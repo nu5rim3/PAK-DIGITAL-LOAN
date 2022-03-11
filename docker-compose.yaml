@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+  mobix-cams-digital-loan-web:
+    build: ./
+    container_name: mobix-cams-digital-loan-web
+    image: mobix-cams-digital-loan-web
+    ports:
+      - "3000:3000"
