@@ -1,0 +1,342 @@
+// 
+// _buttons.scss
+// 
+
+button,a {
+  outline: none !important;
+}
+
+
+// Rounded Buttons
+.btn-rounded {
+  border-radius: 30px;
+}
+
+.btn-dark, .btn-secondary{
+  color: $gray-200 !important;
+}
+
+.btn-outline-light{
+  color: $gray-900;
+}
+
+.btn-outline-dark, .btn-dark{
+  &:not(:disabled):not(.disabled):active,
+  &:not(:disabled):not(.disabled).active,
+  .show > &.dropdown-toggle,
+  &:hover{
+    color: $light;
+  }
+}
+
+// example 1
+
+.btn-group-example{
+  .btn{
+    position: relative;
+
+    &:first-child{
+      &::before{
+        display: none;
+      }
+    }
+
+    &:before{
+      content: "OR";
+      position: absolute;
+      font-size: 10px;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      border-radius: 50%;
+      background-color: $gray-600;
+      color: $light;
+      border: 1px solid $white;
+      left: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+  }
+}
+
+
+// Example 2
+
+.btn-label{
+  position: relative;
+  padding-left: 44px;
+  .label-icon{
+    position: absolute;
+    width: 32px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba($white, 0.1);
+    border-right: 1px solid rgba($white, 0.1);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &.btn-light{
+    .label-icon{
+      background-color: rgba($dark, 0.1);
+      border-right: 1px solid rgba($dark, 0.2);
+    }
+  }
+}
+
+.rejected-button-one{
+  width: 13%;
+  height: 27%;
+  border-radius: 10;
+  background-color: orange;
+  margin-left: 60%;
+  -webkit-text-fill-color: black;
+  margin-top: 8%;
+}
+
+.rejected-button-two{
+  width: 13%;
+  height: 27%;
+  border-radius: 10;
+  background-color: #32CD32;
+  margin-left: 2%;
+  -webkit-text-fill-color: black;
+  margin-top: 8%;
+}
+
+.Reset-button{
+  width: 12%;
+  height: 25%;
+  border-radius: 10;
+  background-color: orange;
+  margin-left: 60%;
+  -webkit-text-fill-color: black;
+  margin-top: 10%;
+}
+
+.Reset-button-one{
+  width: 12%;
+  height: 25%;
+  border-radius: 10;
+  background-color: #32CD32;
+  margin-left: 2%;
+  -webkit-text-fill-color: black;
+  margin-top: 10%;
+}
+
+.yellow-button{
+  width: 15%;
+  height: 5%;
+  padding: 3px 15px;
+  margin-left: 83%;
+  margin-top: 2%;
+  border-radius: 12;
+  background-color: orange;
+  -webkit-text-fill-color: black;
+}
+
+.yellow-button-one{
+  width: 15%;
+  height: 5%;
+  padding: 3px 15px;
+  margin-left: 83%;
+  margin-top: 0%;
+  border-radius: 12;
+  background-color: red;
+  -webkit-text-fill-color: black;
+}
+
+.submit-button-yellow{
+  width: 14%;
+  height: 32;
+  margin-left: 80%;
+  margin-top: 0%;
+  border-radius: 12;
+  background-color: #32CD32;
+  -webkit-text-fill-color: black;
+}
+
+.button-loan-one{
+  background-color: #32CD32;
+  -webkit-text-fill-color: black;
+  border-radius: 10;
+  padding: 4.5px 28px;
+}
+
+.button-row-first{
+  width: 10%;
+  height: 32;
+  margin-left: 60%;
+  margin-top: 3%;
+  border-radius: 10;
+  background-color: red;
+  -webkit-text-fill-color: black;
+}
+
+.button-row-second{
+  width: 10%;
+  height: 32;
+  margin-left: 2%;
+  margin-top: 3%;
+  border-radius: 10;
+  background-color: orange;
+  -webkit-text-fill-color: black;
+}
+
+.button-row-third{
+  width: 10%;
+  height: 32;
+  margin-left: 2%;
+  margin-top: 3%;
+  border-radius: 10;
+  background-color: #32CD32;
+  -webkit-text-fill-color: black;
+}
+
+.reject-button-first{
+  width: 12%;
+  height: 25%;
+  margin-left: 60%;
+  margin-top: 10%;
+  border-radius: 10;
+  background-color: orange;
+  -webkit-text-fill-color: black;
+}
+
+.reject-button-second{
+  width: 12%;
+  height: 25%;
+  margin-left: 2%;
+  margin-top: 10%;
+  border-radius: 10;
+  background-color: #32CD32;
+  -webkit-text-fill-color: black;
+}
+
+.main-button-row-one{
+  padding: 3.5px 65px;
+  margin-left: 12%;
+  margin-top: 5%;
+  border-radius: 10;
+  background-color: #32CD32;
+  -webkit-text-fill-color: black;
+}
+
+.last-button{
+  padding: 4.5px 28px;
+  border-radius: 10;
+  background-color: #32CD32;
+  -webkit-text-fill-color: black;
+}
+
+.main-button-row-two{
+  padding: 3.5px 42px;
+  margin-left: 12%;
+  margin-top: 5%;
+  border-radius: 10;
+  background-color: #32CD32;
+  -webkit-text-fill-color: black; 
+}
+
+.main-button-row-three{
+  padding: 3.5px 72px;
+  margin-left: 12%;
+  margin-top: 5%;
+  border-radius: 10;
+  background-color: #32CD32;
+  -webkit-text-fill-color: black;
+}
+
+.main-button-row-four{
+  padding: 3.5px 62px;
+  margin-left: 12%;
+  margin-top: 5%;
+  border-radius: 10;
+  background-color: #32CD32;
+  -webkit-text-fill-color: black; 
+}
+
+.main-button-row-five{
+  padding: 3.5px 32px;
+  margin-left: 12%;
+  margin-top: 18%;
+  border-radius: 10;
+  background-color: orange;
+  -webkit-text-fill-color: black;
+}
+
+.main-button-row-six{
+  padding: 3.5px 32px;
+  margin-left: 12%;
+  margin-top: 5%;
+  border-radius: 10;
+  background-color: orange;
+  -webkit-text-fill-color: black;
+}
+
+.refresh-btn{
+  background: #4FC3F7;
+  color: black;
+  margin-left: 2%;
+}
+
+.loan-buttonStyle{
+  background: #4FC3F7;
+  color:black;
+  margin-top: 30%;
+  margin-left: 55%;
+}
+
+.row-buttons{
+  background:#D9D9D9 ;
+  color: black;
+  height: 100%;
+  margin-right: 1%;
+}
+
+.exceptional-button{
+  background-color: #029F05;
+  width: 15%;
+  border-radius: 20px;
+  margin-top: 10%;
+  float: right;
+}
+
+.loan-button2{
+  background:#4FC3F7;
+  color: black;
+  width: 100%;
+  margin-left: 20%;
+}
+
+.loan-button3{
+  background:#4FC3F7;
+  color: black;
+  width: 100%;
+  margin-left: 20%;
+  margin-top: 5%;
+}
+
+.notebook-button{
+  background-color:#4FC3F7 ;
+  margin-right: 10%;
+  width: 100%;
+  color: black;
+}
+
+.adduser-button{
+  margin-right:15px;
+  background-color:#f1b44c ;
+  outline-color:#32394e;
+  color: black;
+}
+
+.adduser-button2{
+  margin-right:15px;
+  background-color:#34c38f ;
+  outline-color:#32394e;
+  color: black;
+}

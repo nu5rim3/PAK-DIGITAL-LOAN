@@ -1,0 +1,88 @@
+// 
+// _paragraph.scss
+// 
+
+.dashboard-card-num-text{
+  font-size: 32px;
+  text-align: end; 
+  margin: 10px;
+}
+
+.dashboard-card-des-text{
+  font-size: 10px;
+}
+
+.details-info-dard-text{
+  margin: 10px;  
+}
+
+.grid-text{
+  color: black;
+  font-weight: 500;  
+}
+
+.bank-details-text{
+  text-align: center; 
+  color: blue;
+}
+
+.status-text{
+  margin-top: 15px; 
+  margin-bottom: 5px; 
+  color: blue; 
+  text-align: center;
+}
+
+.successful-text{
+  color: #00FF00; 
+  text-align: center;
+}
+
+.branch-head-verification-note-text{
+  margin-left: 110px; 
+  margin-right: 110px; 
+  margin-top: 25px; 
+  font-weight: 600;
+}
+
+.customer-name-p{
+  width: 13%;
+  margin-top: 1%;
+  margin-left: 2%;
+  color:blue;
+}
+
+.customer-name-details{
+  width: 25%;
+  margin-top: 1%;
+  margin-left: 0%;
+  color:black;
+}
+
+.customer-cnic-p{
+  width: 13%;
+  margin-top: 1%;
+  margin-left: 1%;
+  color:blue;
+}
+
+.customer-cnic-details{
+  width: 15%;
+  margin-top: 1%;
+  margin-left: 0%;
+  color:black;
+}
+
+.application-id-p{
+  width: 13%;
+  margin-top: 1%;
+  margin-left: 2%;
+  color:blue;
+}
+
+.application-id-details{
+  width: 10%;
+  margin-top: 1%;
+  margin-left: 0%;
+  color:black;
+}
