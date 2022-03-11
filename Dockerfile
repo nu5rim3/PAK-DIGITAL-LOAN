@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM fra.ocir.io/lolctech/fxapiuser/node:14-alpine
 RUN mkdir /app
 WORKDIR /app
 COPY package.json /app
