@@ -35,6 +35,7 @@ import {
 } from "services/common.service";
 import {
   getTcDetails,
+  getAmountsOfTcDetails,
 } from "services/tc.service";
 import {
   getMasterData,
@@ -47,8 +48,6 @@ import {
 import {
   getValueByList
 } from "services/util.service";
-
-import Signature from 'assets/images/signature.png'
 
 const GuarantorDetails = (props) => {
 
@@ -74,6 +73,8 @@ const GuarantorDetails = (props) => {
   const [residentials, setResidentials] = useState([]);
   const [income, setIncome] = useState(null);
   const [signature, setSignature] = useState([]);
+  const [customer, setCustomer] = useState({});
+  const [loanDetails, setLoanDetails] = useState({});
 
   const [personalCol, setPersonalCol] = useState(true);
   const [addressCol, setAddressCol] = useState(true);
@@ -114,7 +115,7 @@ const GuarantorDetails = (props) => {
         value={value}
         displayType={'text'}
         thousandSeparator={true}
-        renderText={(value, props) => <p {...props}>{value}</p>}
+        renderText={(value, props) => <p className="m-0" {...props}>{value}</p>}
       />
     );
   }
@@ -134,7 +135,7 @@ const GuarantorDetails = (props) => {
     const incomeResponse = await incomeInformation(obj.idx);
     setIncome(incomeResponse[0]);
 
-    const signatureResponse = await getSignature(appraisalId, `G${index}`);
+    const signatureResponse = await getSignature(appraisalId, `G${index + 1}`);
     setSignature(signatureResponse);
 
     setIsLoading(false);
@@ -153,9 +154,17 @@ const GuarantorDetails = (props) => {
           setTcDetails(tcDetails);
         }
 
+        if (tcDetails !== undefined) {
+          const loanDetails = await getAmountsOfTcDetails(tcDetails.tcNo);
+          if (_isMounted) {
+            setLoanDetails(loanDetails);
+          }
+        }
+
         const masterResponse = await getMasterData(appraisalId);
         if (_isMounted && masterResponse.length > 0) {
           setPeoples(masterResponse.filter(item => item.stkType === "G"));
+          setCustomer(masterResponse.filter(item => item.stkType === "C")[0]);
         }
 
         /* COMMON */
@@ -494,7 +503,7 @@ const GuarantorDetails = (props) => {
                           <Grid item xs={6}>
                             <Card className="witness-signature-card">
                               <p>
-                                میں بقائمی ہوش وحواس ______ کو دئیے جانے والے مبلغ __________ روپے کے قرض کی ضمانت قبول کرتا ہوں اور بلا مشروط اقرار کرتا ہوں کہ اگر قرض خواہ لیے گئے قرض کو کسی بھی وجہ سے ادا کرنے سے قاصر رہتا ہے تو اس قرض کی مکمل ادائیگی کی ذمہ داری مجھ پر ہوگی اور میں اُوپر دی گئی ذاتی اور قرض خواہ کے بارے میں دی گئی معلومات کے بارے میں پوری طرح متفق ہوں.
+                                میں بقائمی ہوش وحواس <u><NumberFormat value={loanDetails?.object?.loanAmount} displayType={'text'} thousandSeparator={true} /></u> کو دئیے جانے والے مبلغ <u>{customer?.stkCusName}</u> روپے کے قرض کی ضمانت قبول کرتا ہوں اور بلا مشروط اقرار کرتا ہوں کہ اگر قرض خواہ لیے گئے قرض کو کسی بھی وجہ سے ادا کرنے سے قاصر رہتا ہے تو اس قرض کی مکمل ادائیگی کی ذمہ داری مجھ پر ہوگی اور میں اُوپر دی گئی ذاتی اور قرض خواہ کے بارے میں دی گئی معلومات کے بارے میں پوری طرح متفق ہوں.
                               </p>
                             </Card>
                           </Grid>

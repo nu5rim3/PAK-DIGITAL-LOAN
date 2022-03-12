@@ -235,7 +235,7 @@ const LoanDetails = (props) => {
         
         const natureOfBnsResponse = await getAllNatureOfBusiness();
         const incomeCatResponse = await getAllOtherIncomeCategories();
-        const signatureResponse = await getSignature(appraisalId, "C");
+        const signatureResponse = await getSignature(appraisalId, "C1");
 
         const salaryLoanDetails = await getSalaryLoanDetails(appraisalId);
         const businessLoanDetails = await getLoanBusinessDetails(appraisalId);
