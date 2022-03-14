@@ -1,12 +1,15 @@
-FROM node:14-alpine as build-step
-
-RUN mkdir /app
+# build environment
+FROM fra.ocir.io/lolctech/fxapiuser/node:14-alpine as build-step
 WORKDIR /app
-COPY . /app
-
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json ./
 RUN npm install
-RUN npm run build --production
+COPY . ./
+RUN npm run build
 
-# SERVICE : rootportal
-FROM nginx:1.17.1-alpine
-COPY --from=build-step /app/build /usr/share/nginx/html
+# production environment
+FROM nginx:stable-alpine
+COPY --from=builder /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"] 
