@@ -4,8 +4,8 @@ RUN mkdir /app
 WORKDIR /app
 COPY . /app
 
-RUN yarn
-RUN yarn build
+RUN npm install
+RUN npm run build --production
 
 # SERVICE : rootportal
 FROM nginx:1.17.1-alpine
