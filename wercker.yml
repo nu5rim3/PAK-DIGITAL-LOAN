@@ -8,16 +8,16 @@ command-timeout: 30
 
 build: 
   steps:
-    - npm-install
-    - script:
-        name: echo nodejs information
-        code: |
-          echo "node version $(node -v) running"
-          echo "npm version $(npm -v) running"
-    - script:
-        name: pre-npm-build
-        code: |
-          npm run build
+    # - npm-install
+    # - script:
+    #     name: echo nodejs information
+    #     code: |
+    #       echo "node version $(node -v) running"
+    #       echo "npm version $(npm -v) running"
+    # - script:
+    #     name: pre-npm-build
+    #     code: |
+    #       npm run build
           
     - internal/docker-build: 
         dockerfile: Dockerfile
