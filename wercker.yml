@@ -1,5 +1,11 @@
 box: fra.ocir.io/lolctech/fxapiuser/node:14-alpine
 
+# No response timeout
+no-response-timeout: 30
+
+# Command timeout
+command-timeout: 30
+
 build: 
   steps:
     - npm-install
