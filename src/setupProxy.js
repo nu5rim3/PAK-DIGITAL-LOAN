@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/token',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: 'https://pofuslbuat01:8243',
       changeOrigin: true,
     })
   );
@@ -12,7 +12,7 @@ module.exports = function(app) {
   app.use(
     '/mobixCamsCommon',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: 'https://pofuslbuat01:8243',
       changeOrigin: true,
     })
   );
@@ -20,7 +20,7 @@ module.exports = function(app) {
   app.use(
     '/mobixCamsClientele',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: 'https://pofuslbuat01:8243',
       changeOrigin: true,
     })
   );
@@ -28,7 +28,7 @@ module.exports = function(app) {
   app.use(
     '/mobixCamsCredit',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: 'https://pofuslbuat01:8243',
       changeOrigin: true,
     })
   );
@@ -36,7 +36,7 @@ module.exports = function(app) {
   app.use(
     '/mobixCamsLoan',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: 'https://pofuslbuat01:8243',
       changeOrigin: true,
     })
   );
@@ -44,15 +44,7 @@ module.exports = function(app) {
   app.use(
     '/mobixCamsApproval',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
-      changeOrigin: true,
-    })
-  );
-
-  app.use(
-    '/api',
-    createProxyMiddleware({
-      target: 'http://localhost:8086',
+      target: 'https://pofuslbuat01:8243',
       changeOrigin: true,
     })
   );
