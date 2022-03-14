@@ -5,5 +5,3 @@ services:
     image: fra.ocir.io/lolctech/pakoman/release/mobix-cams-digital-loan-web:uat
     ports:
       - "3000:3000"
-    env_file:
-      - /appl/.env
