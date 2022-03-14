@@ -2,10 +2,15 @@ box: fra.ocir.io/lolctech/fxapiuser/node:14-alpine
 
 build: 
   steps:
+    - npm-install
+    - script:
+        name: echo nodejs information
+        code: |
+          echo "node version $(node -v) running"
+          echo "npm version $(npm -v) running"
     - script:
         name: pre-npm-build
         code: |
-          npm install
           npm run build
           
     - internal/docker-build: 
