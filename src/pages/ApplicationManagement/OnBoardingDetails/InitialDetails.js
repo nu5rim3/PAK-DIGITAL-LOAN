@@ -7,12 +7,15 @@ import {
   Col,
   Card,
   CardBody,
+  Collapse,
   Button,
 } from "reactstrap";
 
 // Local Components
 import Loader from "components/Loader";
 
+import classnames from "classnames";
+import Grid from '@material-ui/core/Grid'
 // APIs
 import {
   getVerificationDetails,
@@ -28,12 +31,14 @@ const IntialDetails = (props) => {
   const { appraisalId } = useParams();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [objPepName, setObjPepName] = useState(null);
+  const [objSanName, setObjSanName] = useState(null);
   const [rules, setRules] = useState([]);
   const [internalCrib, setInternalCrib] = useState({});
   const [approval, setApproval] = useState({});
   const [msas, setMsas] = useState({});
   const [ecib, setEcib] = useState([]);
-
+  const [personalCol, setPersonalCol] = useState(true);
   useEffect(() => {
     var _isMounted = true;
 
@@ -60,6 +65,24 @@ const IntialDetails = (props) => {
       _isMounted = false;
     };
   }, [props.clientele]);
+
+  const handlePersonalAccn = () => {
+    setPersonalCol(!personalCol);
+
+  };
+
+  const onLoadData = async (obj) => {
+    setIsLoading(true);
+    setObjPepName(obj.objPepName);
+    setIsLoading(false);
+  };
+
+  const onLoadSanName = async (obj) => {
+    setIsLoading(true);
+    setObjSanName(obj.objSanName);
+    setIsLoading(false);
+  };
+
 
   return (
     <div>
@@ -126,10 +149,13 @@ const IntialDetails = (props) => {
                     return <>
                       <td className="align-middle"><Button color="danger" size="sm"><i className="bx bx-x font-size-16 align-middle me-2"></i>Not Verified</Button></td>
                       <td>
-                        {msas?.pepName === true && <Button color="danger" size="sm"><i className="bx bx-file-find font-size-16 align-middle me-2"></i>POLITICALLY EXPOSED PERSON</Button>}
+                        {msas?.pepName === true && <Button color="danger" size="sm" onClick={() => onLoadData(msas)}><i className="bx bx-file-find font-size-16 align-middle me-2"></i>POLITICALLY EXPOSED PERSON</Button>}
+
                         {"\u00A0\u00A0"}
                         {msas?.sanName === true && <Button color="danger" size="sm"><i className="bx bx-file-find font-size-16 align-middle me-2"></i>SANCTION LISTED PERSON</Button>}
                       </td>
+
+
                     </>;
                   } else {
                     return <>
@@ -144,32 +170,32 @@ const IntialDetails = (props) => {
 
             <tr>
               <td className="align-middle grid-text text-info">INTERNAL BLACKLIST STATUS</td>
-              
-                {approval === undefined && <>
-                  <td className="align-middle"><Button color="success" size="sm"><i className="bx bx-check font-size-16 align-middle me-2"></i>Non-Blacklisting</Button></td>
-                  <td></td>
-                </>}
-              
-                {approval !== undefined && <>
-                  <td className="align-middle"><Button color="danger" size="sm"><i className="bx bx-x font-size-16 align-middle me-2"></i>Blacklisted</Button></td>
-                  <td></td>
-                </>}
-        
+
+              {approval === undefined && <>
+                <td className="align-middle"><Button color="success" size="sm"><i className="bx bx-check font-size-16 align-middle me-2"></i>Non-Blacklisting</Button></td>
+                <td></td>
+              </>}
+
+              {approval !== undefined && <>
+                <td className="align-middle"><Button color="danger" size="sm"><i className="bx bx-x font-size-16 align-middle me-2"></i>Blacklisted</Button></td>
+                <td></td>
+              </>}
+
             </tr>
 
             <tr>
               <td className="align-middle grid-text text-info">INTERNAL CREDIT HISTORY</td>
-              
-                {internalCrib !== undefined && <>
-                  <td className="align-middle"><Button color="success" size="sm"><i className="bx bx-check font-size-16 align-middle me-2"></i>Verified</Button></td>
-                  <td><Link target="_blank" to={`/credit-appraisals/documents/credit-history/${props.clientele.idx}`} className="btn btn-info btn-sm"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Preview</Link></td>
-                </>}
-              
-                {internalCrib === undefined && <>
-                  <td className="align-middle"><Button color="warning" size="sm"><i className="bx bx-x font-size-16 align-middle me-2"></i>Data Not Found</Button></td>
-                  <td></td>
-                </>}
-        
+
+              {internalCrib !== undefined && <>
+                <td className="align-middle"><Button color="success" size="sm"><i className="bx bx-check font-size-16 align-middle me-2"></i>Verified</Button></td>
+                <td><Link target="_blank" to={`/credit-appraisals/documents/credit-history/${props.clientele.idx}`} className="btn btn-info btn-sm"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Preview</Link></td>
+              </>}
+
+              {internalCrib === undefined && <>
+                <td className="align-middle"><Button color="warning" size="sm"><i className="bx bx-x font-size-16 align-middle me-2"></i>Data Not Found</Button></td>
+                <td></td>
+              </>}
+
             </tr>
 
             <tr>
@@ -222,8 +248,84 @@ const IntialDetails = (props) => {
             </tr>
           </tbody>
         </table>
+        {objPepName != null && <div className="accordion-item">
+
+          <h2 className="accordion-header">
+            <button
+              className={classnames(
+                "accordion-button",
+                "fw-medium",
+                { collapsed: !personalCol }
+              )}
+              type="button"
+              onClick={handlePersonalAccn}
+              style={{ cursor: "pointer" }}
+            >
+              <p>POLITICALLY EXPOSED PERSON  INFORMATION</p>
+
+            </button>
+          </h2>
+
+          <Collapse
+            isOpen={personalCol}
+            className="accordion-collapse"
+          >
+
+            <div className="accordion-body">
+
+              <Row>
+                <div className="text-muted d-flex">
+                  <Col md={12}>
+                    <table className="table mb-4">
+                      <thead>
+                        <tr>
+                          <th>Date Of Birth</th>
+                          <th>Occuptation</th>
+                          <th>Address</th>
+                          <th>Country</th>
+                          <th>CNIC</th>
+                          <th>Place  of Birth</th>
+                          <th>Father Name/Husband Name</th>
+                          <th>Entity</th>
+
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        {objPepName != null && JSON.parse(objPepName).data?.map((pepNameObj, index) => {
+
+                          return <tr key={index}>
+                            <td>{pepNameObj.dateofbirth ? pepNameObj.dateofbirth : "-"}</td>
+                            <td>{pepNameObj.occuptation ? pepNameObj.occuptation : "-"}</td>
+                            <td>{pepNameObj.address ? pepNameObj.address : "-"}</td>
+                            <td>{pepNameObj.country ? pepNameObj.country : "-"}</td>
+                            <td>{pepNameObj.nicnumber ? pepNameObj.nicnumber : "-"}</td>
+                            <td>{pepNameObj.placeofbirth ? pepNameObj.placeofbirth : "-"}</td>
+                            <td>{pepNameObj.father ? pepNameObj.father : "-"}</td>
+                            <td>{pepNameObj.entity ? pepNameObj.entity : "-"}</td>
+                          </tr>
+
+                        })}
+                      </tbody>
+                    </table>
+                  </Col>
+
+
+                </div>
+              </Row>
+
+            </div>
+
+
+
+          </Collapse>
+        </div>
+        }
+
+
+
       </Loader>
-    </div>
+    </div >
   );
 }
 
