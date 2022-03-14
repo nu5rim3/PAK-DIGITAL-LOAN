@@ -1,10 +1,12 @@
-FROM fra.ocir.io/lolctech/fxapiuser/node:14-alpine
+FROM node:14-alpine as build-step
+
 RUN mkdir /app
 WORKDIR /app
-COPY package.json /app/
-RUN npm install
-COPY . /app/
-RUN npm run build --production
+COPY . /app
 
-EXPOSE 3000
-ENTRYPOINT ["node", "server.js"]
+RUN yarn
+RUN yarn build
+
+# SERVICE : rootportal
+FROM nginx:1.17.1-alpine
+COPY --from=build-step /app/build /usr/share/nginx/html
