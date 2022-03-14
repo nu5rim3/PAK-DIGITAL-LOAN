@@ -423,7 +423,7 @@ const ApprovalDetails = (props) => {
                         <Row>
                           <Col md="3">
                             <Nav pills className="flex-column">
-                              {exceptionalApprovals.map((item, index) => (
+                              {exceptionalApprovals?.map((item, index) => (
                                 <NavItem key={index}>
                                   <NavLink
                                     style={{ cursor: "pointer" }}
@@ -449,7 +449,7 @@ const ApprovalDetails = (props) => {
                             <TabContent
                               activeTab={verticalCaActiveTab}
                               className="text-muted" >
-                              {exceptionalApprovals.map((item, index) => (
+                              {exceptionalApprovals?.map((item, index) => (
                                 <TabPane key={index} tabId={index}>
                                   <Row>
                                     <Col md="12">
