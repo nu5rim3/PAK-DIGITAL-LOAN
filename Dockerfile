@@ -12,7 +12,7 @@ RUN npm install --no-package-lock --production
 
 COPY . ./
 
-# RUN npm run build
+RUN npm run build
 
 # production environment
 FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine
