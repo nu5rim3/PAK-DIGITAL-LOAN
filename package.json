@@ -183,5 +183,6 @@
     "eslint-plugin-react": "^7.20.6",
     "prettier": "^2.1.1"
   },
+  "homepage": "/pakoman-digital-loan",
   "proxy": "https://pofuslbuat01:8243"
 }
