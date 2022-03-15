@@ -8,8 +8,6 @@ command-timeout: 30
 
 build: 
   steps:
-    - install-packages:
-        packages: openssh-client
     # - npm-install
     # - script:
     #     name: echo nodejs information
