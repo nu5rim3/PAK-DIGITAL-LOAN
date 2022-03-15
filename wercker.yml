@@ -30,9 +30,6 @@ build:
         tag: $DOCKER_TAG
         repository: $DOCKER_REPO
         registry: $DOCKER_REGISTRY
-
-    - install-packages:
-        packages: openssh-client
  
     - add-to-known_hosts:
         hostname: $JUMP_SERVER 
