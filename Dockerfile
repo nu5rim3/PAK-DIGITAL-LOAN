@@ -4,7 +4,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 ENV PATH /app/node_modules/.bin:$PATH
-ENV PUBLIC_URL pakoman-digital-loan
+ENV PUBLIC_URL https://pofuslbuat01/pakoman-digital-loan
 
 COPY package.json ./
 
