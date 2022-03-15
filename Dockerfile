@@ -1,5 +1,5 @@
 # build environment
-FROM fra.ocir.io/lolctech/fxapiuser/node:14-alpine as build-step
+FROM fra.ocir.io/lolctech/fxapiuser/node:14.17-alpine as build-step
 WORKDIR /app
 
 ENV NODE_ENV production
