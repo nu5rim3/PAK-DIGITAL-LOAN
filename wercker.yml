@@ -1,4 +1,4 @@
-box: fra.ocir.io/lolctech/fxapiuser/node:14-alpine
+box: fra.ocir.io/lolctech/fxapiuser/node:14.17-alpine
 
 # No response timeout
 no-response-timeout: 30
@@ -8,6 +8,8 @@ command-timeout: 30
 
 build: 
   steps:
+    - install-packages:
+        packages: openssh-client
     # - npm-install
     # - script:
     #     name: echo nodejs information
