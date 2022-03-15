@@ -73,7 +73,7 @@ function* loginUser({ payload: { user, history } }) {
       localStorage.setItem("authUser", JSON.stringify({"uid": `${userData.aud}` ,"username": `${userData.sub}`,"role": `${userData.aut}`}))
       yield put(loginSuccess({"uid": `${userData.aud}` ,"username": `${userData.sub}`,"role": `${userData.aut}`}))
       
-      history.push("/dashboard")
+      history.push("/pakoman-digital-loan/dashboard")
       window.location.reload();
     }
   } catch (error) {
@@ -99,7 +99,7 @@ function* logoutUser({ payload: { history } }) {
       const response = yield call(fireBaseBackend.logout)
       yield put(logoutUserSuccess(response))
     }
-    history.push("/login")
+    history.push("/pakoman-digital-loan/login")
   } catch (error) {
     yield put(apiError(error))
   }
@@ -121,7 +121,7 @@ function* socialLogin({ payload: { data, history, type } }) {
       localStorage.setItem("authUser", JSON.stringify(response))
       yield put(loginSuccess(response))
     }
-    history.push("/dashboard")
+    history.push("/pakoman-digital-loan/dashboard")
   } catch (error) {
     yield put(apiError(error))
   }
