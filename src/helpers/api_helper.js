@@ -3,7 +3,7 @@ import { postJwtRefresh } from "./fakebackend_helper"
 import Token from "./jwt-token-access/accessToken"
 
 //apply base url for axios
-export const API_URL = ""
+export const API_URL = "https://pofuslbuat01:8243"
 
 const axiosApi = axios.create({
   baseURL: API_URL,
