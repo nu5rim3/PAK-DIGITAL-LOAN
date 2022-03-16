@@ -2,49 +2,49 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
   app.use(
-    '/token',
+    '/pakoman-digital-loan/token',
     createProxyMiddleware({
-      target: 'https://pofuslbuat01:8243',
+      target: 'https://pomicroapiuat.lolc.lk',
       changeOrigin: true,
     })
   );
 
   app.use(
-    '/mobixCamsCommon',
+    '/pakoman-digital-loan/mobixCamsCommon',
     createProxyMiddleware({
-      target: 'https://pofuslbuat01:8243',
+      target: 'https://pomicroapiuat.lolc.lk',
       changeOrigin: true,
     })
   );
 
   app.use(
-    '/mobixCamsClientele',
+    '/pakoman-digital-loan/mobixCamsClientele',
     createProxyMiddleware({
-      target: 'https://pofuslbuat01:8243',
+      target: 'https://pomicroapiuat.lolc.lk',
       changeOrigin: true,
     })
   );
 
   app.use(
-    '/mobixCamsCredit',
+    '/pakoman-digital-loan/mobixCamsCredit',
     createProxyMiddleware({
-      target: 'https://pofuslbuat01:8243',
+      target: 'https://pomicroapiuat.lolc.lk',
       changeOrigin: true,
     })
   );
 
   app.use(
-    '/mobixCamsLoan',
+    '/pakoman-digital-loan/mobixCamsLoan',
     createProxyMiddleware({
-      target: 'https://pofuslbuat01:8243',
+      target: 'https://pomicroapiuat.lolc.lk',
       changeOrigin: true,
     })
   );
 
   app.use(
-    '/mobixCamsApproval',
+    '/pakoman-digital-loan/mobixCamsApproval',
     createProxyMiddleware({
-      target: 'https://pofuslbuat01:8243',
+      target: 'https://pomicroapiuat.lolc.lk',
       changeOrigin: true,
     })
   );
