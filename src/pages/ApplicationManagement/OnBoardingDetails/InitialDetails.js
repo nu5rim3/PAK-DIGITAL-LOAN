@@ -188,7 +188,7 @@ const IntialDetails = (props) => {
 
               {internalCrib !== undefined && <>
                 <td className="align-middle"><Button color="success" size="sm"><i className="bx bx-check font-size-16 align-middle me-2"></i>Verified</Button></td>
-                <td><Link target="_blank" to={`/credit-appraisals/documents/credit-history/${props.clientele.idx}`} className="btn btn-info btn-sm"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Preview</Link></td>
+                <td><Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/credit-history/${props.clientele.idx}`} className="btn btn-info btn-sm"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Preview</Link></td>
               </>}
 
               {internalCrib === undefined && <>
@@ -205,7 +205,7 @@ const IntialDetails = (props) => {
                   if (rule.status === "Y") {
                     return <>
                       <td className="align-middle"><Button color="success" size="sm"><i className="bx bx-check font-size-16 align-middle me-2"></i>Verified</Button></td>
-                      <td><Link target="_blank" to={`/credit-appraisals/documents/biometric/${props.clientele.idx}`} className="btn btn-info btn-sm"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Preview</Link></td>
+                      <td><Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/biometric/${props.clientele.idx}`} className="btn btn-info btn-sm"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Preview</Link></td>
                     </>
                   } else if (rule.status === "N") {
                     return <>
@@ -230,7 +230,7 @@ const IntialDetails = (props) => {
                   if (rule.status === "Y") {
                     return <>
                       <td className="align-middle"><Button color="success" size="sm"><i className="bx bx-check font-size-16 align-middle me-2"></i>Verified</Button></td>
-                      <td><Link target="_blank" to={`/credit-appraisals/documents/ecib/${ecib?.length > 0 ? ecib[0]?.imgPath : ""}`} className="btn btn-info btn-sm"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Preview</Link></td>
+                      <td><Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/ecib/${ecib?.length > 0 ? ecib[0]?.imgPath : ""}`} className="btn btn-info btn-sm"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Preview</Link></td>
                     </>
                   } else if (rule.status === "N") {
                     return <>

@@ -53,7 +53,7 @@ const LiabilityDetails = (props) => {
         const LiabilityResponse = await getLiabilityDetails(appraisalId);
         if (_isMounted) {
           setLiabilityDetails(LiabilityResponse);
-          setLiabilities(LiabilityResponse.liabilities);
+          setLiabilities(LiabilityResponse?.liabilities);
 
           setIsLoading(false);
         }

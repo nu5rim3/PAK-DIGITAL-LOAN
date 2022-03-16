@@ -6,22 +6,31 @@ module.exports = function(app) {
     createProxyMiddleware({
       target: 'https://pomicroapiuat.lolc.lk',
       changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/token': '/token'
+      },
     })
   );
 
   app.use(
-    '/pakoman-digital-loan/mobixCamsCommon',
+    '/pakoman-digital-loan/mobixCamsCommon/*',
     createProxyMiddleware({
       target: 'https://pomicroapiuat.lolc.lk',
       changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/mobixCamsCommon': '/mobixCamsCommon'
+      },
     })
   );
 
   app.use(
-    '/pakoman-digital-loan/mobixCamsClientele',
+    '/pakoman-digital-loan/mobixCamsClientele/*',
     createProxyMiddleware({
       target: 'https://pomicroapiuat.lolc.lk',
       changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/mobixCamsClientele': '/mobixCamsClientele'
+      },
     })
   );
 
@@ -30,6 +39,9 @@ module.exports = function(app) {
     createProxyMiddleware({
       target: 'https://pomicroapiuat.lolc.lk',
       changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/mobixCamsCredit': '/mobixCamsCredit'
+      },
     })
   );
 
@@ -38,6 +50,9 @@ module.exports = function(app) {
     createProxyMiddleware({
       target: 'https://pomicroapiuat.lolc.lk',
       changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/mobixCamsLoan': '/mobixCamsLoan'
+      },
     })
   );
 
@@ -46,6 +61,9 @@ module.exports = function(app) {
     createProxyMiddleware({
       target: 'https://pomicroapiuat.lolc.lk',
       changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/mobixCamsApproval': '/mobixCamsApproval'
+      },
     })
   );
 };

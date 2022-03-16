@@ -120,6 +120,12 @@ const GuarantorDetails = (props) => {
     );
   }
 
+  const getGuarantorAknowledgement = () => { 
+    return <p style={{ direction: 'rtl' }}>
+      میں بقائمی ہوش وحواس <u>{customer?.stkCusName}</u> کو دئیے جانے والے مبلغ <u><NumberFormat value={loanDetails?.object?.loanAmount} displayType={'text'} thousandSeparator={true} /></u> روپے کے قرض کی ضمانت قبول کرتا ہوں اور بلا مشروط اقرار کرتا ہوں کہ اگر قرض خواہ لیے گئے قرض کو کسی بھی وجہ سے ادا کرنے سے قاصر رہتا ہے تو اس قرض کی مکمل ادائیگی کی ذمہ داری مجھ پر ہوگی اور میں اُوپر دی گئی ذاتی اور قرض خواہ کے بارے میں دی گئی معلومات کے بارے میں پوری طرح متفق ہوں.
+    </p>;
+  }
+
   const onLoadData = async (obj, index) => {
     setIsLoading(true);
 
@@ -502,8 +508,8 @@ const GuarantorDetails = (props) => {
                         <div className="text-muted d-flex">
                           <Grid item xs={6}>
                             <Card className="witness-signature-card">
-                              <p style={{ textAlign: 'right'}}>
-                                میں بقائمی ہوش وحواس <u><NumberFormat value={loanDetails?.object?.loanAmount} displayType={'text'} thousandSeparator={true} /></u> کو دئیے جانے والے مبلغ <u>{customer?.stkCusName}</u> روپے کے قرض کی ضمانت قبول کرتا ہوں اور بلا مشروط اقرار کرتا ہوں کہ اگر قرض خواہ لیے گئے قرض کو کسی بھی وجہ سے ادا کرنے سے قاصر رہتا ہے تو اس قرض کی مکمل ادائیگی کی ذمہ داری مجھ پر ہوگی اور میں اُوپر دی گئی ذاتی اور قرض خواہ کے بارے میں دی گئی معلومات کے بارے میں پوری طرح متفق ہوں.
+                              <p style={{ textAlign: 'right' }}>
+                                { getGuarantorAknowledgement() }
                               </p>
                             </Card>
                           </Grid>

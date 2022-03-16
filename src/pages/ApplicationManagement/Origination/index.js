@@ -106,7 +106,7 @@ const Origination = (props) => {
   const getAction = (item) => {
     item.actions = (
       <div className="d-flex align-items-center">
-        <Link to={`/credit-appraisals/view/${item.idx}`} className="btn btn-primary btn-sm d-flex justify-content-between align-items-center">
+        <Link to={`/pakoman-digital-loan/credit-appraisals/view/${item.idx}`} className="btn btn-primary btn-sm d-flex justify-content-between align-items-center">
           <i className="bx bx-zoom-in font-size-16 me-1"></i>
           <p className="m-0">Preview</p>
         </Link>
