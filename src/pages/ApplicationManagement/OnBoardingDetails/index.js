@@ -105,7 +105,7 @@ const OnBoardingDetails = (props) => {
 
                           {clientele.type === "C" && (
                             <div id="rental-calculation-details">
-                              <h5 className="p-2 mt-4">Rental Calculation Details</h5>
+                              <h5 className="p-2 mt-4">Loan Installment Calculation</h5>
                               <CalculationDetails clientele={clientele} />
                             </div>
                           )}

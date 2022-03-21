@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/pakoman-digital-loan/token',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
       pathRewrite: {
         '^/pakoman-digital-loan/token': '/token'
@@ -15,7 +15,7 @@ module.exports = function(app) {
   app.use(
     '/pakoman-digital-loan/mobixCamsCommon/*',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
       pathRewrite: {
         '^/pakoman-digital-loan/mobixCamsCommon': '/mobixCamsCommon'
@@ -26,7 +26,7 @@ module.exports = function(app) {
   app.use(
     '/pakoman-digital-loan/mobixCamsClientele/*',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
       pathRewrite: {
         '^/pakoman-digital-loan/mobixCamsClientele': '/mobixCamsClientele'
@@ -37,7 +37,7 @@ module.exports = function(app) {
   app.use(
     '/pakoman-digital-loan/mobixCamsCredit',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
       pathRewrite: {
         '^/pakoman-digital-loan/mobixCamsCredit': '/mobixCamsCredit'
@@ -48,7 +48,7 @@ module.exports = function(app) {
   app.use(
     '/pakoman-digital-loan/mobixCamsLoan',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
       pathRewrite: {
         '^/pakoman-digital-loan/mobixCamsLoan': '/mobixCamsLoan'
@@ -59,7 +59,7 @@ module.exports = function(app) {
   app.use(
     '/pakoman-digital-loan/mobixCamsApproval',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
       pathRewrite: {
         '^/pakoman-digital-loan/mobixCamsApproval': '/mobixCamsApproval'
