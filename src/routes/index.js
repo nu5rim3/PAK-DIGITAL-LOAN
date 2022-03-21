@@ -39,7 +39,7 @@ const authProtectedRoutes = [
   { path: "/pakoman-digital-loan/dashboard", component: Dashboard },
   { path: "/pakoman-digital-loan/application-management/origination", component: Origination },
   { path: "/pakoman-digital-loan/credit-appraisals/view/:appraisalId", component: Appraisal },
-  { path: "/pakoman-digital-loan/credit-appraisals/documents/ecib/:path*", component: EcibViwer },
+  { path: "/pakoman-digital-loan/credit-appraisals/documents/ecib/:cnic", component: EcibViwer },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/biometric/:id", component: BiometricViewer },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/credit-history/:id", component: InternalCreditDocument },
 

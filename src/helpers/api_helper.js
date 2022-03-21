@@ -51,3 +51,8 @@ export function blob(url) {
   return axiosApi
     .get(url, { responseType: 'arraybuffer' })
 }
+
+export function file(url) {
+  return axiosApi
+    .get(url, { responseType: 'blob' })
+}

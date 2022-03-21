@@ -37,7 +37,6 @@ const IntialDetails = (props) => {
   const [internalCrib, setInternalCrib] = useState({});
   const [approval, setApproval] = useState({});
   const [msas, setMsas] = useState({});
-  const [ecib, setEcib] = useState([]);
   const [personalCol, setPersonalCol] = useState(true);
   useEffect(() => {
     var _isMounted = true;
@@ -48,13 +47,11 @@ const IntialDetails = (props) => {
       const verificationResponse = await getVerificationDetails(props.clientele.idx);
       const internalCribResponse = await getInternalCribDetails(props.clientele.idx);
       const approvalResponse = await getObApprovalByParams(appraisalId, props.clientele.idx, "BLACKLIST");
-      const ecibResponse = await getEcibDetails(props.clientele.idx);
       if (_isMounted) {
         setRules(verificationResponse?.rules);
         setInternalCrib(internalCribResponse);
         setApproval(approvalResponse);
         setMsas(verificationResponse?.msasDetailsDto);
-        setEcib(ecibResponse);
         setIsLoading(false);
       }
     };
@@ -230,7 +227,7 @@ const IntialDetails = (props) => {
                   if (rule.status === "Y") {
                     return <>
                       <td className="align-middle"><Button color="success" size="sm"><i className="bx bx-check font-size-16 align-middle me-2"></i>Verified</Button></td>
-                      <td><Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/ecib/${ecib?.length > 0 ? ecib[0]?.imgPath : ""}`} className="btn btn-info btn-sm"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Preview</Link></td>
+                      <td><Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/ecib/${verificationResponse?.clientele?.identificationNumber}`} className="btn btn-info btn-sm"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Preview</Link></td>
                     </>
                   } else if (rule.status === "N") {
                     return <>
