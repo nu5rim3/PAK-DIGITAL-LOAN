@@ -413,3 +413,11 @@ export const getObExceptionals = (key) => {
         case "INTCRIB" : return "Internal CRIB";
     }
 };
+
+export const getCommonAreaValues = (key) => {
+    switch (key) {
+        case "001": return "COMMON";
+        case "KHI": return "KARACHI";
+        default: return "Value Not Found";
+    }
+};

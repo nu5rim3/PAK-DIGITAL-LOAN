@@ -202,7 +202,7 @@ const LoanDetails = (props) => {
 
         /* COMMON */
         if (tcDetails !== undefined) {
-          const applicantDistance = await getAllApplicantDistance(tcDetails.pTrhdLType);
+          const applicantDistanceResponse = await getAllApplicantDistance(tcDetails.pTrhdLType);
           const salaryInfoResponse = await getAllSalaryInformation(tcDetails.pTrhdLType);
           const repeatCusResponse = await getAllRepeatCustomers(tcDetails.pTrhdLType);
           const bnsOwnershipResponse = await getAllBusinessOwnerships(tcDetails.pTrhdLType);
@@ -214,8 +214,9 @@ const LoanDetails = (props) => {
           const agriMachineResponse = await getAllMethodUseAgriMachine(tcDetails.pTrhdLType);
           const cultivationProofResponse = await getAllCultivationProofs(tcDetails.pTrhdLType);
           const fieldVeriResponse = await getAllFieldVerification(tcDetails.pTrhdLType);
-          
+
           if (_isMounted) {
+            setApplicantDistance(applicantDistanceResponse);
             setSalaryInformation(salaryInfoResponse);
             setRepeatCustomers(repeatCusResponse);
             setBusinessOwnerships(bnsOwnershipResponse);
@@ -232,7 +233,7 @@ const LoanDetails = (props) => {
 
         const jobsResponse = await getAllJobs();
         const natureOfEmpResponse = await getAllNatureOfEmp();
-        
+
         const natureOfBnsResponse = await getAllNatureOfBusiness();
         const incomeCatResponse = await getAllOtherIncomeCategories();
         const signatureResponse = await getSignature(appraisalId, "C1");
@@ -251,7 +252,6 @@ const LoanDetails = (props) => {
           /* COMMON */
           setJobs(jobsResponse);
           setNatureOfEmp(natureOfEmpResponse);
-          setApplicantDistance(applicantDistance);
           setNatureOfBusiness(natureOfBnsResponse);
           setOtherIncomeCategories(incomeCatResponse);
 
@@ -284,7 +284,7 @@ const LoanDetails = (props) => {
         <Col lg={12}>
           <div className="page-wrapper-context">
             <div className="accordion accordion-flush">
-              
+
               {salaryLoanDetails && salaryLoanDetails !== undefined && <div className="accordion-item mt-4">
                 <h2 className="accordion-header">
                   <button
@@ -308,43 +308,54 @@ const LoanDetails = (props) => {
                   <div className="accordion-body">
                     <Row>
                       <div className="text-muted d-flex">
-                        <Grid container spacing={10}>
-                          <Grid item className="grid-text">
-                            <p>Profession</p>
-                            <p>Source of Income</p>
-                            <p>Employer</p>
-                            <p>Type of Business</p>
-                            <p>Designation</p>
-                            <p>Experience</p>
-                            <p>Employer address</p>
-                            <p>Type of Job</p>
-                          </Grid>
-                          <Grid item>
-                            <p>{salaryLoanDetails && salaryLoanDetails.profession ? salaryLoanDetails.profession : "\u00A0"}</p>
-                            <p>{salaryLoanDetails && salaryLoanDetails.sourceOfIncome ? salaryLoanDetails.sourceOfIncome : "\u00A0"}</p>
-                            <p>{salaryLoanDetails && salaryLoanDetails.employer ? salaryLoanDetails.employer : "\u00A0"}</p>
-                            <p>{salaryLoanDetails && salaryLoanDetails.typeOfBusiness ? getValueByList(natureOfBusiness, salaryLoanDetails.typeOfBusiness) : "\u00A0"}</p>
-                            <p>{salaryLoanDetails && salaryLoanDetails.designation ? salaryLoanDetails.designation : "\u00A0"}</p>
-                            <p>{salaryLoanDetails && salaryLoanDetails.currEmpPeriod ? salaryLoanDetails.currEmpPeriod : "\u00A0"}</p>
-                            <p>{salaryLoanDetails && salaryLoanDetails.empAddress ? salaryLoanDetails.empAddress : "\u00A0"}</p>
-                            <p>{salaryLoanDetails && salaryLoanDetails.typeOfJob ? getValueByList(jobs, salaryLoanDetails.typeOfJob) : "\u00A0"}</p>
-                          </Grid>
-
-                          <Grid item className="grid-text">
-                            <p>Nature of Employment</p>
-                            <p>Residence or working place of applicant is above 15km, of branch / service center.</p>
-                            <p>Salary information, Proof of Salary</p>
-                            <p>Repeat Customer</p>
-                            <p>Contact No</p>
-                          </Grid>
-                          <Grid item>
-                            <p>{salaryLoanDetails && salaryLoanDetails.natureOfEmp ? getValueByList(natureOfEmp, salaryLoanDetails.natureOfEmp) : "\u00A0"}</p>
-                            <p>{salaryLoanDetails && salaryLoanDetails.residenceOrWorking ? getValueByList(applicantDistance, salaryLoanDetails.residenceOrWorking) : "\u00A0"}</p>
-                            <p>{salaryLoanDetails && salaryLoanDetails.proofOfSalary ? getValueByList(salaryInformation, salaryLoanDetails.proofOfSalary) : "\u00A0"}</p>
-                            <p>{salaryLoanDetails && salaryLoanDetails.repeatCustomer ? getValueByList(repeatCustomers, salaryLoanDetails.repeatCustomer) : "\u00A0"}</p>
-                            <p>{salaryLoanDetails && salaryLoanDetails.contactNo ? salaryLoanDetails.contactNo : "\u00A0"}</p>
-                          </Grid>
-                        </Grid>
+                        <Col md={12}>
+                          <table className="table table-borderless">
+                            <tbody>
+                              <tr>
+                                <td><p className="m-0 grid-text">Profession</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.profession ? salaryLoanDetails.profession : "\u00A0"}</p></td>
+                                <td><p className="m-0 grid-text">Nature of Employment</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.natureOfEmp ? getValueByList(natureOfEmp, salaryLoanDetails.natureOfEmp) : "\u00A0"}</p></td>
+                              </tr>
+                              <tr>
+                                <td><p className="m-0 grid-text">Source of Income</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.sourceOfIncome ? salaryLoanDetails.sourceOfIncome : "\u00A0"}</p></td>
+                                <td><p className="m-0 grid-text">Residence or working place of applicant is above 15km, <br></br> of branch / service center.</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.residenceOrWorking ? getValueByList(applicantDistance, salaryLoanDetails.residenceOrWorking) : "\u00A0"}</p></td>
+                              </tr>
+                              <tr>
+                                <td><p className="m-0 grid-text">Employer</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.employer ? salaryLoanDetails.employer : "\u00A0"}</p></td>
+                                <td><p className="m-0 grid-text">Salary information, Proof of Salary</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.proofOfSalary ? getValueByList(salaryInformation, salaryLoanDetails.proofOfSalary) : "\u00A0"}</p></td>
+                              </tr>
+                              <tr>
+                                <td><p className="m-0 grid-text">Type of Business</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.typeOfBusiness ? getValueByList(natureOfBusiness, salaryLoanDetails.typeOfBusiness) : "\u00A0"}</p></td>
+                                <td><p className="m-0 grid-text">Repeat Customer</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.repeatCustomer ? getValueByList(repeatCustomers, salaryLoanDetails.repeatCustomer) : "\u00A0"}</p></td>
+                              </tr>
+                              <tr>
+                                <td><p className="m-0 grid-text">Designation</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.designation ? salaryLoanDetails.designation : "\u00A0"}</p></td>
+                                <td><p className="m-0 grid-text">Contact No</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.contactNo ? salaryLoanDetails.contactNo : "\u00A0"}</p></td>
+                              </tr>
+                              <tr>
+                                <td><p className="m-0 grid-text">Experience</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.currEmpPeriod ? salaryLoanDetails.currEmpPeriod : "\u00A0"}</p></td>
+                              </tr>
+                              <tr>
+                                <td><p className="m-0 grid-text">Employer address</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.empAddress ? salaryLoanDetails.empAddress : "\u00A0"}</p></td>
+                              </tr>
+                              <tr>
+                                <td><p className="m-0 grid-text">Type of Job</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.typeOfJob ? getValueByList(jobs, salaryLoanDetails.typeOfJob) : "\u00A0"}</p></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </Col>
                       </div>
                     </Row>
                   </div>
