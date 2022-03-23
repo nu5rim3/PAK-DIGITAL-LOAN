@@ -8,10 +8,10 @@ command-timeout: 30
 
 build: 
   steps:  
-    - internal/docker-build: 
+    - internal/docker-build:
         dockerfile: Dockerfile
         image-name: $IMAGE_NAME
- 
+
     - internal/docker-push:
         image-name: $IMAGE_NAME
         username: $DOCKER_USERNAME
@@ -19,26 +19,4 @@ build:
         tag: $DOCKER_TAG
         repository: $DOCKER_REPO
         registry: $DOCKER_REGISTRY
- 
-    - add-to-known_hosts:
-        hostname: $JUMP_SERVER 
- 
-    - add-ssh-key:
-        keyname: sshkey
- 
-    - petrica/ssh-tunnel:
-        source-port: $SOURCE_PORT
-        destination-port: $DESTINATION_PORT
-        destination-host: $DESTINATION_HOST
-        connection-string: $SSH_JUMPUSER@$JUMP_SERVER
-        connection-port: $JUMP_SSHPORT
-        keepalive: 20
-        forward_only: yes
- 
-    - script:
-        name: Docker-compose up
-        code: | 
-            ssh -o StrictHostKeyChecking=no -p $SOURCE_PORT root@localhost "docker-compose -f /appl/$IMAGE_NAME/docker-compose.yml down"
-            ssh -o StrictHostKeyChecking=no -p $SOURCE_PORT root@localhost "docker-compose -f /appl/$IMAGE_NAME/docker-compose.yml pull"
-            ssh -o StrictHostKeyChecking=no -p $SOURCE_PORT root@localhost "docker-compose -f /appl/$IMAGE_NAME/docker-compose.yml up -d" 
  
