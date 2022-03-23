@@ -1,10 +1,25 @@
-FROM node:14-alpine
-RUN mkdir /app
+# build environment
+FROM fra.ocir.io/lolctech/fxapiuser/node:14.17-alpine as build-step
 WORKDIR /app
-COPY package.json /app
-RUN npm install
-COPY . /app
+
+ENV NODE_ENV production
+ENV PATH /app/node_modules/.bin:$PATH
+
+COPY package.json ./
+
+RUN npm cache clean --force
+RUN npm install --no-package-lock --production
+
+COPY . ./
+
 RUN npm run build
 
-EXPOSE 3000
-ENTRYPOINT ["node", "server.js"]
+# production environment
+FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine
+
+COPY --from=build-step /app/build /usr/share/nginx/html/pakoman-digital-loan
+COPY --from=build-step /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

@@ -27,30 +27,31 @@ import InternalCreditDocument from "pages/ApplicationManagement/OnBoardingDetail
 const authProtectedRoutes = [
 
   // ACCESS AND PERMISSIONS
-  { path: "/access-and-permission/roles", component: Role },
-  { path: "/access-and-permission/members", component: Member },
+  { path: "/pakoman-digital-loan/access-and-permission/roles", component: Role },
+  { path: "/pakoman-digital-loan/access-and-permission/members", component: Member },
 
   // APPROVAL AND RETIFICATION
-  { path: "/approval-and-retification/groups", component: Group },
-  { path: "/approval-and-retification/users", component: GroupUser },
-  { path: "/approval-and-retification/workflows", component: Workflow },
+  { path: "/pakoman-digital-loan/approval-and-retification/groups", component: Group },
+  { path: "/pakoman-digital-loan/approval-and-retification/users", component: GroupUser },
+  { path: "/pakoman-digital-loan/approval-and-retification/workflows", component: Workflow },
   
   // APPLICATION MANAGEMENT
-  { path: "/dashboard", component: Dashboard },
-  { path: "/application-management/origination", component: Origination },
-  { path: "/credit-appraisals/view/:appraisalId", component: Appraisal },
-  { path: "/credit-appraisals/documents/ecib/:path*", component: EcibViwer },
-  { path: "/credit-appraisals/documents/biometric/:id", component: BiometricViewer },
-  { path: "/credit-appraisals/documents/credit-history/:id", component: InternalCreditDocument },
+  { path: "/pakoman-digital-loan/dashboard", component: Dashboard },
+  { path: "/pakoman-digital-loan/application-management/origination", component: Origination },
+  { path: "/pakoman-digital-loan/credit-appraisals/view/:appraisalId", component: Appraisal },
+  { path: "/pakoman-digital-loan/credit-appraisals/documents/ecib/:cnic", component: EcibViwer },
+  { path: "/pakoman-digital-loan/credit-appraisals/documents/biometric/:id", component: BiometricViewer },
+  { path: "/pakoman-digital-loan/credit-appraisals/documents/credit-history/:id", component: InternalCreditDocument },
 
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
-  { path: "/", exact: true, component: () => <Redirect to="/dashboard" /> },
+  { path: "/", exact: true, component: () => <Redirect to="/pakoman-digital-loan/dashboard" /> },
+  { path: "/pakoman-digital-loan", exact: true, component: () => <Redirect to="/pakoman-digital-loan/dashboard" /> },
 ]
 
 const publicRoutes = [
-  { path: "/logout", component: Logout },
-  { path: "/login", component: Login },
+  { path: "/pakoman-digital-loan/logout", component: Logout },
+  { path: "/pakoman-digital-loan/login", component: Login },
 ]
 
 export { publicRoutes, authProtectedRoutes }

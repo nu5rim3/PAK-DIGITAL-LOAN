@@ -75,7 +75,11 @@ const CalculationDetails = (props) => {
           </tr>
           <tr>
             <td className="align-middle grid-text">Term</td>
-            <td className="align-middle">{amountsOfTcDetails !== null && amountsOfTcDetails?.object?.facilityDetails[0]?.term}</td>
+            <td className="align-middle">{tcDetails !== null && tcDetails?.pTrhdTerm}</td>
+          </tr>
+          <tr>
+            <td className="align-middle grid-text">Markup Value</td>
+            <td className="align-middle">{tcDetails !== null && tcDetails?.pTrhdTr}</td>
           </tr>
           <tr>
             <td className="align-middle grid-text">Loan Amount</td>

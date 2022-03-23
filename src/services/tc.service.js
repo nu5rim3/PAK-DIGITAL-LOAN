@@ -11,7 +11,7 @@ export const getTcSyncId = async (appraisalId) => {
 export const getAmountsOfTcDetails = async(tcId) => {
     var payload = {
         "tcNo": tcId,
-        "mode": "P"
+        "mode": "T"
     }
     return await post(`/mobixCamsCredit/v1/credit/tc/getTCDetails`, payload);  
 };

@@ -35,8 +35,9 @@ import {
   /* HWT DECLARATION */
   getValuePoliticallyExposed,
   getAllBanks,
-  getValueAccountTitle,
+  getAllGuarantorRelations,
   getValueAddressType,
+  getCommonAreaValues,
 } from "services/common.service";
 import {
   getTcDetails,
@@ -77,6 +78,7 @@ const CustomerDetails = (props) => {
   const [subSectors, setSubSectors] = useState([]);
   const [banks, setBanks] = useState([]);
   const [provinces, setProvinces] = useState([]);
+  const [relationship, setRelationship] = useState([]);
 
   const [tcDetails, setTcDetails] = useState({});
   const [master, setMaster] = useState({});
@@ -162,6 +164,7 @@ const CustomerDetails = (props) => {
         const subSectorsResponse = await getAllSubSectors();
         const banksResponse = await getAllBanks();
         const provinceResponse = await getAllProvinces();
+        const relationshipResponse = await getAllGuarantorRelations();
 
         if (tcDetails !== undefined) {
           const headOfFamilyResponse = await getAllHeadOfFamily(tcDetails.pTrhdLType);
@@ -207,6 +210,7 @@ const CustomerDetails = (props) => {
           setSubSectors(subSectorsResponse);
           setBanks(banksResponse);
           setProvinces(provinceResponse);
+          setRelationship(relationshipResponse);
 
           setContact(contactResponse);
           setResidentials(residentialResponse);
@@ -440,7 +444,7 @@ const CustomerDetails = (props) => {
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Area</p></td>
-                                  <td><p className="m-0">{residential && residential.area ? residential.area : "\u00A0"}</p></td>
+                                  <td><p className="m-0">{residential && residential.area ? getCommonAreaValues(residential.area) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">City</p></td>
@@ -512,7 +516,7 @@ const CustomerDetails = (props) => {
                             </Grid>
                             <Grid item>
                               <p>{recipient && recipient.recipientName ? recipient.recipientName : "\u00A0"}</p>
-                              <p>{recipient && recipient.relationship ? recipient.relationship : "\u00A0"}</p>
+                              <p>{recipient && recipient.relationship ? getValueByList(relationship, recipient.relationship) : "\u00A0"}</p>
                               <p>{recipient && recipient.cNicNo ? recipient.cNicNo : "\u00A0"}</p>
                               <p>{recipient && recipient.phoneNo ? recipient.phoneNo : "\u00A0"}</p>
                             </Grid>
@@ -615,7 +619,7 @@ const CustomerDetails = (props) => {
                               <p>{cheque && cheque.bank ? getValueByList(banks, cheque.bank) : "\u00A0"}</p>
                               <p>{cheque && cheque.chequeNo ? cheque.chequeNo : "\u00A0"}</p>
                               <p>{cheque && cheque.accountNo ? cheque.accountNo : "\u00A0"}</p>
-                              <p>{cheque && cheque.accountTitle ? getValueAccountTitle(cheque.accountTitle) : "\u00A0"}</p>
+                              <p>{cheque && cheque.accountTitle ? cheque.accountTitle : "\u00A0"}</p>
                             </Grid>
 
                             {/* <Grid item className="grid-text">

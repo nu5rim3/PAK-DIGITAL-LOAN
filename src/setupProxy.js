@@ -2,58 +2,68 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = function(app) {
   app.use(
-    '/token',
+    '/pakoman-digital-loan/token',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/token': '/token'
+      },
     })
   );
 
   app.use(
-    '/mobixCamsCommon',
+    '/pakoman-digital-loan/mobixCamsCommon/*',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/mobixCamsCommon': '/mobixCamsCommon'
+      },
     })
   );
 
   app.use(
-    '/mobixCamsClientele',
+    '/pakoman-digital-loan/mobixCamsClientele/*',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/mobixCamsClientele': '/mobixCamsClientele'
+      },
     })
   );
 
   app.use(
-    '/mobixCamsCredit',
+    '/pakoman-digital-loan/mobixCamsCredit',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/mobixCamsCredit': '/mobixCamsCredit'
+      },
     })
   );
 
   app.use(
-    '/mobixCamsLoan',
+    '/pakoman-digital-loan/mobixCamsLoan',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/mobixCamsLoan': '/mobixCamsLoan'
+      },
     })
   );
 
   app.use(
-    '/mobixCamsApproval',
+    '/pakoman-digital-loan/mobixCamsApproval',
     createProxyMiddleware({
-      target: 'https://pomicroapiuat.lolc.lk',
+      target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
-    })
-  );
-
-  app.use(
-    '/api',
-    createProxyMiddleware({
-      target: 'http://localhost:8086',
-      changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/mobixCamsApproval': '/mobixCamsApproval'
+      },
     })
   );
 };

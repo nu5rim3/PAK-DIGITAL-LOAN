@@ -102,10 +102,10 @@ const SidebarContent = props => {
               </Link>
               <ul className="sub-menu" aria-expanded="false">
                 <li>
-                  <Link to="/access-and-permission/roles">{props.t("Roles")}</Link>
+                  <Link to="/pakoman-digital-loan/access-and-permission/roles">{props.t("Roles")}</Link>
                 </li>
                 <li>
-                  <Link to="/access-and-permission/members">{props.t("Members")}</Link>
+                  <Link to="/pakoman-digital-loan/access-and-permission/members">{props.t("Members")}</Link>
                 </li>
               </ul>
             </li>
@@ -128,21 +128,21 @@ const SidebarContent = props => {
             <li className="menu-title">{props.t("Approval and Ratification")}</li>
 
             <li>
-              <Link to="/approval-and-retification/groups" className="">
+              <Link to="/pakoman-digital-loan/approval-and-retification/groups" className="">
                 <i className="bx bx-group"></i>
                 <span>{props.t("Groups")}</span>
               </Link>
             </li>
 
             <li>
-              <Link to="/approval-and-retification/users" className="">
+              <Link to="/pakoman-digital-loan/approval-and-retification/users" className="">
                 <i className="bx bxs-user-check"></i>
                 <span>{props.t("Users")}</span>
               </Link>
             </li>
 
             <li>
-              <Link to="/approval-and-retification/workflows" className="">
+              <Link to="/pakoman-digital-loan/approval-and-retification/workflows" className="">
                 <i className="bx bx-layer"></i>
                 <span>{props.t("Workflows")}</span>
               </Link>
@@ -151,7 +151,7 @@ const SidebarContent = props => {
             <li className="menu-title">{props.t("Application Management")}</li>
 
             <li>
-              <Link to="/application-management/origination" className="">
+              <Link to="/pakoman-digital-loan/application-management/origination" className="">
                 <i className="bx bx-layer"></i>
                 <span>{props.t("Origination")}</span>
               </Link>
