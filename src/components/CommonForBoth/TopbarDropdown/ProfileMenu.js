@@ -30,7 +30,8 @@ const ProfileMenu = props => {
       } else if (
         process.env.REACT_APP_DEFAULTAUTH === "fake" ||
         process.env.REACT_APP_DEFAULTAUTH === "jwt" ||
-        process.env.REACT_APP_DEFAULTAUTH === "PKCE"
+        process.env.REACT_APP_DEFAULTAUTH === "PKCE" ||
+        process.env.REACT_APP_DEFAULTAUTH === "OAUTH2"
       ) {
         const obj = JSON.parse(localStorage.getItem("authUser"))
         setusername(obj.username)
