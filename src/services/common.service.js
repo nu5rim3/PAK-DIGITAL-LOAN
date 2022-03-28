@@ -60,6 +60,10 @@ export const getAllBanks = async () => {
     return await get(`/mobixCamsCommon/v1/banks`).catch(err => console.log(err));
 };
 
+export const getAllPdBanks = async () => {
+    return await get(`/mobixCamsCommon/v1/pd-banks`).catch(err => console.log(err));
+};
+
 export const getAllSecurityCategories = async () => {
     return await get(`/mobixCamsCommon/v1/security/categories`).catch(err => console.log(err));
 };
