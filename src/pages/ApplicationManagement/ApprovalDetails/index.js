@@ -543,12 +543,12 @@ const ApprovalDetails = (props) => {
                                           <p className="text-muted m-0">
                                             {item && item.comment !== null ? item.comment : "Waiting for approval"}
                                           </p>
-                                          {item.comment !== null && <div className="d-flex justify-content-between align-items-center font-size-12">
+                                          {item.lastModifiedBy !== null && item && item.stepAction !== "P" && <div className="d-flex justify-content-between align-items-center font-size-12">
                                             <i className="bx bxs-user font-size-14 me-2" />
-                                            <p className="m-0 me-2">{item.createdBy}</p>
+                                            <p className="m-0 me-2">{item.lastModifiedBy}</p>
                                             <p className="m-0 me-2">{"•"}</p>
                                             <i className="bx bxs-calendar font-size-14 me-2" />
-                                            <p className="text-muted m-0">{moment(item.creationDate).format("YYYY-MM-DD | HH:MM:SS")}</p>
+                                            <p className="text-muted m-0">{moment(item.lastModifiedDate).format("YYYY-MM-DD | HH:MM:SS")}</p>
                                           </div>}
                                         </div>
                                       </div>
@@ -556,7 +556,6 @@ const ApprovalDetails = (props) => {
                                   </div>
                                 </li>
                                 ))}
-
                               </ul>
                             </div>
                           </Col>
