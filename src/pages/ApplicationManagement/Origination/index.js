@@ -68,7 +68,7 @@ const Origination = (props) => {
         sort: "asc",
       },
       {
-        field: 'lastModifiedDate',
+        field: 'createdBy',
         label: 'Created By',
         sort: "asc",
       },
