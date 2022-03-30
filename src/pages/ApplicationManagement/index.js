@@ -26,6 +26,7 @@ import IncomeExpensesDetails from "./IncomeExpensesDetails";
 import LiabilityDetails from "./LiabilityDetails";
 import CreditScoringDetails from "./CreditScoringDetails";
 import ImageDetails from "./ImageDetails";
+import ReportDetails from "./ReportDetails";
 import ApprovalDetails from "./ApprovalDetails";
 
 const Appraisal = () => {
@@ -89,6 +90,10 @@ const Appraisal = () => {
 
                   <AccordionBody title="IMAGE DETAILS">
                     <ImageDetails active={"9"} />
+                  </AccordionBody>
+
+                  <AccordionBody title="REPORT DETAILS">
+                    <ReportDetails active={"11"} />
                   </AccordionBody>
 
                   <AccordionBody title="APPROVAL DETAILS">
