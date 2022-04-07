@@ -92,9 +92,9 @@ const Appraisal = () => {
                     <ImageDetails active={"9"} />
                   </AccordionBody>
 
-                  <AccordionBody title="REPORT DETAILS">
+                  {/* <AccordionBody title="REPORT DETAILS">
                     <ReportDetails active={"11"} />
-                  </AccordionBody>
+                  </AccordionBody> */}
 
                   <AccordionBody title="APPROVAL DETAILS">
                     <ApprovalDetails active={"10"} />
