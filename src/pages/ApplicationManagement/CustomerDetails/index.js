@@ -34,7 +34,7 @@ import {
   getAllSubSectors,
   /* HWT DECLARATION */
   getValuePoliticallyExposed,
-  getAllBanks,
+  getAllPdBanks,
   getAllGuarantorRelations,
   getValueAddressType,
   getCommonAreaValues,
@@ -162,7 +162,7 @@ const CustomerDetails = (props) => {
         const informationSourcesResponse = await getAllInformationSources();
         const sectorsResponse = await getAllSectors();
         const subSectorsResponse = await getAllSubSectors();
-        const banksResponse = await getAllBanks();
+        const banksResponse = await getAllPdBanks();
         const provinceResponse = await getAllProvinces();
         const relationshipResponse = await getAllGuarantorRelations();
 

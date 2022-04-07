@@ -21,6 +21,7 @@ import Appraisal from "pages/ApplicationManagement"
 import EcibViwer from "pages/ApplicationManagement/OnBoardingDetails/EcibDocument"
 import BiometricViewer from "pages/ApplicationManagement/OnBoardingDetails/BiometricDocument"
 import InternalCreditDocument from "pages/ApplicationManagement/OnBoardingDetails/InternalCreditDocument"
+import ReportDocument from "pages/ApplicationManagement/ReportDetails/Document"
 
 // REPORT AND SUMMARY
 
@@ -42,6 +43,7 @@ const authProtectedRoutes = [
   { path: "/pakoman-digital-loan/credit-appraisals/documents/ecib/:cnic", component: EcibViwer },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/biometric/:id", component: BiometricViewer },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/credit-history/:id", component: InternalCreditDocument },
+  { path: "/pakoman-digital-loan/credit-appraisals/documents/:reportType/reports/:appraisalId", component: ReportDocument },
 
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
