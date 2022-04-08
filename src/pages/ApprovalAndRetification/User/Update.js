@@ -34,7 +34,7 @@ const Update = (props) => {
       "group": {
         "code": data.group
       },
-      "userIdx": data.userIdx,
+      "userIdx": data.userIdx.trim(),
       "status": data.status
     }
 
