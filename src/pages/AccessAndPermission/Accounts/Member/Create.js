@@ -56,7 +56,7 @@ const Create = (props) => {
           "model": data.model,
         }
       ],
-      "meCode": (data?.meCode) ? data.meCode : data.profileUser,
+      "meCode": data?.meCode,
       "profileUser": data.profileUser
     }
 
