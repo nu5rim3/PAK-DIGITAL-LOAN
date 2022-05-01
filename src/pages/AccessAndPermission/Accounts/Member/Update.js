@@ -61,7 +61,7 @@ const Update = (props) => {
           "model": data.model,
         }
       ],
-      "meCode": data?.meCode,
+      "meCode": (data?.meCode === "") ? null : data.meCode,
       "profileUser": data.profileUser,
       "status": data.status,
     }
@@ -69,7 +69,7 @@ const Update = (props) => {
     setIsLoading(true);
 
     await updateUser(props.data.idx, payload).then(res => {
-      if (res !== undefined && res !== null) {
+      if (res?.status === 200) {
         setIsLoading(false);
         setSuccessMessage("User updated successfully.");
         reset();
@@ -77,11 +77,14 @@ const Update = (props) => {
           setSuccessMessage(null); 
           props.toggel(); 
         }, 3000);
-      } else {
+      } else if (res?.status === 500) {
         setIsLoading(false);
         setErrorMessage("User update failed.");
+      } else {
+        setIsLoading(false);
+        setErrorMessage(res.data?.message);
       }
-    });
+    }).catch(err => console.log(err));
   };
 
   const getStatusValue = (value) => {

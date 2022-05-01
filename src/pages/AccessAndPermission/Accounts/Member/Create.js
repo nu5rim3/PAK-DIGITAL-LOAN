@@ -56,14 +56,14 @@ const Create = (props) => {
           "model": data.model,
         }
       ],
-      "meCode": data?.meCode,
+      "meCode": (data?.meCode === "") ? null : data.meCode,
       "profileUser": data.profileUser
     }
 
     setIsLoading(true);
 
     await createUser(payload).then(res => {
-      if (res !== undefined && res !== null) {
+      if (res?.status === 200) {
         setIsLoading(false);
         setSuccessMessage("User created successfully.");
         reset();
@@ -72,11 +72,14 @@ const Create = (props) => {
           props.toggel(); 
 
         }, 3000);
-      } else {
+      } else if (res?.status === 500) {
         setIsLoading(false);
         setErrorMessage("User already exists.");
+      } else {
+        setIsLoading(false);
+        setErrorMessage(res.data?.message);
       }
-    });
+    }).catch(err => console.log(err));
   };
 
   const verifyUser = async() => {

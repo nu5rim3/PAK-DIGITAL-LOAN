@@ -35,10 +35,20 @@ export async function post(url, data, config = {}) {
     .then(response => (response !== undefined ? response.data : undefined))
 }
 
+export async function postResponse(url, data, config = {}) {
+  return axiosApi
+    .post(url, { ...data }, { ...config }).catch(err => err);
+}
+
 export async function put(url, data, config = {}) {
   return axiosApi
     .put(url, { ...data }, { ...config })
     .then(response => response?.data).catch(err => console.log(err))
+}
+
+export async function putResponse(url, data, config = {}) {
+  return axiosApi
+    .put(url, { ...data }, { ...config }).catch(err => err);
 }
 
 export async function del(url, config = {}) {
