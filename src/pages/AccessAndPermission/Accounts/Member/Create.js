@@ -272,8 +272,9 @@ const Create = (props) => {
                       className="form-control"
                       id="user-contact"
                       placeholder="Enter User Contact"
-                      {...register("mobileNo", { required: false })}
+                      {...register("mobileNo", { required: true, pattern: /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/ })}
                     />
+                    {errors.mobileNo && <span className="text-danger">This field is required</span>}
                   </div>
                 </Col>
 
