@@ -74,7 +74,7 @@ const Create = (props) => {
         }, 3000);
       } else if (res?.status === 500) {
         setIsLoading(false);
-        setErrorMessage("User already exists.");
+        setErrorMessage("User creation failed.");
       } else {
         setIsLoading(false);
         setErrorMessage(res.data?.message);
