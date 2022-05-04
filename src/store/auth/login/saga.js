@@ -75,6 +75,47 @@ function* loginUser({ payload: { user, history } }) {
       
       history.push("/pakoman-digital-loan/dashboard")
       window.location.reload();
+    } else if (process.env.REACT_APP_DEFAULTAUTH === "OAUTH2") {
+      
+      const params = {
+        username: user.email,
+        password: user.password,
+        grant_type: "password",
+        client_id: process.env.REACT_APP_AUTH_CLIENT_ID,
+        client_secret: process.env.REACT_APP_AUTH_CLIENT_SECRET,
+      }
+
+      const response = yield call(postJwtLogin, new URLSearchParams(params));
+      
+      if (response !== null && response !== undefined) {
+        localStorage.setItem("access_token", response.access_token);  
+        localStorage.setItem("expires_in", response.expires_in);  
+        localStorage.setItem("refresh_token", response.refresh_token);  
+        localStorage.setItem("scope", response.scope);  
+        localStorage.setItem("token_type", response.token_type);
+
+        // Token Expire time
+        var timestamp = moment().add((response.expires_in / 60) - 10, 'minutes');
+        localStorage.setItem("expires_time", timestamp);
+      }
+
+      // Extracting user data from token
+      localStorage.setItem("x-auth-token", Buffer.from(user.email).toString('base64'));
+
+      if (user.email !== null && user.email !== undefined) {
+          const userResponse = yield call(getUserDetails, user.email, response.access_token);
+          if (userResponse !== undefined) {
+            console.log(userResponse);
+            localStorage.setItem("role", userResponse.roles[0].code);
+            localStorage.setItem("branch", userResponse.branches[0].code);
+            
+            localStorage.setItem("authUser", JSON.stringify({"uid": `${userResponse.idx}` ,"username": `${user.email}`,"role": `${userResponse.roles[0].code}`}))
+            yield put(loginSuccess({"uid": `${userResponse.idx}` ,"username": `${user.email}`,"role": `${userResponse.roles[0].code}`}))
+          }
+      }
+      
+      history.push("/pakoman-digital-loan/dashboard")
+      window.location.reload();
     }
   } catch (error) {
     yield put(apiError(error))
