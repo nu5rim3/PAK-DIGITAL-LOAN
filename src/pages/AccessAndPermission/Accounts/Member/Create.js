@@ -56,14 +56,14 @@ const Create = (props) => {
           "model": data.model,
         }
       ],
-      "meCode": (data?.meCode) ? data.meCode : data.profileUser,
+      "meCode": (data?.meCode === "") ? null : data.meCode,
       "profileUser": data.profileUser
     }
 
     setIsLoading(true);
 
     await createUser(payload).then(res => {
-      if (res !== undefined && res !== null) {
+      if (res?.status === 200) {
         setIsLoading(false);
         setSuccessMessage("User created successfully.");
         reset();
@@ -72,11 +72,14 @@ const Create = (props) => {
           props.toggel(); 
 
         }, 3000);
+      } else if (res?.status === 500) {
+        setIsLoading(false);
+        setErrorMessage("User creation failed.");
       } else {
         setIsLoading(false);
-        setErrorMessage("User already exists.");
+        setErrorMessage(res.data?.message);
       }
-    });
+    }).catch(err => console.log(err));
   };
 
   const verifyUser = async() => {
@@ -269,8 +272,9 @@ const Create = (props) => {
                       className="form-control"
                       id="user-contact"
                       placeholder="Enter User Contact"
-                      {...register("mobileNo", { required: false })}
+                      {...register("mobileNo", { required: true, pattern: /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/ })}
                     />
+                    {errors.mobileNo && <span className="text-danger">This field is required</span>}
                   </div>
                 </Col>
 

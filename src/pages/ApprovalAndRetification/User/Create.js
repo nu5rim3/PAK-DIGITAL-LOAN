@@ -38,7 +38,7 @@ const Create = (props) => {
       "group": {
         "code": data.group
       },
-      "userIdx": data.userIdx.trim()
+      "userIdx": data.userIdx.trim(),
     }
 
     setIsLoading(true);
