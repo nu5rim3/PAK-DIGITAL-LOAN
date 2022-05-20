@@ -86,10 +86,6 @@ const ApprovalDetails = (props) => {
   }
 
   const verifyUserWithLevel = (level) => {
-    if (findUser !== null && findUser?.group !== undefined) {
-      return findUser.group.code === level;
-    }
-
     if (level !== "" && level !== null) {
       var role = localStorage.getItem("role");
       return role === level;
