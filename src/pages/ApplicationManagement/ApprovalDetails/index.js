@@ -452,6 +452,10 @@ const ApprovalDetails = (props) => {
                                       <table className="table-striped table-bordered table">
                                         <tbody>
                                           <tr>
+                                            <td><p className="grid-text m-0">Approval User :</p></td>
+                                            <td><p className="m-0">{item.role}</p></td>
+                                          </tr>
+                                          <tr>
                                             <td><p className="grid-text m-0">Requester&apos;s Comment :</p></td>
                                             <td><p className="m-0">{item.remark}</p></td>
                                           </tr>
