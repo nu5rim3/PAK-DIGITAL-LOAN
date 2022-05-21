@@ -12,7 +12,7 @@ app.use(cors());
 app.disable('x-powered-by');
 
 app.use(function (req, res, next) {
-    res.setHeader("content-security-policy", "upgrade-insecure-requests; frame-ancestors 'self' http://pofuslblive01/pakoman-digital-loan");
+    res.setHeader("content-security-policy", "upgrade-insecure-requests; frame-ancestors 'self' http://172.16.100.12/pakoman-digital-loan");
     res.setHeader("strict-transport-security", "max-age=31536000");
     res.setHeader("Referrer-Policy", "no-referrer");
     res.setHeader("X-Content-Type-Options", "nosniff");
@@ -24,7 +24,7 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.use('/pakoman-digital-loan/robots.txt', function (req, res, next) {
-    res.redirect('http://pofuslblive01/pakoman-digital-loan');
+    res.redirect('http://172.16.100.12/pakoman-digital-loan');
 });
 
 app.all("/pakoman-digital-loan/token", function (req, res) {
