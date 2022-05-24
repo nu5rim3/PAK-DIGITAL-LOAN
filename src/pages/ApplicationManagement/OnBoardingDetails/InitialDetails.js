@@ -32,11 +32,12 @@ const IntialDetails = (props) => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [objPepName, setObjPepName] = useState(null);
-  const [objSanName, setObjSanName] = useState(null);
+
   const [rules, setRules] = useState([]);
   const [internalCrib, setInternalCrib] = useState({});
   const [approval, setApproval] = useState({});
   const [msas, setMsas] = useState({});
+
   const [personalCol, setPersonalCol] = useState(true);
 
   useEffect(() => {
@@ -45,9 +46,11 @@ const IntialDetails = (props) => {
     setIsLoading(true);
 
     const fetchData = async () => {
+    
       const verificationResponse = await getVerificationDetails(props.clientele.idx);
       const internalCribResponse = await getInternalCribDetails(props.clientele.idx);
       const approvalResponse = await getObApprovalByParams(appraisalId, props.clientele.idx, "BLACKLIST");
+
       if (_isMounted) {
         setRules(verificationResponse?.rules);
         setInternalCrib(internalCribResponse);
@@ -71,15 +74,10 @@ const IntialDetails = (props) => {
 
   const onLoadData = async (obj) => {
     setIsLoading(true);
-    setObjPepName(obj.objPepName);
     setIsLoading(false);
   };
 
-  const onLoadSanName = async (obj) => {
-    setIsLoading(true);
-    setObjSanName(obj.objSanName);
-    setIsLoading(false);
-  };
+
 
 
   return (
@@ -147,10 +145,10 @@ const IntialDetails = (props) => {
                     return <>
                       <td className="align-middle"><Button color="danger" size="sm"><i className="bx bx-x font-size-16 align-middle me-2"></i>Not Verified</Button></td>
                       <td>
-                        {msas?.pepName === true && <Button color="danger" size="sm" onClick={() => onLoadData(msas)}><i className="bx bx-file-find font-size-16 align-middle me-2"></i>POLITICALLY EXPOSED PERSON</Button>}
+                        {msas?.pepName === true && <Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/pep/${props.clientele.idx}`} className="btn btn-danger btn-sm"><i className="bx bx-file-find font-size-16 align-middle me-2"></i>POLITICALLY EXPOSED PERSON</Link>}
 
                         {"\u00A0\u00A0"}
-                        {msas?.sanName === true && <Button color="danger" size="sm"><i className="bx bx-file-find font-size-16 align-middle me-2"></i>SANCTION LISTED PERSON</Button>}
+                        {msas?.sanName === true && <Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/sanc/${props.clientele.idx}`} className="btn btn-danger btn-sm"> <i className="bx bx-file-find font-size-16 align-middle me-2"></i>SANCTION LISTED PERSON</Link>}
                       </td>
 
 

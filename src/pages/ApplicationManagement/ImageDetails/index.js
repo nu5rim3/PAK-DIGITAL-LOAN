@@ -9,9 +9,8 @@ import {
 // Local Components
 import Category from "./category";
 import Loader from "components/Loader";
-
 import {
-  getAllImages,
+  getAllImages, exportAsPdf
 } from "services/images.service";
 
 const ImageDetails = (props) => {
@@ -54,6 +53,16 @@ const ImageDetails = (props) => {
     };
   }, [props.active]);
 
+  const exportAsPdf = (appraisalId) => {
+    // setDownloading(true);
+    const pdf = exportAsPdf(appraisalId)
+    // .then((status) => {
+    //   if (status) {
+    //     setDownloading(false);
+    //   }
+    // })
+  }
+
 
   return (
     <Row>
@@ -66,7 +75,16 @@ const ImageDetails = (props) => {
           </div>
         </Col>
       </Loader>
+      <div className="form-group mt-3 d-flex justify-content-end align-items-center">
+        <button onClick={() => exportAsPdf(appraisalId)} className="btn btn-success w-md me-2">
+
+          <i className="far fa-file-pdf font-size-16 me-2" />
+                                              Export
+
+        </button>
+      </div>
     </Row>
+
   );
 }
 

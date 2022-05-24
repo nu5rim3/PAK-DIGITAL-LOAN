@@ -20,12 +20,12 @@ const CalculationDetails = (props) => {
   const [amountsOfTcDetails, setAmountsOfTcDetails] = useState(null);
 
   const formatNumber = inputNumber => {
-    let formetedNumber=(Number(inputNumber)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-    let splitArray=formetedNumber.split('.');
-    if(splitArray.length>1){
-      formetedNumber=splitArray[0];
+    let formetedNumber = (Number(inputNumber)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    let splitArray = formetedNumber.split('.');
+    if (splitArray.length > 1) {
+      formetedNumber = splitArray[0];
     }
-    return(formetedNumber).concat(".00");
+    return (formetedNumber).concat(".00");
   };
 
   useEffect(() => {
@@ -35,6 +35,8 @@ const CalculationDetails = (props) => {
       const response = await getTcDetails(appraisalId);
       if (_isMounted && response !== undefined) {
         setTcDetails(response);
+
+
         setIsLoading(false);
       }
     };
@@ -65,39 +67,90 @@ const CalculationDetails = (props) => {
     }
   }, [tcDetails]);
 
+  const getRentalDetails = (items) => {
+    let rentals = [];
+    let i = 0;
+
+    for (let item of items) {
+
+      const row = (
+        <tr key={i}>
+          <td>{item.struSeq ? item.struSeq : "-"}</td>
+          <td>{item.struPrds ? item.struPrds : "-"}</td>
+          <td>{item.struRent ? item.struRent : "-"}</td>
+        </tr>
+      );
+      i++;
+      rentals.push(row);
+    }
+
+
+    return rentals;
+  }
+
+
   return (
-    <Loader loading={isLoading}>
-      <table className="table table-responsive">
-        <tbody>
-          <tr>
-            <td className="align-middle grid-text">TC No</td>
-            <td className="align-middle">{amountsOfTcDetails !== null && amountsOfTcDetails?.object?.tcNo}</td>
-          </tr>
-          <tr>
-            <td className="align-middle grid-text">Term</td>
-            <td className="align-middle">{tcDetails !== null && tcDetails?.pTrhdTerm}</td>
-          </tr>
-          <tr>
-            <td className="align-middle grid-text">Markup Value</td>
-            <td className="align-middle">{tcDetails !== null && tcDetails?.pTrhdTr}</td>
-          </tr>
-          <tr>
-            <td className="align-middle grid-text">Loan Amount</td>
-            <td className="align-middle">{amountsOfTcDetails !== null && formatNumber(amountsOfTcDetails?.object?.loanAmount)}</td>
-          </tr>
-          <tr>
-            <td className="align-middle grid-text">Total Receivable</td>
-            <td className="align-middle">{amountsOfTcDetails !== null && formatNumber(amountsOfTcDetails?.object?.totalReceivable)}</td>
-          </tr>
-          <tr>
-            <td className="align-middle grid-text">Down Payment</td>
-            <td className="align-middle">{amountsOfTcDetails !== null && formatNumber(amountsOfTcDetails?.object?.downPayment)}</td>
-          </tr>
-        </tbody>
-      </table>
-    </Loader>
+    <div>
+      <Loader loading={isLoading}>
+
+        <table className="table table-responsive">
+          <tbody>
+            <tr>
+              <td className="align-middle grid-text">TC No</td>
+              <td className="align-middle">{amountsOfTcDetails !== null && amountsOfTcDetails?.object?.tcNo}</td>
+              <td className="align-middle grid-text">Loan Amount</td>
+              <td className="align-middle">{amountsOfTcDetails !== null && formatNumber(amountsOfTcDetails?.object?.loanAmount)}</td>
+            </tr>
+
+            <tr>
+              <td className="align-middle grid-text">Markup Value</td>
+              <td className="align-middle">{tcDetails !== null && tcDetails?.pTrhdTr}</td>
+              <td className="align-middle grid-text">Term</td>
+              <td className="align-middle">{tcDetails !== null && tcDetails?.pTrhdTerm}</td>
+            </tr>
+
+            <tr>
+              <td className="align-middle grid-text">Total Receivable</td>
+              <td className="align-middle">{amountsOfTcDetails !== null && formatNumber(amountsOfTcDetails?.object?.totalReceivable)}</td>
+              <td className="align-middle grid-text">Down Payment</td>
+              <td className="align-middle">{amountsOfTcDetails !== null && formatNumber(amountsOfTcDetails?.object?.downPayment)}</td>
+            </tr>
+
+          </tbody>
+        </table>
+
+
+
+        <table className="table table-responsive">
+          <thead>
+            <tr>
+              <th className="align-middle grid-text">Seq</th>
+              <th className="align-middle grid-text">Months</th>
+              <th className="align-middle grid-text">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tcDetails != null && getRentalDetails(tcDetails?.pStru)}
+
+
+            {/* {tcDetails != null && tcDetails?.pStru.map((str, index) => {
+              return <tr key={index}>
+                <td>{str.struSeq ? str.struSeq : "-"}</td>
+                <td>{str.struPrds ? str.struPrds : "-"}</td>
+                <td>{str.struRent ? str.struRent : "-"}</td>
+              </tr>
+            })} */}
+          </tbody>
+        </table>
+
+      </Loader>
+    </div>
   );
 }
+
+
+
+
 
 CalculationDetails.propTypes = {
   clientele: PropTypes.object,
