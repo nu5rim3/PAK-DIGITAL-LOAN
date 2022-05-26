@@ -5,7 +5,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
-
+// import FileDownload from "js-file-download";
 // Local Components
 import Category from "./category";
 import Loader from "components/Loader";
@@ -19,6 +19,14 @@ const ImageDetails = (props) => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [groups, setGroups] = useState([]);
+
+  const [data, setData] = useState(null);
+
+
+  const download = () => {
+    window.open(data);
+  }
+
 
   useEffect(() => {
     var _isMounted = true;
@@ -53,14 +61,15 @@ const ImageDetails = (props) => {
     };
   }, [props.active]);
 
-  const exportAsPdf = (appraisalId) => {
-    // setDownloading(true);
-    const pdf = exportAsPdf(appraisalId)
-    // .then((status) => {
-    //   if (status) {
-    //     setDownloading(false);
-    //   }
-    // })
+  const exportToPdf = async (appraisalId) => {
+
+    const response = await exportAsPdf(appraisalId)
+
+    const blob = new Blob([response.data], { type: 'application/pdf' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = `${appraisalId}.pdf`;
+    link.click();
   }
 
 
@@ -76,7 +85,7 @@ const ImageDetails = (props) => {
         </Col>
       </Loader>
       <div className="form-group mt-3 d-flex justify-content-end align-items-center">
-        <button onClick={() => exportAsPdf(appraisalId)} className="btn btn-success w-md me-2">
+        <button onClick={() => exportToPdf(appraisalId)} className="btn btn-success w-md me-2">
 
           <i className="far fa-file-pdf font-size-16 me-2" />
                                               Export

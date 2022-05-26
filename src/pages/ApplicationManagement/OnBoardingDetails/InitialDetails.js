@@ -31,7 +31,7 @@ const IntialDetails = (props) => {
   const { appraisalId } = useParams();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [objPepName, setObjPepName] = useState(null);
+
 
   const [rules, setRules] = useState([]);
   const [internalCrib, setInternalCrib] = useState({});
@@ -46,7 +46,7 @@ const IntialDetails = (props) => {
     setIsLoading(true);
 
     const fetchData = async () => {
-    
+
       const verificationResponse = await getVerificationDetails(props.clientele.idx);
       const internalCribResponse = await getInternalCribDetails(props.clientele.idx);
       const approvalResponse = await getObApprovalByParams(appraisalId, props.clientele.idx, "BLACKLIST");
@@ -244,84 +244,8 @@ const IntialDetails = (props) => {
             </tr>
           </tbody>
         </table>
-        {objPepName != null && <div className="accordion-item">
-
-          <h2 className="accordion-header">
-            <button
-              className={classnames(
-                "accordion-button",
-                "fw-medium",
-                { collapsed: !personalCol }
-              )}
-              type="button"
-              onClick={handlePersonalAccn}
-              style={{ cursor: "pointer" }}
-            >
-              <p>POLITICALLY EXPOSED PERSON  INFORMATION</p>
-
-            </button>
-          </h2>
-
-          <Collapse
-            isOpen={personalCol}
-            className="accordion-collapse"
-          >
-
-            <div className="accordion-body">
-
-              <Row>
-                <div className="text-muted d-flex">
-                  <Col md={12}>
-                    <table className="table mb-4">
-                      <thead>
-                        <tr>
-                          <th>Date Of Birth</th>
-                          <th>Occuptation</th>
-                          <th>Address</th>
-                          <th>Country</th>
-                          <th>CNIC</th>
-                          <th>Place  of Birth</th>
-                          <th>Father Name/Husband Name</th>
-                          <th>Entity</th>
-
-                        </tr>
-                      </thead>
-                      <tbody>
-
-                        {objPepName != null && JSON.parse(objPepName).data?.map((pepNameObj, index) => {
-
-                          return <tr key={index}>
-                            <td>{pepNameObj.dateofbirth ? pepNameObj.dateofbirth : "-"}</td>
-                            <td>{pepNameObj.occuptation ? pepNameObj.occuptation : "-"}</td>
-                            <td>{pepNameObj.address ? pepNameObj.address : "-"}</td>
-                            <td>{pepNameObj.country ? pepNameObj.country : "-"}</td>
-                            <td>{pepNameObj.nicnumber ? pepNameObj.nicnumber : "-"}</td>
-                            <td>{pepNameObj.placeofbirth ? pepNameObj.placeofbirth : "-"}</td>
-                            <td>{pepNameObj.father ? pepNameObj.father : "-"}</td>
-                            <td>{pepNameObj.entity ? pepNameObj.entity : "-"}</td>
-                          </tr>
-
-                        })}
-                      </tbody>
-                    </table>
-                  </Col>
-
-
-                </div>
-              </Row>
-
-            </div>
-
-
-
-          </Collapse>
-        </div>
-        }
-
-
-
       </Loader>
-    </div >
+    </div>
   );
 }
 
