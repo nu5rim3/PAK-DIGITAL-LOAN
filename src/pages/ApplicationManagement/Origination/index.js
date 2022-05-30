@@ -25,10 +25,18 @@ import {
   getAllCompletedAppraisals
 } from "services/origination.service";
 
+
+
+
+
+
+
 const Origination = (props) => {
 
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+
 
   const items = {
     columns: [
@@ -37,6 +45,7 @@ const Origination = (props) => {
         label: 'Appraisal ID',
         sort: "asc",
       },
+
       {
         field: 'contractNo',
         label: 'Contarct ID',
@@ -78,7 +87,7 @@ const Origination = (props) => {
         sort: "asc",
       }
     ],
-    rows: data,
+    rows: data
   };
 
   const { register, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
@@ -89,6 +98,7 @@ const Origination = (props) => {
     const originationResponse = await getAllCompletedAppraisals(data);
     if (originationResponse !== undefined && originationResponse !== null) {
       var data = originationResponse.map(item => modernization(item));
+
       setData(data);
 
       setIsLoading(false);
@@ -100,6 +110,7 @@ const Origination = (props) => {
     item.customerName = item.clienteles[0].fullName;
     item.createdBy = item.clienteles[0].createdBy;
     item.createdAt = moment(item.lastModifiedDate).format("DD-MM-YYYY HH:mm:ss");
+    item.isReturned = item.isReturned;
     return item;
   }
 
@@ -125,11 +136,24 @@ const Origination = (props) => {
 
     return item;
   }
+  const getBackgroundColor = (item) => {
+    if (item.isReturned === "Y") {
+      item.idx = (
+        <span className="font-size-12  badge bg-warning rounded-pill">{item.idx}</span>
+      );
+    } else {
+      item.idx = (
+        <span>{item.idx}</span>
+      );
+    }
+    return item;
+  }
 
   const modernization = (item) => {
     item = getLabel(item);
     item = getAction(item);
     item = getContractNo(item);
+    item = getBackgroundColor(item);
     return item;
   }
 
@@ -137,7 +161,7 @@ const Origination = (props) => {
     var _isMounted = true;
 
     const fetchData = async () => {
-      
+
     };
 
     fetchData();
@@ -168,20 +192,20 @@ const Origination = (props) => {
 
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <Row className="my-4">
-                    <Col className="col-3">
+                      <Col className="col-3">
                         <div className="form-group row">
                           <label
                             htmlFor="example-date-input"
                             className="col-md-4 col-form-label">Status : </label>
                           <div className="col-md-9">
-                            <select className="form-control" name="status" 
-                            {...register("status", { required: true })}>
+                            <select className="form-control" name="status"
+                              {...register("status", { required: true })}>
                               <option value="">-- Select --</option>
                               <option value="completed">Pending</option>
                               <option value="returned">Returned</option>
                               <option value="active">Approved</option>
                               <option value="rejected">Rejected</option>
-                              </select>
+                            </select>
                           </div>
                           {errors.status && <span className="error">This field is required</span>}
                         </div>

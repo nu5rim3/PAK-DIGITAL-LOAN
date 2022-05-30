@@ -34,7 +34,6 @@ const OnBoardingDetails = (props) => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [clienteles, setClienteles] = useState([]);
-
   const [verticalActiveTab, setVerticalActiveTab] = useState(0);
 
   const toggleVertical = (tab) => {
