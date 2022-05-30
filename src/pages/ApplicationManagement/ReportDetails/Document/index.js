@@ -18,7 +18,9 @@ import FileViewer from 'react-file-viewer';
 
 //APIs
 import {
-  getProNoteReport
+  getProNoteReport,
+  getIqarNamaReport,
+  getLandVerificationReport
 } from "services/report.service";
 
 const ReportDocument = (props) => {
@@ -44,6 +46,42 @@ const ReportDocument = (props) => {
 
       if (response != undefined) {
     
+        var fileURL = URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+
+        if (_isMounted) {
+          setData(fileURL);
+          setType('pdf');
+        }
+      }
+
+      return () => {
+        _isMounted = false;
+      };
+    }
+
+    if (reportType === 'iqar-name') {
+      const response = await getIqarNamaReport(appraisalId);
+
+      if (response != undefined) {
+
+        var fileURL = URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
+
+        if (_isMounted) {
+          setData(fileURL);
+          setType('pdf');
+        }
+      }
+
+      return () => {
+        _isMounted = false;
+      };
+    }
+
+    if (reportType === 'land-verification') {
+      const response = await getLandVerificationReport(appraisalId);
+
+      if (response != undefined) {
+
         var fileURL = URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }));
 
         if (_isMounted) {
