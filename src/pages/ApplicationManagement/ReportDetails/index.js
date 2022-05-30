@@ -8,8 +8,6 @@ import {
 
 import Loader from "components/Loader";
 
-// APIs
-
 const ReportDetails = (props) => {
 
   const { appraisalId } = useParams();

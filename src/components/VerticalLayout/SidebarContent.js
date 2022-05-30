@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 
 // //Import Scrollbar
 import SimpleBar from "simplebar-react"
@@ -14,6 +14,11 @@ import { withTranslation } from "react-i18next"
 
 const SidebarContent = props => {
   const ref = useRef();
+  const [role, setRole] = useState(null);
+
+  // Permission groups
+  const permission = ['ADMIN'];
+  
   // Use ComponentDidMount and ComponentDidUpdate method symultaniously
   useEffect(() => {
     const pathName = props.location.pathname
@@ -36,8 +41,30 @@ const SidebarContent = props => {
     initMenu()
   }, [props.location.pathname])
 
+  const assignUserRole = () => {
+    const role = localStorage.getItem("role");
+    setRole(role);
+  }
+
+  const activePermission = (roles = []) => {
+    if (roles.includes(role)) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   useEffect(() => {
+    var _isMounted = true;
     ref.current.recalculate()
+
+    if (_isMounted) {
+      assignUserRole();
+    }
+
+    return () => {
+      _isMounted = false;
+    };
   })
 
   function scrollElement(item) {
@@ -93,6 +120,7 @@ const SidebarContent = props => {
         <div id="sidebar-menu">
           <ul className="metismenu list-unstyled" id="side-menu">
 
+            {activePermission(permission) && <>
             <li className="menu-title">{props.t("Access and Permisssion")} </li>
 
             <li>
@@ -108,24 +136,9 @@ const SidebarContent = props => {
                   <Link to="/pakoman-digital-loan/access-and-permission/members">{props.t("Members")}</Link>
                 </li>
               </ul>
-            </li>
+            </li></>}
 
-            {/* <li>
-              <Link to="#" className="">
-                <i className="bx bxs-data"></i>
-                <span>{props.t("Definitions")}</span>
-              </Link>
-              <ul className="sub-menu" aria-expanded="false">
-                <li>
-                  <Link to="#">{props.t("Module 1")}</Link>
-                </li>
-                <li>
-                  <Link to="#">{props.t("Module 2")}</Link>
-                </li>
-              </ul>
-            </li> */}
-
-            <li className="menu-title">{props.t("Approval and Ratification")}</li>
+            {activePermission(permission) && <><li className="menu-title">{props.t("Approval and Ratification")}</li>
 
             <li>
               <Link to="/pakoman-digital-loan/approval-and-retification/groups" className="">
@@ -146,7 +159,7 @@ const SidebarContent = props => {
                 <i className="bx bx-layer"></i>
                 <span>{props.t("Workflows")}</span>
               </Link>
-            </li>
+            </li></>}
 
             <li className="menu-title">{props.t("Application Management")}</li>
 
@@ -157,7 +170,7 @@ const SidebarContent = props => {
               </Link>
             </li>
 
-            <li className="menu-title">{props.t("Report and Summary")}</li>
+            {activePermission(permission) && <><li className="menu-title">{props.t("Report and Summary")}</li></>}
 
             {/* <li>
               <Link to="#" className="">
