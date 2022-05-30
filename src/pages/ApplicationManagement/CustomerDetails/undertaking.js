@@ -36,10 +36,12 @@ const UndertakingDetails = (props) => {
 
     const fetchData = async () => {
       const signatureResponse = await getSignature(appraisalId, `C1`);
-      setSignature(signatureResponse);
-  
       const thumbResponse = await getThumb(appraisalId, `CUSTOMER1FINGER`);
-      setThumb(thumbResponse);
+      if (_isMounted && signatureResponse !== undefined) {
+        setSignature(signatureResponse);
+        setThumb(thumbResponse);
+      }
+      
     };
 
     fetchData();
