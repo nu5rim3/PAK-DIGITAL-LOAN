@@ -44,6 +44,7 @@ import {
   residentialInformation,
   incomeInformation,
   getSignature,
+  getThumb,
 } from "services/guarantor.service";
 import {
   getValueByList
@@ -73,6 +74,7 @@ const GuarantorDetails = (props) => {
   const [residentials, setResidentials] = useState([]);
   const [income, setIncome] = useState(null);
   const [signature, setSignature] = useState([]);
+  const [thumb, setThumb] = useState([]);
   const [customer, setCustomer] = useState({});
   const [loanDetails, setLoanDetails] = useState({});
 
@@ -120,7 +122,7 @@ const GuarantorDetails = (props) => {
     );
   }
 
-  const getGuarantorAknowledgement = () => { 
+  const getGuarantorAknowledgement = () => {
     return <p style={{ direction: 'rtl' }}>
       میں بقائمی ہوش وحواس <u>{customer?.stkCusName}</u> کو دئیے جانے والے مبلغ <u><NumberFormat value={loanDetails?.object?.loanAmount} displayType={'text'} thousandSeparator={true} /></u> روپے کے قرض کی ضمانت قبول کرتا ہوں اور بلا مشروط اقرار کرتا ہوں کہ اگر قرض خواہ لیے گئے قرض کو کسی بھی وجہ سے ادا کرنے سے قاصر رہتا ہے تو اس قرض کی مکمل ادائیگی کی ذمہ داری مجھ پر ہوگی اور میں اُوپر دی گئی ذاتی اور قرض خواہ کے بارے میں دی گئی معلومات کے بارے میں پوری طرح متفق ہوں.
     </p>;
@@ -143,6 +145,9 @@ const GuarantorDetails = (props) => {
 
     const signatureResponse = await getSignature(appraisalId, `G${index + 1}`);
     setSignature(signatureResponse);
+
+    const thumbResponse = await getThumb(appraisalId, `G${index + 1}FINGER`);
+    setThumb(thumbResponse);
 
     setIsLoading(false);
   };
@@ -506,11 +511,23 @@ const GuarantorDetails = (props) => {
                     <div className="accordion-body">
                       <Row>
                         <div className="text-muted d-flex">
-                          <Grid item xs={6}>
+                          <Grid item xs={12}>
                             <Card className="witness-signature-card">
                               <p style={{ textAlign: 'right' }}>
-                                { getGuarantorAknowledgement() }
+                                {getGuarantorAknowledgement()}
                               </p>
+                            </Card>
+                          </Grid>
+                        </div>
+                      </Row>
+                      <Row>
+                        <div className="text-muted d-flex">
+                          <Grid item xs={6}>
+                            <Card className="witness-signature-card">
+                              <p>Guarantor Thumbnail</p>
+                              {thumb && thumb.length > 0 && thumb.map((sign, index) => (
+                                sign.status === "A" && <AsyncImage src={sign.imgPath} key={index} />
+                              ))}
                             </Card>
                           </Grid>
                           <Grid item xs={6}>

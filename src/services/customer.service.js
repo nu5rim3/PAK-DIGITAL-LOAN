@@ -27,3 +27,11 @@ export const otherInformation = async (stkId) => {
 export const pdChequeInformation = async (stkId) => {
     return await get(`/mobixCamsClientele/v1/clienteles/pdc/${stkId}`).catch(err => console.log(err));
 };
+
+export const getSignature = async (appraisalId, type) => {
+    return await get(`/mobixCamsLoan/v1/loans/image/details/${appraisalId}/master/${type}/sub/SIGN`).catch(err => console.log(err));
+};
+
+export const getThumb = async (appraisalId, type) => {
+    return await get(`/mobixCamsLoan/v1/loans/image/details/${appraisalId}/master/${type}/sub/1`).catch(err => console.log(err));
+};
