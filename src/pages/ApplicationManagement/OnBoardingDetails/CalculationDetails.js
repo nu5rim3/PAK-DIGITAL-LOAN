@@ -121,7 +121,7 @@ const CalculationDetails = (props) => {
 
 
 
-        <table className="table table-responsive">
+        {tcDetails != null && tcDetails?.pStru.length > 0 && <table className="table table-responsive">
           <thead>
             <tr>
               <th className="align-middle grid-text">Seq</th>
@@ -142,6 +142,7 @@ const CalculationDetails = (props) => {
             })} */}
           </tbody>
         </table>
+        }
 
       </Loader>
     </div>
