@@ -75,9 +75,9 @@ const CalculationDetails = (props) => {
 
       const row = (
         <tr key={i}>
-          <td>{item.struSeq ? item.struSeq : "-"}</td>
-          <td>{item.struPrds ? item.struPrds : "-"}</td>
-          <td>{item.struRent ? item.struRent : "-"}</td>
+          <td>{item.seq ? item.seq : "-"}</td>
+          <td>{item.term ? item.term : "-"}</td>
+          <td>{item.instalment ? formatNumber(item.instalment) : "-"}</td>
         </tr>
       );
       i++;
@@ -115,13 +115,17 @@ const CalculationDetails = (props) => {
               <td className="align-middle grid-text">Down Payment</td>
               <td className="align-middle">{amountsOfTcDetails !== null && formatNumber(amountsOfTcDetails?.object?.downPayment)}</td>
             </tr>
-
+            {tcDetails != null && tcDetails?.pTrhdMethod === 'F' && amountsOfTcDetails != null && amountsOfTcDetails?.object?.facilityDetails.length > 0 && <tr>
+              <td className="align-middle grid-text">Rental Amount</td>
+              <td className="align-middle">{amountsOfTcDetails !== null && formatNumber(amountsOfTcDetails?.object?.facilityDetails[0]?.instalment)}</td>
+            </tr>
+            }
           </tbody>
         </table>
 
 
 
-        {tcDetails != null && tcDetails?.pStru.length > 0 && <table className="table table-responsive">
+        {tcDetails != null && tcDetails?.pTrhdMethod === 'S' && amountsOfTcDetails != null && amountsOfTcDetails?.object?.facilityDetails.length > 0 && <table className="table table-responsive">
           <thead>
             <tr>
               <th className="align-middle grid-text">Seq</th>
@@ -130,16 +134,8 @@ const CalculationDetails = (props) => {
             </tr>
           </thead>
           <tbody>
-            {tcDetails != null && getRentalDetails(tcDetails?.pStru)}
+            {amountsOfTcDetails != null && getRentalDetails(amountsOfTcDetails?.object?.facilityDetails)}
 
-
-            {/* {tcDetails != null && tcDetails?.pStru.map((str, index) => {
-              return <tr key={index}>
-                <td>{str.struSeq ? str.struSeq : "-"}</td>
-                <td>{str.struPrds ? str.struPrds : "-"}</td>
-                <td>{str.struRent ? str.struRent : "-"}</td>
-              </tr>
-            })} */}
           </tbody>
         </table>
         }
