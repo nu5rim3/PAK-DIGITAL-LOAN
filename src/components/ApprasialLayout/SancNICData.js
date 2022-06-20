@@ -6,6 +6,7 @@ import Loader from "../Loader"
 // APIs
 import { getVerificationDetails } from "services/on_board.service"
 
+//Fetch Sanction Data from Sanction NIC
 export const SancNICDetails = () => {
   const { id } = useParams()
   const [msasNic, setMsasNic] = useState([])

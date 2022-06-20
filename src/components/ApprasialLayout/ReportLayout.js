@@ -10,6 +10,7 @@ import SancNICDetails from "./SancNICData"
 import SancNameDetails from "./SancNameData"
 import "./ReportLayout.css"
 
+//Form layout
 const CombinedReports = () => {
   const { id } = useParams()
 

@@ -6,6 +6,7 @@ import Loader from "../Loader"
 //API
 import { getVerificationDetails } from "services/on_board.service"
 
+//Fetch PEP Data from PEP NIC
 const PepNICDetails = () => {
   const { id } = useParams()
 

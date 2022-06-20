@@ -6,6 +6,7 @@ import Loader from "../Loader"
 // API
 import { getVerificationDetails } from "services/on_board.service"
 
+//Fetch Sanction Data from Sanction Name
 export const SancNameDetails = () => {
   const { id } = useParams()
   const [msasName, setMsasName] = useState([])

@@ -6,13 +6,13 @@ import Loader from "../Loader"
 //API
 import { getBiometricDetails } from "services/on_board.service"
 
+//Fetch Bio Data
 const BioDetails = () => {
   const { id } = useParams()
 
   const [bioData, setBioData] = useState([])
   const [loading, setLoading] = useState(true)
 
-  //Fetch Bio Data
   useEffect(() => {
     let _isMounted = true
     setLoading(true)
