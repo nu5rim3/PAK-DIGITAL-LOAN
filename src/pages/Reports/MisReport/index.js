@@ -25,7 +25,9 @@ import {
   getMisReportSummary, getMisReport
 } from "services/report.service";
 
-
+import {
+  getAllBranches,getAllCros
+} from "services/common.service";
 
 
 
@@ -34,6 +36,11 @@ import {
 const MisReport = (props) => {
 
   const [data, setData] = useState([]);
+  const [downloadData, setDownloadData] = useState([]);
+  const [type, setType] = useState(null);
+  const [branches, setBranches] = useState([]);
+
+  const [cros, setCros] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -86,12 +93,7 @@ const MisReport = (props) => {
         field: 'userIdx',
         label: 'Created By',
         sort: "asc",
-      },
-      // {
-      //   field: 'actions',
-      //   label: 'Action',
-      //   sort: "asc",
-      // }
+      }
     ],
     rows: data
   };
@@ -101,9 +103,9 @@ const MisReport = (props) => {
   const onSubmit = async (data) => {
 
     setIsLoading(true);
-    const originationResponse = await getMisReportSummary(data);
-    if (originationResponse !== undefined && originationResponse !== null) {
-      var data = originationResponse.map(item => modernization(item));
+    const misResponse = await getMisReportSummary(data);
+    if (misResponse !== undefined && misResponse !== null) {
+      var data = misResponse.map(item => modernization(item));
 
       setData(data);
 
@@ -120,54 +122,68 @@ const MisReport = (props) => {
     return item;
   }
 
-  const getAction = (item) => {
-    item.actions = (
-      <div className="d-flex align-items-center">
-        <Link to={`/pakoman-digital-loan/credit-appraisals/view/${item.idx}`} className="btn btn-primary btn-sm d-flex justify-content-between align-items-center">
-          <i className="bx bx-zoom-in font-size-16 me-1"></i>
-          <p className="m-0">Preview</p>
-        </Link>
-      </div>
-    );
+  // const getAction = (item) => {
+  //   item.actions = (
+  //     <div className="d-flex align-items-center">
+  //       <Link to={`/pakoman-digital-loan/credit-appraisals/view/${item.idx}`} className="btn btn-primary btn-sm d-flex justify-content-between align-items-center">
+  //         <i className="bx bx-zoom-in font-size-16 me-1"></i>
+  //         <p className="m-0">Preview</p>
+  //       </Link>
+  //     </div>
+  //   );
 
-    return item;
-  }
+  //   return item;
+  // }
 
-  const getContractNo = (item) => {
-    if (item.status === "A") {
-      item.contractNo = JSON.parse(item.contractNo)?.object?.lchdContNo;
-    } else {
-      item.contractNo = item.contractNo;
-    }
+  // const getContractNo = (item) => {
+  //   if (item.status === "A") {
+  //     item.contractNo = JSON.parse(item.contractNo)?.object?.lchdContNo;
+  //   } else {
+  //     item.contractNo = item.contractNo;
+  //   }
 
-    return item;
-  }
-  const getBackgroundColor = (item) => {
-    if (item.isReturned === "Y") {
-      item.idx = (
-        <span className="font-size-12  badge bg-warning rounded-pill">{item.idx}</span>
-      );
-    } else {
-      item.idx = (
-        <span>{item.idx}</span>
-      );
-    }
-    return item;
-  }
+  //   return item;
+  // }
+  // const getBackgroundColor = (item) => {
+  //   if (item.isReturned === "Y") {
+  //     item.idx = (
+  //       <span className="font-size-12  badge bg-warning rounded-pill">{item.idx}</span>
+  //     );
+  //   } else {
+  //     item.idx = (
+  //       <span>{item.idx}</span>
+  //     );
+  //   }
+  //   return item;
+  // }
 
   const modernization = (item) => {
     item = getLabel(item);
-    item = getAction(item);
-    item = getContractNo(item);
-    item = getBackgroundColor(item);
+    // item = getAction(item);
+    // item = getContractNo(item);
+    // item = getBackgroundColor(item);
     return item;
   }
+  const onError = (error) => {
+    console.error(error, 'error in file-viewer');
+  }
 
+  const download = () => {
+    window.open(downloadData);
+  }
   useEffect(() => {
     var _isMounted = true;
 
     const fetchData = async () => {
+      const branchResponse = await getAllBranches();
+      const croResponse = await getAllCros();
+      if (_isMounted) {
+        setBranches(branchResponse);
+        setCros(croResponse);
 
+        // setDownloadData(fileURL);
+        // setType('pdf');
+      }
     };
 
     fetchData();
@@ -205,7 +221,7 @@ const MisReport = (props) => {
                             className="col-md-4 col-form-label">Status : </label>
                           <div className="col-md-9">
                             <select className="form-control" name="status"
-                              {...register("status", { required: true })}>
+                              {...register("status", { required: false })}>
                               <option value="">-- Select --</option>
                               <option value="completed">Pending</option>
                               <option value="returned">Returned</option>
@@ -257,6 +273,74 @@ const MisReport = (props) => {
                           </div>
                         </div>
                       </Col>
+
+
+
+                    </Row>
+                    <Row>
+                      <Col className="col-3">
+                        <div className="form-group row">
+                          <label
+                            htmlFor="example-date-input"
+                            className="col-md-4 col-form-label">Branch : </label>
+                          <div className="col-md-9">
+
+                            <select
+                              className="form-control"
+                              id="branch"
+                              {...register("branch", { required: false })}
+                            >
+                              <option value="">-- Select --</option>
+                              {branches.map((item, index) => <option key={index} value={item.code}>{item.description}</option>)}
+                            </select>
+
+
+                          </div>
+                          {/* {errors.branch && <span className="text-danger">This field is required</span>} */}
+                        </div>
+                      </Col>
+                      <Col className="col-3">
+                        <div className="form-group row">
+                          <label
+                            htmlFor="example-date-input"
+                            className="col-md-4 col-form-label">CRO : </label>
+                          <div className="col-md-9">
+
+                            <select
+                              className="form-control"
+                              id="cro"
+                              {...register("cro", { required: false })}
+                            >
+                              <option value="">-- Select --</option>
+                              {cros.map((item, index) => <option key={index} value={item.code}>{item.mkexName}</option>)}
+                            </select>
+
+
+                          </div>
+                          {/* {errors.branch && <span className="text-danger">This field is required</span>} */}
+                        </div>
+                      </Col>
+                      {/* <Col className="col-3">
+                        <div className="form-group row">
+                          <label
+                            htmlFor="example-date-input"
+                            className="col-md-4 col-form-label">Product : </label>
+                          <div className="col-md-9">
+
+                            <select
+                              className="form-control"
+                              id="branch"
+                              {...register("branch", { required: true })}
+                            >
+                              <option value="">-- Select --</option>
+                              {branches.map((item, index) => <option key={index} value={item.code}>{item.description}</option>)}
+                            </select>
+
+
+                          </div>
+                        {errors.branch && <span className="text-danger">This field is required</span>}  
+                        </div>
+                      </Col> */}
                       <Col className="col-12 mt-4">
                         <div className="d-flex justify-content-end">
                           <div className="p-2">
@@ -270,12 +354,13 @@ const MisReport = (props) => {
                               type="submit" className="btn btn-success waves-effect waves-light">
                               <span className="d-flex"><Loader loading={isLoading} /> <p className="m-0">Download</p></span>
                             </button>
+                            {/* <Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/pro-note/reports/${appraisalId}`} className="btn btn-success waves-effect waves-light"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Pro Note Report Preview</Link> */}
                           </div>
                         </div>
 
                       </Col>
-
                     </Row>
+
                   </form>
 
                   <Table items={items} />

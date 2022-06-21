@@ -13,12 +13,9 @@ export const getLandVerificationReport = (appraisalId) => {
 };
 
 export const getMisReport = (data) => {
-    return blob(`/mobixCamsReport/v1/reports/mis-reports/report.xlsx`);
+    return blob(`/mobixCamsReport/v1/reports/mis-reports/report.xlsx?cro=${data.cro}&branch=${data.branch}&status=${data.status}&appraisalId=${data.appraisalId}&fromDate=${data.fromDate}&toDate=${data.toDate}`);
 };
 
 export const getMisReportSummary = (data) => {
-
-    var cro = localStorage.getItem("cro");
-    var branch = localStorage.getItem("branch");
-    return get(`/mobixCamsReport/v1/reports/mis-reports?cro=${cro}&product=${product}&branch=${branch}&status=${data.status}&appraisalId=${data.appraisalId}&fromDate=${data.fromDate}&toDate=${data.toDate}`);
+    return  get(`/mobixCamsReport/v1/reports/mis-reports?cro=${data.cro}&branch=${data.branch}&status=${data.status}&appraisalId=${data.appraisalId}&fromDate=${data.fromDate}&toDate=${data.toDate}`);
 };
