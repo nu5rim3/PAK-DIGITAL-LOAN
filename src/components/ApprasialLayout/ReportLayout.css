@@ -1,4 +1,4 @@
-.gutter {
+/* .gutter {
   background-color: #eee;
 
   background-repeat: no-repeat;
@@ -13,7 +13,7 @@
 .gutter.gutter-vertical {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=");
   cursor: row-resize;
-}
+} */
 
 .table-wrapper {
   display: flex;
@@ -26,6 +26,12 @@
 .td-wrapper {
   min-width: 40em;
   border: 0.5px solid rgb(218, 217, 217);
+  border-collapse: collapse;
+}
+
+.th-wrapper {
+  border-left: 0.5px solid rgb(218, 217, 217);
+  border-right: 0.5px solid rgb(218, 217, 217);
   border-collapse: collapse;
 }
 

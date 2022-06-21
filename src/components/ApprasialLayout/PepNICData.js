@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom"
 import { Col, Row } from "reactstrap"
 import Loader from "../Loader"
 
+import "./ReportLayout.css"
+
 //API
 import { getVerificationDetails } from "services/on_board.service"
 
@@ -46,14 +48,14 @@ const PepNICDetails = () => {
                 <table className="table mb-4">
                   <thead>
                     <tr>
-                      <th>Date Of Birth</th>
-                      <th>Occuptation</th>
-                      <th>Address</th>
-                      <th>Country</th>
-                      <th>CNIC</th>
-                      <th>Place of Birth</th>
-                      <th>Father Name/Husband Name</th>
-                      <th>Entity</th>
+                      <th className="th-wrapper">Date Of Birth</th>
+                      <th className="th-wrapper">Occuptation</th>
+                      <th className="th-wrapper">Address</th>
+                      <th className="th-wrapper">Country</th>
+                      <th className="th-wrapper">CNIC</th>
+                      <th className="th-wrapper">Place of Birth</th>
+                      <th className="th-wrapper">Father Name/Husband Name</th>
+                      <th className="th-wrapper">Entity</th>
                     </tr>
                   </thead>
                   <tbody>
