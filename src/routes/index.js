@@ -52,8 +52,8 @@ const authProtectedRoutes = [
   { path: "/pakoman-digital-loan/credit-appraisals/documents/:reportType/reports/:appraisalId", component: ReportDocument },
 
   // REPORT AND SUMMARY
-
   { path: "/pakoman-digital-loan/reports/mis-report",component:  MisReport},
+
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
   { path: "/", exact: true, component: () => <Redirect to="/pakoman-digital-loan/dashboard" /> },

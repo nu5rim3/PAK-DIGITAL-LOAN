@@ -26,7 +26,7 @@ import {
 } from "services/report.service";
 
 import {
-  getAllBranches,getAllCros
+  getAllBranches, getAllCros
 } from "services/common.service";
 
 
@@ -36,8 +36,7 @@ import {
 const MisReport = (props) => {
 
   const [data, setData] = useState([]);
-  const [downloadData, setDownloadData] = useState([]);
-  const [type, setType] = useState(null);
+
   const [branches, setBranches] = useState([]);
 
   const [cros, setCros] = useState([]);
@@ -64,22 +63,22 @@ const MisReport = (props) => {
         sort: "asc",
       },
       {
-        field: 'creditReportVo.loanProduct',
+        field: 'loanProduct',
         label: 'Product Name',
         sort: "asc",
       },
       {
-        field: 'customer.cNic',
+        field: 'customerCnic',
         label: 'Customer CNIC',
         sort: "asc",
       },
       {
-        field: 'customer.name',
+        field: 'customerName',
         label: 'Customer Name',
         sort: "asc",
       },
       {
-        field: 'creditReportVo.requestedLoanAmount',
+        field: 'requestedLoanAmount',
         label: 'Req. Loan Amount',
         sort: "asc",
       },
@@ -114,63 +113,38 @@ const MisReport = (props) => {
   }
 
   const getLabel = (item) => {
-    item.customerCnic = item.clienteles[0].identificationNumber;
-    item.customerName = item.clienteles[0].fullName;
-    item.createdBy = item.clienteles[0].createdBy;
-    item.createdAt = moment(item.lastModifiedDate).format("DD-MM-YYYY HH:mm:ss");
-    item.isReturned = item.isReturned;
+    item.appraisalId = item.appraisalId;
+    item.branchDesc = item.branchDesc;
+    item.userName = item.userName;
+    item.customerCnic = item.customer.cNic;
+    item.customerName = item.customer.name;
+    item.loanProduct = item.creditReportVo.loanProduct;
+    item.requestedLoanAmount = item.creditReportVo.requestedLoanAmount;
+    item.createdDate = moment(item.createdDate).format("DD-MM-YYYY HH:mm:ss");
+    item.userIdx = item.userIdx;
     return item;
   }
 
-  // const getAction = (item) => {
-  //   item.actions = (
-  //     <div className="d-flex align-items-center">
-  //       <Link to={`/pakoman-digital-loan/credit-appraisals/view/${item.idx}`} className="btn btn-primary btn-sm d-flex justify-content-between align-items-center">
-  //         <i className="bx bx-zoom-in font-size-16 me-1"></i>
-  //         <p className="m-0">Preview</p>
-  //       </Link>
-  //     </div>
-  //   );
-
-  //   return item;
-  // }
-
-  // const getContractNo = (item) => {
-  //   if (item.status === "A") {
-  //     item.contractNo = JSON.parse(item.contractNo)?.object?.lchdContNo;
-  //   } else {
-  //     item.contractNo = item.contractNo;
-  //   }
-
-  //   return item;
-  // }
-  // const getBackgroundColor = (item) => {
-  //   if (item.isReturned === "Y") {
-  //     item.idx = (
-  //       <span className="font-size-12  badge bg-warning rounded-pill">{item.idx}</span>
-  //     );
-  //   } else {
-  //     item.idx = (
-  //       <span>{item.idx}</span>
-  //     );
-  //   }
-  //   return item;
-  // }
 
   const modernization = (item) => {
     item = getLabel(item);
-    // item = getAction(item);
-    // item = getContractNo(item);
-    // item = getBackgroundColor(item);
+
     return item;
   }
-  const onError = (error) => {
-    console.error(error, 'error in file-viewer');
+
+  const exportToExcel = async () => {
+    var exportData = watch();
+    const response = await getMisReport(exportData)
+
+    const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = `mis-report.xlsx`;
+    link.click();
   }
 
-  const download = () => {
-    window.open(downloadData);
-  }
+
+
   useEffect(() => {
     var _isMounted = true;
 
@@ -350,9 +324,9 @@ const MisReport = (props) => {
                             </button>
                           </div>
                           <div className="p-2">
-                            <button
-                              type="submit" className="btn btn-success waves-effect waves-light">
-                              <span className="d-flex"><Loader loading={isLoading} /> <p className="m-0">Download</p></span>
+                            <button onClick={exportToExcel}
+                              type="button" className="btn btn-success waves-effect waves-light">
+                              <span className="d-flex"><p className="m-0">Download</p></span>
                             </button>
                             {/* <Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/pro-note/reports/${appraisalId}`} className="btn btn-success waves-effect waves-light"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Pro Note Report Preview</Link> */}
                           </div>
