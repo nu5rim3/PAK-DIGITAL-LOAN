@@ -326,7 +326,7 @@ const MisReport = (props) => {
                           <div className="p-2">
                             <button onClick={exportToExcel}
                               type="button" className="btn btn-success waves-effect waves-light">
-                              <span className="d-flex"><p className="m-0">Download</p></span>
+                              <span className="d-flex"><p className="m-0"><i className="dripicons-download"></i>Download</p></span>
                             </button>
                             {/* <Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/pro-note/reports/${appraisalId}`} className="btn btn-success waves-effect waves-light"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Pro Note Report Preview</Link> */}
                           </div>
