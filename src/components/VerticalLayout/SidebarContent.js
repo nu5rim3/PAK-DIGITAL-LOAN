@@ -172,14 +172,14 @@ const SidebarContent = props => {
 
             {activePermission(permission) && <><li className="menu-title">{props.t("Report and Summary")}</li></>}
 
-            {/* <li>
-              <Link to="#" className="">
+           <li>
+              <Link to="/pakoman-digital-loan/reports/mis-report" className="">
                 <i className="bx bxs-report"></i>
-                <span>{props.t("Report 01")}</span>
+                <span>{props.t("MIS Report")}</span>
               </Link>
             </li>
 
-            <li>
+              {/*<li>
               <Link to="#" className="">
                 <i className="bx bxs-report"></i>
                 <span>{props.t("Report 01")}</span>

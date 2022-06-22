@@ -314,6 +314,10 @@ export const getAllBranches = async () => {
     return await get(`/mobixCamsCommon/v1/marketeers/branches`).catch(err => console.log(err));
 };
 
+export const getAllCros = async () => {
+    return await get(`/mobixCamsCommon/v1/marketeers`).catch(err => console.log(err));
+};
+
 export const verifyProfileUser = async (user) => {
     return await get(`/mobixCamsCommon/v1/marketeers/${user}`).catch(err => console.log(err));
 };
