@@ -331,7 +331,7 @@ const MisReport = (props) => {
                             {/* <Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/pro-note/reports/${appraisalId}`} className="btn btn-success waves-effect waves-light"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Pro Note Report Preview</Link> */}
                           </div>
                         </div>
-                        
+                         
 
                       </Col>
                     </Row>
