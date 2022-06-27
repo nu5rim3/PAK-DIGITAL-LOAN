@@ -197,10 +197,10 @@ const MisReport = (props) => {
                             <select className="form-control" name="status"
                               {...register("status", { required: false })}>
                               <option value="">-- Select --</option>
-                              <option value="completed">Pending</option>
-                              <option value="returned">Returned</option>
-                              <option value="active">Approved</option>
-                              <option value="rejected">Rejected</option>
+                              <option value="P">Pending</option>
+                              <option value="R">Returned</option>
+                              <option value="A">Approved</option>
+                              <option value="J">Rejected</option>
                             </select>
                           </div>
                           {errors.status && <span className="error">This field is required</span>}
