@@ -1,0 +1,19 @@
+.card-wrapper {
+  align-items: center;
+  width: 30rem;
+  min-height: 20rem;
+  margin-top: 10px;
+}
+
+.coord-card {
+  width: 20rem;
+  min-height: 10rem;
+}
+
+.btn {
+  margin-top: 10px;
+}
+
+.coords {
+  align-items: center;
+}
