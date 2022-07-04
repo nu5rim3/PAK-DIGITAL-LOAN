@@ -479,13 +479,13 @@ const ApprovalDetails = (props) => {
                                           {<span id={`ca_error_comment_${index}`} className="text-danger d-none">This field is required</span>}
                                         </div>
                                         {verifyUserWithLevel(item.roleCode) === true && item.status === "P" && <div className="form-group mt-3 d-flex justify-content-end align-items-center">
-                                          <button onClick={() => onSubmitCaApprove(index, item)} className="btn btn-danger w-md me-2">
+                                          <button onClick={() => onSubmitCaReject(index, item)} className="btn btn-danger w-md me-2">
                                             <SyncLoader loading={isLoadingCa}>
                                               <i className="bx bx-x-circle font-size-16 me-2" />
                                               Reject
                                             </SyncLoader>
                                           </button>
-                                          <button onClick={() => onSubmitCaReject(index, item)} className="btn btn-success w-md">
+                                          <button onClick={() => onSubmitCaApprove(index, item)} className="btn btn-success w-md">
                                             <SyncLoader loading={isLoadingCa}>
                                               <i className="bx bxs-check-circle font-size-16 me-2" />
                                               Approve
