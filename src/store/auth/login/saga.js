@@ -34,8 +34,8 @@ function* loginUser({ payload: { user, history, response } }) {
         localStorage.setItem("role", userResponse.roles[0].code);
         localStorage.setItem("branch", userResponse.branches[0].code);
 
-        localStorage.setItem("authUser", JSON.stringify({ "uid": `${userResponse.idx}`, "username": `${user.email}`, "role": `${userResponse.roles[0].code}` }))
-        yield put(loginSuccess({ "uid": `${userResponse.idx}`, "username": `${user.email}`, "role": `${userResponse.roles[0].code}` }))
+        localStorage.setItem("authUser", JSON.stringify({ "uid": `${userResponse.idx}`, "username": `${userResponse.idx}`, "role": `${userResponse.roles[0].code}` }))
+        yield put(loginSuccess({ "uid": `${userResponse.idx}`, "username": `${userResponse.idx}`, "role": `${userResponse.roles[0].code}` }))
       }
 
       history.push("/pakoman-digital-loan/dashboard")
