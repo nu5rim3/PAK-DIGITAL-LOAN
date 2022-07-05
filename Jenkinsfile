@@ -13,8 +13,6 @@ pipeline {
           stage('mvn build') {
           agent { docker { image 'fra.ocir.io/lolctech/fxapiuser/node:latest' } }
           steps {
-                sh 'mvn --version'
-                sh 'mvn clean install'
                 sh 'ls -lrt target/'
  
       }
