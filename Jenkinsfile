@@ -12,10 +12,6 @@ pipeline {
       stages {
           stage('mvn build') {
           agent { docker { image 'fra.ocir.io/lolctech/fxapiuser/node:latest' } }
-          steps {
-                sh 'ls -lrt target/'
- 
-      }
     }
         stage('Build docker image'){
             agent {
