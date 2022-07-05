@@ -84,7 +84,7 @@ const MisReport = (props) => {
       },
       {
         field: 'createdDate',
-        label: 'Initialted Date',
+        label: 'Initiated Date',
         sort: "asc",
       },
 
