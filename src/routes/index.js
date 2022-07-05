@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom"
 // ACCESS AND PERMISSIONS
 import Login from "pages/Authentication/Login"
 import Logout from "pages/Authentication/Logout"
+import RedirectPage from "pages/Authentication/Redirect"
 
 import Role from "pages/AccessAndPermission/Accounts/Role"
 import Member from "pages/AccessAndPermission/Accounts/Member"
@@ -63,6 +64,7 @@ const authProtectedRoutes = [
 const publicRoutes = [
   { path: "/pakoman-digital-loan/logout", component: Logout },
   { path: "/pakoman-digital-loan/login", component: Login },
+  { path: "/pakoman-digital-loan/redirect", component: RedirectPage },
 ]
 
 export { publicRoutes, authProtectedRoutes }

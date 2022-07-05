@@ -173,8 +173,8 @@ export const postJwtRefresh = async () => {
   }
 }
 
-export const getUserDetails = (idx, token) => {
-  return get(`${url.GET_USER_DETAILS}/${idx}`, {
+export const getUserDetails = async (idx, token) => {
+  return await get(`${url.GET_USER_DETAILS}/${idx}`, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
@@ -183,7 +183,6 @@ export const getUserDetails = (idx, token) => {
     if (response !== undefined) return response
     throw response
   }).catch(err => {
-    console.log(err);
     var message
       if (err === undefined) {
         message = "Sorry! you can't access the system. Please contact our support team."
