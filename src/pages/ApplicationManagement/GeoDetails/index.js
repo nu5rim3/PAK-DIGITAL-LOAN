@@ -10,6 +10,8 @@ import GoogleMapReact from 'google-map-react';
 
 import Loader from "components/Loader";
 
+// Internal dependency
+import Upload from "./Upload";
 
 const GeoDetails = (props) => {
 
@@ -45,10 +47,10 @@ const GeoDetails = (props) => {
   return (
     <Row>
       <Loader loading={isLoading} >
-        <Col lg={12}>
-          <div className="page-wrapper-context">
+        <Row>
+          <Col md={6}>
             <div className="mt-4">
-              <div style={{ height: '100vh', width: '100%' }}>
+              <div style={{ height: '100vh' }}>
                 <GoogleMapReact
                   bootstrapURLKeys={{ key: "" }}
                   defaultCenter={defaultProps.center}
@@ -62,8 +64,13 @@ const GeoDetails = (props) => {
                 </GoogleMapReact>
               </div>
             </div>
-          </div>
-        </Col>
+          </Col>
+          <Col md={6}>
+            <div className="mt-4">
+              <Upload appraisalId={appraisalId} />
+            </div>
+          </Col>
+        </Row>
       </Loader>
     </Row>
 
