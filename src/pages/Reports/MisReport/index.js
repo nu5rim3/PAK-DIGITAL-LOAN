@@ -160,9 +160,7 @@ const MisReport = (props) => {
         if (userResponse !== undefined) {
 
           var croList = [];
-         
-
-
+        
           userResponse.content.forEach(function (item) {
             if (item.meCode != null) {
               croList.push(item);
