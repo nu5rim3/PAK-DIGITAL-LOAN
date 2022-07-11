@@ -156,11 +156,11 @@ const MisReport = (props) => {
       const userResponse = await getAllUsers(0, 10000);
       if (_isMounted) {
         setBranches(branchResponse);
-  
+
         if (userResponse !== undefined) {
 
           var croList = [];
-        
+
           userResponse.content.forEach(function (item) {
             if (item.meCode != null) {
               croList.push(item);
