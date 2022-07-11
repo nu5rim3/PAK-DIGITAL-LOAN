@@ -152,7 +152,7 @@ const MisReport = (props) => {
 
     const fetchData = async () => {
       const branchResponse = await getAllBranches();
-      // const croResponse = await getAllCros();
+
       const userResponse = await getAllUsers(0, 10000);
       if (_isMounted) {
         setBranches(branchResponse);
