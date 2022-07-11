@@ -29,7 +29,9 @@ import {
   getAllBranches, getAllCros
 } from "services/common.service";
 
-
+import {
+  getAllUsers
+} from "services/user.service";
 
 
 
@@ -150,13 +152,26 @@ const MisReport = (props) => {
 
     const fetchData = async () => {
       const branchResponse = await getAllBranches();
-      const croResponse = await getAllCros();
+      // const croResponse = await getAllCros();
+      const userResponse = await getAllUsers(0, 10000);
       if (_isMounted) {
         setBranches(branchResponse);
-        setCros(croResponse);
+  
+        if (userResponse !== undefined) {
 
-        // setDownloadData(fileURL);
-        // setType('pdf');
+          var croList = [];
+         
+
+
+          userResponse.content.forEach(function (item) {
+            if (item.meCode != null) {
+              croList.push(item);
+            }
+          });
+          croList.sort((a, b) => a.userName.toLowerCase() > b.userName.toLowerCase() ? 1 : -1);
+          setCros(croList);
+        }
+
       }
     };
 
@@ -166,6 +181,11 @@ const MisReport = (props) => {
       _isMounted = false;
     };
   }, []);
+
+
+
+
+
 
   return (
     <React.Fragment>
@@ -286,7 +306,7 @@ const MisReport = (props) => {
                               {...register("cro", { required: false })}
                             >
                               <option value="">-- Select --</option>
-                              {cros.map((item, index) => <option key={index} value={item.code}>{item.mkexName}</option>)}
+                              {cros.map((item, index) => <option key={index} value={item.idx}>{item.userName}</option>)}
                             </select>
 
 
@@ -331,7 +351,7 @@ const MisReport = (props) => {
                             {/* <Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/pro-note/reports/${appraisalId}`} className="btn btn-success waves-effect waves-light"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Pro Note Report Preview</Link> */}
                           </div>
                         </div>
-                         
+
 
                       </Col>
                     </Row>
