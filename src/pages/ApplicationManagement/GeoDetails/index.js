@@ -13,6 +13,9 @@ import Loader from "components/Loader";
 // Internal dependency
 import Upload from "./Upload";
 
+// service
+import { getAllImages } from "services/images.service"
+
 const GeoDetails = (props) => {
 
   const { appraisalId } = useParams();
@@ -27,13 +30,18 @@ const GeoDetails = (props) => {
 
 
   const [isLoading, setIsLoading] = useState(false);
+  const [locations, setLocations] = useState([]);
 
   useEffect(() => {
     var _isMounted = true;
 
     const fetchData = async () => {
       if (props.active === "13") {
+        const responseImages = await getAllImages(appraisalId);
 
+        if (responseImages != undefined) {
+          console.log(responseImages);
+        }
       }
     };
 
