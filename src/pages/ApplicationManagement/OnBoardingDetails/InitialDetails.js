@@ -31,12 +31,13 @@ const IntialDetails = (props) => {
   const { appraisalId } = useParams();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [objPepName, setObjPepName] = useState(null);
-  const [objSanName, setObjSanName] = useState(null);
+
+
   const [rules, setRules] = useState([]);
   const [internalCrib, setInternalCrib] = useState({});
   const [approval, setApproval] = useState({});
   const [msas, setMsas] = useState({});
+
   const [personalCol, setPersonalCol] = useState(true);
 
   useEffect(() => {
@@ -45,9 +46,11 @@ const IntialDetails = (props) => {
     setIsLoading(true);
 
     const fetchData = async () => {
+
       const verificationResponse = await getVerificationDetails(props.clientele.idx);
       const internalCribResponse = await getInternalCribDetails(props.clientele.idx);
       const approvalResponse = await getObApprovalByParams(appraisalId, props.clientele.idx, "BLACKLIST");
+
       if (_isMounted) {
         setRules(verificationResponse?.rules);
         setInternalCrib(internalCribResponse);
@@ -71,15 +74,10 @@ const IntialDetails = (props) => {
 
   const onLoadData = async (obj) => {
     setIsLoading(true);
-    setObjPepName(obj.objPepName);
     setIsLoading(false);
   };
 
-  const onLoadSanName = async (obj) => {
-    setIsLoading(true);
-    setObjSanName(obj.objSanName);
-    setIsLoading(false);
-  };
+
 
 
   return (
@@ -147,10 +145,10 @@ const IntialDetails = (props) => {
                     return <>
                       <td className="align-middle"><Button color="danger" size="sm"><i className="bx bx-x font-size-16 align-middle me-2"></i>Not Verified</Button></td>
                       <td>
-                        {msas?.pepName === true && <Button color="danger" size="sm" onClick={() => onLoadData(msas)}><i className="bx bx-file-find font-size-16 align-middle me-2"></i>POLITICALLY EXPOSED PERSON</Button>}
+                        {msas?.pepName === true && <Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/pep/${props.clientele.idx}`} className="btn btn-danger btn-sm"><i className="bx bx-file-find font-size-16 align-middle me-2"></i>POLITICALLY EXPOSED PERSON</Link>}
 
                         {"\u00A0\u00A0"}
-                        {msas?.sanName === true && <Button color="danger" size="sm"><i className="bx bx-file-find font-size-16 align-middle me-2"></i>SANCTION LISTED PERSON</Button>}
+                        {msas?.sanName === true && <Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/sanc/${props.clientele.idx}`} className="btn btn-danger btn-sm" style={{margin: '4px'}}> <i className="bx bx-file-find font-size-16 align-middle me-2"></i>SANCTION LISTED PERSON</Link>}
                       </td>
 
 
@@ -246,84 +244,8 @@ const IntialDetails = (props) => {
             </tr>
           </tbody>
         </table>
-        {objPepName != null && <div className="accordion-item">
-
-          <h2 className="accordion-header">
-            <button
-              className={classnames(
-                "accordion-button",
-                "fw-medium",
-                { collapsed: !personalCol }
-              )}
-              type="button"
-              onClick={handlePersonalAccn}
-              style={{ cursor: "pointer" }}
-            >
-              <p>POLITICALLY EXPOSED PERSON  INFORMATION</p>
-
-            </button>
-          </h2>
-
-          <Collapse
-            isOpen={personalCol}
-            className="accordion-collapse"
-          >
-
-            <div className="accordion-body">
-
-              <Row>
-                <div className="text-muted d-flex">
-                  <Col md={12}>
-                    <table className="table mb-4">
-                      <thead>
-                        <tr>
-                          <th>Date Of Birth</th>
-                          <th>Occuptation</th>
-                          <th>Address</th>
-                          <th>Country</th>
-                          <th>CNIC</th>
-                          <th>Place  of Birth</th>
-                          <th>Father Name/Husband Name</th>
-                          <th>Entity</th>
-
-                        </tr>
-                      </thead>
-                      <tbody>
-
-                        {objPepName != null && JSON.parse(objPepName).data?.map((pepNameObj, index) => {
-
-                          return <tr key={index}>
-                            <td>{pepNameObj.dateofbirth ? pepNameObj.dateofbirth : "-"}</td>
-                            <td>{pepNameObj.occuptation ? pepNameObj.occuptation : "-"}</td>
-                            <td>{pepNameObj.address ? pepNameObj.address : "-"}</td>
-                            <td>{pepNameObj.country ? pepNameObj.country : "-"}</td>
-                            <td>{pepNameObj.nicnumber ? pepNameObj.nicnumber : "-"}</td>
-                            <td>{pepNameObj.placeofbirth ? pepNameObj.placeofbirth : "-"}</td>
-                            <td>{pepNameObj.father ? pepNameObj.father : "-"}</td>
-                            <td>{pepNameObj.entity ? pepNameObj.entity : "-"}</td>
-                          </tr>
-
-                        })}
-                      </tbody>
-                    </table>
-                  </Col>
-
-
-                </div>
-              </Row>
-
-            </div>
-
-
-
-          </Collapse>
-        </div>
-        }
-
-
-
       </Loader>
-    </div >
+    </div>
   );
 }
 

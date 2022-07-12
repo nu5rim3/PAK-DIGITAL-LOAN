@@ -26,21 +26,43 @@ import IncomeExpensesDetails from "./IncomeExpensesDetails";
 import LiabilityDetails from "./LiabilityDetails";
 import CreditScoringDetails from "./CreditScoringDetails";
 import ImageDetails from "./ImageDetails";
+import UndertakingDetails from "./CustomerDetails/undertaking";
 import ReportDetails from "./ReportDetails";
 import ApprovalDetails from "./ApprovalDetails";
-
+// APIs
+import {
+  getOnBoardClienteles
+} from "services/on_board.service";
 const Appraisal = () => {
 
   const { appraisalId } = useParams();
 
   const [customIconActiveTab, setcustomIconActiveTab] = useState("1");
-
+  const [isReturned, setReturned] = useState({});
   const toggleIconCustom = tab => {
     if (customIconActiveTab !== tab) {
       setcustomIconActiveTab(tab);
     }
   };
+  useEffect(() => {
+    var _isMounted = true;
 
+    const fetchData = async () => {
+
+      const response = await getOnBoardClienteles(appraisalId);
+      if (_isMounted && response !== undefined) {
+        setReturned(response?.isReturned);
+
+      }
+
+    };
+
+    fetchData();
+
+    return () => {
+      _isMounted = false;
+    };
+  });
   return (
     <React.Fragment>
       <div className="page-content">
@@ -54,12 +76,12 @@ const Appraisal = () => {
             <Col lg={12}>
               <Card>
                 <CardBody>
-                  <CardTitle className="h4">Appraisal ID : {appraisalId}</CardTitle>
-                  
+                  <CardTitle className="h4">Appraisal ID : {appraisalId}  {(isReturned === 'Y') ? '[Returned]' : ''}</CardTitle>
+
                   <AccordionBody title="ON BOARDING DETAILS">
                     <OnBoardingDetails active={"1"} />
                   </AccordionBody>
-                  
+
                   <AccordionBody title="CUSTOMER DETAILS">
                     <CustomerDetails active={"2"} />
                   </AccordionBody>
@@ -92,9 +114,13 @@ const Appraisal = () => {
                     <ImageDetails active={"9"} />
                   </AccordionBody>
 
-                  {/* <AccordionBody title="REPORT DETAILS">
+                  <AccordionBody title="CUSTOMER UNDERTAKING">
+                    <UndertakingDetails active={"12"} />
+                  </AccordionBody>
+
+                  <AccordionBody title="REPORT DETAILS">
                     <ReportDetails active={"11"} />
-                  </AccordionBody> */}
+                  </AccordionBody>
 
                   <AccordionBody title="APPROVAL DETAILS">
                     <ApprovalDetails active={"10"} />
