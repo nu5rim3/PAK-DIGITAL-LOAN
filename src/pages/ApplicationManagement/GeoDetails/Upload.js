@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types";
 import {
   Card,
@@ -8,83 +8,103 @@ import {
   Form,
   Row,
   Button,
-  Alert
+  Alert,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from "reactstrap"
 import Dropzone from "react-dropzone"
 
 import { Link } from "react-router-dom"
 
-import SyncLoader from "components/SyncLoader";
+import SyncLoader from "components/SyncLoader"
 
 // service
 import { uploadGeoImage } from "services/geo_details.service";
 
-class FormUpload extends Component {
-  constructor(props) {
-    super(props)
-    this.handleAcceptedFiles = this.handleAcceptedFiles.bind(this)
-    this.state = { selectedFiles: [], loading: false, message: null, warning: null }
-  }
+const FormUpload = (props) => {
 
-  onSubmit = () => {
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState(null);
+  const [warning, setWarning] = useState(null);
+  const [latitude, setLatitude] = useState(null)
+  const [longtitude, setLongtitude] = useState(null)
+  const [mapMessage, setMapMessage] = useState(null)
+  const [visible, setVisible] = useState(false)
+  const [count, setCount] = useState(0)
+  const [btn, setBtn] = useState(false)
 
-    if (this.state.selectedFiles.length < 2) {
-      this.setState({warning: "Minimum two images are required!"})
-      return;
-    }
+  const onSubmit = () => {
 
-    this.setState({loading: true, warning: null});
+    getCoordinates();
 
-    this.state.selectedFiles?.forEach(async (file, index) => {
-      const image = await this.toBase64(file);
-      const base64Content = image.split(",");
-      var payload = {
-        "appraisalIdx": this.props.appraisalId,
-        "imgMasterCategory": `GEO_DETAILS_${this.getUserRole()}`,
-        "imgSubCategory": `GEO_SUB_${this.getUserRole()}_${index}`,
-        "imgOriginalName": file.path,
-        "imgContentType": file.type,
-        "longitude": "1.44",
-        "latitude": "2.40",
-        "image": base64Content[1]
-      };
+    if (visible === false) {
 
-      var response = await uploadGeoImage(payload);
-
-      if (response != undefined) {
-        if ((this.state.selectedFiles?.length - 1) === index) {
-          this.setState({loading: false, message: response?.message, selectedFiles: []});
-          setTimeout(() => {
-            window.location.reload();
-          }, 1000);
-        }
+      if (selectedFiles.length < 2) {
+        setWarning("Minimum two images are required!");
+        return;
       }
-    });
+
+      setLoading(true);
+      setWarning(true);
+
+      selectedFiles?.forEach(async (file, index) => {
+        const image = await toBase64(file);
+        const base64Content = image.split(",");
+        var payload = {
+          "appraisalIdx": props.appraisalId,
+          "imgMasterCategory": `GEO_DETAILS_${getUserRole()}`,
+          "imgSubCategory": `GEO_SUB_${getUserRole()}_${index}`,
+          "imgOriginalName": file.path,
+          "imgContentType": file.type,
+          "longitude": "1.44",
+          "latitude": "2.40",
+          "image": base64Content[1]
+        };
+
+        var response = await uploadGeoImage(payload);
+
+        if (response != undefined) {
+          if ((selectedFiles?.length - 1) === index) {
+            setLoading(false);
+            setMessage(response?.message);
+            setSelectedFiles([]);
+
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          }
+        }
+      });
+
+    }
   }
 
-  handleAcceptedFiles = files => {
+  const handleAcceptedFiles = files => {
     files.map(file =>
       Object.assign(file, {
         preview: URL.createObjectURL(file),
-        formattedSize: this.formatBytes(file.size),
+        formattedSize: formatBytes(file.size),
       })
     )
 
-    this.setState({ selectedFiles: files })
+    setSelectedFiles(files);
   }
 
-  toBase64 = file => new Promise((resolve, reject) => {
+  const toBase64 = file => new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result);
     reader.onerror = error => reject(error);
   });
 
-  getUserRole = () => {
+  const getUserRole = () => {
     return localStorage.getItem("role");
   }
 
-  formatBytes = (bytes, decimals = 2) => {
+  const formatBytes = (bytes, decimals = 2) => {
     if (bytes === 0) return "0 Bytes"
     const k = 1024
     const dm = decimals < 0 ? 0 : decimals
@@ -94,96 +114,150 @@ class FormUpload extends Component {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i]
   }
 
-  render() {
-    return (
-      <Row>
-        <Col className="col-12">
-          <Card>
-            <CardBody>
-              <CardTitle className="h4">GEO Location Images</CardTitle>
-              <p className="card-title-desc">
-                {" "}
-                Upload the GEO location images (Two images required!).
-              </p>
-              <p className="mt-1">
-                {this.state.message && <Alert color="success">{this.state.message}</Alert>}
-                {this.state.warning && <Alert color="danger">{this.state.warning}</Alert>}
-              </p>
-              <Form>
-                <Dropzone
-                  onDrop={acceptedFiles =>
-                    this.handleAcceptedFiles(acceptedFiles)
-                  }
-                >
-                  {({ getRootProps, getInputProps }) => (
-                    <div className="dropzone">
-                      <div
-                        className="dz-message needsclick"
-                        {...getRootProps()}
-                      >
-                        <input {...getInputProps()} />
-                        <div className="mb-3">
-                          <i className="display-4 text-muted bx bxs-cloud-upload" />
-                        </div>
-                        <h4>Drop files here or click to upload.</h4>
-                      </div>
-                    </div>
-                  )}
-                </Dropzone>
-                <div
-                  className="dropzone-previews mt-3"
-                  id="file-previews"
-                >
-                  {this.state.selectedFiles?.map((f, i) => {
-                    return (
-                      <Card
-                        className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
-                        key={i + "-file"}
-                      >
-                        <div className="p-2">
-                          <Row className="align-items-center">
-                            <Col className="col-auto">
-                              <img
-                                data-dz-thumbnail=""
-                                height="80"
-                                className="avatar-sm rounded bg-light"
-                                alt={f.name}
-                                src={f.preview}
-                              />
-                            </Col>
-                            <Col>
-                              <Link
-                                to="#"
-                                className="text-muted font-weight-bold"
-                              >
-                                {f.name}
-                              </Link>
-                              <p className="mb-0">
-                                <strong>{f.formattedSize}</strong>
-                              </p>
-                            </Col>
-                          </Row>
-                        </div>
-                      </Card>
-                    )
-                  })}
-                </div>
-              </Form>
 
-              <div className="text-center mt-4">
-                <div className="d-flex justify-content-between">
-                  <p className="card-title-desc"></p>
-                  <SyncLoader loading={this.state.loading}>
-                    <Button size="md" color="info" onClick={this.onSubmit}><i className="fa fa-upload me-2"></i>Upload</Button>
-                  </SyncLoader>
-                </div>
-              </div>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-    )
+  const getCoordinates = () => {
+    //set counter to disable the button
+    setCount(count + 1)
+    if (count === 5) {
+      setBtn(true)
+    }
+
+    //Requset location
+    if (!navigator.geolocation) {
+      setMapMessage("Geolocation is not supported by your browser")
+    } else {
+      setMapMessage("Locating...")
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setMapMessage(null)
+          setLatitude(position.coords.latitude)
+          setLongtitude(position.coords.longitude)
+        },
+        () => {
+          setMapMessage(
+            "Unable to retrieve your location. Please enable your location to continue."
+          )
+          setVisible(!visible)
+        }
+      )
+    }
+
+    return visible;
   }
+
+  const handleClose = () => {
+    setVisible(false)
+  }
+
+  return (
+    <Row>
+      <Col className="col-12">
+        <Card>
+          <CardBody>
+            <CardTitle className="h4">GEO Location Images</CardTitle>
+            <p className="card-title-desc">
+              {" "}
+              Upload the GEO location images (Two images required!).
+            </p>
+            <p className="mt-1">
+              {message && <Alert color="success">{message}</Alert>}
+              {warning && <Alert color="danger">{warning}</Alert>}
+            </p>
+            <Form>
+              <Dropzone
+                onDrop={acceptedFiles =>
+                  handleAcceptedFiles(acceptedFiles)
+                }
+              >
+                {({ getRootProps, getInputProps }) => (
+                  <div className="dropzone">
+                    <div
+                      className="dz-message needsclick"
+                      {...getRootProps()}
+                    >
+                      <input {...getInputProps()} />
+                      <div className="mb-3">
+                        <i className="display-4 text-muted bx bxs-cloud-upload" />
+                      </div>
+                      <h4>Drop files here or click to upload.</h4>
+                    </div>
+                  </div>
+                )}
+              </Dropzone>
+              <div
+                className="dropzone-previews mt-3"
+                id="file-previews"
+              >
+                {selectedFiles?.map((f, i) => {
+                  return (
+                    <Card
+                      className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
+                      key={i + "-file"}
+                    >
+                      <div className="p-2">
+                        <Row className="align-items-center">
+                          <Col className="col-auto">
+                            <img
+                              data-dz-thumbnail=""
+                              height="80"
+                              className="avatar-sm rounded bg-light"
+                              alt={f.name}
+                              src={f.preview}
+                            />
+                          </Col>
+                          <Col>
+                            <Link
+                              to="#"
+                              className="text-muted font-weight-bold"
+                            >
+                              {f.name}
+                            </Link>
+                            <p className="mb-0">
+                              <strong>{f.formattedSize}</strong>
+                            </p>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Card>
+                  )
+                })}
+              </div>
+            </Form>
+
+            <div className="text-center mt-4">
+              <div className="d-flex justify-content-between">
+                <p className="card-title-desc"></p>
+                <SyncLoader loading={loading}>
+                  <Button size="md" color="info" onClick={onSubmit}><i className="fa fa-upload me-2"></i>Upload</Button>
+                </SyncLoader>
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+
+        <Modal isOpen={visible} backdrop="static" keyboard={false}>
+          <ModalHeader>
+            <h4 color="danger">Enable Location!</h4>
+          </ModalHeader>
+          <ModalBody>
+            <p>
+              Unable to retrieve your location. Please enable your location
+              to continue.
+            </p>
+            <p>
+              Settings -{">"} Privacy {"&"} Security -{">"} Site Settings -
+              {">"} Permissions -{">"}Location
+            </p>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" onClick={handleClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </Col>
+    </Row>
+  )
 }
 
 FormUpload.propTypes = {
