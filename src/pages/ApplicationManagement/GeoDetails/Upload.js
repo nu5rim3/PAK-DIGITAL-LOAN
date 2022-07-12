@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import PropTypes from "prop-types";
+import PropTypes from "prop-types"
 import {
   Card,
   CardBody,
@@ -12,7 +12,7 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter
+  ModalFooter,
 } from "reactstrap"
 import Dropzone from "react-dropzone"
 
@@ -21,14 +21,13 @@ import { Link } from "react-router-dom"
 import SyncLoader from "components/SyncLoader"
 
 // service
-import { uploadGeoImage } from "services/geo_details.service";
+import { uploadGeoImage } from "services/geo_details.service"
 
-const FormUpload = (props) => {
-
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(null);
-  const [warning, setWarning] = useState(null);
+const FormUpload = props => {
+  const [selectedFiles, setSelectedFiles] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState(null)
+  const [warning, setWarning] = useState(null)
   const [latitude, setLatitude] = useState(null)
   const [longtitude, setLongtitude] = useState(null)
   const [mapMessage, setMapMessage] = useState(null)
@@ -37,48 +36,45 @@ const FormUpload = (props) => {
   const [btn, setBtn] = useState(false)
 
   const onSubmit = () => {
-
-    getCoordinates();
+    getCoordinates()
 
     if (visible === false) {
-
       if (selectedFiles.length < 2) {
-        setWarning("Minimum two images are required!");
-        return;
+        setWarning("Minimum two images are required!")
+        return
       }
 
-      setLoading(true);
-      setWarning(true);
+      setLoading(true)
+      setWarning(true)
 
       selectedFiles?.forEach(async (file, index) => {
-        const image = await toBase64(file);
-        const base64Content = image.split(",");
+        const image = await toBase64(file)
+        const base64Content = image.split(",")
         var payload = {
-          "appraisalIdx": props.appraisalId,
-          "imgMasterCategory": `GEO_DETAILS_${getUserRole()}`,
-          "imgSubCategory": `GEO_SUB_${getUserRole()}_${index}`,
-          "imgOriginalName": file.path,
-          "imgContentType": file.type,
-          "longitude": "1.44",
-          "latitude": "2.40",
-          "image": base64Content[1]
-        };
+          appraisalIdx: props.appraisalId,
+          imgMasterCategory: `GEO_DETAILS_${getUserRole()}`,
+          imgSubCategory: `GEO_SUB_${getUserRole()}_${index}`,
+          imgOriginalName: file.path,
+          imgContentType: file.type,
+          longitude: longtitude,
+          latitude: latitude,
+          image: base64Content[1],
+        }
 
-        var response = await uploadGeoImage(payload);
+        var response = await uploadGeoImage(payload)
 
         if (response != undefined) {
-          if ((selectedFiles?.length - 1) === index) {
-            setLoading(false);
-            setMessage(response?.message);
-            setSelectedFiles([]);
+          if (selectedFiles?.length - 1 === index) {
+            setLoading(false)
+            setMessage(response?.message)
+            setSelectedFiles([])
 
             setTimeout(() => {
-              window.location.reload();
-            }, 1000);
+              window.location.reload()
+            }, 1000)
           }
         }
-      });
-
+      })
     }
   }
 
@@ -90,18 +86,19 @@ const FormUpload = (props) => {
       })
     )
 
-    setSelectedFiles(files);
+    setSelectedFiles(files)
   }
 
-  const toBase64 = file => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = error => reject(error);
-  });
+  const toBase64 = file =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = () => resolve(reader.result)
+      reader.onerror = error => reject(error)
+    })
 
   const getUserRole = () => {
-    return localStorage.getItem("role");
+    return localStorage.getItem("role")
   }
 
   const formatBytes = (bytes, decimals = 2) => {
@@ -113,7 +110,6 @@ const FormUpload = (props) => {
     const i = Math.floor(Math.log(bytes) / Math.log(k))
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i]
   }
-
 
   const getCoordinates = () => {
     //set counter to disable the button
@@ -128,7 +124,7 @@ const FormUpload = (props) => {
     } else {
       setMapMessage("Locating...")
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        position => {
           setMapMessage(null)
           setLatitude(position.coords.latitude)
           setLongtitude(position.coords.longitude)
@@ -142,7 +138,7 @@ const FormUpload = (props) => {
       )
     }
 
-    return visible;
+    return visible
   }
 
   const handleClose = () => {
@@ -165,16 +161,11 @@ const FormUpload = (props) => {
             </p>
             <Form>
               <Dropzone
-                onDrop={acceptedFiles =>
-                  handleAcceptedFiles(acceptedFiles)
-                }
+                onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles)}
               >
                 {({ getRootProps, getInputProps }) => (
                   <div className="dropzone">
-                    <div
-                      className="dz-message needsclick"
-                      {...getRootProps()}
-                    >
+                    <div className="dz-message needsclick" {...getRootProps()}>
                       <input {...getInputProps()} />
                       <div className="mb-3">
                         <i className="display-4 text-muted bx bxs-cloud-upload" />
@@ -184,10 +175,7 @@ const FormUpload = (props) => {
                   </div>
                 )}
               </Dropzone>
-              <div
-                className="dropzone-previews mt-3"
-                id="file-previews"
-              >
+              <div className="dropzone-previews mt-3" id="file-previews">
                 {selectedFiles?.map((f, i) => {
                   return (
                     <Card
@@ -228,7 +216,9 @@ const FormUpload = (props) => {
               <div className="d-flex justify-content-between">
                 <p className="card-title-desc"></p>
                 <SyncLoader loading={loading}>
-                  <Button size="md" color="info" onClick={onSubmit}><i className="fa fa-upload me-2"></i>Upload</Button>
+                  <Button size="md" color="info" onClick={onSubmit}>
+                    <i className="fa fa-upload me-2"></i>Upload
+                  </Button>
                 </SyncLoader>
               </div>
             </div>
@@ -241,12 +231,12 @@ const FormUpload = (props) => {
           </ModalHeader>
           <ModalBody>
             <p>
-              Unable to retrieve your location. Please enable your location
-              to continue.
+              Unable to retrieve your location. Please enable your location to
+              continue.
             </p>
             <p>
-              Settings -{">"} Privacy {"&"} Security -{">"} Site Settings -
-              {">"} Permissions -{">"}Location
+              Settings -{">"} Privacy {"&"} Security -{">"} Site Settings -{">"}{" "}
+              Permissions -{">"}Location
             </p>
           </ModalBody>
           <ModalFooter>
@@ -261,7 +251,7 @@ const FormUpload = (props) => {
 }
 
 FormUpload.propTypes = {
-  appraisalId: PropTypes.string
-};
+  appraisalId: PropTypes.string,
+}
 
 export default FormUpload
