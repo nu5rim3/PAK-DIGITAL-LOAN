@@ -40,10 +40,16 @@ const GeoDetails = (props) => {
         const responseImages = await getAllImages(appraisalId);
 
         if (responseImages != undefined) {
-          console.log(responseImages);
+          var locationDetails = responseImages?.map(img => {
+            return {latitude: img.latitude, longitude: img.longitude, imgMasterCategory: img.imgMasterCategory}
+          });
+
+          setLocations(locationDetails);
         }
       }
     };
+
+    fetchData();
 
     return () => {
       _isMounted = false;
@@ -64,11 +70,12 @@ const GeoDetails = (props) => {
                   defaultCenter={defaultProps.center}
                   defaultZoom={defaultProps.zoom}
                 >
-                  <AnyReactComponent
-                    lat={59.955413}
-                    lng={30.337844}
-                    text="My Marker"
-                  />
+                  {locations.length > 0 && locations.map((l, i) => <AnyReactComponent
+                    key={i}
+                    lat={l.latitude}
+                    lng={l.longitude}
+                    text={l.imgMasterCategory}
+                  />)}
                 </GoogleMapReact>
               </div>
             </div>
