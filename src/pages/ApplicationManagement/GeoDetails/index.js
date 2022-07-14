@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Row,
-  Col,
+  Col
 } from "reactstrap";
 
 import GoogleMapReact from 'google-map-react';
@@ -31,6 +31,11 @@ const GeoDetails = (props) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [locations, setLocations] = useState([]);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+
+  const tooltipToggel = () => {
+    setTooltipOpen(!tooltipOpen);
+  };
 
   useEffect(() => {
     var _isMounted = true;
@@ -41,7 +46,7 @@ const GeoDetails = (props) => {
 
         if (responseImages != undefined) {
           var locationDetails = responseImages?.map(img => {
-            return {latitude: img.latitude, longitude: img.longitude, imgMasterCategory: img.imgMasterCategory}
+            return { latitude: img.latitude, longitude: img.longitude, imgMasterCategory: img.imgMasterCategory }
           });
 
           setLocations(locationDetails);
@@ -56,7 +61,18 @@ const GeoDetails = (props) => {
     };
   }, [props.active]);
 
-  const AnyReactComponent = ({ text }) => <div>{text}</div>;
+  const AnyReactComponent = ({ index, text }) => (
+    <div className="pin">
+      <span className="d-flex flex-column">
+        <div>
+          <i className="bx bxs-map" style={{ fontSize: "36px", color: "red" }}></i>
+        </div>
+        <div style={{ width: '150px' }}>
+          <p style={{ fontWeight: 'bold', color: 'black', WebkitTextStroke: '0.5px white' }}>{ text }</p>
+        </div>
+      </span>
+    </div>
+  );
 
   return (
     <Row>
@@ -64,14 +80,15 @@ const GeoDetails = (props) => {
         <Row>
           <Col md={6}>
             <div className="mt-4">
-              <div style={{ height: '100vh' }}>
+              <div className="google-map" style={{ height: '100vh' }}>
                 <GoogleMapReact
-                  bootstrapURLKeys={{ key: "" }}
+                  bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAP_API_KEY }}
                   defaultCenter={defaultProps.center}
                   defaultZoom={defaultProps.zoom}
                 >
                   {locations.length > 0 && locations.map((l, i) => <AnyReactComponent
                     key={i}
+                    index={i}
                     lat={l.latitude}
                     lng={l.longitude}
                     text={l.imgMasterCategory}
@@ -88,12 +105,12 @@ const GeoDetails = (props) => {
         </Row>
       </Loader>
     </Row>
-
   );
 }
 
 GeoDetails.propTypes = {
   active: PropTypes.string,
+  index: PropTypes.string,
   text: PropTypes.string
 };
 
