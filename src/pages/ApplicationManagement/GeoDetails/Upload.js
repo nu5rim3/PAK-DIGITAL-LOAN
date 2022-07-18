@@ -36,6 +36,7 @@ const FormUpload = props => {
   const [btn, setBtn] = useState(false)
 
   const onSubmit = () => {
+    // get coordinates before submit the images.
     getCoordinates()
 
     if (visible === false) {
@@ -101,6 +102,14 @@ const FormUpload = props => {
     return localStorage.getItem("role")
   }
 
+  const userRoleVerification = () => {
+    var role = getUserRole();
+
+    if (role === "CO" || role === "BHO") {
+      return true;
+    } else return false;
+  }
+
   const formatBytes = (bytes, decimals = 2) => {
     if (bytes === 0) return "0 Bytes"
     const k = 1024
@@ -148,7 +157,7 @@ const FormUpload = props => {
   return (
     <Row>
       <Col className="col-12">
-        <Card>
+        {userRoleVerification() && <Card>
           <CardBody>
             <CardTitle className="h4">GEO Location Images</CardTitle>
             <p className="card-title-desc">
@@ -223,7 +232,7 @@ const FormUpload = props => {
               </div>
             </div>
           </CardBody>
-        </Card>
+        </Card>}
 
         <Modal isOpen={visible} backdrop="static" keyboard={false}>
           <ModalHeader>

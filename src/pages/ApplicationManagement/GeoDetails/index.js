@@ -31,14 +31,25 @@ const GeoDetails = (props) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [locations, setLocations] = useState([]);
-  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [active, setActive] = useState(false);
 
-  const tooltipToggel = () => {
-    setTooltipOpen(!tooltipOpen);
-  };
+  const verifyUserRole = () => {
+    var role = localStorage.getItem("role");
+
+    if (role === "BHO" || role === "CO") {
+      return true;
+    } else return false;
+  }
+
+  const checkAldreadySubmit = (category) => {
+    if (category.includes('GEO_DETAILS_CO') || category.includes('GEO_DETAILS_BHO')) {
+      setActive(true);
+    }
+  }
 
   useEffect(() => {
     var _isMounted = true;
+    setIsLoading(true);
 
     const fetchData = async () => {
       if (props.active === "13") {
@@ -46,10 +57,12 @@ const GeoDetails = (props) => {
 
         if (responseImages != undefined) {
           var locationDetails = responseImages?.map(img => {
+            checkAldreadySubmit(img?.imgMasterCategory);
             return { latitude: img.latitude, longitude: img.longitude, imgMasterCategory: img.imgMasterCategory }
           });
 
           setLocations(locationDetails);
+          setIsLoading(false);
         }
       }
     };
@@ -61,7 +74,7 @@ const GeoDetails = (props) => {
     };
   }, [props.active]);
 
-  const AnyReactComponent = ({ index, text }) => (
+  const Marker = ({ index, text }) => (
     <div className="pin">
       <span className="d-flex flex-column">
         <div>
@@ -78,7 +91,7 @@ const GeoDetails = (props) => {
     <Row>
       <Loader loading={isLoading} >
         <Row>
-          <Col md={6}>
+          <Col md={ verifyUserRole() ? 6 : 12}>
             <div className="mt-4">
               <div className="google-map" style={{ height: '100vh' }}>
                 <GoogleMapReact
@@ -86,7 +99,7 @@ const GeoDetails = (props) => {
                   defaultCenter={defaultProps.center}
                   defaultZoom={defaultProps.zoom}
                 >
-                  {locations.length > 0 && locations.map((l, i) => <AnyReactComponent
+                  {locations.length > 0 && locations.map((l, i) => <Marker
                     key={i}
                     index={i}
                     lat={l.latitude}
@@ -97,11 +110,11 @@ const GeoDetails = (props) => {
               </div>
             </div>
           </Col>
-          <Col md={6}>
+          {verifyUserRole() && active === false && <Col md={6}>
             <div className="mt-4">
               <Upload appraisalId={appraisalId} />
             </div>
-          </Col>
+          </Col>}
         </Row>
       </Loader>
     </Row>
