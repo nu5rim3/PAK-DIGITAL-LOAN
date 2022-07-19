@@ -17,10 +17,10 @@ pipeline {
 
           println(git_branch)
 
-          if (git_branch != "develop" || git_branch != "bugfix" || git_branch != "release" || git_branch != "main") {
-            currentBuild.result = "FAILURE"
-            error "Failed, Invalid branch, exiting now..."
-          }
+          // if (git_branch != "develop" || git_branch != "bugfix" || git_branch != "release" || git_branch != "main") {
+          //   currentBuild.result = "FAILURE"
+          //   error "Failed, Invalid branch, exiting now..."
+          // }
         }
       }
     }
