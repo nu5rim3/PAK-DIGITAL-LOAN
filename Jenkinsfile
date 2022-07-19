@@ -10,20 +10,6 @@ pipeline {
   }
   agent none
   stages {
-    // stage('checkout') {
-    //   steps {
-    //     script {
-    //       def git_branch = env.BRANCH_NAME
-
-    //       println(git_branch)
-
-    //       if (git_branch != "develop" || git_branch != "bugfix" || git_branch != "release" || git_branch != "main") {
-    //         currentBuild.result = "FAILURE"
-    //         error "Failed, Invalid branch, exiting now..."
-    //       }
-    //     }
-    //   }
-    // }
     stage('mvn build') {
       agent {
         docker {
