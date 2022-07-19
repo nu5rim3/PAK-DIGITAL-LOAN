@@ -54,7 +54,7 @@ const CalculationDetails = (props) => {
     const fetchData = async () => {
       if (tcDetails !== null && tcDetails !== undefined) {
         const response = await getAmountsOfTcDetails(tcDetails?.tcNo);
-        if (_isMounted && response.code === "000") {
+        if (_isMounted && response?.code === "000") {
           setAmountsOfTcDetails(response);
         }
       }
