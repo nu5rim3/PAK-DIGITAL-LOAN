@@ -5,7 +5,8 @@ var httpProxy = require('http-proxy')
 var cors = require('cors')
 var proxy = httpProxy.createProxyServer()
 
-var serverOne = 'https://pomicroapiuat.lolc.lk'
+var IDENTITY_SERVER_URL = 'https://pakauthuat.lolc.lk';
+var MIDDLEWARE_BASE_URL = 'https://pomicroapiuat.lolc.lk';
 
 app.use(cors());
 
@@ -24,7 +25,7 @@ app.use(function (req, res, next) {
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.use('/pakoman-digital-loan/robots.txt', function (req, res, next) {
-    res.redirect('http://pofuslblive01/pakoman-digital-loan');
+    res.redirect(`${MIDDLEWARE_BASE_URL}/pakoman-digital-loan`);
 });
 
 app.all("/pakoman-digital-loan/token", function (req, res) {
@@ -32,7 +33,7 @@ app.all("/pakoman-digital-loan/token", function (req, res) {
     url = url.slice(21);
     req.url = url;
 
-    proxy.web(req, res, { target: serverOne, secure: false, changeOrigin: true })
+    proxy.web(req, res, { target: MIDDLEWARE_BASE_URL, secure: false, changeOrigin: true })
 });
 
 app.all("/pakoman-digital-loan/mobixCamsCommon*", function (req, res) {
@@ -40,7 +41,7 @@ app.all("/pakoman-digital-loan/mobixCamsCommon*", function (req, res) {
     url = url.slice(21);
     req.url = url;
 
-    proxy.web(req, res, { target: serverOne, secure: false, changeOrigin: true })
+    proxy.web(req, res, { target: MIDDLEWARE_BASE_URL, secure: false, changeOrigin: true })
 });
 
 app.all("/pakoman-digital-loan/mobixCamsClientele*", function (req, res) {
@@ -48,7 +49,7 @@ app.all("/pakoman-digital-loan/mobixCamsClientele*", function (req, res) {
     url = url.slice(21);
     req.url = url;
 
-    proxy.web(req, res, { target: serverOne, secure: false, changeOrigin: true })
+    proxy.web(req, res, { target: MIDDLEWARE_BASE_URL, secure: false, changeOrigin: true })
 });
 
 app.all("/pakoman-digital-loan/mobixCamsCredit*", function (req, res) {
@@ -56,7 +57,7 @@ app.all("/pakoman-digital-loan/mobixCamsCredit*", function (req, res) {
     url = url.slice(21);
     req.url = url;
 
-    proxy.web(req, res, { target: serverOne, secure: false, changeOrigin: true })
+    proxy.web(req, res, { target: MIDDLEWARE_BASE_URL, secure: false, changeOrigin: true })
 });
 
 app.all("/pakoman-digital-loan/mobixCamsLoan*", function (req, res) {
@@ -64,7 +65,7 @@ app.all("/pakoman-digital-loan/mobixCamsLoan*", function (req, res) {
     url = url.slice(21);
     req.url = url;
 
-    proxy.web(req, res, { target: serverOne, secure: false, changeOrigin: true })
+    proxy.web(req, res, { target: MIDDLEWARE_BASE_URL, secure: false, changeOrigin: true })
 });
 
 app.all("/pakoman-digital-loan/mobixCamsApproval*", function (req, res) {
@@ -72,7 +73,15 @@ app.all("/pakoman-digital-loan/mobixCamsApproval*", function (req, res) {
     url = url.slice(21);
     req.url = url;
     
-    proxy.web(req, res, { target: serverOne, secure: false, changeOrigin: true })
+    proxy.web(req, res, { target: MIDDLEWARE_BASE_URL, secure: false, changeOrigin: true })
+});
+
+app.all("/pakoman-digital-loan/oauth2*", function (req, res) {
+    var url = req.url;
+    url = url.slice(21);
+    req.url = url;
+    
+    proxy.web(req, res, { target: IDENTITY_SERVER_URL, secure: false, changeOrigin: true })
 });
 
 app.get('/pakoman-digital-loan/', function (req, res) {

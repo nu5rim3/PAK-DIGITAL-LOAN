@@ -1,26 +1,54 @@
 import PropTypes from "prop-types";
 import MetaTags from "react-meta-tags";
-import React from "react";
+import React, { useEffect } from "react";
+import moment from "moment";
 
 import { Row, Col, CardBody, Card, Alert, Container } from "reactstrap";
+
+//redux
+import { useSelector, useDispatch } from "react-redux";
 
 import { withRouter, Link } from "react-router-dom";
 
 // service
 import { Authentication } from "services/auth.service";
 
+// actions
+import { loginUser } from "../../store/actions";
+
 // import images
 import profile from "assets/images/profile-img.jpg";
+import loading from "assets/images/loading.gif";
 
 const Login = props => {
+  const dispatch = useDispatch();
 
   const service = Authentication();
 
-  const submitLogin = async () => {
-    if (service.getAccessToken() == null) {
-      await service.authorize();
+  const { error } = useSelector(state => ({
+    error: state.Login.error,
+  }));
+
+  useEffect(async () => {
+    var _isMounted = true;
+
+    if (_isMounted && service.getAccessToken() == null) {
+
+      await service.exchange().then(response => {
+        dispatch(loginUser({}, props.history, response));
+      });
+
+    } else {
+      setTimeout(() => {
+        localStorage.clear();
+        props.history.push("/pakoman-digital-loan/login");
+      }, 3000);
     }
-  };
+
+    return () => {
+      _isMounted = false;
+    }
+  }, []);
 
   return (
     <React.Fragment>
@@ -52,18 +80,12 @@ const Login = props => {
                 </div>
                 <CardBody className="pt-0">
                   <div className="text-center p-2">
+                    {error ? <Alert color="danger">{error}</Alert> : null}
                   </div>
-                  <div className="text-center p-2">
-                    <h5 className="text-dark m-5">Mobix Passport Authentication Manager</h5>
-                  </div>
-                  <div className="mt-3 d-grid">
-                    <button
-                      onClick={() => submitLogin()}
-                      className="btn btn-primary btn-block"
-                      type="button"
-                    >
-                      Pakoman Corporate Login
-                    </button>
+                  <div className="d-grid">
+                    <div className="mt-3 mb-5 text-center">
+                      <img src={loading} style={{width: '30%', height: '100%'}} />
+                    </div>
                   </div>
                 </CardBody>
               </Card>
