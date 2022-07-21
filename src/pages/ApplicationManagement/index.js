@@ -26,6 +26,7 @@ import IncomeExpensesDetails from "./IncomeExpensesDetails";
 import LiabilityDetails from "./LiabilityDetails";
 import CreditScoringDetails from "./CreditScoringDetails";
 import ImageDetails from "./ImageDetails";
+import GeoDetails from "./GeoDetails";
 import UndertakingDetails from "./CustomerDetails/undertaking";
 import ReportDetails from "./ReportDetails";
 import ApprovalDetails from "./ApprovalDetails";
@@ -112,6 +113,10 @@ const Appraisal = () => {
 
                   <AccordionBody title="IMAGE DETAILS">
                     <ImageDetails active={"9"} />
+                  </AccordionBody>
+
+                  <AccordionBody title="GEO DETAILS">
+                    <GeoDetails active={"13"} />
                   </AccordionBody>
 
                   <AccordionBody title="CUSTOMER UNDERTAKING">

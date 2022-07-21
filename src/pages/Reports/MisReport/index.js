@@ -26,10 +26,12 @@ import {
 } from "services/report.service";
 
 import {
-  getAllBranches, getAllCros
+  getAllBranches
 } from "services/common.service";
 
-
+import {
+  getAllUsers
+} from "services/user.service";
 
 
 
@@ -84,7 +86,7 @@ const MisReport = (props) => {
       },
       {
         field: 'createdDate',
-        label: 'Initialted Date',
+        label: 'Initiated Date',
         sort: "asc",
       },
 
@@ -150,13 +152,24 @@ const MisReport = (props) => {
 
     const fetchData = async () => {
       const branchResponse = await getAllBranches();
-      const croResponse = await getAllCros();
+
+      const userResponse = await getAllUsers(0, 10000);
       if (_isMounted) {
         setBranches(branchResponse);
-        setCros(croResponse);
 
-        // setDownloadData(fileURL);
-        // setType('pdf');
+        if (userResponse !== undefined) {
+
+          var croList = [];
+
+          userResponse.content.forEach(function (item) {
+            if (item.meCode != null) {
+              croList.push(item);
+            }
+          });
+          croList.sort((a, b) => a.userName.toLowerCase() > b.userName.toLowerCase() ? 1 : -1);
+          setCros(croList);
+        }
+
       }
     };
 
@@ -166,6 +179,11 @@ const MisReport = (props) => {
       _isMounted = false;
     };
   }, []);
+
+
+
+
+
 
   return (
     <React.Fragment>
@@ -197,10 +215,10 @@ const MisReport = (props) => {
                             <select className="form-control" name="status"
                               {...register("status", { required: false })}>
                               <option value="">-- Select --</option>
-                              <option value="completed">Pending</option>
-                              <option value="returned">Returned</option>
-                              <option value="active">Approved</option>
-                              <option value="rejected">Rejected</option>
+                              <option value="P">Pending</option>
+                              <option value="R">Returned</option>
+                              <option value="A">Approved</option>
+                              <option value="J">Rejected</option>
                             </select>
                           </div>
                           {errors.status && <span className="error">This field is required</span>}
@@ -286,7 +304,7 @@ const MisReport = (props) => {
                               {...register("cro", { required: false })}
                             >
                               <option value="">-- Select --</option>
-                              {cros.map((item, index) => <option key={index} value={item.code}>{item.mkexName}</option>)}
+                              {cros.map((item, index) => <option key={index} value={item.idx}>{item.userName}</option>)}
                             </select>
 
 
@@ -331,7 +349,7 @@ const MisReport = (props) => {
                             {/* <Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/pro-note/reports/${appraisalId}`} className="btn btn-success waves-effect waves-light"><i className="bx bxs-report font-size-16 align-middle me-2"></i>Pro Note Report Preview</Link> */}
                           </div>
                         </div>
-                         
+
 
                       </Col>
                     </Row>
