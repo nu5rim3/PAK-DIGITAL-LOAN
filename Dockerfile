@@ -52,7 +52,8 @@ FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine
 COPY --from=nginx-builder /usr/local/nginx/modules/ngx_http_headers_more_filter_module.so /usr/local/nginx/modules/ngx_http_headers_more_filter_module.so
 
 # COPY --from=build-step /app/build /usr/share/nginx/html/pakoman-digital-loan
-COPY --from=build-step /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build-step /app/nginx/nginx.conf /etc/nginx/conf.d/nginx.conf
+COPY --from=build-step /app/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
