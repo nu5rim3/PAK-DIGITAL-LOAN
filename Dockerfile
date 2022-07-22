@@ -7,12 +7,12 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY package.json ./
 
-RUN npm cache clean --force
-RUN npm install --no-package-lock --production
+# RUN npm cache clean --force
+# RUN npm install --no-package-lock --production
 
 COPY . ./
 
-RUN npm run build
+# RUN npm run build
 
 # production environment
 FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine AS nginx-builder
@@ -51,7 +51,7 @@ FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine
 
 COPY --from=nginx-builder /usr/local/nginx/modules/ngx_http_headers_more_filter_module.so /usr/local/nginx/modules/ngx_http_headers_more_filter_module.so
 
-COPY --from=build-step /app/build /usr/share/nginx/html/pakoman-digital-loan
+# COPY --from=build-step /app/build /usr/share/nginx/html/pakoman-digital-loan
 COPY --from=build-step /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
