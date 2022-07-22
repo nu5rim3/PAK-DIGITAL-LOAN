@@ -7,12 +7,12 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY package.json ./
 
-RUN npm cache clean --force
-RUN npm install --no-package-lock --production
+# RUN npm cache clean --force
+# RUN npm install --no-package-lock --production
 
 COPY . ./
 
-RUN npm run build
+# RUN npm run build
 
 # production environment
 ARG CUSTOM_BUILD_VERSION
