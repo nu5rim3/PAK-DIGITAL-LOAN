@@ -21,7 +21,7 @@ ARG CUSTOM_BUILD_UID
 
 ARG NGINX_VERSION 1.21.6
 
-FROM fra.ocir.io/lolctech/fxapiuser/nginx:${NGINX_VERSION}-alpine AS builder
+FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine AS builder
 
 ARG CUSTOM_BUILD_VERSION
 ARG CUSTOM_BUILD_DATE
@@ -30,7 +30,7 @@ ARG CUSTOM_BUILD_UID
 ARG NGINX_VERSION 1.21.6
 ARG NGINX_HEADERS_MORE_VERSION 0.33
 
-RUN wget "http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz" -O nginx.tar.gz && \
+RUN wget "http://nginx.org/download/nginx-1.21.6.tar.gz" -O nginx.tar.gz && \
     wget "https://github.com/openresty/headers-more-nginx-module/archive/v${NGINX_HEADERS_MORE_VERSION}.tar.gz" -O headers-more.tar.gz
 
 RUN apk add --no-cache --virtual .build-deps \
@@ -61,7 +61,7 @@ RUN HEADERSMOREDIR="/app/src/headers-more-nginx-module-0.33" && \
   ./configure --without-http_autoindex_module --with-compat $CONFARGS --add-dynamic-module=$HEADERSMOREDIR && \
   make && make install
 
-FROM fra.ocir.io/lolctech/fxapiuser/nginx:${NGINX_VERSION}-alpine as mobix-cams-digital-loan-web
+FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine as mobix-cams-digital-loan-web
 
 COPY --from=builder /usr/local/nginx/modules/ngx_http_headers_more_filter_module.so /usr/local/nginx/modules/ngx_http_headers_more_filter_module.so
 
