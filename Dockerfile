@@ -17,6 +17,8 @@ RUN npm run build
 # production environment
 FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine
 
+RUN apt-get update && apt-get install -y nginx-module-security-headers
+
 COPY --from=build-step /app/build /usr/share/nginx/html/pakoman-digital-loan
 COPY --from=build-step /app/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
