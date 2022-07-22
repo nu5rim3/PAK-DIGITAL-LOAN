@@ -15,23 +15,10 @@ COPY . ./
 # RUN npm run build
 
 # production environment
-ARG CUSTOM_BUILD_VERSION
-ARG CUSTOM_BUILD_DATE
-ARG CUSTOM_BUILD_UID
-
-ARG NGINX_VERSION 1.21.6
-
 FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine AS builder
 
-ARG CUSTOM_BUILD_VERSION
-ARG CUSTOM_BUILD_DATE
-ARG CUSTOM_BUILD_UID
-
-ARG NGINX_VERSION 1.21.6
-ARG NGINX_HEADERS_MORE_VERSION 0.33
-
 RUN wget "http://nginx.org/download/nginx-1.21.6.tar.gz" -O nginx.tar.gz && \
-    wget "https://github.com/openresty/headers-more-nginx-module/archive/v${NGINX_HEADERS_MORE_VERSION}.tar.gz" -O headers-more.tar.gz
+    wget "https://github.com/openresty/headers-more-nginx-module/archive/v0.33.tar.gz" -O headers-more.tar.gz
 
 RUN apk add --no-cache --virtual .build-deps \
   git \
@@ -56,9 +43,8 @@ RUN CONFARGS=$(nginx -V 2>&1 | sed -n -e 's/^.*arguments: //p') \
 
 RUN tar -zxvC /app/src -f "headers-more.tar.gz"
 
-RUN HEADERSMOREDIR="/app/src/headers-more-nginx-module-0.33" && \
-  cd /app/src/nginx-$NGINX_VERSION && \
-  ./configure --without-http_autoindex_module --with-compat $CONFARGS --add-dynamic-module=$HEADERSMOREDIR && \
+RUN cd /app/src/nginx-1.21.6 && \
+  ./configure --without-http_autoindex_module --with-compat $CONFARGS --add-dynamic-module="/app/src/headers-more-nginx-module-0.33" && \
   make && make install
 
 FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine as mobix-cams-digital-loan-web
