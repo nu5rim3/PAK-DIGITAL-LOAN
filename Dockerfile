@@ -14,7 +14,7 @@ COPY . ./
 
 RUN npm run build
 
-# production environment
+# proxy server environment
 FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine AS builder
 
 RUN wget "http://nginx.org/download/nginx-1.21.6.tar.gz" -O nginx.tar.gz && \
