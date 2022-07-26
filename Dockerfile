@@ -12,6 +12,8 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 # COPY . ./
 
+COPY ./nginx ./
+
 # RUN npm run build
 
 # production environment
