@@ -18,7 +18,7 @@ COPY . ./
 ARG NGINX_VERSION 1.21.6
 ARG NGINX_HEADERS_MORE_VERSION 0.33
 
-FROM fra.ocir.io/lolctech/fxapiuser/nginx:${NGINX_VERSION}-alpine as builder
+FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine AS builder
 
 RUN wget "http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz" -O nginx.tar.gz && \
     wget "https://github.com/openresty/headers-more-nginx-module/archive/v${NGINX_HEADERS_MORE_VERSION}.tar.gz" -O headers-more.tar.gz
