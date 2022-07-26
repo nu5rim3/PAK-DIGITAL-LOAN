@@ -15,9 +15,46 @@ COPY . ./
 # RUN npm run build
 
 # production environment
-FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine as nginx
+ARG NGINX_VERSION 1.21.6
+ARG NGINX_HEADERS_MORE_VERSION 0.33
 
-RUN apk update && apk add nginx-mod-http-headers-more
+FROM fra.ocir.io/lolctech/fxapiuser/nginx:${NGINX_VERSION}-alpine as builder
+
+RUN wget "http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz" -O nginx.tar.gz && \
+    wget "https://github.com/openresty/headers-more-nginx-module/archive/v${NGINX_HEADERS_MORE_VERSION}.tar.gz" -O headers-more.tar.gz
+
+RUN apk add --no-cache --virtual .build-deps \
+  git \
+  gcc \
+  libc-dev \
+  make \
+  openssl-dev \
+  pcre-dev \
+  zlib-dev \
+  linux-headers \
+  curl \
+  gnupg \
+  libxslt-dev \
+  gd-dev \
+  geoip-dev
+
+RUN mkdir -p /usr/src
+
+# Reuse same cli arguments as the nginx:alpine image used to build
+RUN CONFARGS=$(nginx -V 2>&1 | sed -n -e 's/^.*arguments: //p') \
+	tar -zxC /usr/src -f "nginx.tar.gz"
+
+RUN tar -zxvC /usr/src -f "headers-more.tar.gz"
+
+RUN HEADERSMOREDIR="/usr/src/headers-more-nginx-module-0.33" && \
+  cd /usr/src/nginx-$NGINX_VERSION && \
+  ./configure --without-http_autoindex_module --with-compat $CONFARGS --add-dynamic-module=$HEADERSMOREDIR && \
+  make && make install
+
+FROM fra.ocir.io/lolctech/fxapiuser/nginx:${NGINX_VERSION}-alpine
+
+# Extract the dynamic module "headers more" from the builder image
+COPY --from=builder /usr/lib/nginx/modules/modules/ngx_http_headers_more_filter_module.so /usr/lib/nginx/modules/modules/ngx_http_headers_more_filter_module.so
 
 # COPY --from=build-step /app/build /usr/share/nginx/html/pakoman-digital-loan
 COPY --from=build-step /app/nginx/nginx.conf /etc/nginx/nginx.conf
