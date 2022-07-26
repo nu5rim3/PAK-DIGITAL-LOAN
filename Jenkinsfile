@@ -20,13 +20,19 @@ pipeline {
         sh 'ls -la'
       }
     }
+    stage('cleanup') {
+        steps {
+            sh '''
+               docker rm $(docker ps -qf 'status=exited')
+               docker rmi $(docker images -qf "dangling=true")
+               '''
+        }
+    }
     stage('Build docker image') {
       agent {
         label "local"
       }
       steps {
-        sh "docker rm $(docker ps -qf 'status=exited')"
-        sh "docker rmi $(docker images -qf "dangling=true")"
         sh "docker build -t  fra.ocir.io/lolctech/pakoman/release/${con_name}:${tag} ."
       }
     }
