@@ -5,14 +5,12 @@ WORKDIR /app
 ENV NODE_ENV production
 ENV PATH /app/node_modules/.bin:$PATH
 
-# COPY package.json ./
+COPY package.json ./
 
 # RUN npm cache clean --force
 # RUN npm install --no-package-lock --production
 
-# COPY . ./
-
-COPY ./nginx ./
+COPY . ./
 
 # RUN npm run build
 
