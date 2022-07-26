@@ -51,7 +51,7 @@ RUN HEADERSMOREDIR="/usr/src/headers-more-nginx-module-0.33" && \
 FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine
 
 # Extract the dynamic module "headers more" from the builder image
-COPY --from=builder /usr/local/nginx/modules/ngx_http_headers_more_filter_module.so /usr/lib/nginx/modules/modules/ngx_http_headers_more_filter_module.so
+COPY --from=builder /usr/local/nginx/modules/ngx_http_headers_more_filter_module.so /usr/local/nginx/modules/ngx_http_headers_more_filter_module.so
 
 # COPY --from=build-step /app/build /usr/share/nginx/html/pakoman-digital-loan
 COPY --from=build-step /app/nginx/nginx.conf /etc/nginx/nginx.conf
