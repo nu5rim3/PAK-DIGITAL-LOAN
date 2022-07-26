@@ -25,10 +25,10 @@ pipeline {
         label "local"
       }
       steps {
-        sh """
-        docker rm $(docker ps - qf 'status=exited')
+        sh '''
+        docker rm $(docker ps - qf "status=exited")
         docker rmi $(docker images - qf "dangling=true")
-        """
+        '''
       }
     }
     stage('Build docker image') {
