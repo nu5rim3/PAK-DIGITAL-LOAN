@@ -7,17 +7,20 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY package.json ./
 
-RUN npm cache clean --force
-RUN npm install --no-package-lock --production
+# RUN npm cache clean --force
+# RUN npm install --no-package-lock --production
 
 COPY . ./
 
-RUN npm run build
+# RUN npm run build
 
 # production environment
-FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine
+FROM fra.ocir.io/lolctech/fxapiuser/nginx:1.21.6-alpine as nginx
 
-COPY --from=build-step /app/build /usr/share/nginx/html/pakoman-digital-loan
+RUN apk update && apk add nginx-mod-http-headers-more
+
+# COPY --from=build-step /app/build /usr/share/nginx/html/pakoman-digital-loan
+COPY --from=build-step /app/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build-step /app/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
