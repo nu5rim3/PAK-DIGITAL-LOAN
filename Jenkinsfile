@@ -21,12 +21,13 @@ pipeline {
       }
     }
     stage('cleanup') {
-        steps {
-            sh '''
-               docker rm $(docker ps -qf 'status=exited')
-               docker rmi $(docker images -qf "dangling=true")
-               '''
-        }
+      agent none
+      steps {
+        sh '''
+        docker rm $(docker ps - qf 'status=exited')
+        docker rmi $(docker images - qf "dangling=true")
+        '''
+      }
     }
     stage('Build docker image') {
       agent {
