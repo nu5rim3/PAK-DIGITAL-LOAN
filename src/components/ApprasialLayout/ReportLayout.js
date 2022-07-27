@@ -23,7 +23,7 @@ const CombinedReports = () => {
               <Card>
                 <div className="table-wrapper text-muted d-flex">
                   <Col md={12}>
-                    <CardTitle className="h4 col-wrapper text-muted">
+                    <CardTitle className=" h4 col-wrapper text-muted">
                       Clietele ID : {id}
                     </CardTitle>
 
