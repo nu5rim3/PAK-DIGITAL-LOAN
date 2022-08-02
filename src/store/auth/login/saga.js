@@ -92,6 +92,8 @@ function* loginUser({ payload: { user, history, response } }) {
 function* logoutUser({ payload: { history } }) {
   try {
 
+    history.push("/pakoman-digital-loan/redirect")
+
     const params = {
       token: `${localStorage.getItem('access_token')}`,
       token_type_hint: "access_token"
@@ -101,7 +103,10 @@ function* logoutUser({ payload: { history } }) {
 
     if (response != undefined, response != null) {
       localStorage.clear();
-      history.push("/pakoman-digital-loan/dashboard")
+
+      setTimeout(() => {
+        window.location.replace(`${process.env.REACT_APP_IDENTITY_SERVER_URL}/oidc/logout`)
+      }, 1000);
     }
 
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
@@ -109,7 +114,6 @@ function* logoutUser({ payload: { history } }) {
       yield put(logoutUserSuccess(response))
     }
   } catch (error) {
-    console.log(error);
     yield put(apiError(error))
   }
 }
