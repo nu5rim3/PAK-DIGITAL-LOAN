@@ -88,4 +88,15 @@ module.exports = function(app) {
       },
     })
   );
+
+  app.use(
+    '/pakoman-digital-loan/oauth2/revoke',
+    createProxyMiddleware({
+      target: process.env.REACT_APP_IDENTITY_SERVER_URL,
+      changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/oauth2/revoke': '/oauth2/revoke'
+      },
+    })
+  );
 };

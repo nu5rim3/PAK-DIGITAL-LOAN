@@ -55,7 +55,7 @@ const GeoDetails = (props) => {
       if (props.active === "13") {
         const responseImages = await getAllImages(appraisalId);
 
-        if (responseImages != undefined) {
+        if (responseImages != undefined && _isMounted) {
           var locationDetails = responseImages?.map(img => {
             checkAldreadySubmit(img?.imgMasterCategory);
             return { latitude: img.latitude, longitude: img.longitude, imgMasterCategory: img.imgMasterCategory }

@@ -12,6 +12,7 @@ import {
   postJwtLogin,
   postSocialLogin,
   getUserDetails,
+  postJwtRevokeToken
 } from "../../../helpers/fakebackend_helper"
 
 const fireBaseBackend = getFirebaseBackend()
@@ -91,14 +92,24 @@ function* loginUser({ payload: { user, history, response } }) {
 function* logoutUser({ payload: { history } }) {
   try {
 
-    localStorage.clear();
+    const params = {
+      token: `${localStorage.getItem('access_token')}`,
+      token_type_hint: "access_token"
+    }
+
+    const response = yield call(postJwtRevokeToken, new URLSearchParams(params));
+
+    if (response != undefined, response != null) {
+      localStorage.clear();
+      history.push("/pakoman-digital-loan/dashboard")
+    }
 
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
       const response = yield call(fireBaseBackend.logout)
       yield put(logoutUserSuccess(response))
     }
-    history.push("/pakoman-digital-loan/login")
   } catch (error) {
+    console.log(error);
     yield put(apiError(error))
   }
 }
