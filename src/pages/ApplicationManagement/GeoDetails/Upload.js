@@ -42,20 +42,25 @@ const FormUpload = props => {
     if (visible === false) {
       if (selectedFiles.length < 2) {
         setWarning("Minimum two images are required!")
+
+        setTimeout(() => {
+          setWarning(false)
+        }, 3000);
         return
       }
 
       setLoading(true)
-      setWarning(true)
+      setWarning(false)
 
-      selectedFiles?.forEach(async (file, index) => {
+      selectedFiles?.forEach(async(file, index) => {
+
         const image = await toBase64(file)
         const base64Content = image.split(",")
         var payload = {
           appraisalIdx: props.appraisalId,
           imgMasterCategory: `GEO_DETAILS_${getUserRole()}`,
-          imgSubCategory: `GEO_SUB_${getUserRole()}_${index}`,
-          imgOriginalName: file.path,
+          imgSubCategory: `GEO_SUB_${getUserRole()}_${index+1}`,
+          imgOriginalName: `${index}_${file.path}`.replace(" ", "_"),
           imgContentType: file.type,
           longitude: longtitude,
           latitude: latitude,
@@ -65,17 +70,18 @@ const FormUpload = props => {
         var response = await uploadGeoImage(payload)
 
         if (response != undefined) {
-          if (selectedFiles?.length - 1 === index) {
+          if (selectedFiles?.length -1 === index) {
             setLoading(false)
-            setMessage(response?.message)
             setSelectedFiles([])
 
+            setMessage("Images uploaded successfully!")
+            
             setTimeout(() => {
               window.location.reload()
             }, 1000)
           }
         }
-      })
+      });
     }
   }
 
@@ -171,6 +177,7 @@ const FormUpload = props => {
             <Form>
               <Dropzone
                 onDrop={acceptedFiles => handleAcceptedFiles(acceptedFiles)}
+                maxFiles={10}
               >
                 {({ getRootProps, getInputProps }) => (
                   <div className="dropzone">
@@ -191,29 +198,45 @@ const FormUpload = props => {
                       className="mt-1 mb-0 shadow-none border dz-processing dz-image-preview dz-success dz-complete"
                       key={i + "-file"}
                     >
-                      <div className="p-2">
-                        <Row className="align-items-center">
-                          <Col className="col-auto">
-                            <img
-                              data-dz-thumbnail=""
-                              height="80"
-                              className="avatar-sm rounded bg-light"
-                              alt={f.name}
-                              src={f.preview}
-                            />
-                          </Col>
-                          <Col>
-                            <Link
-                              to="#"
-                              className="text-muted font-weight-bold"
-                            >
-                              {f.name}
-                            </Link>
-                            <p className="mb-0">
-                              <strong>{f.formattedSize}</strong>
-                            </p>
-                          </Col>
-                        </Row>
+                      <div className="d-flex justify-content-between ">
+                        <div className="p-2">
+                          <Row className="align-items-center">
+                            <Col className="col-auto">
+                              <img
+                                data-dz-thumbnail=""
+                                height="80"
+                                className="avatar-sm rounded bg-light"
+                                alt={f.name}
+                                src={f.preview}
+                              />
+                            </Col>
+                            <Col>
+                              <Link
+                                to="#"
+                                className="text-muted font-weight-bold"
+                              >
+                                {f.name}
+                              </Link>
+                              <p className="mb-0">
+                                <strong>{f.formattedSize}</strong>
+                              </p>
+                            </Col>
+                          </Row>
+                        </div>
+                        <div className="text-right">
+                          <i 
+                          onClick={() => {
+                            if (i > -1) {
+                              var array = [...selectedFiles];
+                              var index = array.indexOf(f)
+                              if (index !== -1) {
+                                array.splice(index, 1);
+                                setSelectedFiles(array);
+                              }
+                            }
+                          }}
+                          className="h4 mt-1 mb-0 text-danger bx bxs-x-circle" />
+                        </div>
                       </div>
                     </Card>
                   )
