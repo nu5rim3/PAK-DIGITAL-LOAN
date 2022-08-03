@@ -20,16 +20,6 @@ pipeline {
         sh 'ls -la'
       }
     }
-    stage('Dangling') {
-      agent {
-        label "local"
-      }
-      steps {
-        // sh 'docker ps -q -f status=exited | xargs --no-run-if-empty docker rm'
-        // sh 'docker images -q -f dangling=true | xargs --no-run-if-empty docker rmi'
-        // sh 'docker volume ls -qf dangling=true | xargs -r docker volume rm'
-      }
-    }
     stage('Build docker image') {
       agent {
         label "local"
