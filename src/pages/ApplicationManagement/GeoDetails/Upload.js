@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import PropTypes from "prop-types"
 import {
   Card,
@@ -24,64 +24,88 @@ import SyncLoader from "components/SyncLoader"
 import { uploadGeoImage } from "services/geo_details.service"
 
 const FormUpload = props => {
+
+  const uploadBtnRef = useRef();
+
   const [selectedFiles, setSelectedFiles] = useState([])
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState(null)
   const [warning, setWarning] = useState(null)
-  const [latitude, setLatitude] = useState(null)
-  const [longtitude, setLongtitude] = useState(null)
   const [mapMessage, setMapMessage] = useState(null)
   const [visible, setVisible] = useState(false)
   const [count, setCount] = useState(0)
-  const [btn, setBtn] = useState(false)
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+
     // get coordinates before submit the images.
-    getCoordinates()
+    if (!navigator.geolocation) {
+      setMapMessage("Geolocation is not supported by your browser")
+    } else {
+      setMapMessage("Locating...")
+      navigator.geolocation.getCurrentPosition(
+        position => {
 
-    if (visible === false) {
-      if (selectedFiles.length < 2) {
-        setWarning("Minimum two images are required!")
-
-        setTimeout(() => {
-          setWarning(false)
-        }, 3000);
-        return
-      }
-
-      setLoading(true)
-      setWarning(false)
-
-      selectedFiles?.forEach(async(file, index) => {
-
-        const image = await toBase64(file)
-        const base64Content = image.split(",")
-        var payload = {
-          appraisalIdx: props.appraisalId,
-          imgMasterCategory: `GEO_DETAILS_${getUserRole()}`,
-          imgSubCategory: `GEO_SUB_${getUserRole()}_${index+1}`,
-          imgOriginalName: `${index}_${file.path}`.replace(" ", "_"),
-          imgContentType: file.type,
-          longitude: longtitude,
-          latitude: latitude,
-          image: base64Content[1],
-        }
-
-        var response = await uploadGeoImage(payload)
-
-        if (response != undefined) {
-          if (selectedFiles?.length -1 === index) {
-            setLoading(false)
-            setSelectedFiles([])
-
-            setMessage("Images uploaded successfully!")
+          if (position.coords.longitude !== null && position.coords.latitud !== null) {
             
-            setTimeout(() => {
-              window.location.reload()
-            }, 1000)
+            setMapMessage(null)
+
+            // save the images
+            if (selectedFiles.length < 2) {
+              setWarning("Minimum two images are required!")
+
+              setTimeout(() => {
+                setWarning(false)
+              }, 3000);
+              return
+            }
+
+            setLoading(true)
+            setWarning(false)
+
+            // disable button action
+            if (uploadBtnRef.current) {
+              uploadBtnRef.current.setAttribute("disabled", "disabled");
+            }
+
+            selectedFiles?.forEach(async (file, index) => {
+
+              const image = await toBase64(file)
+              const base64Content = image.split(",")
+              var payload = {
+                appraisalIdx: props.appraisalId,
+                imgMasterCategory: `GEO_DETAILS_${getUserRole()}`,
+                imgSubCategory: `GEO_SUB_${getUserRole()}_${index + 1}`,
+                imgOriginalName: `${index}_${file.path}`,
+                imgContentType: file.type,
+                longitude: position.coords.longitude,
+                latitude: position.coords.latitude,
+                image: base64Content[1],
+              }
+
+              var response = await uploadGeoImage(payload)
+
+              if (response != undefined) {
+                if (selectedFiles?.length - 1 === index) {
+                  setLoading(false)
+                  setSelectedFiles([])
+
+                  setMessage("Images uploaded successfully!")
+
+                  setTimeout(() => {
+                    window.location.reload()
+                  }, 1000)
+                }
+              }
+            });
           }
+        },
+        () => {
+          setMapMessage(
+            "Unable to retrieve your location. Please enable your location to continue."
+          )
+          setVisible(!visible)
         }
-      });
+      )
     }
   }
 
@@ -124,36 +148,6 @@ const FormUpload = props => {
 
     const i = Math.floor(Math.log(bytes) / Math.log(k))
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i]
-  }
-
-  const getCoordinates = () => {
-    //set counter to disable the button
-    setCount(count + 1)
-    if (count === 5) {
-      setBtn(true)
-    }
-
-    //Requset location
-    if (!navigator.geolocation) {
-      setMapMessage("Geolocation is not supported by your browser")
-    } else {
-      setMapMessage("Locating...")
-      navigator.geolocation.getCurrentPosition(
-        position => {
-          setMapMessage(null)
-          setLatitude(position.coords.latitude)
-          setLongtitude(position.coords.longitude)
-        },
-        () => {
-          setMapMessage(
-            "Unable to retrieve your location. Please enable your location to continue."
-          )
-          setVisible(!visible)
-        }
-      )
-    }
-
-    return visible
   }
 
   const handleClose = () => {
@@ -224,18 +218,18 @@ const FormUpload = props => {
                           </Row>
                         </div>
                         <div className="text-right">
-                          <i 
-                          onClick={() => {
-                            if (i > -1) {
-                              var array = [...selectedFiles];
-                              var index = array.indexOf(f)
-                              if (index !== -1) {
-                                array.splice(index, 1);
-                                setSelectedFiles(array);
+                          <i
+                            onClick={() => {
+                              if (i > -1) {
+                                var array = [...selectedFiles];
+                                var index = array.indexOf(f)
+                                if (index !== -1) {
+                                  array.splice(index, 1);
+                                  setSelectedFiles(array);
+                                }
                               }
-                            }
-                          }}
-                          className="h4 mt-1 mb-0 text-danger bx bxs-x-circle" />
+                            }}
+                            className="h4 mt-1 mb-0 text-danger bx bxs-x-circle" />
                         </div>
                       </div>
                     </Card>
@@ -247,11 +241,12 @@ const FormUpload = props => {
             <div className="text-center mt-4">
               <div className="d-flex justify-content-between">
                 <p className="card-title-desc"></p>
-                <SyncLoader loading={loading}>
-                  <Button size="md" color="info" onClick={onSubmit}>
-                    <i className="fa fa-upload me-2"></i>Upload
-                  </Button>
-                </SyncLoader>
+
+                  <button className="btn btn-info" onClick={onSubmit} ref={uploadBtnRef}>
+                    {loading === true && <i className="loader-item fas fa-sync fa-spin text-white"/>}
+                    {loading === false && <i className="fa fa-upload me-2"/>}Upload
+                  </button>
+
               </div>
             </div>
           </CardBody>
