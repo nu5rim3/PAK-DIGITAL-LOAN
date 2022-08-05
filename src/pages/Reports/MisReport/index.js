@@ -65,6 +65,11 @@ const MisReport = (props) => {
         sort: "asc",
       },
       {
+        field: 'status',
+        label: 'Status',
+        sort: "asc",
+      },
+      {
         field: 'loanProduct',
         label: 'Product Name',
         sort: "asc",
@@ -94,7 +99,13 @@ const MisReport = (props) => {
         field: 'userIdx',
         label: 'Created By',
         sort: "asc",
+      },
+      {
+        field: 'nextActionPendingRole',
+        label: 'Next Action Pending Role',
+        sort: "asc",
       }
+
     ],
     rows: data
   };
@@ -118,12 +129,14 @@ const MisReport = (props) => {
     item.appraisalId = item.appraisalId;
     item.branchDesc = item.branchDesc;
     item.userName = item.userName;
-    item.customerCnic = item.customer.cNic;
-    item.customerName = item.customer.name;
+    item.status = item.status;
+    item.customerCnic = item.clienteleCustomer.identificationNumber;
+    item.customerName = item.clienteleCustomer.fullName;
     item.loanProduct = item.creditReportVo.loanProduct;
     item.requestedLoanAmount = item.creditReportVo.requestedLoanAmount;
     item.createdDate = moment(item.createdDate).format("DD-MM-YYYY HH:mm:ss");
     item.userIdx = item.userIdx;
+    item.nextActionPendingRole=item.approvalReport.nextActionPendingRole;
     return item;
   }
 
