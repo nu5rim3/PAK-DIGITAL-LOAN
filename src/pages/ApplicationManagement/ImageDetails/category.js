@@ -32,7 +32,6 @@ const Category = (props) => {
 
   const loadThumbnails = (images) => {
     return images.map((image, index) => {
-      console.log(image);
       return <AsyncImage className="col-md-3"
         key={index}
         src={image.imgPath} 
