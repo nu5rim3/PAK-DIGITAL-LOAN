@@ -30,7 +30,7 @@ import {
 } from "services/common.service";
 
 import {
-  getAllUsers
+  getAllUsers, getUserById
 } from "services/user.service";
 
 
@@ -42,6 +42,7 @@ const MisReport = (props) => {
   const [branches, setBranches] = useState([]);
 
   const [cros, setCros] = useState([]);
+  const [userDetails, setUserDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -62,6 +63,11 @@ const MisReport = (props) => {
       {
         field: 'userName',
         label: 'CRO Name',
+        sort: "asc",
+      },
+      {
+        field: 'status',
+        label: 'Status',
         sort: "asc",
       },
       {
@@ -94,7 +100,13 @@ const MisReport = (props) => {
         field: 'userIdx',
         label: 'Created By',
         sort: "asc",
+      },
+      {
+        field: 'nextActionPendingRole',
+        label: 'Next Action Pending Role',
+        sort: "asc",
       }
+
     ],
     rows: data
   };
@@ -102,6 +114,10 @@ const MisReport = (props) => {
   const { register, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
+    if (userDetails.roles[0].code === 'CRO' || userDetails.roles[0].code === 'CO' || userDetails.roles[0].code === 'BHO') {
+      data.branch = userDetails.branches[0].code;
+
+    }
 
     setIsLoading(true);
     const misResponse = await getMisReportSummary(data);
@@ -118,12 +134,14 @@ const MisReport = (props) => {
     item.appraisalId = item.appraisalId;
     item.branchDesc = item.branchDesc;
     item.userName = item.userName;
-    item.customerCnic = item.customer.cNic;
-    item.customerName = item.customer.name;
+    item.status = item.status;
+    item.customerCnic = item.clienteleCustomer.identificationNumber;
+    item.customerName = item.clienteleCustomer.fullName;
     item.loanProduct = item.creditReportVo.loanProduct;
     item.requestedLoanAmount = item.creditReportVo.requestedLoanAmount;
     item.createdDate = moment(item.createdDate).format("DD-MM-YYYY HH:mm:ss");
     item.userIdx = item.userIdx;
+    item.nextActionPendingRole = item.approvalReport.nextActionPendingRole;
     return item;
   }
 
@@ -136,6 +154,10 @@ const MisReport = (props) => {
 
   const exportToExcel = async () => {
     var exportData = watch();
+    if (userDetails.roles[0].code === 'CRO' || userDetails.roles[0].code === 'CO' || userDetails.roles[0].code === 'BHO') {
+      exportData.branch = userDetails.branches[0].code;
+     
+    }
     const response = await getMisReport(exportData)
 
     const blob = new Blob([response.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
@@ -154,9 +176,14 @@ const MisReport = (props) => {
       const branchResponse = await getAllBranches();
 
       const userResponse = await getAllUsers(0, 10000);
+      const obj = JSON.parse(localStorage.getItem("authUser"));
+
+
+      const userDetailsResponse = await getUserById(obj.username);
+
       if (_isMounted) {
         setBranches(branchResponse);
-
+        setUserDetails(userDetailsResponse)
         if (userResponse !== undefined) {
 
           var croList = [];
