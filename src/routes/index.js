@@ -25,6 +25,7 @@ import EcibViwer from "pages/ApplicationManagement/OnBoardingDetails/EcibDocumen
 import BiometricViewer from "pages/ApplicationManagement/OnBoardingDetails/BiometricDocument"
 import InternalCreditDocument from "pages/ApplicationManagement/OnBoardingDetails/InternalCreditDocument"
 import ReportDocument from "pages/ApplicationManagement/ReportDetails/Document"
+import CombinedReports from "../components/ApprasialLayout/ReportLayout";
 
 // REPORT AND SUMMARY
 
@@ -43,10 +44,10 @@ const authProtectedRoutes = [
 
   // APPLICATION MANAGEMENT
   { path: "/pakoman-digital-loan/dashboard", component: Dashboard },
-  { path: "/pakoman-digital-loan/application-management/origination", component: Origination },
+  { path: "/pakoman-digital-loan/application-management/origination", component: Origination },  
   { path: "/pakoman-digital-loan/credit-appraisals/view/:appraisalId", component: Appraisal },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/pep/:id", component: PepDocument },
-  { path: "/pakoman-digital-loan/credit-appraisals/documents/sanc/:id", component: SancDocument },
+  { path: "/pakoman-digital-loan/credit-appraisals/documents/sanc/:id", component: CombinedReports },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/ecib/:cnic", component: EcibViwer },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/biometric/:id", component: BiometricViewer },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/credit-history/:id", component: InternalCreditDocument },

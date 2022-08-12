@@ -1,0 +1,24 @@
+.table-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: auto;
+  height: 100%;  
+}
+
+.td-wrapper {
+  min-width: 40em;
+  border: 0.5px solid rgb(218, 217, 217);
+  border-top: 2px solid rgb(104, 104, 104);
+  border-collapse: collapse;
+}
+
+.th-wrapper {
+  border-left: 0.5px solid rgb(218, 217, 217);
+  border-right: 0.5px solid rgb(218, 217, 217);
+  border-collapse: collapse;
+}
+
+.col-wrapper {
+  padding-top: 10px;
+}
