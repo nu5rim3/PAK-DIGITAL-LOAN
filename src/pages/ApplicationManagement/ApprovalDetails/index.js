@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import {
   Row,
@@ -39,6 +39,8 @@ import {
 const ApprovalDetails = (props) => {
 
   const { appraisalId } = useParams();
+
+  const approvalBtnRef = useRef();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingOb, setIsLoadingOb] = useState(false);
@@ -215,6 +217,12 @@ const ApprovalDetails = (props) => {
       "stepAction": type,
       "comment": value
     }
+
+    // disable button action
+    if(approvalBtnRef.current){
+      approvalBtnRef.current.setAttribute("disabled", "disabled");
+    }
+
     setIsLoadingStep(true);
     const stepResponse = await createApprovalStep(payload);
     if (stepResponse !== null) {
@@ -471,13 +479,13 @@ const ApprovalDetails = (props) => {
                                           {<span id={`ca_error_comment_${index}`} className="text-danger d-none">This field is required</span>}
                                         </div>
                                         {verifyUserWithLevel(item.roleCode) === true && item.status === "P" && <div className="form-group mt-3 d-flex justify-content-end align-items-center">
-                                          <button onClick={() => onSubmitCaApprove(index, item)} className="btn btn-danger w-md me-2">
+                                          <button onClick={() => onSubmitCaReject(index, item)} className="btn btn-danger w-md me-2">
                                             <SyncLoader loading={isLoadingCa}>
                                               <i className="bx bx-x-circle font-size-16 me-2" />
                                               Reject
                                             </SyncLoader>
                                           </button>
-                                          <button onClick={() => onSubmitCaReject(index, item)} className="btn btn-success w-md">
+                                          <button onClick={() => onSubmitCaApprove(index, item)} className="btn btn-success w-md">
                                             <SyncLoader loading={isLoadingCa}>
                                               <i className="bx bxs-check-circle font-size-16 me-2" />
                                               Approve
@@ -567,7 +575,7 @@ const ApprovalDetails = (props) => {
                                   {<span id="err_step_comment" className="text-danger d-none">This field is required</span>}
                                 </div>
                                 <div className="form-group mt-3 d-flex justify-content-end align-items-center">
-                                  <button className="btn btn-danger w-md me-2"
+                                  <button className="btn btn-danger w-md me-2" ref={approvalBtnRef}
                                     onClick={() => createActionApprovalStep("J")}
                                   >
                                     <SyncLoader loading={isLoadingStep}>
@@ -575,7 +583,7 @@ const ApprovalDetails = (props) => {
                                       Reject
                                     </SyncLoader>
                                   </button>
-                                  <button className="btn btn-warning w-md me-2"
+                                  <button className="btn btn-warning w-md me-2" ref={approvalBtnRef}
                                     onClick={() => createActionApprovalStep("R")}
                                   >
                                     <SyncLoader loading={isLoadingStep}>
@@ -583,7 +591,7 @@ const ApprovalDetails = (props) => {
                                       Return
                                     </SyncLoader>
                                   </button>
-                                  <button type="submit" className="btn btn-success w-md"
+                                  <button type="submit" className="btn btn-success w-md" ref={approvalBtnRef}
                                     onClick={() => createActionApprovalStep("A")}
                                   >
                                     <SyncLoader loading={isLoadingStep}>

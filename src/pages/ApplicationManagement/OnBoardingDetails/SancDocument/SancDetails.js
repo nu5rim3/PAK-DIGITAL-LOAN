@@ -42,7 +42,7 @@ const SancDetails = () => {
                 let jsonObj = JSON.parse(verificationResponse?.msasDetailsDto?.objSanName);
 
                 if (Array.isArray(jsonObj.data.eu) && jsonObj.data.eu.length) {
-                    setEU(jsonObj.data);
+                    setEU(true);
                 }
 
                 if (Array.isArray(jsonObj.data.nabpk) && jsonObj.data.nabpk.length) {

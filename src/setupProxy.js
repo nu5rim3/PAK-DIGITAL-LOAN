@@ -55,7 +55,7 @@ module.exports = function(app) {
       },
     })
   );
-
+  
   app.use(
     '/pakoman-digital-loan/mobixCamsApproval',
     createProxyMiddleware({
@@ -63,6 +63,39 @@ module.exports = function(app) {
       changeOrigin: true,
       pathRewrite: {
         '^/pakoman-digital-loan/mobixCamsApproval': '/mobixCamsApproval'
+      },
+    })
+  );
+  
+  app.use(
+    '/pakoman-digital-loan/mobixCamsReport',
+    createProxyMiddleware({
+      target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
+      changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/mobixCamsReport': '/mobixCamsReport'
+      },
+    })
+  );
+
+  app.use(
+    '/pakoman-digital-loan/oauth2/token',
+    createProxyMiddleware({
+      target: process.env.REACT_APP_IDENTITY_SERVER_URL,
+      changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/oauth2/token': '/oauth2/token'
+      },
+    })
+  );
+
+  app.use(
+    '/pakoman-digital-loan/oauth2/revoke',
+    createProxyMiddleware({
+      target: process.env.REACT_APP_IDENTITY_SERVER_URL,
+      changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/oauth2/revoke': '/oauth2/revoke'
       },
     })
   );

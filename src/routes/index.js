@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom"
 // ACCESS AND PERMISSIONS
 import Login from "pages/Authentication/Login"
 import Logout from "pages/Authentication/Logout"
+import RedirectPage from "pages/Authentication/Redirect"
 
 import Role from "pages/AccessAndPermission/Accounts/Role"
 import Member from "pages/AccessAndPermission/Accounts/Member"
@@ -28,6 +29,8 @@ import CombinedReports from "../components/ApprasialLayout/ReportLayout";
 
 // REPORT AND SUMMARY
 
+import MisReport from "pages/Reports/MisReport"
+
 const authProtectedRoutes = [
 
   // ACCESS AND PERMISSIONS
@@ -50,6 +53,9 @@ const authProtectedRoutes = [
   { path: "/pakoman-digital-loan/credit-appraisals/documents/credit-history/:id", component: InternalCreditDocument },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/:reportType/reports/:appraisalId", component: ReportDocument },
 
+  // REPORT AND SUMMARY
+  { path: "/pakoman-digital-loan/reports/mis-report",component:  MisReport},
+
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
   { path: "/", exact: true, component: () => <Redirect to="/pakoman-digital-loan/dashboard" /> },
@@ -59,6 +65,7 @@ const authProtectedRoutes = [
 const publicRoutes = [
   { path: "/pakoman-digital-loan/logout", component: Logout },
   { path: "/pakoman-digital-loan/login", component: Login },
+  { path: "/pakoman-digital-loan/redirect", component: RedirectPage },
 ]
 
 export { publicRoutes, authProtectedRoutes }

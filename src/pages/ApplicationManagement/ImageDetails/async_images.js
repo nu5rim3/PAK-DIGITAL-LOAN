@@ -36,9 +36,9 @@ const AsyncImage = (props) => {
         return (
             <div className={props.className}>
                 <img src={data} onClick={() => setisFits(true)} className="img-responsive" style={{
-                    width: "100%",
+                    width: "200px",
                     height: "200px",
-                    objectFit: "cover",
+                    objectFit: "fill",
                 }}/>
                 <p>{props.category}</p>
                 {isFits ? (

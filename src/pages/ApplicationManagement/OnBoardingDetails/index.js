@@ -74,7 +74,7 @@ const OnBoardingDetails = (props) => {
                   <Nav pills className="flex-column">
                     {clienteles && clienteles.map((clientele, index) => (
                       <NavItem key={index}>
-                        <NavLink
+                        {clientele?.status === "A" && <NavLink
                           style={{ cursor: "pointer" }}
                           className={classnames({
                             "mb-2": true,
@@ -84,8 +84,8 @@ const OnBoardingDetails = (props) => {
                             toggleVertical(index);
                           }}
                         >
-                          {getValueOfClientele(clientele.type)} 0{index + 1}
-                        </NavLink>
+                          {getValueOfClientele(clientele?.type)} - {clientele?.fullName}
+                        </NavLink>}
                       </NavItem>
                     ))}
                   </Nav>

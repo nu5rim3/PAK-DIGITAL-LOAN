@@ -2,6 +2,11 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Route, Redirect } from "react-router-dom"
 
+// service
+import { Authentication } from "services/auth.service";
+
+const service = Authentication();
+
 const Authmiddleware = ({
   component: Component,
   layout: Layout,
@@ -17,13 +22,13 @@ const Authmiddleware = ({
             to={{ pathname: "/pakoman-digital-loan/login", state: { from: props.location } }}
           />
         )
+      } else {
+        return (
+          <Layout>
+            <Component {...props} />
+          </Layout>
+        )
       }
-
-      return (
-        <Layout>
-          <Component {...props} />
-        </Layout>
-      )
     }}
   />
 )
