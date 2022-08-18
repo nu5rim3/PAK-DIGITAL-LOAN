@@ -43,6 +43,7 @@ const MisReport = (props) => {
 
   const [cros, setCros] = useState([]);
   const [userDetails, setUserDetails] = useState(null);
+  const [isBranch, setIsBranch] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -156,7 +157,7 @@ const MisReport = (props) => {
     var exportData = watch();
     if (userDetails.roles[0].code === 'CRO' || userDetails.roles[0].code === 'CO' || userDetails.roles[0].code === 'BHO') {
       exportData.branch = userDetails.branches[0].code;
-     
+
     }
     const response = await getMisReport(exportData)
 
@@ -184,6 +185,10 @@ const MisReport = (props) => {
       if (_isMounted) {
         setBranches(branchResponse);
         setUserDetails(userDetailsResponse)
+        if (userDetailsResponse.roles[0].code === 'CRO' || userDetailsResponse.roles[0].code === 'CO' || userDetailsResponse.roles[0].code === 'BHO') {
+          setIsBranch(false);
+
+        }
         if (userResponse !== undefined) {
 
           var croList = [];
@@ -297,7 +302,7 @@ const MisReport = (props) => {
 
                     </Row>
                     <Row>
-                      <Col className="col-3">
+                      {isBranch && <Col className="col-3">
                         <div className="form-group row">
                           <label
                             htmlFor="example-date-input"
@@ -318,6 +323,7 @@ const MisReport = (props) => {
                           {/* {errors.branch && <span className="text-danger">This field is required</span>} */}
                         </div>
                       </Col>
+                      }
                       <Col className="col-3">
                         <div className="form-group row">
                           <label
