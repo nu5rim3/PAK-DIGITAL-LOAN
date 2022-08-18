@@ -141,7 +141,7 @@ const MisReport = (props) => {
     item.requestedLoanAmount = item.creditReportVo.requestedLoanAmount;
     item.createdDate = moment(item.createdDate).format("DD-MM-YYYY HH:mm:ss");
     item.userIdx = item.userIdx;
-    item.nextActionPendingRole = item.approvalReport.nextActionPendingRole;
+    item.nextActionPendingRole = item.nextActionPendingRole;
     return item;
   }
 
