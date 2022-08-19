@@ -249,6 +249,7 @@ const MisReport = (props) => {
                               <option value="">-- Select --</option>
                               <option value="P">Pending</option>
                               <option value="R">Returned</option>
+                              <option value="C">Approval Pending</option>
                               <option value="A">Approved</option>
                               <option value="J">Rejected</option>
                             </select>
