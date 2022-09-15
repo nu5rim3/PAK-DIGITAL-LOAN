@@ -383,8 +383,9 @@ const LoanDetails = (props) => {
                   className="accordion-collapse"
                 >
                   <div className="accordion-body p-0 mt-4">
-                    <Row>
-                      <Col md="3">
+                    <Row className="container">
+                      <div>
+                        <Col md="3">
                         <Nav pills className="flex-column">
                           {businessLoanDetails && businessLoanDetails.map((item, index) => (
                             <NavItem key={index}>
@@ -403,8 +404,9 @@ const LoanDetails = (props) => {
                             </NavItem>
                           ))}
                         </Nav>
-                      </Col>
-                      <Col md="9">
+                        </Col>
+                      </div>
+                      <div item className="col-12 col-md-12 col-sm-12">
                         <TabContent
                           activeTab={toggleBusinessVerticalTab}
                           className="text-muted mt-4 mt-md-0"
@@ -413,8 +415,8 @@ const LoanDetails = (props) => {
                             <TabPane key={index} tabId={index}>
                               <Row>
                                 <div className="text-muted d-flex">
-                                  <Grid container spacing={10}>
-                                    <Grid item className="grid-text">
+                                  <div className="container row">
+                                    <div item className="col-6 col-md-6 col-sm-6 grid-text">
                                       <p>Business Name</p>
                                       <p>Nature of Business</p>
                                       <p>Business Address</p>
@@ -424,8 +426,8 @@ const LoanDetails = (props) => {
                                       <p>Ownership of Business Place</p>
                                       <p>Business Assets + Stocks</p>
                                       <p>Repeat Customer</p>
-                                    </Grid>
-                                    <Grid item>
+                                    </div>
+                                    <div item className="col-6 col-md-6 col-sm-6">
                                       <p>{item && item.bnsName ? item.bnsName : "\u00A0"}</p>
                                       <p>{item && item.natureOfBns ? getValueByList(natureOfBusiness, item.natureOfBns) : "\u00A0"}</p>
                                       <p>{item && item.bnsAddress ? item.bnsAddress : "\u00A0"}</p>
@@ -436,14 +438,14 @@ const LoanDetails = (props) => {
                                       <p>{item && item.costOfBns ? item.costOfBns : "\u00A0"}</p>
                                       <p>{item && item.repeatCustomer ? getValueByList(repeatCustomers, item.repeatCustomer) : "\u00A0"}</p>
 
-                                    </Grid>
-                                  </Grid>
+                                    </div>
+                                  </div>
                                 </div>
                               </Row>
                             </TabPane>
                           ))}
                         </TabContent>
-                      </Col>
+                      </div>
                     </Row>
                   </div>
                 </Collapse>
@@ -472,8 +474,8 @@ const LoanDetails = (props) => {
                   <div className="accordion-body">
                     <Row>
                       <div className="text-muted d-flex">
-                        <Grid container spacing={10}>
-                          <Grid item className="grid-text">
+                        <div className="container row">
+                          <div item className="col-6 col-md-6 col-sm-6 grid-text">
                             <p>Borrower District</p>
                             <p>S/O, W/O, D/O</p>
                             <p>Loan Tenure in Days</p>
@@ -488,8 +490,8 @@ const LoanDetails = (props) => {
                             <p>{'\u00A0'}</p>
                             <p>Collateral Against which Loan Given</p>
                             <p>Number of Times Claim Lodged</p>
-                          </Grid>
-                          <Grid item>
+                          </div>
+                          <div item className="col-6 col-md-6 col-sm-6">
                             <p>{liveStockLoanDetails && liveStockLoanDetails.borrowerDistrict ? liveStockLoanDetails.borrowerDistrict : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.sowodo ? liveStockLoanDetails.sowodo : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.loanTenure ? liveStockLoanDetails.loanTenure : "\u00A0"}</p>
@@ -504,9 +506,9 @@ const LoanDetails = (props) => {
                             <p>{liveStockLoanDetails && liveStockLoanDetails.bulls ? "Bulls: " + liveStockLoanDetails.bulls : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.collateral ? liveStockLoanDetails.collateral : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.claimLodged ? liveStockLoanDetails.claimLodged : "\u00A0"}</p>
-                          </Grid>
+                          </div>
 
-                          <Grid item className="grid-text">
+                          <div item className="col-6 col-md-6 col-sm-6 grid-text">
                             <p>Animal Tagging</p>
                             <p>Purpose of Loan</p>
                             <p>Nature of the borrower</p>
@@ -518,8 +520,8 @@ const LoanDetails = (props) => {
                             <p>Experience in Cultivation</p>
                             <p>Market Check through Field Verification</p>
                             <p>Agri Secured</p>
-                          </Grid>
-                          <Grid item>
+                          </div>
+                          <div item className="col-6 col-md-6 col-sm-6">
                             <p>{liveStockLoanDetails && liveStockLoanDetails.animalTagging ? liveStockLoanDetails.animalTagging : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.purposeOfLoan ? getValueByList(loanPurpose, liveStockLoanDetails.purposeOfLoan) : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.natureOfTheBorrower ? getValueNatureOfBorrowe(liveStockLoanDetails.natureOfTheBorrower) : "\u00A0"}</p>
@@ -531,9 +533,9 @@ const LoanDetails = (props) => {
                             <p>{liveStockLoanDetails && liveStockLoanDetails.expInCult ? liveStockLoanDetails.expInCult : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.marketCheck ? getValueByList(fieldVerification, liveStockLoanDetails.marketCheck) : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.agriSecured ? liveStockLoanDetails.agriSecured : "\u00A0"}</p>
-                          </Grid>
+                          </div>
 
-                          <Grid item >
+                          <div item className="col-12 col-md-12 col-sm-12">
                             {/* TODO */}
                             <Card className="witness-signature-card">
                               <p>Customer Signature</p>
@@ -541,8 +543,8 @@ const LoanDetails = (props) => {
                                 sign.status === "A" && <AsyncImage src={sign.imgPath} key={index} />
                               ))}
                             </Card>
-                          </Grid>
-                        </Grid>
+                          </div>
+                        </div>
                       </div>
                     </Row>
                   </div>
@@ -572,8 +574,8 @@ const LoanDetails = (props) => {
                   <div className="accordion-body">
                     <Row>
                       <div className="text-muted d-flex">
-                        <Grid container spacing={10}>
-                          <Grid item className="grid-text">
+                        <div className="container row">
+                          <div item className="col-6 col-md-6 col-sm-6 grid-text">
                             <p>Nature of the borrower</p>
                             <p>{'\u00A0'}</p>
                             <p>Ownership of Land</p>
@@ -584,8 +586,8 @@ const LoanDetails = (props) => {
                             <p>Land Under Cultivation in Acres</p>
                             <p>{'\u00A0'}</p>
                             <p>{'\u00A0'}</p>
-                          </Grid>
-                          <Grid item>
+                          </div>
+                          <div item className="col-6 col-md-6 col-sm-6">
                             <p>{cultivationLoanDetails && cultivationLoanDetails.natureOfTheBorrower ? getValueNatureOfBorrowe(cultivationLoanDetails.natureOfTheBorrower) : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.ownOfCult ? getValueByList(ownOfCultivation, cultivationLoanDetails.ownOfCult) : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.ownOfLand ? getValueOwnershipOfLand(cultivationLoanDetails.ownOfLand) : "\u00A0"}</p>
@@ -596,30 +598,30 @@ const LoanDetails = (props) => {
                             <p>{cultivationLoanDetails && cultivationLoanDetails.acresOwned ? "Owned: " + cultivationLoanDetails.acresOwned : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.acresRented ? "Rented: " + cultivationLoanDetails.acresRented : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.acresTotal ? "Total: " + cultivationLoanDetails.acresTotal : "\u00A0"}</p>
-                          </Grid>
+                          </div>
 
-                          <Grid item className="grid-text">
+                          <div item className="col-6 col-md-6 col-sm-6 grid-text">
                             <p>Acres of Rabi</p>
                             <p>Harvesting Date</p>
                             <p>Cultivation Date </p>
-                          </Grid>
-                          <Grid item>
+                          </div>
+                          <div item className="col-6 col-md-6 col-sm-6">
                             <p>{cultivationLoanDetails && cultivationLoanDetails.acresOfRabi ? cultivationLoanDetails.acresOfRabi : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.rabiHarvestingDate ? new moment(cultivationLoanDetails.rabiHarvestingDate).format("Y-MM-DD") : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.rabiCultivationDate ? new moment(cultivationLoanDetails.rabiCultivationDate).format("Y-MM-DD") : "\u00A0"}</p>
-                          </Grid>
+                          </div>
 
-                          <Grid item className="grid-text">
+                          <div item className="col-6 col-md-6 col-sm-6 grid-text">
                             <p>Acres of Kharif</p>
                             <p>Harvesting Date</p>
                             <p>Cultivation Date</p>
-                          </Grid>
-                          <Grid item>
+                          </div>
+                          <div item className="col-6 col-md-6 col-sm-6">
                             <p>{cultivationLoanDetails && cultivationLoanDetails.acresOfKharif ? cultivationLoanDetails.acresOfKharif : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.kharifHarvestingDate ? new moment(cultivationLoanDetails.kharifHarvestingDate).format("Y-MM-DD") : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.kharifCultivationDate ? new moment(cultivationLoanDetails.kharifCultivationDate).format("Y-MM-DD") : "\u00A0"}</p>
-                          </Grid>
-                        </Grid>
+                          </div>
+                        </div>
                       </div>
                     </Row>
 

@@ -393,20 +393,20 @@ const CustomerDetails = (props) => {
                       <Row>
                         <div className="text-muted d-flex">
                           {contact.map((item, index) => (
-                            <Grid container spacing={12} key={index}>
-                              <Grid item className="grid-text">
+                            <div className="container row" style={{ width: "inherit" }} key={index}>
+                              <div item className="col-6 col-md-6 grid-text">
                                 <span key={index}>
                                   <p>Phone No Type</p>
                                   <p>Phone No</p>
                                 </span>
-                              </Grid>
-                              <Grid item>
+                              </div>
+                              <div item className="col-6 col-md-6"> 
                                 <span key={index}>
                                   <p>{item.phoneNoType}</p>
                                   <p>{item.phoneNo}</p>
                                 </span>
-                              </Grid>
-                            </Grid>
+                              </div>
+                            </div>
                           ))}
                         </div>
                       </Row>
@@ -505,24 +505,24 @@ const CustomerDetails = (props) => {
                     className="accordion-collapse"
                   >
                     <div className="accordion-body">
-                      <Row>
+                      <div className="row">
                         <div className="text-muted d-flex">
-                          <Grid container spacing={12}>
-                            <Grid item className="grid-text">
-                              <p>Recipient Name</p>
-                              <p>Relationship</p>
+                          <div className="row" style={{ width: "inherit" }}>
+                            <div className="col-6 col-md-6 grid-text">
+                              <p>Recipient Name</p>                         
+                              <p>Relationship</p>                              
                               <p>CNIC No</p>
                               <p>Phone No</p>
-                            </Grid>
-                            <Grid item>
+                            </div>
+                            <div className="col-6 col-md-6" >
                               <p>{recipient && recipient.recipientName ? recipient.recipientName : "\u00A0"}</p>
                               <p>{recipient && recipient.relationship ? getValueByList(relationship, recipient.relationship) : "\u00A0"}</p>
                               <p>{recipient && recipient.cNicNo ? recipient.cNicNo : "\u00A0"}</p>
                               <p>{recipient && recipient.phoneNo ? recipient.phoneNo : "\u00A0"}</p>
-                            </Grid>
-                          </Grid>
+                            </div>
+                          </div>
                         </div>
-                      </Row>
+                      </div>
                     </div>
                   </Collapse>
                 </div>
@@ -551,33 +551,71 @@ const CustomerDetails = (props) => {
                     <div className="accordion-body">
                       <Row>
                         <div className="text-muted d-flex">
-                          <Grid container spacing={12}>
-                            <Grid item className="grid-text">
-                              <p>Occupation</p>
-                              <p>Sub Occupation</p>
-                              <p>How Did You Know About Us</p>
-                              <p>Sector</p>
-                              <p>Sub Sector</p>
-                            </Grid>
-                            <Grid item>
-                              <p>{other && other.occupation ? getValueByList(occupations, other.occupation) : "\u00A0"}</p>
-                              <p>{other && other.subOccupation ? other.subOccupation : "\u00A0"}</p>
-                              <p>{other && other.howDidYouKnow ? getValueByList(informationSources, other.howDidYouKnow) : "\u00A0"}</p>
-                              <p>{other && other.sector ? getValueByList(sectors, other.sector) : "\u00A0"}</p>
-                              <p>{other && other.subSector ? getValueByList(subSectors, other.subSector) : "\u00A0"}</p>
-                            </Grid>
+                          <div item className="container row col-12 col-md-12 col-sm-6">
+                            <table className="table table-borderless">
+                              <tbody>
+                                <tr>
+                                  <td className="grid-text"><p>Occupation</p></td>
+                                  <td><p>{other && other.occupation ? getValueByList(occupations, other.occupation) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="grid-text"><p>Sub Occupation</p></td>
+                                  <td><p>{other && other.subOccupation ? other.subOccupation : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="grid-text"><p>How Did You Know About Us</p></td>
+                                  <td><p>{other && other.howDidYouKnow ? getValueByList(informationSources, other.howDidYouKnow) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="grid-text"><p>Sector</p></td>
+                                  <td><p>{other && other.sector ? getValueByList(sectors, other.sector) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="grid-text"><p>Sub Sector</p></td>
+                                  <td><p>{other && other.subSector ? getValueByList(subSectors, other.subSector) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="grid-text"><p>Savings Account Required</p></td>
+                                  <td><p>{other && other.savingsReq ? other.savingsReq : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="grid-text"><p>WHT Declaration</p></td>
+                                  <td><p>{other && other.whtDec ? other.whtDec : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="grid-text"> <p>PoliticallyExposedPerson</p></td>
+                                  <td><p>{other && other.poliExpo ? getValuePoliticallyExposed(other.poliExpo) : "\u00A0"}</p></td>
+                                </tr>
+                              {/* <div item className="col-6 col-md-4 col-sm-6 grid-text">
+                                <p>Occupation</p>
+                                <p>Sub Occupation</p>
+                                <p>How Did You Know About Us</p>
+                                <p>Sector</p>
+                                <p>Sub Sector</p>                                
+                              </div> */}
 
-                            <Grid item className="grid-text">
+
+                              {/* <div item className="col-6 col-md-4 col-sm-6">
+                                <p>{other && other.occupation ? getValueByList(occupations, other.occupation) : "\u00A0"}</p>
+                                <p>{other && other.subOccupation ? other.subOccupation : "\u00A0"}</p>
+                                <p>{other && other.howDidYouKnow ? getValueByList(informationSources, other.howDidYouKnow) : "\u00A0"}</p>
+                                <p>{other && other.sector ? getValueByList(sectors, other.sector) : "\u00A0"}</p>
+                                <p>{other && other.subSector ? getValueByList(subSectors, other.subSector) : "\u00A0"}</p>
+                              </div> */}
+                              </tbody>
+                            </table>
+
+                            {/* <div item className="col-6 col-md-4 col-sm-6 grid-text">
                               <p>Savings Account Required</p>
                               <p>WHT Declaration</p>
                               <p>PoliticallyExposedPerson</p>
-                            </Grid>
-                            <Grid item>
+                            </div>
+                            <div item className="col-6 col-md-4 col-sm-6">
                               <p>{other && other.savingsReq ? other.savingsReq : "\u00A0"}</p>
                               <p>{other && other.whtDec ? other.whtDec : "\u00A0"}</p>
                               <p>{other && other.poliExpo ? getValuePoliticallyExposed(other.poliExpo) : "\u00A0"}</p>
-                            </Grid>
-                          </Grid>
+                            </div> */}
+                          </div>
                         </div>
                       </Row>
                     </div>
@@ -608,19 +646,19 @@ const CustomerDetails = (props) => {
                     <div className="accordion-body">
                       <Row>
                         <div className="text-muted d-flex">
-                          <Grid container spacing={12}>
-                            <Grid item className="grid-text">
+                          <div className="container row" >
+                            <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>Bank</p>
                               <p>Cheque No</p>
                               <p>Account No</p>
                               <p>Account Title</p>
-                            </Grid>
-                            <Grid item>
+                            </div>
+                            <div item className="col-6 col-md-6 col-sm-6">
                               <p>{cheque && cheque.bank ? getValueByList(banks, cheque.bank) : "\u00A0"}</p>
                               <p>{cheque && cheque.chequeNo ? cheque.chequeNo : "\u00A0"}</p>
                               <p>{cheque && cheque.accountNo ? cheque.accountNo : "\u00A0"}</p>
                               <p>{cheque && cheque.accountTitle ? cheque.accountTitle : "\u00A0"}</p>
-                            </Grid>
+                            </div>
 
                             {/* <Grid item className="grid-text">
                             <p>Bank</p>
@@ -634,7 +672,7 @@ const CustomerDetails = (props) => {
                             <p>{cheque && cheque.poliExpo ? cheque.poliExpo : "\u00A0"}</p>
                             <p>{cheque && cheque.status ? cheque.status : "\u00A0"}</p>
                           </Grid> */}
-                          </Grid>
+                          </div>
                         </div>
                       </Row>
                     </div>

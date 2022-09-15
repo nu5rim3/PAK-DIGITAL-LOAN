@@ -279,8 +279,8 @@ const GuarantorDetails = (props) => {
                     <div className="accordion-body">
                       <Row>
                         <div className="text-muted d-flex">
-                          <Grid container spacing={10}>
-                            <Grid item className="grid-text">
+                          <div className="container row">
+                            <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>Organization Type</p>
                               <p>CNIC Expired Date</p>
                               <p>Initials</p>
@@ -290,8 +290,8 @@ const GuarantorDetails = (props) => {
                               <p>Customer Code</p>
                               <p>Description of Disability</p>
                               <p>Health Condition of Customer</p>
-                            </Grid>
-                            <Grid item>
+                            </div>
+                            <div item className="col-6 col-md-6 col-sm-6">
                               <p>{master && master.stkOrgType ? master.stkOrgType : "\u00A0"}</p>
                               <p>{master && master.stkCNicExpDate ? master.stkCNicExpDate : "\u00A0"}</p>
                               <p>{master && master.stkInitials ? master.stkInitials : "\u00A0"}</p>
@@ -300,9 +300,9 @@ const GuarantorDetails = (props) => {
                               <p>{master && master.stkNumOfDependents ? master.stkNumOfDependents : "\u00A0"}</p>
                               <p>{master && master.stkPhysDisability ? master.stkPhysDisability : "\u00A0"}</p>
                               <p>{master && master.healthCondition ? master.healthCondition : "\u00A0"}</p>
-                            </Grid>
+                            </div>
 
-                            <Grid item className="grid-text">
+                            <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>Customer CNIC</p>
                               <p>CNIC Status</p>
                               <p>Surname</p>
@@ -311,8 +311,8 @@ const GuarantorDetails = (props) => {
                               <p>No.of Earners</p>
                               <p>Group/ Reference No</p>
                               <p>Head of Family</p>
-                            </Grid>
-                            <Grid item>
+                            </div>
+                            <div item className="col-6 col-md-6 col-sm-6">
                               <p>{master && master.stkCNic ? master.stkCNic : "\u00A0"}</p>
                               <p>{master && master.stkCNicStatus ? getValueByList(cnicStatus, master.stkCNicStatus) : "\u00A0"}</p>
                               <p>{master && master.stkSurName ? master.stkSurName : "\u00A0"}</p>
@@ -321,9 +321,9 @@ const GuarantorDetails = (props) => {
                               <p>{master && master.stkNumOfEarners ? master.stkNumOfEarners : "\u00A0"}</p>
                               <p>{master && master.stkGrpRefNo ? master.stkGrpRefNo : "\u00A0"}</p>
                               <p>{master && master.headOfFamily ? getValueByList(headOfFamily, master.headOfFamily) : "\u00A0"}</p>
-                            </Grid>
+                            </div>
 
-                            <Grid item className="grid-text">
+                            <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>CNIC Issued Date</p>
                               <p>Customer Name</p>
                               <p>Other Name</p>
@@ -332,8 +332,8 @@ const GuarantorDetails = (props) => {
                               <p>Educational Qualification</p>
                               <p>There is a Physical Disability</p>
                               <p>House Hold Contribution</p>
-                            </Grid>
-                            <Grid item >
+                            </div>
+                            <div item className="col-6 col-md-6 col-sm-6">
                               <p>{master && master.stkCNicIssuedDate ? master.stkCNicIssuedDate : "\u00A0"}</p>
                               <p>{master && master.stkCusName ? master.stkCusName : "\u00A0"}</p>
                               <p>{master && master.stkOtherName ? master.stkOtherName : "\u00A0"}</p>
@@ -342,8 +342,8 @@ const GuarantorDetails = (props) => {
                               <p>{master && master.stkEduLevel ? getValueByList(educationalLevels, master.stkEduLevel) : "\u00A0"}</p>
                               <p>{master && master.stkPhysDisabilityDesce ? master.stkPhysDisabilityDesce : "\u00A0"}</p>
                               <p>{master && master.houseHoldCont ? getValueByList(houseHoldContribution, master.houseHoldCont) : "\u00A0"}</p>
-                            </Grid>
-                          </Grid>
+                            </div>
+                          </div>
                         </div>
                       </Row>
                     </div>
@@ -374,20 +374,20 @@ const GuarantorDetails = (props) => {
                       <Row>
                         <div className="text-muted d-flex">
                           {contact.map((item, index) => (
-                            <Grid container spacing={12} key={index}>
-                              <Grid item className="grid-text">
+                            <div className="container row" key={index}>
+                              <div item className="col-6 col-md-6 col-sm-6 grid-text">
                                 <span key={index}>
                                   <p>Phone No Type</p>
                                   <p>Phone No</p>
                                 </span>
-                              </Grid>
-                              <Grid item>
+                              </div>
+                              <div item className="col-6 col-md-6 col-sm-6">
                                 <span key={index}>
                                   <p>{item.phoneNoType}</p>
                                   <p>{item.phoneNo}</p>
                                 </span>
-                              </Grid>
-                            </Grid>
+                              </div>
+                            </div>
                           ))}
                         </div>
                       </Row>
@@ -397,8 +397,8 @@ const GuarantorDetails = (props) => {
                       <Row>
                         <div className="text-muted d-flex">
                           {residentials.map((residential, index) => (
-                            <Grid container spacing={12} key={index}>
-                              <Grid item className="grid-text">
+                            <div className="container row" key={index}>
+                              <div item className="col-6 col-md-6 col-sm-6 grid-text">
                                 <p>Address Type</p>
                                 <p>Same as the Residential Address</p>
                                 <p>Address Line 1</p>
@@ -413,8 +413,8 @@ const GuarantorDetails = (props) => {
                                 <p>Nearby Popular Places</p>
                                 <p>Duration of Current Location</p>
                                 <p>Residence Type</p>
-                              </Grid>
-                              <Grid item>
+                              </div>
+                              <div item className="col-6 col-md-6 col-sm-6">
                                 <p>{residential && residential.addressType ? getValueAddressType(residential.addressType) : "\u00A0"}</p>
                                 <p>{residential && residential.same ? residential.same : "\u00A0"}</p>
                                 <p>{residential && residential.addressLine1 ? residential.addressLine1 : "\u00A0"}</p>
@@ -429,8 +429,8 @@ const GuarantorDetails = (props) => {
                                 <p>{residential && residential.nearByPopPlc ? residential.nearByPopPlc : "\u00A0"}</p>
                                 <p>{residential && residential.durOfCurrLoc ? residential.durOfCurrLoc : "\u00A0"}</p>
                                 <p>{residential && residential.residenceType ? getValueByList(residantals, residential.residenceType) : "\u00A0"}</p>
-                              </Grid>
-                            </Grid>
+                              </div>
+                            </div>
                           ))}
                         </div>
                       </Row>
@@ -463,22 +463,22 @@ const GuarantorDetails = (props) => {
                     <div className="accordion-body">
                       <Row>
                         <div className="text-muted d-flex">
-                          <Grid container spacing={12}>
-                            <Grid item className="grid-text">
+                          <div className="container row">
+                            <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>Source of Income</p>
                               <p>Monthly Income</p>
                               <p>Asset Description</p>
                               <p>Total Value Assets</p>
                               <p>Total Monthly Income</p>
-                            </Grid>
-                            <Grid item>
+                            </div>
+                            <div item className="col-6 col-md-6 col-sm-6">
                               <p>{income && income.sourceOfIncome ? income.sourceOfIncome : "\u00A0"}</p>
                               <p>{income && income.monthlyIncome ? format(income.monthlyIncome) : "\u00A0"}</p>
                               <p>{income && income.assetsDesc ? income.assetsDesc : "\u00A0"}</p>
                               <p>{income && income.totValAssets ? income.totValAssets : "\u00A0"}</p>
                               <p>{income && income.totMonIncome ? income.totMonIncome : "\u00A0"}</p>
-                            </Grid>
-                          </Grid>
+                            </div>
+                          </div>
                         </div>
                       </Row>
                     </div>
@@ -511,33 +511,33 @@ const GuarantorDetails = (props) => {
                     <div className="accordion-body">
                       <Row>
                         <div className="text-muted d-flex">
-                          <Grid item xs={12}>
+                          <div item className="col-12 col-md-12 col-sm-12">
                             <Card className="witness-signature-card">
                               <p style={{ textAlign: 'right' }}>
                                 {getGuarantorAknowledgement()}
                               </p>
                             </Card>
-                          </Grid>
+                          </div>
                         </div>
                       </Row>
                       <Row>
                         <div className="text-muted d-flex">
-                          <Grid item xs={6}>
+                          <div item className="col-6 col-md-6 col-sm-6">
                             <Card className="witness-signature-card">
                               <p>Guarantor Thumbnail</p>
                               {thumb && thumb.length > 0 && thumb.map((sign, index) => (
                                 sign.status === "A" && <AsyncImage src={sign.imgPath} key={index} />
                               ))}
                             </Card>
-                          </Grid>
-                          <Grid item xs={6}>
+                          </div>
+                          <div item className="col-6 col-md-6 col-sm-6">
                             <Card className="witness-signature-card">
                               <p>Guarantor Signature</p>
                               {signature && signature.length > 0 && signature.map((sign, index) => (
                                 sign.status === "A" && <AsyncImage src={sign.imgPath} key={index} />
                               ))}
                             </Card>
-                          </Grid>
+                          </div>
                         </div>
                       </Row>
                     </div>
