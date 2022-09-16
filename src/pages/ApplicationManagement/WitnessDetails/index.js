@@ -151,7 +151,46 @@ const WitnessDetails = (props) => {
                       <Row>
                         <div className="text-muted d-flex">
                           <div className="container row">
-                            <div item className="col-6 col-md-6 col-sm-6 grid-text">
+                            <div item className="table-responsive-md col-12 col-md-12 col-sm-12">
+                              <table lassName="table table-borderless table-sm">
+                                <tbody>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Witness CNIC</p></td>
+                                    <td className="m-1"><p>{master && master.stkCNic ? master.stkCNic : "\u00A0"}</p></td>
+                                  </tr> 
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Witness Full Name</p></td>
+                                    <td className="m-1"><p>{master && master.stkCusName ? master.stkCusName : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Father/Husband Name</p></td>
+                                    <td className="m-1"><p>{master && master.stkFatherOrHusName ? master.stkFatherOrHusName : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Address Type</p></td>
+                                    <td className="m-1"><p>{master && master.addressType ? getValueAddressType(master.addressType) : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Address Line 1</p></td>
+                                    <td className="m-1"><p>{residential && residential.addressLine1 ? residential.addressLine1 : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Address Line 2</p></td>
+                                    <td className="m-1"><p>{residential && residential.addressLine2 ? residential.addressLine2 : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Address Line 3</p></td>
+                                    <td className="m-1"><p>{residential && residential.addressLine3 ? residential.addressLine3 : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Address Line 4</p></td>
+                                    <td className="m-1"><p>{residential && residential.addressLine4 ? residential.addressLine4 : "\u00A0"}</p></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>  
+
+                            {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>Witness CNIC</p>
                               <p>Witness Full Name</p>
                               <p>Father/Husband Name</p>
@@ -170,9 +209,32 @@ const WitnessDetails = (props) => {
                               <p>{residential && residential.addressLine2 ? residential.addressLine2 : "\u00A0"}</p>
                               <p>{residential && residential.addressLine3 ? residential.addressLine3 : "\u00A0"}</p>
                               <p>{residential && residential.addressLine4 ? residential.addressLine4 : "\u00A0"}</p>
+                            </div> */}
+
+                            <div item className="table-responsive-md col-12 col-md-12 col-sm-12">
+                              <table lassName="table table-borderless table-sm">
+                                <tbody>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Area</p></td>
+                                    <td className="m-1"><p>{residential && residential.area ? residential.area : "\u00A0"}</p></td>
+                                  </tr> 
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>City</p></td>
+                                    <td className="m-1"><p>{residential && residential.city ? residential.city : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>District</p></td>
+                                    <td className="m-1"><p>{residential && residential.district ? residential.district : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Province</p></td>
+                                    <td className="m-1"><p>{residential && residential.province ? residential.province : "\u00A0"}</p></td>
+                                  </tr>                                  
+                                </tbody>
+                              </table>
                             </div>
 
-                            <div item className="col-6 col-md-6 col-sm-6 grid-text">
+                            {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>Area</p>
                               <p>City</p>
                               <p>District</p>
@@ -183,7 +245,7 @@ const WitnessDetails = (props) => {
                               <p>{residential && residential.city ? residential.city : "\u00A0"}</p>
                               <p>{residential && residential.district ? residential.district : "\u00A0"}</p>
                               <p>{residential && residential.province ? residential.province : "\u00A0"}</p>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </Row>

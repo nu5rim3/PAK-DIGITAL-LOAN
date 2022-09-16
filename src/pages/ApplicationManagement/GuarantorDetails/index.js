@@ -395,42 +395,102 @@ const GuarantorDetails = (props) => {
                       <hr></hr>
 
                       <Row>
-                        <div className="text-muted d-flex">
+                        <div className="table-responsive-lg text-muted d-flex">
                           {residentials.map((residential, index) => (
-                            <div className="container row" key={index}>
-                              <div item className="col-6 col-md-6 col-sm-6 grid-text">
-                                <p>Address Type</p>
-                                <p>Same as the Residential Address</p>
-                                <p>Address Line 1</p>
-                                <p>Address Line 2</p>
-                                <p>Address Line 3</p>
-                                <p>Address Line 4</p>
-                                <p>Area</p>
-                                <p>City</p>
-                                <p>Distric</p>
-                                <p>Province</p>
-                                <p>Community</p>
-                                <p>Nearby Popular Places</p>
-                                <p>Duration of Current Location</p>
-                                <p>Residence Type</p>
-                              </div>
-                              <div item className="col-6 col-md-6 col-sm-6">
-                                <p>{residential && residential.addressType ? getValueAddressType(residential.addressType) : "\u00A0"}</p>
-                                <p>{residential && residential.same ? residential.same : "\u00A0"}</p>
-                                <p>{residential && residential.addressLine1 ? residential.addressLine1 : "\u00A0"}</p>
-                                <p>{residential && residential.addressLine2 ? residential.addressLine2 : "\u00A0"}</p>
-                                <p>{residential && residential.addressLine3 ? residential.addressLine3 : "\u00A0"}</p>
-                                <p>{residential && residential.addressLine4 ? residential.addressLine4 : "\u00A0"}</p>
-                                <p>{residential && residential.area ? residential.area : "\u00A0"}</p>
-                                <p>{residential && residential.city ? residential.city : "\u00A0"}</p>
-                                <p>{residential && residential.district ? residential.district : "\u00A0"}</p>
-                                <p>{residential && residential.province ? residential.province : "\u00A0"}</p>
-                                <p>{residential && residential.community ? getValueByList(communities, residential.community) : "\u00A0"}</p>
-                                <p>{residential && residential.nearByPopPlc ? residential.nearByPopPlc : "\u00A0"}</p>
-                                <p>{residential && residential.durOfCurrLoc ? residential.durOfCurrLoc : "\u00A0"}</p>
-                                <p>{residential && residential.residenceType ? getValueByList(residantals, residential.residenceType) : "\u00A0"}</p>
-                              </div>
-                            </div>
+                             <table className="table table-sm" key={index}>
+                              <tbody>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Address Type</p></td>
+                                  <td><p className="m-0">{residential && residential.addressType ? getValueAddressType(residential.addressType) : "\u00A0"}</p></td>
+                                </tr>
+                                {/* <tr>
+                                  <td><p className="m-0 grid-text">Same as the Residential Address</p></td>
+                                  <td><p className="m-0">{residential && residential.same ? residential.same : "\u00A0"}</p></td>
+                                </tr> */}
+                                <tr>
+                                  <td><p className="m-0 grid-text">Address Line 1</p></td>
+                                  <td><p className="m-0">{residential && residential.addressLine1 ? residential.addressLine1 : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Address Line 2</p></td>
+                                  <td><p className="m-0">{residential && residential.addressLine2 ? residential.addressLine2 : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Address Line 3</p></td>
+                                  <td><p className="m-0">{residential && residential.addressLine3 ? residential.addressLine3 : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Address Line 4</p></td>
+                                  <td><p className="m-0">{residential && residential.addressLine4 ? residential.addressLine4 : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Area</p></td>
+                                  <td><p className="m-0">{residential && residential.area ? getCommonAreaValues(residential.area) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">City</p></td>
+                                  <td><p className="m-0">{residential && residential.city ? residential.city : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Distric</p></td>
+                                  <td><p className="m-0">{residential && residential.district ? residential.district : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Province</p></td>
+                                  <td><p className="m-0">{residential && residential.province ? getValueByList(provinces, residential.province) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Community</p></td>
+                                  <td><p className="m-0">{residential && residential.community ? getValueByList(communities, residential.community) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Nearby Popular Places</p></td>
+                                  <td><p className="m-0">{residential && residential.nearByPopPlc ? residential.nearByPopPlc : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Duration of Current Location</p></td>
+                                  <td><p className="m-0">{residential && residential.durOfCurrLoc ? residential.durOfCurrLoc : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Residence Type</p></td>
+                                  <td><p className="m-0">{residential && residential.residenceType ? getValueByList(residantals, residential.residenceType) : "\u00A0"}</p></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            // <div className="container row" key={index}>
+                            //   <div item className="col-6 col-md-6 col-sm-6 grid-text">
+                            //     <p>Address Type</p>
+                            //     <p>Same as the Residential Address</p>
+                            //     <p>Address Line 1</p>
+                            //     <p>Address Line 2</p>
+                            //     <p>Address Line 3</p>
+                            //     <p>Address Line 4</p>
+                            //     <p>Area</p>
+                            //     <p>City</p>
+                            //     <p>Distric</p>
+                            //     <p>Province</p>
+                            //     <p>Community</p>
+                            //     <p>Nearby Popular Places</p>
+                            //     <p>Duration of Current Location</p>
+                            //     <p>Residence Type</p>
+                            //   </div>
+                            //   <div item className="col-6 col-md-6 col-sm-6">
+                            //     <p>{residential && residential.addressType ? getValueAddressType(residential.addressType) : "\u00A0"}</p>
+                            //     <p>{residential && residential.same ? residential.same : "\u00A0"}</p>
+                            //     <p>{residential && residential.addressLine1 ? residential.addressLine1 : "\u00A0"}</p>
+                            //     <p>{residential && residential.addressLine2 ? residential.addressLine2 : "\u00A0"}</p>
+                            //     <p>{residential && residential.addressLine3 ? residential.addressLine3 : "\u00A0"}</p>
+                            //     <p>{residential && residential.addressLine4 ? residential.addressLine4 : "\u00A0"}</p>
+                            //     <p>{residential && residential.area ? residential.area : "\u00A0"}</p>
+                            //     <p>{residential && residential.city ? residential.city : "\u00A0"}</p>
+                            //     <p>{residential && residential.district ? residential.district : "\u00A0"}</p>
+                            //     <p>{residential && residential.province ? residential.province : "\u00A0"}</p>
+                            //     <p>{residential && residential.community ? getValueByList(communities, residential.community) : "\u00A0"}</p>
+                            //     <p>{residential && residential.nearByPopPlc ? residential.nearByPopPlc : "\u00A0"}</p>
+                            //     <p>{residential && residential.durOfCurrLoc ? residential.durOfCurrLoc : "\u00A0"}</p>
+                            //     <p>{residential && residential.residenceType ? getValueByList(residantals, residential.residenceType) : "\u00A0"}</p>
+                            //   </div>
+                            // </div>
                           ))}
                         </div>
                       </Row>
