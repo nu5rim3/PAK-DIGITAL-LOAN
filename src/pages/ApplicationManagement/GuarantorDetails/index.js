@@ -280,7 +280,53 @@ const GuarantorDetails = (props) => {
                       <Row>
                         <div className="text-muted d-flex">
                           <div className="container row">
-                            <div item className="col-6 col-md-6 col-sm-6 grid-text">
+
+                            <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                              <table className="table table-borderless table-sm">
+                                <tbody>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Organization Type</p></td>
+                                    <td className="m-1"><p>{master && master.stkOrgType ? master.stkOrgType : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>CNIC Expired Date</p></td>
+                                    <td className="m-1"><p>{master && master.stkCNicExpDate ? master.stkCNicExpDate : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>{master && master.stkInitials ? master.stkInitials : "\u00A0"}</p><p>Initials</p></td>
+                                    <td className="m-1"></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Date of Birth</p></td>
+                                    <td className="m-1"><p>{master && master.stkDob ? master.stkDob : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Marital Status</p></td>
+                                    <td className="m-1"><p>{master && master.stkMaritialStatus ? getValueByList(maritalStatus, master.stkMaritialStatus) : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>No.of Dependents</p></td>
+                                    <td className="m-1"><p>{master && master.stkNumOfDependents ? master.stkNumOfDependents : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Customer Code</p></td>
+                                    <td className="m-1"></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Description of Disability</p></td>
+                                    <td className="m-1"><p>{master && master.stkPhysDisability ? master.stkPhysDisability : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Health Condition of Customer</p></td>
+                                    <td className="m-1"><p>{master && master.healthCondition ? master.healthCondition : "\u00A0"}</p></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+
+                            
+
+                            {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>Organization Type</p>
                               <p>CNIC Expired Date</p>
                               <p>Initials</p>
@@ -300,9 +346,48 @@ const GuarantorDetails = (props) => {
                               <p>{master && master.stkNumOfDependents ? master.stkNumOfDependents : "\u00A0"}</p>
                               <p>{master && master.stkPhysDisability ? master.stkPhysDisability : "\u00A0"}</p>
                               <p>{master && master.healthCondition ? master.healthCondition : "\u00A0"}</p>
+                            </div> */}
+
+                            <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                              <table className="table table-borderless table-sm">
+                                <tbody>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Customer CNIC</p></td>
+                                    <td className="m-1"><p>{master && master.stkCNic ? master.stkCNic : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>CNIC Status</p></td>
+                                    <td className="m-1"><p>{master && master.stkCNicStatus ? getValueByList(cnicStatus, master.stkCNicStatus) : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Surname</p></td>
+                                    <td className="m-1"><p>{master && master.stkSurName ? master.stkSurName : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Age</p></td>
+                                    <td className="m-1"><p>{master && master.stkAge ? master.stkAge : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Title</p></td>
+                                    <td className="m-1"><p>{master && master.stkTitle ? getValueByList(titles, master.stkTitle) : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>No.of Earners</p></td>
+                                    <td className="m-1"><p>{master && master.stkNumOfEarners ? master.stkNumOfEarners : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"> <p>Group/ Reference No</p></td>
+                                    <td className="m-1"><p>{master && master.stkGrpRefNo ? master.stkGrpRefNo : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Head of Family</p></td>
+                                    <td className="m-1"><p>{master && master.headOfFamily ? getValueByList(headOfFamily, master.headOfFamily) : "\u00A0"}</p></td>
+                                  </tr>
+                                </tbody>
+                              </table>
                             </div>
 
-                            <div item className="col-6 col-md-6 col-sm-6 grid-text">
+                            {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>Customer CNIC</p>
                               <p>CNIC Status</p>
                               <p>Surname</p>
@@ -321,9 +406,48 @@ const GuarantorDetails = (props) => {
                               <p>{master && master.stkNumOfEarners ? master.stkNumOfEarners : "\u00A0"}</p>
                               <p>{master && master.stkGrpRefNo ? master.stkGrpRefNo : "\u00A0"}</p>
                               <p>{master && master.headOfFamily ? getValueByList(headOfFamily, master.headOfFamily) : "\u00A0"}</p>
+                            </div> */}
+
+                            <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                              <table className="table table-borderless table-sm">
+                                <tbody>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>CNIC Issued Date</p></td>
+                                    <td className="m-1"><p>{master && master.stkCNicIssuedDate ? master.stkCNicIssuedDate : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Customer Name</p></td>
+                                    <td className="m-1"><p>{master && master.stkCusName ? master.stkCusName : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Other Name</p></td>
+                                    <td className="m-1"><p>{master && master.stkOtherName ? master.stkOtherName : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Gender</p></td>
+                                    <td className="m-1"><p>{master && master.stkGender ? getValueByList(genders, master.stkGender) : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Father/ Husband Name</p></td>
+                                    <td className="m-1"><p>{master && master.stkFatherOrHusName ? master.stkFatherOrHusName : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Educational Qualification</p></td>
+                                    <td className="m-1"><p>{master && master.stkEduLevel ? getValueByList(educationalLevels, master.stkEduLevel) : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>There is a Physical Disability</p></td>
+                                    <td className="m-1"><p>{master && master.stkPhysDisabilityDesce ? master.stkPhysDisabilityDesce : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>House Hold Contribution</p></td>
+                                    <td className="m-1"><p>{master && master.houseHoldCont ? getValueByList(houseHoldContribution, master.houseHoldCont) : "\u00A0"}</p></td>
+                                  </tr>
+                                </tbody>
+                              </table>
                             </div>
 
-                            <div item className="col-6 col-md-6 col-sm-6 grid-text">
+                            {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>CNIC Issued Date</p>
                               <p>Customer Name</p>
                               <p>Other Name</p>
@@ -342,7 +466,7 @@ const GuarantorDetails = (props) => {
                               <p>{master && master.stkEduLevel ? getValueByList(educationalLevels, master.stkEduLevel) : "\u00A0"}</p>
                               <p>{master && master.stkPhysDisabilityDesce ? master.stkPhysDisabilityDesce : "\u00A0"}</p>
                               <p>{master && master.houseHoldCont ? getValueByList(houseHoldContribution, master.houseHoldCont) : "\u00A0"}</p>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </Row>

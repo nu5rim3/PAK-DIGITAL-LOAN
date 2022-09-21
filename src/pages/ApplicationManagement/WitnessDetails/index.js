@@ -151,8 +151,8 @@ const WitnessDetails = (props) => {
                       <Row>
                         <div className="text-muted d-flex">
                           <div className="container row">
-                            <div item className="table-responsive-md col-12 col-md-12 col-sm-12">
-                              <table lassName="table table-borderless table-sm">
+                            <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                              <table className="table table-borderless table-sm">
                                 <tbody>
                                   <tr>
                                     <td className="m-0 grid-text"><p>Witness CNIC</p></td>
