@@ -525,7 +525,7 @@ const GuarantorDetails = (props) => {
                               <tbody>
                                 <tr>
                                   <td><p className="m-0 grid-text">Address Type</p></td>
-                                  <td><p className="m-0">{residential && residential.addressType ? getValueAddressType(residential.addressType) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.addressType ? getValueAddressType(residential.addressType) : "\u00A0"}</p></td>
                                 </tr>
                                 {/* <tr>
                                   <td><p className="m-0 grid-text">Same as the Residential Address</p></td>
@@ -533,51 +533,51 @@ const GuarantorDetails = (props) => {
                                 </tr> */}
                                 <tr>
                                   <td><p className="m-0 grid-text">Address Line 1</p></td>
-                                  <td><p className="m-0">{residential && residential.addressLine1 ? residential.addressLine1 : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.addressLine1 ? residential.addressLine1 : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Address Line 2</p></td>
-                                  <td><p className="m-0">{residential && residential.addressLine2 ? residential.addressLine2 : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.addressLine2 ? residential.addressLine2 : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Address Line 3</p></td>
-                                  <td><p className="m-0">{residential && residential.addressLine3 ? residential.addressLine3 : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.addressLine3 ? residential.addressLine3 : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Address Line 4</p></td>
-                                  <td><p className="m-0">{residential && residential.addressLine4 ? residential.addressLine4 : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.addressLine4 ? residential.addressLine4 : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Area</p></td>
-                                  <td><p className="m-0">{residential && residential.area ? getCommonAreaValues(residential.area) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.area ? getCommonAreaValues(residential.area) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">City</p></td>
-                                  <td><p className="m-0">{residential && residential.city ? residential.city : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.city ? residential.city : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Distric</p></td>
-                                  <td><p className="m-0">{residential && residential.district ? residential.district : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.district ? residential.district : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Province</p></td>
-                                  <td><p className="m-0">{residential && residential.province ? getValueByList(provinces, residential.province) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.province ? getValueByList(provinces, residential.province) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Community</p></td>
-                                  <td><p className="m-0">{residential && residential.community ? getValueByList(communities, residential.community) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.community ? getValueByList(communities, residential.community) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Nearby Popular Places</p></td>
-                                  <td><p className="m-0">{residential && residential.nearByPopPlc ? residential.nearByPopPlc : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.nearByPopPlc ? residential.nearByPopPlc : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Duration of Current Location</p></td>
-                                  <td><p className="m-0">{residential && residential.durOfCurrLoc ? residential.durOfCurrLoc : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.durOfCurrLoc ? residential.durOfCurrLoc : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Residence Type</p></td>
-                                  <td><p className="m-0">{residential && residential.residenceType ? getValueByList(residantals, residential.residenceType) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.residenceType ? getValueByList(residantals, residential.residenceType) : "\u00A0"}</p></td>
                                 </tr>
                               </tbody>
                             </table>
@@ -648,7 +648,34 @@ const GuarantorDetails = (props) => {
                       <Row>
                         <div className="text-muted d-flex">
                           <div className="container row">
-                            <div item className="col-6 col-md-6 col-sm-6 grid-text">
+                            <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                              <table className="table table-borderless table-sm">
+                                <tbody>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Source of Income</p></td>
+                                    <td className="m-1"><p>{income && income.sourceOfIncome ? income.sourceOfIncome : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Monthly Income</p></td>
+                                    <td className="m-1"><p>{income && income.monthlyIncome ? format(income.monthlyIncome) : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Asset Description</p></td>
+                                    <td className="m-1"><p>{income && income.assetsDesc ? income.assetsDesc : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Total Value Assets</p></td>
+                                    <td className="m-1"><p>{income && income.totValAssets ? income.totValAssets : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Total Monthly Income</p></td>
+                                    <td className="m-1"><p>{income && income.totMonIncome ? income.totMonIncome : "\u00A0"}</p></td>
+                                  </tr>
+                                </tbody>
+                                
+                              </table>
+                            </div>
+                            {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>Source of Income</p>
                               <p>Monthly Income</p>
                               <p>Asset Description</p>
@@ -661,7 +688,7 @@ const GuarantorDetails = (props) => {
                               <p>{income && income.assetsDesc ? income.assetsDesc : "\u00A0"}</p>
                               <p>{income && income.totValAssets ? income.totValAssets : "\u00A0"}</p>
                               <p>{income && income.totMonIncome ? income.totMonIncome : "\u00A0"}</p>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </Row>
