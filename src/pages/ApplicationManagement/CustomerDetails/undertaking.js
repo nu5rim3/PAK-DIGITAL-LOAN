@@ -59,7 +59,7 @@ const UndertakingDetails = (props) => {
           <div className="page-wrapper-context">
             <Row>
               <div className="text-muted d-flex">
-                <div item className="col-12 col-md-12">
+                <div className="col-12 col-md-12">
                   <Card className="customer-signature-card">
                     <p style={{ textAlign: 'right' }}>
                       {getCustomerAknowledgement()}
@@ -70,7 +70,7 @@ const UndertakingDetails = (props) => {
             </Row>
             <Row>
               <div className="text-muted d-flex">
-                <div item className="col-6 col-md-6 col-sm-6">
+                <div className="col-6 col-md-6 col-sm-6">
                   <Card className="customer-signature-card">
                     <p>Customer Thumbnail</p>
                     {thumb && thumb.length > 0 && thumb.map((sign, index) => (
@@ -78,7 +78,7 @@ const UndertakingDetails = (props) => {
                     ))}
                   </Card>
                 </div>
-                <div item className="col-6 col-md-6 col-sm-6">
+                <div className="col-6 col-md-6 col-sm-6">
                   <Card className="customer-signature-card">
                     <p>Customer Signature</p>
                     {signature && signature.length > 0 && signature.map((sign, index) => (

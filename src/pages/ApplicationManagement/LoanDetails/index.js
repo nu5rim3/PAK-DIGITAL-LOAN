@@ -406,7 +406,7 @@ const LoanDetails = (props) => {
                         </Nav>
                         </Col>
                       </div>
-                      <div item className="col-12 col-md-12 col-sm-12">
+                      <div className="col-12 col-md-12 col-sm-12">
                         <TabContent
                           activeTab={toggleBusinessVerticalTab}
                           className="text-muted mt-4 mt-md-0"
@@ -416,7 +416,7 @@ const LoanDetails = (props) => {
                               <div className="row">
                                 <div className="text-muted d-flex">
                                   <div className="container row table-responsive-lg">
-                                    <div item className="col-12 col-md-12 col-sm-12">
+                                    <div className="col-12 col-md-12 col-sm-12">
                                       <table className="table table-borderless table-sm">
                                         <tbody>
                                           <tr>
@@ -515,7 +515,7 @@ const LoanDetails = (props) => {
                     <Row>
                       <div className="text-muted d-flex">
                         <div className="container row">
-                          <div item className="table-responsive-md col-12 col-md-12 col-sm-12">
+                          <div className="table-responsive-md col-12 col-md-12 col-sm-12">
                             <table className="table table-sm">
                               <tbody>
                                 <tr>
@@ -613,7 +613,7 @@ const LoanDetails = (props) => {
                             <p>{liveStockLoanDetails && liveStockLoanDetails.claimLodged ? liveStockLoanDetails.claimLodged : "\u00A0"}</p>
                           </div> */}
 
-                          <div item className="table-responsive-md col-12 col-md-12 col-sm-12">
+                          <div className="table-responsive-md col-12 col-md-12 col-sm-12">
                             <table className="table table-sm">
                               <tbody>
                                 <tr>
@@ -690,7 +690,7 @@ const LoanDetails = (props) => {
                             <p>{liveStockLoanDetails && liveStockLoanDetails.agriSecured ? liveStockLoanDetails.agriSecured : "\u00A0"}</p>
                           </div> */}
 
-                          <div item className="col-12 col-md-12 col-sm-12">
+                          <div className="col-12 col-md-12 col-sm-12">
                             {/* TODO */}
                             <Card className="witness-signature-card">
                               <p>Customer Signature</p>
@@ -730,8 +730,8 @@ const LoanDetails = (props) => {
                     <Row>
                       <div className="text-muted d-flex">
                         <div className="container row">
-                          <div item className="table-responsive-md col-12 col-md-12 col-sm-12">
-                            <table lassName="table table-borderless table-sm">
+                          <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                            <table className="table table-borderless table-sm">
                               <tbody>
                                 <tr>
                                   <td><p className="m-0 grid-text">Nature of the borrower</p></td>
@@ -799,7 +799,7 @@ const LoanDetails = (props) => {
                             <p>{cultivationLoanDetails && cultivationLoanDetails.acresTotal ? "Total: " + cultivationLoanDetails.acresTotal : "\u00A0"}</p>
                           </div> */}
 
-                          <div item className="table-responsive-md col-12 col-md-12 col-sm-12">
+                          <div className="table-responsive-md col-12 col-md-12 col-sm-12">
                             <table className="table table-sm">
                               <tbody>
                                 <tr>
@@ -829,13 +829,12 @@ const LoanDetails = (props) => {
                             <p>{cultivationLoanDetails && cultivationLoanDetails.rabiCultivationDate ? new moment(cultivationLoanDetails.rabiCultivationDate).format("Y-MM-DD") : "\u00A0"}</p>
                           </div> */}
 
-                          <div item className="table-responsive-md col-12 col-md-12 col-sm-12">
+                          <div className="table-responsive-md col-12 col-md-12 col-sm-12">
                             <table className="table table-sm">
                               <tbody>
                                 <tr>
                                   <td className="m-0 grid-text"><p>Acres of Kharif</p></td>
-                                  <td className="m-1"><p>{cultivationLoanDetails && cultivationLoanDetails.acresOfKharif ? cultivationLoanDetails.acresOfKharif : "\u00A0"}</p>
-</td>
+                                  <td className="m-1"><p>{cultivationLoanDetails && cultivationLoanDetails.acresOfKharif ? cultivationLoanDetails.acresOfKharif : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td className="m-0 grid-text"><p>Harvesting Date</p></td>

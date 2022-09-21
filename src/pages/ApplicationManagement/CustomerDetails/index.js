@@ -394,13 +394,13 @@ const CustomerDetails = (props) => {
                         <div className="text-muted d-flex">
                           {contact.map((item, index) => (
                             <div className="container row" style={{ width: "inherit" }} key={index}>
-                              <div item className="col-6 col-md-6 grid-text">
+                              <div className="col-6 col-md-6 grid-text">
                                 <span key={index}>
                                   <p>Phone No Type</p>
                                   <p>Phone No</p>
                                 </span>
                               </div>
-                              <div item className="col-6 col-md-6"> 
+                              <div className="col-6 col-md-6"> 
                                 <span key={index}>
                                   <p>{item.phoneNoType}</p>
                                   <p>{item.phoneNo}</p>
@@ -561,7 +561,7 @@ const CustomerDetails = (props) => {
                     <div className="accordion-body">
                       <Row>
                         <div className=" text-muted d-flex">
-                          <div item className="container row table-responsive-md col-12 col-md-12 col-sm-12">
+                          <div className="container row table-responsive-md col-12 col-md-12 col-sm-12">
                             <table className="table table-borderless table-sm">
                               <tbody>
                                 <tr>
@@ -657,7 +657,7 @@ const CustomerDetails = (props) => {
                       <Row>
                         <div className="text-muted d-flex">
                           <div className="container row" >
-                            <div item className="table-responsive-md col-12 col-md-12 col-sm-12 ">
+                            <div className="table-responsive-md col-12 col-md-12 col-sm-12 ">
                               <table className="table table-borderless table-sm">
                                 <tbody>
                                   <tr>

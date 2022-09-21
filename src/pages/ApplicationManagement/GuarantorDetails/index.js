@@ -499,13 +499,13 @@ const GuarantorDetails = (props) => {
                         <div className="text-muted d-flex">
                           {contact.map((item, index) => (
                             <div className="container row" key={index}>
-                              <div item className="col-6 col-md-6 col-sm-6 grid-text">
+                              <div className="col-6 col-md-6 col-sm-6 grid-text">
                                 <span key={index}>
                                   <p>Phone No Type</p>
                                   <p>Phone No</p>
                                 </span>
                               </div>
-                              <div item className="col-6 col-md-6 col-sm-6">
+                              <div className="col-6 col-md-6 col-sm-6">
                                 <span key={index}>
                                   <p>{item.phoneNoType}</p>
                                   <p>{item.phoneNo}</p>
@@ -722,7 +722,7 @@ const GuarantorDetails = (props) => {
                     <div className="accordion-body">
                       <Row>
                         <div className="text-muted d-flex">
-                          <div item className="col-12 col-md-12 col-sm-12">
+                          <div className="col-12 col-md-12 col-sm-12">
                             <Card className="witness-signature-card">
                               <p style={{ textAlign: 'right' }}>
                                 {getGuarantorAknowledgement()}
@@ -733,7 +733,7 @@ const GuarantorDetails = (props) => {
                       </Row>
                       <Row>
                         <div className="text-muted d-flex">
-                          <div item className="col-6 col-md-6 col-sm-6">
+                          <div className="col-6 col-md-6 col-sm-6">
                             <Card className="witness-signature-card">
                               <p>Guarantor Thumbnail</p>
                               {thumb && thumb.length > 0 && thumb.map((sign, index) => (
@@ -741,7 +741,7 @@ const GuarantorDetails = (props) => {
                               ))}
                             </Card>
                           </div>
-                          <div item className="col-6 col-md-6 col-sm-6">
+                          <div className="col-6 col-md-6 col-sm-6">
                             <Card className="witness-signature-card">
                               <p>Guarantor Signature</p>
                               {signature && signature.length > 0 && signature.map((sign, index) => (
