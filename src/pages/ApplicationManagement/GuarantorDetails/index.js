@@ -549,7 +549,7 @@ const GuarantorDetails = (props) => {
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Area</p></td>
-                                  <td><p className="m-1">{residential && residential.area ? getCommonAreaValues(residential.area) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.area ? residential.area : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">City</p></td>
@@ -561,7 +561,7 @@ const GuarantorDetails = (props) => {
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Province</p></td>
-                                  <td><p className="m-1">{residential && residential.province ? getValueByList(provinces, residential.province) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.province ? residential.province : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Community</p></td>
