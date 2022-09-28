@@ -53,13 +53,14 @@ const GeoDetails = (props) => {
 
     const fetchData = async () => {
       if (props.active === "13") {
-        const responseImages = await getAllImages(appraisalId);
+        const responseImages = await getAllImages(appraisalId);      
 
         if (responseImages != undefined && _isMounted) {
           var locationDetails = responseImages?.map(img => {
             checkAldreadySubmit(img?.imgMasterCategory);
             return { latitude: img.latitude, longitude: img.longitude, imgMasterCategory: img.imgMasterCategory }
           });
+          console.log(locationDetails);
 
           setLocations(locationDetails);
           setIsLoading(false);
@@ -72,21 +73,35 @@ const GeoDetails = (props) => {
     return () => {
       _isMounted = false;
     };
-  }, [props.active]);
+  }, [props.active]);  
 
-  const Marker = ({ index, text }) => (
+  const getCatagoryColor = (category) => {
+    switch (category) {
+      case "GEO_DETAILS_BHO":
+        return "#F44546";
+      
+      case "GEO_DETAILS_CO":
+        return "#21409A"; 
+      
+      default:
+        return "#039C4B";
+     
+    }
+  }
+  const Marker = ({ index, text }) => (    
+    
     <div className="pin">
       <span className="d-flex flex-column">
         <div>
-          <i className="bx bxs-map" style={{ fontSize: "36px", color: "red" }}></i>
+          <i className="bx bxs-map" style={{ fontSize: "46px", color: getCatagoryColor(text)}}></i>
         </div>
         <div style={{ width: '150px' }}>
-          <p style={{ fontWeight: 'bold', color: 'black', WebkitTextStroke: '0.5px white' }}>{ text }</p>
+          <p style={{ fontSize: "13px", fontWeight: 'bold', color: 'black', WebkitTextStroke: '0.5px white' }}>{ text }</p>
         </div>
       </span>
     </div>
   );
-
+  
   return (
     <Row>
       <Loader loading={isLoading} >
@@ -104,7 +119,7 @@ const GeoDetails = (props) => {
                     index={i}
                     lat={l.latitude}
                     lng={l.longitude}
-                    text={l.imgMasterCategory}
+                    text={l.imgMasterCategory}                    
                   />)}
                 </GoogleMapReact>
               </div>
