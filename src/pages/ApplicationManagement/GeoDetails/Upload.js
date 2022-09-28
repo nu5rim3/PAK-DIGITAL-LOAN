@@ -22,11 +22,12 @@ import SyncLoader from "components/SyncLoader"
 
 // service
 import { uploadGeoImage } from "services/geo_details.service"
+import { file } from "helpers/api_helper"
 
 const FormUpload = props => {
 
   const uploadBtnRef = useRef();
-
+  
   const [selectedFiles, setSelectedFiles] = useState([])
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState(null)
@@ -117,7 +118,7 @@ const FormUpload = props => {
       })
     )
 
-    setSelectedFiles(files)
+    setSelectedFiles((prevfiles) => prevfiles.concat(files))
   }
 
   const toBase64 = file =>
@@ -199,7 +200,7 @@ const FormUpload = props => {
                               <img
                                 data-dz-thumbnail=""
                                 height="80"
-                                className="avatar-sm rounded bg-light"
+                                className="avatar-sm rounded bg-light" style={{ height: "5rem", width: "5rem"}}
                                 alt={f.name}
                                 src={f.preview}
                               />

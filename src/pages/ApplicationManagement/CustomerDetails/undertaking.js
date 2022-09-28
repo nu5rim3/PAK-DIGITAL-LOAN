@@ -59,33 +59,33 @@ const UndertakingDetails = (props) => {
           <div className="page-wrapper-context">
             <Row>
               <div className="text-muted d-flex">
-                <Grid item xs={12}>
+                <div className="col-12 col-md-12">
                   <Card className="customer-signature-card">
                     <p style={{ textAlign: 'right' }}>
                       {getCustomerAknowledgement()}
                     </p>
                   </Card>
-                </Grid>
+                </div>
               </div>
             </Row>
             <Row>
               <div className="text-muted d-flex">
-                <Grid item xs={6}>
+                <div className="col-6 col-md-6 col-sm-6">
                   <Card className="customer-signature-card">
                     <p>Customer Thumbnail</p>
                     {thumb && thumb.length > 0 && thumb.map((sign, index) => (
                       sign.status === "A" && <AsyncImage src={sign.imgPath} key={index} />
                     ))}
                   </Card>
-                </Grid>
-                <Grid item xs={6}>
+                </div>
+                <div className="col-6 col-md-6 col-sm-6">
                   <Card className="customer-signature-card">
                     <p>Customer Signature</p>
                     {signature && signature.length > 0 && signature.map((sign, index) => (
                       sign.status === "A" && <AsyncImage src={sign.imgPath} key={index} />
                     ))}
                   </Card>
-                </Grid>
+                </div>
               </div>
             </Row>
           </div>

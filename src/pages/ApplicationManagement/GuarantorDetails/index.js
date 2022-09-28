@@ -279,8 +279,54 @@ const GuarantorDetails = (props) => {
                     <div className="accordion-body">
                       <Row>
                         <div className="text-muted d-flex">
-                          <Grid container spacing={10}>
-                            <Grid item className="grid-text">
+                          <div className="container row">
+
+                            <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                              <table className="table table-borderless table-sm">
+                                <tbody>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Organization Type</p></td>
+                                    <td className="m-1"><p>{master && master.stkOrgType ? master.stkOrgType : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>CNIC Expired Date</p></td>
+                                    <td className="m-1"><p>{master && master.stkCNicExpDate ? master.stkCNicExpDate : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>{master && master.stkInitials ? master.stkInitials : "\u00A0"}</p><p>Initials</p></td>
+                                    <td className="m-1"></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Date of Birth</p></td>
+                                    <td className="m-1"><p>{master && master.stkDob ? master.stkDob : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Marital Status</p></td>
+                                    <td className="m-1"><p>{master && master.stkMaritialStatus ? getValueByList(maritalStatus, master.stkMaritialStatus) : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>No.of Dependents</p></td>
+                                    <td className="m-1"><p>{master && master.stkNumOfDependents ? master.stkNumOfDependents : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Customer Code</p></td>
+                                    <td className="m-1"></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Description of Disability</p></td>
+                                    <td className="m-1"><p>{master && master.stkPhysDisability ? master.stkPhysDisability : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Health Condition of Customer</p></td>
+                                    <td className="m-1"><p>{master && master.healthCondition ? master.healthCondition : "\u00A0"}</p></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+
+                            
+
+                            {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>Organization Type</p>
                               <p>CNIC Expired Date</p>
                               <p>Initials</p>
@@ -290,8 +336,8 @@ const GuarantorDetails = (props) => {
                               <p>Customer Code</p>
                               <p>Description of Disability</p>
                               <p>Health Condition of Customer</p>
-                            </Grid>
-                            <Grid item>
+                            </div>
+                            <div item className="col-6 col-md-6 col-sm-6">
                               <p>{master && master.stkOrgType ? master.stkOrgType : "\u00A0"}</p>
                               <p>{master && master.stkCNicExpDate ? master.stkCNicExpDate : "\u00A0"}</p>
                               <p>{master && master.stkInitials ? master.stkInitials : "\u00A0"}</p>
@@ -300,9 +346,48 @@ const GuarantorDetails = (props) => {
                               <p>{master && master.stkNumOfDependents ? master.stkNumOfDependents : "\u00A0"}</p>
                               <p>{master && master.stkPhysDisability ? master.stkPhysDisability : "\u00A0"}</p>
                               <p>{master && master.healthCondition ? master.healthCondition : "\u00A0"}</p>
-                            </Grid>
+                            </div> */}
 
-                            <Grid item className="grid-text">
+                            <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                              <table className="table table-borderless table-sm">
+                                <tbody>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Customer CNIC</p></td>
+                                    <td className="m-1"><p>{master && master.stkCNic ? master.stkCNic : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>CNIC Status</p></td>
+                                    <td className="m-1"><p>{master && master.stkCNicStatus ? getValueByList(cnicStatus, master.stkCNicStatus) : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Surname</p></td>
+                                    <td className="m-1"><p>{master && master.stkSurName ? master.stkSurName : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Age</p></td>
+                                    <td className="m-1"><p>{master && master.stkAge ? master.stkAge : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Title</p></td>
+                                    <td className="m-1"><p>{master && master.stkTitle ? getValueByList(titles, master.stkTitle) : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>No.of Earners</p></td>
+                                    <td className="m-1"><p>{master && master.stkNumOfEarners ? master.stkNumOfEarners : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"> <p>Group/ Reference No</p></td>
+                                    <td className="m-1"><p>{master && master.stkGrpRefNo ? master.stkGrpRefNo : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Head of Family</p></td>
+                                    <td className="m-1"><p>{master && master.headOfFamily ? getValueByList(headOfFamily, master.headOfFamily) : "\u00A0"}</p></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+
+                            {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>Customer CNIC</p>
                               <p>CNIC Status</p>
                               <p>Surname</p>
@@ -311,8 +396,8 @@ const GuarantorDetails = (props) => {
                               <p>No.of Earners</p>
                               <p>Group/ Reference No</p>
                               <p>Head of Family</p>
-                            </Grid>
-                            <Grid item>
+                            </div>
+                            <div item className="col-6 col-md-6 col-sm-6">
                               <p>{master && master.stkCNic ? master.stkCNic : "\u00A0"}</p>
                               <p>{master && master.stkCNicStatus ? getValueByList(cnicStatus, master.stkCNicStatus) : "\u00A0"}</p>
                               <p>{master && master.stkSurName ? master.stkSurName : "\u00A0"}</p>
@@ -321,9 +406,48 @@ const GuarantorDetails = (props) => {
                               <p>{master && master.stkNumOfEarners ? master.stkNumOfEarners : "\u00A0"}</p>
                               <p>{master && master.stkGrpRefNo ? master.stkGrpRefNo : "\u00A0"}</p>
                               <p>{master && master.headOfFamily ? getValueByList(headOfFamily, master.headOfFamily) : "\u00A0"}</p>
-                            </Grid>
+                            </div> */}
 
-                            <Grid item className="grid-text">
+                            <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                              <table className="table table-borderless table-sm">
+                                <tbody>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>CNIC Issued Date</p></td>
+                                    <td className="m-1"><p>{master && master.stkCNicIssuedDate ? master.stkCNicIssuedDate : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Customer Name</p></td>
+                                    <td className="m-1"><p>{master && master.stkCusName ? master.stkCusName : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Other Name</p></td>
+                                    <td className="m-1"><p>{master && master.stkOtherName ? master.stkOtherName : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Gender</p></td>
+                                    <td className="m-1"><p>{master && master.stkGender ? getValueByList(genders, master.stkGender) : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Father/ Husband Name</p></td>
+                                    <td className="m-1"><p>{master && master.stkFatherOrHusName ? master.stkFatherOrHusName : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Educational Qualification</p></td>
+                                    <td className="m-1"><p>{master && master.stkEduLevel ? getValueByList(educationalLevels, master.stkEduLevel) : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>There is a Physical Disability</p></td>
+                                    <td className="m-1"><p>{master && master.stkPhysDisabilityDesce ? master.stkPhysDisabilityDesce : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>House Hold Contribution</p></td>
+                                    <td className="m-1"><p>{master && master.houseHoldCont ? getValueByList(houseHoldContribution, master.houseHoldCont) : "\u00A0"}</p></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+
+                            {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>CNIC Issued Date</p>
                               <p>Customer Name</p>
                               <p>Other Name</p>
@@ -332,8 +456,8 @@ const GuarantorDetails = (props) => {
                               <p>Educational Qualification</p>
                               <p>There is a Physical Disability</p>
                               <p>House Hold Contribution</p>
-                            </Grid>
-                            <Grid item >
+                            </div>
+                            <div item className="col-6 col-md-6 col-sm-6">
                               <p>{master && master.stkCNicIssuedDate ? master.stkCNicIssuedDate : "\u00A0"}</p>
                               <p>{master && master.stkCusName ? master.stkCusName : "\u00A0"}</p>
                               <p>{master && master.stkOtherName ? master.stkOtherName : "\u00A0"}</p>
@@ -342,8 +466,8 @@ const GuarantorDetails = (props) => {
                               <p>{master && master.stkEduLevel ? getValueByList(educationalLevels, master.stkEduLevel) : "\u00A0"}</p>
                               <p>{master && master.stkPhysDisabilityDesce ? master.stkPhysDisabilityDesce : "\u00A0"}</p>
                               <p>{master && master.houseHoldCont ? getValueByList(houseHoldContribution, master.houseHoldCont) : "\u00A0"}</p>
-                            </Grid>
-                          </Grid>
+                            </div> */}
+                          </div>
                         </div>
                       </Row>
                     </div>
@@ -374,20 +498,20 @@ const GuarantorDetails = (props) => {
                       <Row>
                         <div className="text-muted d-flex">
                           {contact.map((item, index) => (
-                            <Grid container spacing={12} key={index}>
-                              <Grid item className="grid-text">
+                            <div className="container row" key={index}>
+                              <div className="col-6 col-md-6 col-sm-6 grid-text">
                                 <span key={index}>
                                   <p>Phone No Type</p>
                                   <p>Phone No</p>
                                 </span>
-                              </Grid>
-                              <Grid item>
+                              </div>
+                              <div className="col-6 col-md-6 col-sm-6">
                                 <span key={index}>
                                   <p>{item.phoneNoType}</p>
                                   <p>{item.phoneNo}</p>
                                 </span>
-                              </Grid>
-                            </Grid>
+                              </div>
+                            </div>
                           ))}
                         </div>
                       </Row>
@@ -395,42 +519,102 @@ const GuarantorDetails = (props) => {
                       <hr></hr>
 
                       <Row>
-                        <div className="text-muted d-flex">
+                        <div className="table-responsive-lg text-muted d-flex">
                           {residentials.map((residential, index) => (
-                            <Grid container spacing={12} key={index}>
-                              <Grid item className="grid-text">
-                                <p>Address Type</p>
-                                <p>Same as the Residential Address</p>
-                                <p>Address Line 1</p>
-                                <p>Address Line 2</p>
-                                <p>Address Line 3</p>
-                                <p>Address Line 4</p>
-                                <p>Area</p>
-                                <p>City</p>
-                                <p>Distric</p>
-                                <p>Province</p>
-                                <p>Community</p>
-                                <p>Nearby Popular Places</p>
-                                <p>Duration of Current Location</p>
-                                <p>Residence Type</p>
-                              </Grid>
-                              <Grid item>
-                                <p>{residential && residential.addressType ? getValueAddressType(residential.addressType) : "\u00A0"}</p>
-                                <p>{residential && residential.same ? residential.same : "\u00A0"}</p>
-                                <p>{residential && residential.addressLine1 ? residential.addressLine1 : "\u00A0"}</p>
-                                <p>{residential && residential.addressLine2 ? residential.addressLine2 : "\u00A0"}</p>
-                                <p>{residential && residential.addressLine3 ? residential.addressLine3 : "\u00A0"}</p>
-                                <p>{residential && residential.addressLine4 ? residential.addressLine4 : "\u00A0"}</p>
-                                <p>{residential && residential.area ? residential.area : "\u00A0"}</p>
-                                <p>{residential && residential.city ? residential.city : "\u00A0"}</p>
-                                <p>{residential && residential.district ? residential.district : "\u00A0"}</p>
-                                <p>{residential && residential.province ? residential.province : "\u00A0"}</p>
-                                <p>{residential && residential.community ? getValueByList(communities, residential.community) : "\u00A0"}</p>
-                                <p>{residential && residential.nearByPopPlc ? residential.nearByPopPlc : "\u00A0"}</p>
-                                <p>{residential && residential.durOfCurrLoc ? residential.durOfCurrLoc : "\u00A0"}</p>
-                                <p>{residential && residential.residenceType ? getValueByList(residantals, residential.residenceType) : "\u00A0"}</p>
-                              </Grid>
-                            </Grid>
+                             <table className="table table-sm" key={index}>
+                              <tbody>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Address Type</p></td>
+                                  <td><p className="m-1">{residential && residential.addressType ? getValueAddressType(residential.addressType) : "\u00A0"}</p></td>
+                                </tr>
+                                {/* <tr>
+                                  <td><p className="m-0 grid-text">Same as the Residential Address</p></td>
+                                  <td><p className="m-0">{residential && residential.same ? residential.same : "\u00A0"}</p></td>
+                                </tr> */}
+                                <tr>
+                                  <td><p className="m-0 grid-text">Address Line 1</p></td>
+                                  <td><p className="m-1">{residential && residential.addressLine1 ? residential.addressLine1 : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Address Line 2</p></td>
+                                  <td><p className="m-1">{residential && residential.addressLine2 ? residential.addressLine2 : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Address Line 3</p></td>
+                                  <td><p className="m-1">{residential && residential.addressLine3 ? residential.addressLine3 : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Address Line 4</p></td>
+                                  <td><p className="m-1">{residential && residential.addressLine4 ? residential.addressLine4 : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Area</p></td>
+                                  <td><p className="m-1">{residential && residential.area ? residential.area : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">City</p></td>
+                                  <td><p className="m-1">{residential && residential.city ? residential.city : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Distric</p></td>
+                                  <td><p className="m-1">{residential && residential.district ? residential.district : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Province</p></td>
+                                  <td><p className="m-1">{residential && residential.province ? residential.province : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Community</p></td>
+                                  <td><p className="m-1">{residential && residential.community ? getValueByList(communities, residential.community) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Nearby Popular Places</p></td>
+                                  <td><p className="m-1">{residential && residential.nearByPopPlc ? residential.nearByPopPlc : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Duration of Current Location</p></td>
+                                  <td><p className="m-1">{residential && residential.durOfCurrLoc ? residential.durOfCurrLoc : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Residence Type</p></td>
+                                  <td><p className="m-1">{residential && residential.residenceType ? getValueByList(residantals, residential.residenceType) : "\u00A0"}</p></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            // <div className="container row" key={index}>
+                            //   <div item className="col-6 col-md-6 col-sm-6 grid-text">
+                            //     <p>Address Type</p>
+                            //     <p>Same as the Residential Address</p>
+                            //     <p>Address Line 1</p>
+                            //     <p>Address Line 2</p>
+                            //     <p>Address Line 3</p>
+                            //     <p>Address Line 4</p>
+                            //     <p>Area</p>
+                            //     <p>City</p>
+                            //     <p>Distric</p>
+                            //     <p>Province</p>
+                            //     <p>Community</p>
+                            //     <p>Nearby Popular Places</p>
+                            //     <p>Duration of Current Location</p>
+                            //     <p>Residence Type</p>
+                            //   </div>
+                            //   <div item className="col-6 col-md-6 col-sm-6">
+                            //     <p>{residential && residential.addressType ? getValueAddressType(residential.addressType) : "\u00A0"}</p>
+                            //     <p>{residential && residential.same ? residential.same : "\u00A0"}</p>
+                            //     <p>{residential && residential.addressLine1 ? residential.addressLine1 : "\u00A0"}</p>
+                            //     <p>{residential && residential.addressLine2 ? residential.addressLine2 : "\u00A0"}</p>
+                            //     <p>{residential && residential.addressLine3 ? residential.addressLine3 : "\u00A0"}</p>
+                            //     <p>{residential && residential.addressLine4 ? residential.addressLine4 : "\u00A0"}</p>
+                            //     <p>{residential && residential.area ? residential.area : "\u00A0"}</p>
+                            //     <p>{residential && residential.city ? residential.city : "\u00A0"}</p>
+                            //     <p>{residential && residential.district ? residential.district : "\u00A0"}</p>
+                            //     <p>{residential && residential.province ? residential.province : "\u00A0"}</p>
+                            //     <p>{residential && residential.community ? getValueByList(communities, residential.community) : "\u00A0"}</p>
+                            //     <p>{residential && residential.nearByPopPlc ? residential.nearByPopPlc : "\u00A0"}</p>
+                            //     <p>{residential && residential.durOfCurrLoc ? residential.durOfCurrLoc : "\u00A0"}</p>
+                            //     <p>{residential && residential.residenceType ? getValueByList(residantals, residential.residenceType) : "\u00A0"}</p>
+                            //   </div>
+                            // </div>
                           ))}
                         </div>
                       </Row>
@@ -463,22 +647,49 @@ const GuarantorDetails = (props) => {
                     <div className="accordion-body">
                       <Row>
                         <div className="text-muted d-flex">
-                          <Grid container spacing={12}>
-                            <Grid item className="grid-text">
+                          <div className="container row">
+                            <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                              <table className="table table-borderless table-sm">
+                                <tbody>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Source of Income</p></td>
+                                    <td className="m-1"><p>{income && income.sourceOfIncome ? income.sourceOfIncome : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Monthly Income</p></td>
+                                    <td className="m-1"><p>{income && income.monthlyIncome ? format(income.monthlyIncome) : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Asset Description</p></td>
+                                    <td className="m-1"><p>{income && income.assetsDesc ? income.assetsDesc : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Total Value Assets</p></td>
+                                    <td className="m-1"><p>{income && income.totValAssets ? income.totValAssets : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="m-0 grid-text"><p>Total Monthly Income</p></td>
+                                    <td className="m-1"><p>{income && income.totMonIncome ? income.totMonIncome : "\u00A0"}</p></td>
+                                  </tr>
+                                </tbody>
+                                
+                              </table>
+                            </div>
+                            {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>Source of Income</p>
                               <p>Monthly Income</p>
                               <p>Asset Description</p>
                               <p>Total Value Assets</p>
                               <p>Total Monthly Income</p>
-                            </Grid>
-                            <Grid item>
+                            </div>
+                            <div item className="col-6 col-md-6 col-sm-6">
                               <p>{income && income.sourceOfIncome ? income.sourceOfIncome : "\u00A0"}</p>
                               <p>{income && income.monthlyIncome ? format(income.monthlyIncome) : "\u00A0"}</p>
                               <p>{income && income.assetsDesc ? income.assetsDesc : "\u00A0"}</p>
                               <p>{income && income.totValAssets ? income.totValAssets : "\u00A0"}</p>
                               <p>{income && income.totMonIncome ? income.totMonIncome : "\u00A0"}</p>
-                            </Grid>
-                          </Grid>
+                            </div> */}
+                          </div>
                         </div>
                       </Row>
                     </div>
@@ -511,33 +722,33 @@ const GuarantorDetails = (props) => {
                     <div className="accordion-body">
                       <Row>
                         <div className="text-muted d-flex">
-                          <Grid item xs={12}>
+                          <div className="col-12 col-md-12 col-sm-12">
                             <Card className="witness-signature-card">
                               <p style={{ textAlign: 'right' }}>
                                 {getGuarantorAknowledgement()}
                               </p>
                             </Card>
-                          </Grid>
+                          </div>
                         </div>
                       </Row>
                       <Row>
                         <div className="text-muted d-flex">
-                          <Grid item xs={6}>
+                          <div className="col-6 col-md-6 col-sm-6">
                             <Card className="witness-signature-card">
                               <p>Guarantor Thumbnail</p>
                               {thumb && thumb.length > 0 && thumb.map((sign, index) => (
                                 sign.status === "A" && <AsyncImage src={sign.imgPath} key={index} />
                               ))}
                             </Card>
-                          </Grid>
-                          <Grid item xs={6}>
+                          </div>
+                          <div className="col-6 col-md-6 col-sm-6">
                             <Card className="witness-signature-card">
                               <p>Guarantor Signature</p>
                               {signature && signature.length > 0 && signature.map((sign, index) => (
                                 sign.status === "A" && <AsyncImage src={sign.imgPath} key={index} />
                               ))}
                             </Card>
-                          </Grid>
+                          </div>
                         </div>
                       </Row>
                     </div>
