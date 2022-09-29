@@ -78,13 +78,13 @@ const GeoDetails = (props) => {
   const getCatagoryColor = (category) => {
     switch (category) {
       case "GEO_DETAILS_BHO":
-        return "#F44546";
+        return {color: "#F44546", categoryName: "Branch Manager"};
       
       case "GEO_DETAILS_CO":
-        return "#21409A"; 
+        return {color: "#21409A", categoryName: "Credit Officer"}; 
       
       default:
-        return "#039C4B";
+        return {color: "#039C4B", categoryName: "CRO"};
      
     }
   }
@@ -93,10 +93,10 @@ const GeoDetails = (props) => {
     <div className="pin">
       <span className="d-flex flex-column">
         <div>
-          <i className="bx bxs-map" style={{ fontSize: "46px", color: getCatagoryColor(text)}}></i>
+          <i className="bx bxs-map" style={{ fontSize: "46px", color: getCatagoryColor(text).color}}></i>
         </div>
         <div style={{ width: '150px' }}>
-          <p style={{ fontSize: "13px", fontWeight: 'bold', color: 'black', WebkitTextStroke: '0.5px white' }}>{ text }</p>
+          <p style={{ fontSize: "18px", fontWeight: '800', color: 'black', WebkitTextStroke: '0.5px white' }}>{getCatagoryColor(text).categoryName}</p>
         </div>
       </span>
     </div>
@@ -106,7 +106,7 @@ const GeoDetails = (props) => {
     <Row>
       <Loader loading={isLoading} >
         <Row>
-          <Col md={ verifyUserRole() ? 6 : 12}>
+          <Col lg={ verifyUserRole() ? 6 : 12}>
             <div className="mt-4">
               <div className="google-map" style={{ height: '100vh' }}>
                 <GoogleMapReact
@@ -125,7 +125,7 @@ const GeoDetails = (props) => {
               </div>
             </div>
           </Col>
-          {verifyUserRole() && active === false && <Col md={6}>
+          {verifyUserRole() && active === false && <Col md={12} lg={6}>
             <div className="mt-4">
               <Upload appraisalId={appraisalId} />
             </div>
