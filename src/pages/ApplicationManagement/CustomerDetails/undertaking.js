@@ -74,7 +74,7 @@ const UndertakingDetails = (props) => {
                   <Card className="customer-signature-card">
                     <p>Customer Thumbnail</p>
                     {thumb && thumb.length > 0 && thumb.map((sign, index) => (
-                      sign.status === "A" && <AsyncImage src={sign.imgPath} key={index} />
+                      sign.status === "A" && <AsyncImage src={sign.hashIdentifier} key={index} />
                     ))}
                   </Card>
                 </div>
@@ -82,7 +82,7 @@ const UndertakingDetails = (props) => {
                   <Card className="customer-signature-card">
                     <p>Customer Signature</p>
                     {signature && signature.length > 0 && signature.map((sign, index) => (
-                      sign.status === "A" && <AsyncImage src={sign.imgPath} key={index} />
+                      sign.status === "A" && <AsyncImage src={sign.hashIdentifier} key={index} />
                     ))}
                   </Card>
                 </div>

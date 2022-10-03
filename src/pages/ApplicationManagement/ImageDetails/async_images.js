@@ -1,55 +1,50 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { FileViewer } from "react-file-viewer";
-import {
-  Row,
-  Col,  
-  Card,
-  CardBody,
-  Container
-} from "reactstrap";
+import './buttonPDF.css'
 
 //Lightbox
 import Lightbox from "react-image-lightbox-rotate-fixed";
 import "react-image-lightbox/style.css";
 
 // APIs
-import {
-    viewImage,
-} from "services/images.service";
+import { viewImageOrPDF } from "services/images.service";
+import { fontSize } from "@material-ui/system";
 
 const AsyncImage = (props) => {
 
-    const [data, setdata] = useState(null);
+    const [data, setData] = useState(null);
     const [isFits, setisFits] = useState(false);
     const [type, setType] = useState(null);
+
+    const openPdf = () => {
+        window.open(data)
+    }
 
     useEffect(async () => {
         var _isMounted = true;
         if (props.src) {
-            const response = await viewImage(props.src); 
-            // console.log(response);
+            const response = await viewImageOrPDF(props.src);    
+           
             
             var data = null;
             var contentType = null;
-            if (response != undefined && response != null) {  
+            if (response != undefined && response != null) {               
                 
-                contentType = `data:${response?.headers['content-type']}`;
-                //console.log(contentType);
+                contentType = `data:${response?.headers['content-type']}`;                               
 
-                if (contentType == "application/pdf") {
-                    data = `${contentType};base64,${new Buffer(response?.data).toString('base64')}`;
-
-                    var fileURL = URL.createObjectURL(data);
-                    window.open(fileURL);
+                if (contentType == "data:application/pdf") {
+                    
+                    var fileURL = URL.createObjectURL(new Blob([response?.data], { type: 'application/pdf' }));
+                                      
+                    // console.log(fileURL);
 
                     if (_isMounted) {
-                        setdata(fileURL);
-                        setType('pdf');
+                        setData(fileURL);                       
+                        setType('pdf')
                     }
                 } else {                
                     data = `${contentType};base64,${new Buffer(response?.data).toString('base64')}`;
-                    _isMounted && setdata(data);
+                    _isMounted && setData(data);
                 }
             }            
             
@@ -63,25 +58,15 @@ const AsyncImage = (props) => {
 
     if (data && type == 'pdf') {
         return (                           
-            <Container fluid>
-                <Row>
-                    <Col lg={12}>
-                    <Card>
-                        <CardBody>
-                            <div key={1} className="document-wrapper">
-                                { <FileViewer
-                                fileType={type}
-                                filePath={data}
-                                />}
-                            </div>
-                        </CardBody>
-                    </Card>
-                    </Col>
-                </Row>
-            </Container>          
+            <div>               
+                <button onClick={openPdf} className='button-wrapper'>                
+                    <span><i className="lar la-file-pdf" style={{ margin: '0' }}></i></span> 
+                    <p style={{fontSize:"1rem"}}>Open PDF</p>
+                </button>
+            </div>          
         )
     } else {
-        return (                           
+        return (            
             <div className={props.className}>
                 <img src={data} onClick={() => setisFits(true)} className="img-responsive" style={{
                     width: "200px",
@@ -100,8 +85,9 @@ const AsyncImage = (props) => {
                             setisFits(!isFits);
                         }}
                     />
-                ) : null}
-            </div>              
+                ) : null}                
+            </div>             
+            
         )
     }
 

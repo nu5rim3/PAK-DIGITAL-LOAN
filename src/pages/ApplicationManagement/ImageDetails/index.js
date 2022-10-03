@@ -37,17 +37,17 @@ const ImageDetails = (props) => {
       if (props.active === "9") {
 
         const images = await getAllImages(appraisalId);
-
-        const result = [...images.reduce((r, { imgMasterCategory, imgSubCategory, imgPath }) => {
+        
+        const result = [...images.reduce((r, { imgMasterCategory, imgSubCategory, hashIdentifier}) => {
           r.has(imgMasterCategory) || r.set(imgMasterCategory, {
             imgMasterCategory,
             images: []
           });
 
-          r.get(imgMasterCategory).images.push({ imgSubCategory, imgPath });
-
+          r.get(imgMasterCategory).images.push({ imgSubCategory, hashIdentifier });
+          
           return r;
-        }, new Map).values()];
+        }, new Map).values()];        
 
         setGroups(result);
         setIsLoading(false);

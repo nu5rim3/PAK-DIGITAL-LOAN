@@ -66,3 +66,8 @@ export function file(url) {
   return axiosApi
     .get(url, { responseType: 'blob' })
 }
+
+export function imgFile(url) {
+  return axiosApi
+    .get(url, {responseType: 'arraybuffer'})
+}
