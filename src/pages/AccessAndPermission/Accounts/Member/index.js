@@ -57,12 +57,14 @@ const Member = (props) => {
   const getRoles = (item) => {
     if (item.roles.length > 0) {
       item.roles = item.roles.map(role => role.code).join(", ");
+      console.log(item);
       return item;
     } else {
       item.roles = "";
       return item;
     }
   }
+  
 
   const getLastModifiedDate = (item) => {
     item.lastModifiedDate = moment(item.lastModifiedDate).format("YYYY-MM-DD");

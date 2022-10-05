@@ -7,7 +7,8 @@ import {
   Alert,
 } from "reactstrap";
 
-import { useForm } from "react-hook-form";
+import {useForm } from "react-hook-form";
+import MultiSelect from "./MultiSelect";
 
 import Loader from "components/SyncLoader";
 
@@ -32,7 +33,7 @@ const Create = (props) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
-  const { register, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
+  const { register, control, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
 
   const onSubmit = async(data) => {
     var payload = {
@@ -121,6 +122,8 @@ const Create = (props) => {
       _isMounted = false;
     }
   }, []);
+
+  const rolesOptions = roles.map((item, index) => { return {key:index, label: item.description, value: item.code } })    
 
   return (
     <Row>
@@ -235,17 +238,12 @@ const Create = (props) => {
                 </Col>
 
                 <Col md={6}>
-                  <div className="mb-3">
-                    <label htmlFor="user-role">Role</label>
-                    <select
-                      className="form-control"
-                      id="user-role"
-                      {...register("role", { required: true })}
-                    >
-                      <option value="">Choose...</option>
-                      {roles.map((item, index) => <option key={index} value={item.code}>{item.description}</option>)}
-                    </select>
-                    {errors.role && <span className="text-danger">This field is required</span>}
+                  <div className="mb-3"> 
+                    <MultiSelect
+                      control={control}
+                      values={rolesOptions}
+                    />                    
+                    {errors.item?.message && <span className="text-danger">This field is required</span>}
                   </div>
                 </Col>
 
