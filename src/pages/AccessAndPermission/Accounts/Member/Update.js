@@ -11,9 +11,7 @@ import {
   Alert,
 } from "reactstrap";
 
-import {Controller, useForm } from "react-hook-form";
-import Select from "react-select";
-import makeAnimated from 'react-select/animated';
+import { useForm } from "react-hook-form";
 import MultiSelect from "./MultiSelect";
 
 import Loader from "components/SyncLoader";
@@ -76,9 +74,9 @@ const Update = (props) => {
         setIsLoading(false);
         setSuccessMessage("User updated successfully.");
         reset();
-        setTimeout(() => { 
-          setSuccessMessage(null); 
-          props.toggel(); 
+        setTimeout(() => {
+          setSuccessMessage(null);
+          props.toggel();
         }, 3000);
       } else if (res?.status === 500) {
         setIsLoading(false);
@@ -135,10 +133,7 @@ const Update = (props) => {
     }
   }, [props.data]);
 
-    const rolesOptions = roles.map((item, index) => { return {key:index, label: item.description, value: item.code } })
-    console.log(rolesOptions);
-
-    const animatedComponents = makeAnimated();
+  const rolesOptions = roles.map((item, index) => { return { key: index, label: item.description, value: item.code } })
 
   return (
     <Row>
@@ -244,10 +239,11 @@ const Update = (props) => {
                 </Col>
 
                 <Col md={6}>
-                  <div className="mb-3">                    
+                  <div className="mb-3">
                     <MultiSelect
                       control={control}
                       values={rolesOptions}
+                      {...register("role", { required: true })}
                     />
                     {/* <select
                       className="form-control"

@@ -7,8 +7,9 @@ import {
   Alert,
 } from "reactstrap";
 
-import {useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import MultiSelect from "./MultiSelect";
+import { ErrorMessage } from '@hookform/error-message';
 
 import Loader from "components/SyncLoader";
 
@@ -35,7 +36,7 @@ const Create = (props) => {
 
   const { register, control, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     var payload = {
       "idx": data.idx,
       "userName": data.userName,
@@ -68,9 +69,9 @@ const Create = (props) => {
         setIsLoading(false);
         setSuccessMessage("User created successfully.");
         reset();
-        setTimeout(() => { 
-          setSuccessMessage(null); 
-          props.toggel(); 
+        setTimeout(() => {
+          setSuccessMessage(null);
+          props.toggel();
 
         }, 3000);
       } else if (res?.status === 500) {
@@ -83,7 +84,7 @@ const Create = (props) => {
     }).catch(err => console.log(err));
   };
 
-  const verifyUser = async() => {
+  const verifyUser = async () => {
     setErrorMessage(null);
     var value = watch("profileUser");
 
@@ -123,7 +124,7 @@ const Create = (props) => {
     }
   }, []);
 
-  const rolesOptions = roles.map((item, index) => { return {key:index, label: item.description, value: item.code } })    
+  const rolesOptions = roles.map((item, index) => { return { key: index, label: item.description, value: item.code } })
 
   return (
     <Row>
@@ -238,12 +239,13 @@ const Create = (props) => {
                 </Col>
 
                 <Col md={6}>
-                  <div className="mb-3"> 
+                  <div className="mb-3">
                     <MultiSelect
                       control={control}
                       values={rolesOptions}
-                    />                    
-                    {errors.item?.message && <span className="text-danger">This field is required</span>}
+                      {...register("role", { required: true })}
+                    />
+                    {errors.role && <span className="text-danger">This field is required</span>}
                   </div>
                 </Col>
 

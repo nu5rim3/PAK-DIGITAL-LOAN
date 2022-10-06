@@ -5,44 +5,43 @@ import makeAnimated from 'react-select/animated';
 import { Controller } from "react-hook-form";
 
 import {
-  getRoles,
+    getRoles,
 } from "services/role.service";
 
-const MultiSelect = ({control}) => {
+const MultiSelect = ({ control }) => {
 
     const [roles, setRoles] = useState([]);
 
-        useEffect(() => {
-            var _isMounted = true;
+    useEffect(() => {
+        var _isMounted = true;
 
-            const fetchData = async () => {
+        const fetchData = async () => {
             const roleResponse = await getRoles();
-            
+
             if (_isMounted) {
-                setRoles(roleResponse);            
+                setRoles(roleResponse);
             }
         };
 
         fetchData();
 
         return () => {
-        _isMounted = false;
+            _isMounted = false;
         }
-        }, [])
-    
-        const options = roles.map((item, index) => { return {key:index, label: item.description, value: item.code } })
-        console.log(options);  
+    }, [])
 
-        const animatedComponents = makeAnimated();
+    const options = roles.map((item, index) => { return { key: index, label: item.description, value: item.code } })
+
+    const animatedComponents = makeAnimated();
 
     return (
-        <div className="mb-3">                    
-                <label htmlFor="user-role">Role</label>
-                <Controller
-                    control={control}
-                    name="role"
-                    render={({ field: { value, onChange, onBlur } }) => {
-                    return(
+        <div className="mb-3">
+            <label htmlFor="user-role">Role</label>
+            <Controller
+                control={control}
+                name="role"
+                render={({ field: { value, onChange, onBlur } }) => {
+                    return (
                         <SelectMultiple
                             id="user-role"
                             name="role"
@@ -54,19 +53,23 @@ const MultiSelect = ({control}) => {
                                 onChange(options?.map((option) => option.value))
                             }
                             onBlur={onBlur}
-                            value={options.filter((option) => value?.includes(option.value))}               
-                        
+                            value={options.filter((option) => value?.includes(option.value))}
+
                         />
-                    )}}
-                
-                />
+
+
+                    )
+
+                }}
+
+            />
         </div>
     )
 
 }
 
 MultiSelect.propTypes = {
-  control: PropTypes.object
+    control: PropTypes.object
 }
 
 export default MultiSelect;
