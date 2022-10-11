@@ -11,8 +11,9 @@ import {
   Alert,
 } from "reactstrap";
 
-import { useForm } from "react-hook-form";
-import MultiSelect from "./MultiSelect";
+import { useForm, Controller } from "react-hook-form";
+
+import Select from "react-select";
 
 import Loader from "components/SyncLoader";
 
@@ -41,6 +42,8 @@ const Update = (props) => {
   const { register, control, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
+    const userRoles = data.role.map((r) => ({ "code": r }))
+
     var payload = {
       "idx": data.idx,
       "userName": data.userName,
@@ -51,11 +54,9 @@ const Update = (props) => {
           "code": data.branch,
         }
       ],
-      "roles": [
-        {
-          "code": data.role,
-        }
-      ],
+
+      "roles": userRoles,
+
       "devices": [
         {
           "code": data.device,
@@ -133,7 +134,7 @@ const Update = (props) => {
     }
   }, [props.data]);
 
-  const rolesOptions = roles.map((item, index) => { return { key: index, label: item.description, value: item.code } })
+  const options = roles.map((item, index) => { return { key: index, label: item.description, value: item.code } });
 
   return (
     <Row>
@@ -240,19 +241,28 @@ const Update = (props) => {
 
                 <Col md={6}>
                   <div className="mb-3">
-                    <MultiSelect
+                    <label htmlFor="user-role">Role</label>
+                    <Controller
                       control={control}
-                      values={rolesOptions}
-                      {...register("role", { required: true })}
+                      defaultValue={options}
+                      name="role"
+                      rules={{
+                        required: {
+                          //value: assetType.value == "item",
+                          message: "Item type is required.",
+                        },
+                      }}
+                      render={({ field: { onChange, value, ref } }) => (
+                        <Select
+                          inputRef={ref}
+                          value={options.filter(c => value.includes(c.value))}
+                          onChange={val => onChange(val.map(c => c.value))}
+                          options={options}
+                          isMulti
+                          required
+                        />
+                      )}
                     />
-                    {/* <select
-                      className="form-control"
-                      id="user-role"
-                      {...register("role", { required: true })}
-                    >
-                      <option value="">Choose...</option>
-                      {roles.map((item, index) => <option key={index} value={item.code}>{item.description}</option>)}
-                    </select> */}
                     {errors.role && <span className="text-danger">This field is required</span>}
                   </div>
                 </Col>

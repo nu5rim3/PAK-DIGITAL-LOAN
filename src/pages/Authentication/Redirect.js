@@ -84,7 +84,7 @@ const Login = props => {
                   </div>
                   <div className="d-grid">
                     <div className="mt-3 mb-5 text-center">
-                      <img src={loading} style={{width: '30%', height: '100%'}} />
+                      <img src={loading} style={{ width: '30%', height: '100%' }} />
                     </div>
                   </div>
                 </CardBody>

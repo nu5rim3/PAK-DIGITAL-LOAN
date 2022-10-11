@@ -7,9 +7,9 @@ import {
   Alert,
 } from "reactstrap";
 
-import { useForm } from "react-hook-form";
-import MultiSelect from "./MultiSelect";
-import { ErrorMessage } from '@hookform/error-message';
+import { useForm, Controller } from "react-hook-form";
+
+import Select from "react-select";
 
 import Loader from "components/SyncLoader";
 
@@ -37,6 +37,8 @@ const Create = (props) => {
   const { register, control, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
+    const userRoles = data.role.map((r) => ({ "code": r }))
+
     var payload = {
       "idx": data.idx,
       "userName": data.userName,
@@ -47,11 +49,7 @@ const Create = (props) => {
           "code": data.branch,
         }
       ],
-      "roles": [
-        {
-          "code": data.role,
-        }
-      ],
+      "roles": userRoles,
       "devices": [
         {
           "code": data.device,
@@ -124,7 +122,7 @@ const Create = (props) => {
     }
   }, []);
 
-  const rolesOptions = roles.map((item, index) => { return { key: index, label: item.description, value: item.code } })
+  const options = roles.map((item, index) => { return { key: index, label: item.description, value: item.code } })
 
   return (
     <Row>
@@ -240,10 +238,27 @@ const Create = (props) => {
 
                 <Col md={6}>
                   <div className="mb-3">
-                    <MultiSelect
+                    <label htmlFor="user-role">Role</label>
+                    <Controller
                       control={control}
-                      values={rolesOptions}
-                      {...register("role", { required: true })}
+                      defaultValue={options}
+                      name="role"
+                      rules={{
+                        required: {
+                          //value: assetType.value == "item",
+                          message: "Item type is required.",
+                        },
+                      }}
+                      render={({ field: { onChange, value, ref } }) => (
+                        <Select
+                          inputRef={ref}
+                          value={options.filter(c => value.includes(c.value))}
+                          onChange={val => onChange(val.map(c => c.value))}
+                          options={options}
+                          isMulti
+                          required
+                        />
+                      )}
                     />
                     {errors.role && <span className="text-danger">This field is required</span>}
                   </div>
