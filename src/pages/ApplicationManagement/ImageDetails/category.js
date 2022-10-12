@@ -34,7 +34,7 @@ const Category = (props) => {
     return images.map((image, index) => {
       return <AsyncImage className="col-md-4 col-sm-6"
         key={index}
-        src={image.imgPath} 
+        src={image.hashIdentifier} 
         category={removeUnderscore(image.imgSubCategory)} />
     })
   }

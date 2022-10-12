@@ -60,7 +60,7 @@ const GeoDetails = (props) => {
             checkAldreadySubmit(img?.imgMasterCategory);
             return { latitude: img.latitude, longitude: img.longitude, imgMasterCategory: img.imgMasterCategory }
           });
-          console.log(locationDetails);
+          //console.log(locationDetails);
 
           setLocations(locationDetails);
           setIsLoading(false);
