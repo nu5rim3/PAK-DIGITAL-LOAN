@@ -56,7 +56,7 @@ const Member = (props) => {
 
   const getRoles = (item) => {
     if (item.roles.length > 0) {
-      item.roles = item.roles.map(role => role.code).join(", ");
+      item.roles = item.roles.map(role => role.code).join(",");
       return item;
     } else {
       item.roles = "";

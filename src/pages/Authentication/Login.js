@@ -59,8 +59,9 @@ const Login = props => {
                   <div className="mt-3 d-grid">
                     <button
                       onClick={() => submitLogin()}
-                      className="btn btn-primary btn-block"
+                      className="btn btn-success btn-block"
                       type="button"
+                      style={{ borderColor: "#1abc86", color: "white" }}
                     >
                       Pakoman Corporate Login
                     </button>

@@ -3,7 +3,7 @@ import jwt_decode from "jwt-decode"
 import { call, put, takeEvery, takeLatest } from "redux-saga/effects"
 
 // Login Redux States
-import { LOGIN_USER, LOGOUT_USER, SOCIAL_LOGIN } from "./actionTypes"
+import { LOGIN_USER, LOGOUT_USER, SOCIAL_LOGIN, USER_AUTHORIZATION } from "./actionTypes"
 import { apiError, loginSuccess, logoutUserSuccess } from "./actions"
 
 //Include Both Helper File with needed methods
@@ -32,16 +32,18 @@ function* loginUser({ payload: { user, history, response } }) {
 
       if (userResponse !== undefined) {
 
-        localStorage.setItem("role", userResponse.roles[0].code);
+        //localStorage.setItem("role", userResponse.roles[0].code);
         localStorage.setItem("branch", userResponse.branches[0].code);
 
         localStorage.setItem("authUser", JSON.stringify({ "uid": `${userResponse.idx}`, "username": `${userResponse.idx}`, "role": `${userResponse.roles[0].code}` }))
-        yield put(loginSuccess({ "uid": `${userResponse.idx}`, "username": `${userResponse.idx}`, "role": `${userResponse.roles[0].code}` }))
+        //yield put(loginSuccess({ "uid": `${userResponse.idx}`, "username": `${userResponse.idx}`, "role": `${userResponse.roles[0].code}` }))
       }
 
-      history.push("/pakoman-digital-loan/dashboard")
-      window.location.reload();
-      
+      history.push("/pakoman-digital-loan/role", {
+        userResponse: userResponse
+      })
+      //window.location.reload();
+
     } else if (process.env.REACT_APP_DEFAULTAUTH === "OAUTH2") {
 
       const params = {
@@ -84,6 +86,18 @@ function* loginUser({ payload: { user, history, response } }) {
       history.push("/pakoman-digital-loan/dashboard")
       window.location.reload();
     }
+  } catch (error) {
+    yield put(apiError(error))
+  }
+}
+
+function* autherizationContextHandler({ payload: { userResponse, roleType } }) {
+  try {
+    localStorage.setItem("role", roleType);
+    yield put(loginSuccess({ "uid": `${userResponse.idx}`, "username": `${userResponse.idx}`, "role": `${roleType}` }))
+
+    window.location.replace("/pakoman-digital-loan/dashboard")
+
   } catch (error) {
     yield put(apiError(error))
   }
@@ -144,6 +158,7 @@ function* authSaga() {
   yield takeEvery(LOGIN_USER, loginUser)
   yield takeLatest(SOCIAL_LOGIN, socialLogin)
   yield takeEvery(LOGOUT_USER, logoutUser)
+  yield takeLatest(USER_AUTHORIZATION, autherizationContextHandler)
 }
 
 export default authSaga

@@ -5,6 +5,7 @@ import { Redirect } from "react-router-dom"
 import Login from "pages/Authentication/Login"
 import Logout from "pages/Authentication/Logout"
 import RedirectPage from "pages/Authentication/Redirect"
+import UserRoleSelecter from "pages/Authentication/LoginRoles"
 
 import Role from "pages/AccessAndPermission/Accounts/Role"
 import Member from "pages/AccessAndPermission/Accounts/Member"
@@ -44,7 +45,7 @@ const authProtectedRoutes = [
 
   // APPLICATION MANAGEMENT
   { path: "/pakoman-digital-loan/dashboard", component: Dashboard },
-  { path: "/pakoman-digital-loan/application-management/origination", component: Origination },  
+  { path: "/pakoman-digital-loan/application-management/origination", component: Origination },
   { path: "/pakoman-digital-loan/credit-appraisals/view/:appraisalId", component: Appraisal },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/pep/:id", component: PepDocument },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/sanc/:id", component: CombinedReports },
@@ -54,7 +55,7 @@ const authProtectedRoutes = [
   { path: "/pakoman-digital-loan/credit-appraisals/documents/:reportType/reports/:appraisalId", component: ReportDocument },
 
   // REPORT AND SUMMARY
-  { path: "/pakoman-digital-loan/reports/mis-report",component:  MisReport},
+  { path: "/pakoman-digital-loan/reports/mis-report", component: MisReport },
 
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
@@ -66,6 +67,7 @@ const publicRoutes = [
   { path: "/pakoman-digital-loan/logout", component: Logout },
   { path: "/pakoman-digital-loan/login", component: Login },
   { path: "/pakoman-digital-loan/redirect", component: RedirectPage },
+  { path: "/pakoman-digital-loan/role", component: UserRoleSelecter },
 ]
 
 export { publicRoutes, authProtectedRoutes }
