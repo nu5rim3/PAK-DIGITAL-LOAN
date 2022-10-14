@@ -243,20 +243,15 @@ const Create = (props) => {
                       control={control}
                       defaultValue={options}
                       name="role"
-                      rules={{
-                        required: {
-                          //value: assetType.value == "item",
-                          message: "Item type is required.",
-                        },
-                      }}
-                      render={({ field: { onChange, value, ref } }) => (
+                      rules={{ required: true }}
+                      render={({ field: { onChange, value, ref, onBlur } }) => (
                         <Select
                           inputRef={ref}
+                          onBlur={onBlur}
                           value={options.filter(c => value.includes(c.value))}
                           onChange={val => onChange(val.map(c => c.value))}
                           options={options}
                           isMulti
-                          required
                         />
                       )}
                     />

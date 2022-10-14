@@ -246,12 +246,7 @@ const Update = (props) => {
                       control={control}
                       defaultValue={options}
                       name="role"
-                      rules={{
-                        required: {
-                          //value: assetType.value == "item",
-                          message: "Item type is required.",
-                        },
-                      }}
+                      rules={{ required: true }}
                       render={({ field: { onChange, value, ref } }) => (
                         <Select
                           inputRef={ref}
@@ -259,7 +254,7 @@ const Update = (props) => {
                           onChange={val => onChange(val.map(c => c.value))}
                           options={options}
                           isMulti
-                          required
+                        //required
                         />
                       )}
                     />
