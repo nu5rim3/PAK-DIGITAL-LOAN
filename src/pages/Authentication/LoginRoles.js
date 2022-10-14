@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 
 import './UserRolePage.css'
 
-import { Row, Col, CardBody, Card, Alert, Container } from "reactstrap";
+import { Row, Col, CardBody, Card, Button, Container, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 import { withRouter, Link } from "react-router-dom";
 
@@ -18,6 +18,7 @@ const UserRoleSelecter = (props) => {
 
     const [roles, setRoles] = useState([null]);
     const [roleType, setRoleType] = useState();
+    const [modal, showModal] = useState(false);
 
     const dispatch = useDispatch();
 
@@ -37,7 +38,17 @@ const UserRoleSelecter = (props) => {
     ), [];
 
     const submitLoginRole = () => {
-        dispatch(autherizationContextHandler(props.location.state.userResponse, roleType))
+        var checked_role = document.querySelector('input[name = "radio"]:checked');
+
+        if (checked_role != null) {
+            dispatch(autherizationContextHandler(props.location.state.userResponse, roleType))
+        } else {
+            closeModel();
+        }
+    }
+
+    const closeModel = () => {
+        showModal(!modal)
     }
 
     const renderRoleCard = () => {
@@ -56,7 +67,6 @@ const UserRoleSelecter = (props) => {
                 />
                 <span className="radio-btn"><i className="las la-check"></i>
                     <div className="user-icon">
-                        <i className="las la-cog"></i>
                         <h3>{userRoles[i].role}</h3>
                     </div>
                 </span>
@@ -126,6 +136,17 @@ const UserRoleSelecter = (props) => {
                                 </p>
                             </div>
                         </Col>
+                        <Modal isOpen={modal} toggle={closeModel} >
+                            <ModalHeader toggle={closeModel}>User Role Error!</ModalHeader>
+                            <ModalBody>
+                                <span><h5 style={{ color: "red" }}>Please Select a Role to Proceed.</h5></span>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="success" onClick={closeModel}>
+                                    <h5 style={{ color: "white" }}>Okay</h5>
+                                </Button>
+                            </ModalFooter>
+                        </Modal>
                     </Row>
                 </Container>
             </div>
