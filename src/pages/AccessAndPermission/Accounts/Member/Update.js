@@ -135,6 +135,7 @@ const Update = (props) => {
   }, [props.data]);
 
   const options = roles.map((item, index) => { return { key: index, label: item.description, value: item.code } });
+  console.log(options);
 
   return (
     <Row>
@@ -247,14 +248,14 @@ const Update = (props) => {
                       defaultValue={options}
                       name="role"
                       rules={{ required: true }}
-                      render={({ field: { onChange, value, ref } }) => (
+                      render={({ field: { onChange, value, ref, onBlur } }) => (
                         <Select
+                          onBlur={onBlur}
                           inputRef={ref}
                           value={options.filter(c => value.includes(c.value))}
                           onChange={val => onChange(val.map(c => c.value))}
                           options={options}
                           isMulti
-                        //required
                         />
                       )}
                     />
