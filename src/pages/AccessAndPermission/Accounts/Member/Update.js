@@ -135,7 +135,6 @@ const Update = (props) => {
   }, [props.data]);
 
   const options = roles.map((item, index) => { return { key: index, label: item.description, value: item.code } });
-  console.log(options);
 
   return (
     <Row>
