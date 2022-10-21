@@ -102,7 +102,7 @@ const ApprovalDetails = (props) => {
       result = (findUser.group.code === activeStep.workflowStep.name && activeStep.stepAction === "P");
       return result;
     }
-    
+
     if ((activeStep !== null && activeStep !== undefined)) {
       var role = localStorage.getItem("role");
       result = (role === activeStep.workflowStep.roleCode && activeStep.stepAction === "P");
@@ -114,6 +114,12 @@ const ApprovalDetails = (props) => {
 
   const verifyExceptionalApprovals = () => {
     return exceptionalApprovals.filter((item) => item.status === "P").length > 0;
+  }
+
+  const verifyOnBoardingApprovals = () => {
+    if ((onBoardingApprovals !== null && onBoardingApprovals !== undefined) && (activeStep !== null && activeStep !== undefined)) {
+      return onBoardingApprovals.filter((item) => item.status === "P").length > 0 && activeStep.workflowStep.name === "AG_LEVEL_2";
+    }
   }
 
   const onSubmitObApproval = (index, item) => {
@@ -205,11 +211,11 @@ const ApprovalDetails = (props) => {
     }
   }
 
-  const createActionApprovalStep = async(type) => {
+  const createActionApprovalStep = async (type) => {
     var value = document.getElementById(`step_comment`).value;
     if (value === "") {
       document.getElementById(`step_error_comment`).classList.remove("d-none")
-      return;      
+      return;
     }
 
     var payload = {
@@ -219,7 +225,7 @@ const ApprovalDetails = (props) => {
     }
 
     // disable button action
-    if(approvalBtnRef.current){
+    if (approvalBtnRef.current) {
       approvalBtnRef.current.setAttribute("disabled", "disabled");
     }
 
@@ -533,73 +539,72 @@ const ApprovalDetails = (props) => {
                             <div className="mt-4">
                               <ul className="verti-timeline list-unstyled">
                                 {steps.length > 0 && steps.map((item, index) => (
-                                <li key={index} className="event-list mb-3">
-                                  <div className="event-timeline-dot">
-                                    <i className="bx bx-right-arrow-circle" />
-                                  </div>
-                                  <div className="d-flex">
-                                    <div className="me-3">
-                                      {item && item.stepAction === "A" && <i className="bx bxs-check-circle h1 text-success" />}
-                                      {item && item.stepAction === "R" && <i className="bx bxs-log-out-circle h1 text-warning" />}
-                                      {item && item.stepAction === "J" && <i className="bx bxs-x-circle h1 text-danger" />}
-                                      {item && item.stepAction === "P" && <i className="bx bxs-hourglass-top h1 text-info" />}
+                                  <li key={index} className="event-list mb-3">
+                                    <div className="event-timeline-dot">
+                                      <i className="bx bx-right-arrow-circle" />
                                     </div>
-                                    <div className="flex-grow-1">
-                                      <div>
-                                        <h5 className="font-size-14">{item && item.workflowStep.description}</h5>
-                                        <div className="d-flex justify-content-between align-items-top">
-                                          <p className="text-muted m-0">
-                                            {item && item.comment !== null ? item.comment : "Waiting for approval"}
-                                          </p>
-                                          {item.lastModifiedBy !== null && item && item.stepAction !== "P" && <div className="d-flex justify-content-between align-items-center font-size-12">
-                                            <i className="bx bxs-user font-size-14 me-2" />
-                                            <p className="m-0 me-2">{item.lastModifiedBy}</p>
-                                            <p className="m-0 me-2">{"•"}</p>
-                                            <i className="bx bxs-calendar font-size-14 me-2" />
-                                            <p className="text-muted m-0">{moment(item.lastModifiedDate).format("YYYY-MM-DD | HH:MM:SS")}</p>
-                                          </div>}
+                                    <div className="d-flex">
+                                      <div className="me-3">
+                                        {item && item.stepAction === "A" && <i className="bx bxs-check-circle h1 text-success" />}
+                                        {item && item.stepAction === "R" && <i className="bx bxs-log-out-circle h1 text-warning" />}
+                                        {item && item.stepAction === "J" && <i className="bx bxs-x-circle h1 text-danger" />}
+                                        {item && item.stepAction === "P" && <i className="bx bxs-hourglass-top h1 text-info" />}
+                                      </div>
+                                      <div className="flex-grow-1">
+                                        <div>
+                                          <h5 className="font-size-14">{item && item.workflowStep.description}</h5>
+                                          <div className="d-flex justify-content-between align-items-top">
+                                            <p className="text-muted m-0">
+                                              {item && item.comment !== null ? item.comment : "Waiting for approval"}
+                                            </p>
+                                            {item.lastModifiedBy !== null && item && item.stepAction !== "P" && <div className="d-flex justify-content-between align-items-center font-size-12">
+                                              <i className="bx bxs-user font-size-14 me-2" />
+                                              <p className="m-0 me-2">{item.lastModifiedBy}</p>
+                                              <p className="m-0 me-2">{"•"}</p>
+                                              <i className="bx bxs-calendar font-size-14 me-2" />
+                                              <p className="text-muted m-0">{moment(item.lastModifiedDate).format("YYYY-MM-DD | HH:MM:SS")}</p>
+                                            </div>}
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
-                                </li>
+                                  </li>
                                 ))}
                               </ul>
                             </div>
                           </Col>
-
-                          {verifyActiveStepAndUser() == true && verifyExceptionalApprovals() == false && <Col md="12">
-                            <div className="level-approval-section mt-5">
-                                <div className="form-group">
-                                  <textarea className="form-control" id="step_comment" rows="4"></textarea>
-                                  {<span id="err_step_comment" className="text-danger d-none">This field is required</span>}
-                                </div>
-                                <div className="form-group mt-3 d-flex justify-content-end align-items-center">
-                                  <button className="btn btn-danger w-md me-2" ref={approvalBtnRef}
-                                    onClick={() => createActionApprovalStep("J")}
-                                  >
-                                    <SyncLoader loading={isLoadingStep}>
-                                      <i className="bx bx-x-circle font-size-16 me-2" />
-                                      Reject
-                                    </SyncLoader>
-                                  </button>
-                                  <button className="btn btn-warning w-md me-2" ref={approvalBtnRef}
-                                    onClick={() => createActionApprovalStep("R")}
-                                  >
-                                    <SyncLoader loading={isLoadingStep}>
-                                      <i className="bx bxs-log-out-circle font-size-16 me-2" />
-                                      Return
-                                    </SyncLoader>
-                                  </button>
-                                  <button type="submit" className="btn btn-success w-md" ref={approvalBtnRef}
-                                    onClick={() => createActionApprovalStep("A")}
-                                  >
-                                    <SyncLoader loading={isLoadingStep}>
-                                      <i className="bx bxs-check-circle font-size-16 me-2" />
-                                      Approve
-                                    </SyncLoader>
-                                  </button>
-                                </div>
+                          {verifyActiveStepAndUser() == true && (verifyOnBoardingApprovals() == false && verifyExceptionalApprovals() == false) && <Col md="12">
+                            <div className="level-approval-section mt-5 mb-5">
+                              <div className="form-group">
+                                <textarea className="form-control" id="step_comment" rows="4"></textarea>
+                                {<span id="err_step_comment" className="text-danger d-none">This field is required</span>}
+                              </div>
+                              <div className="form-group mt-3 d-flex justify-content-end align-items-center">
+                                <button className="btn btn-danger w-md me-2" ref={approvalBtnRef}
+                                  onClick={() => createActionApprovalStep("J")}
+                                >
+                                  <SyncLoader loading={isLoadingStep}>
+                                    <i className="bx bx-x-circle font-size-16 me-2" />
+                                    Reject
+                                  </SyncLoader>
+                                </button>
+                                <button className="btn btn-warning w-md me-2" ref={approvalBtnRef}
+                                  onClick={() => createActionApprovalStep("R")}
+                                >
+                                  <SyncLoader loading={isLoadingStep}>
+                                    <i className="bx bxs-log-out-circle font-size-16 me-2" />
+                                    Return
+                                  </SyncLoader>
+                                </button>
+                                <button type="submit" className="btn btn-success w-md" ref={approvalBtnRef}
+                                  onClick={() => createActionApprovalStep("A")}
+                                >
+                                  <SyncLoader loading={isLoadingStep}>
+                                    <i className="bx bxs-check-circle font-size-16 me-2" />
+                                    Approve
+                                  </SyncLoader>
+                                </button>
+                              </div>
                             </div>
                           </Col>}
                         </Row>
