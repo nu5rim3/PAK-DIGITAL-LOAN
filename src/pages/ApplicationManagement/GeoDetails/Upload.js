@@ -16,25 +16,24 @@ import {
 } from "reactstrap"
 import Dropzone from "react-dropzone"
 
-import { Link } from "react-router-dom"
+import { ProgressBar } from 'react-bootstrap';
 
-import SyncLoader from "components/SyncLoader"
+import { Link } from "react-router-dom"
 
 // service
 import { uploadGeoImage } from "services/geo_details.service"
-import { file } from "helpers/api_helper"
 
 const FormUpload = props => {
 
   const uploadBtnRef = useRef();
-  
+
   const [selectedFiles, setSelectedFiles] = useState([])
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState(null)
   const [warning, setWarning] = useState(null)
   const [mapMessage, setMapMessage] = useState(null)
   const [visible, setVisible] = useState(false)
-  const [count, setCount] = useState(0)
+  const [uploadProgress, setUploadProgress] = useState(0)
 
   const onSubmit = async () => {
 
@@ -47,7 +46,7 @@ const FormUpload = props => {
         position => {
 
           if (position.coords.longitude !== null && position.coords.latitud !== null) {
-            
+
             setMapMessage(null)
 
             // save the images
@@ -83,16 +82,29 @@ const FormUpload = props => {
                 image: base64Content[1],
               }
 
-              var response = await uploadGeoImage(payload)
+              const load = {
+                onUploadProgress: (progressEvent) => {
+                  const { loaded, total } = progressEvent;
+                  let percent = Math.floor((loaded * 100) / total)
+
+                  if (percent < 100) {
+                    setUploadProgress(percent);
+                  }
+                }
+              }
+
+              const response = await uploadGeoImage(payload, load)
 
               if (response != undefined) {
+                setUploadProgress(100)
+
                 if (selectedFiles?.length - 1 === index) {
                   setLoading(false)
                   setSelectedFiles([])
 
                   setMessage("Images uploaded successfully!")
-
                   setTimeout(() => {
+                    setUploadProgress(0)
                     window.location.reload()
                   }, 1000)
                 }
@@ -166,6 +178,9 @@ const FormUpload = props => {
               Upload the GEO location images (Two images required!).
             </p>
             <p className="mt-1">
+              {uploadProgress > 0 && <ProgressBar variant="success" now={uploadProgress} active label={`${uploadProgress}%`} />}
+            </p>
+            <p className="mt-1">
               {message && <Alert color="success">{message}</Alert>}
               {warning && <Alert color="danger">{warning}</Alert>}
             </p>
@@ -200,7 +215,7 @@ const FormUpload = props => {
                               <img
                                 data-dz-thumbnail=""
                                 height="80"
-                                className="avatar-sm rounded bg-light" style={{ height: "5rem", width: "5rem"}}
+                                className="avatar-sm rounded bg-light" style={{ height: "5rem", width: "5rem" }}
                                 alt={f.name}
                                 src={f.preview}
                               />
@@ -243,10 +258,13 @@ const FormUpload = props => {
               <div className="d-flex justify-content-between">
                 <p className="card-title-desc"></p>
 
-                  <button className="btn btn-info" onClick={onSubmit} ref={uploadBtnRef}>
-                    {loading === true && <i className="loader-item fas fa-sync fa-spin text-white"/>}
-                    {loading === false && <i className="fa fa-upload me-2"/>}Upload
-                  </button>
+
+                <button className="btn btn-info" onClick={onSubmit} ref={uploadBtnRef}>
+                  {loading === true && <i className="loader-item fas fa-sync fa-spin text-white" />}
+                  {loading === false && <i className="fa fa-upload me-2" />}Upload
+                </button>
+
+
 
               </div>
             </div>

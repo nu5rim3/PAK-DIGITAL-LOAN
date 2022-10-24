@@ -122,7 +122,7 @@ const Create = (props) => {
     }
   }, []);
 
-  const options = roles.map((item, index) => { return { key: index, label: item.description, value: item.code } })
+  const options = roles.map((item, index) => { return { key: index, label: item.description, value: item.code } });
 
   return (
     <Row>
@@ -243,17 +243,18 @@ const Create = (props) => {
                       control={control}
                       defaultValue={options}
                       name="role"
-                      rules={{ required: true }}
                       render={({ field: { onChange, value, ref, onBlur } }) => (
                         <Select
                           inputRef={ref}
                           onBlur={onBlur}
-                          value={options.filter(c => value.includes(c.value))}
+                          // value={options.filter(c => value.includes(c.value))}
                           onChange={val => onChange(val.map(c => c.value))}
                           options={options}
+                          defaultValue={options[6]}
                           isMulti
                         />
                       )}
+                      rules={{ required: true }}
                     />
                     {errors.role && <span className="text-danger">This field is required</span>}
                   </div>

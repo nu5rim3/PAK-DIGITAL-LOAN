@@ -53,14 +53,13 @@ const GeoDetails = (props) => {
 
     const fetchData = async () => {
       if (props.active === "13") {
-        const responseImages = await getAllImages(appraisalId);      
+        const responseImages = await getAllImages(appraisalId);
 
         if (responseImages != undefined && _isMounted) {
           var locationDetails = responseImages?.map(img => {
             checkAldreadySubmit(img?.imgMasterCategory);
             return { latitude: img.latitude, longitude: img.longitude, imgMasterCategory: img.imgMasterCategory }
           });
-          //console.log(locationDetails);
 
           setLocations(locationDetails);
           setIsLoading(false);
@@ -73,27 +72,27 @@ const GeoDetails = (props) => {
     return () => {
       _isMounted = false;
     };
-  }, [props.active]);  
+  }, [props.active]);
 
   const getCatagoryColor = (category) => {
     switch (category) {
       case "GEO_DETAILS_BHO":
-        return {color: "#F44546", categoryName: "Branch Manager"};
-      
+        return { color: "#F44546", categoryName: "Branch Manager" };
+
       case "GEO_DETAILS_CO":
-        return {color: "#21409A", categoryName: "Credit Officer"}; 
-      
+        return { color: "#21409A", categoryName: "Credit Officer" };
+
       default:
-        return {color: "#039C4B", categoryName: "CRO"};
-     
+        return { color: "#039C4B", categoryName: "CRO" };
+
     }
   }
-  const Marker = ({ index, text }) => (    
-    
+  const Marker = ({ index, text }) => (
+
     <div className="pin">
       <span className="d-flex flex-column">
         <div>
-          <i className="bx bxs-map" style={{ fontSize: "46px", color: getCatagoryColor(text).color}}></i>
+          <i className="bx bxs-map" style={{ fontSize: "46px", color: getCatagoryColor(text).color }}></i>
         </div>
         <div style={{ width: '150px' }}>
           <p style={{ fontSize: "18px", fontWeight: '800', color: 'black', WebkitTextStroke: '0.5px white' }}>{getCatagoryColor(text).categoryName}</p>
@@ -101,12 +100,12 @@ const GeoDetails = (props) => {
       </span>
     </div>
   );
-  
+
   return (
     <Row>
       <Loader loading={isLoading} >
         <Row>
-          <Col lg={ verifyUserRole() ? 6 : 12}>
+          <Col lg={verifyUserRole() ? 6 : 12}>
             <div className="mt-4">
               <div className="google-map" style={{ height: '100vh' }}>
                 <GoogleMapReact
@@ -119,7 +118,7 @@ const GeoDetails = (props) => {
                     index={i}
                     lat={l.latitude}
                     lng={l.longitude}
-                    text={l.imgMasterCategory}                    
+                    text={l.imgMasterCategory}
                   />)}
                 </GoogleMapReact>
               </div>
