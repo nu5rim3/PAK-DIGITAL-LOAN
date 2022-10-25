@@ -3,7 +3,7 @@ import { postJwtRefresh } from "./fakebackend_helper"
 import Token from "./jwt-token-access/accessToken"
 
 //apply base url for axios
-export const API_URL = process.env.REACT_APP_MIDDLEWARE_BASE_URL
+export const API_URL = "/pakoman-digital-loan"
 
 const axiosApi = axios.create({
   baseURL: API_URL,
