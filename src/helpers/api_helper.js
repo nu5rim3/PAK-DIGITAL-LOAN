@@ -13,7 +13,7 @@ axiosApi.defaults.headers.common["Authorization"] = Token.AccessToken
 axiosApi.defaults.headers.common["X-Auth-Token"] = Token.AuthToken
 
 axiosApi.interceptors.response.use(
-  async(response) => {
+  async (response) => {
     await postJwtRefresh();
     return response;
   },
@@ -26,12 +26,12 @@ axiosApi.interceptors.response.use(
 )
 
 export async function get(url, config = {}) {
-  return await axiosApi.get(url, { ...config }).then(response => response.data).catch(err => {}) 
+  return await axiosApi.get(url, { ...config }).then(response => response.data).catch(err => { })
 }
 
 export async function post(url, data, config = {}) {
   return axiosApi
-    .post(url, { ...data }, { ...config }).catch(err => {}) 
+    .post(url, { ...data }, { ...config }).catch(err => { })
     .then(response => (response !== undefined ? response.data : undefined))
 }
 
@@ -43,7 +43,7 @@ export async function postResponse(url, data, config = {}) {
 export async function put(url, data, config = {}) {
   return axiosApi
     .put(url, { ...data }, { ...config })
-    .then(response => response?.data).catch(err => {})
+    .then(response => response?.data).catch(err => { })
 }
 
 export async function putResponse(url, data, config = {}) {
@@ -69,5 +69,5 @@ export function file(url) {
 
 export function imgFile(url) {
   return axiosApi
-    .get(url, {responseType: 'arraybuffer'})
+    .get(url, { responseType: 'arraybuffer' })
 }
