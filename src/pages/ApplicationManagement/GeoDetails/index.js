@@ -42,9 +42,18 @@ const GeoDetails = (props) => {
   }
 
   const checkAldreadySubmit = (category) => {
-    if (category.includes('GEO_DETAILS_CO') || category.includes('GEO_DETAILS_BHO')) {
+    var role = localStorage.getItem("role");
+    if (role === "CO" && category.includes('GEO_DETAILS_CO')) {
       setActive(true);
+      return;
     }
+
+    if (role === "BHO" && category.includes('GEO_DETAILS_BHO')) {
+      setActive(true);
+      return;
+    }
+
+    setActive(false);
   }
 
   useEffect(() => {
