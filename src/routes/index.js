@@ -4,6 +4,9 @@ import { Redirect } from "react-router-dom"
 // ACCESS AND PERMISSIONS
 import Login from "pages/Authentication/Login"
 import Logout from "pages/Authentication/Logout"
+import RedirectPage from "pages/Authentication/Redirect"
+import UserRoleSelecter from "pages/Authentication/LoginRoles"
+import CommonOauth2Logout from "pages/Authentication/CommonOauth2Logout"
 
 import Role from "pages/AccessAndPermission/Accounts/Role"
 import Member from "pages/AccessAndPermission/Accounts/Member"
@@ -24,6 +27,7 @@ import EcibViwer from "pages/ApplicationManagement/OnBoardingDetails/EcibDocumen
 import BiometricViewer from "pages/ApplicationManagement/OnBoardingDetails/BiometricDocument"
 import InternalCreditDocument from "pages/ApplicationManagement/OnBoardingDetails/InternalCreditDocument"
 import ReportDocument from "pages/ApplicationManagement/ReportDetails/Document"
+import CombinedReports from "../components/ApprasialLayout/ReportLayout";
 
 // REPORT AND SUMMARY
 
@@ -45,14 +49,14 @@ const authProtectedRoutes = [
   { path: "/pakoman-digital-loan/application-management/origination", component: Origination },
   { path: "/pakoman-digital-loan/credit-appraisals/view/:appraisalId", component: Appraisal },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/pep/:id", component: PepDocument },
-  { path: "/pakoman-digital-loan/credit-appraisals/documents/sanc/:id", component: SancDocument },
+  { path: "/pakoman-digital-loan/credit-appraisals/documents/sanc/:id", component: CombinedReports },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/ecib/:cnic", component: EcibViwer },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/biometric/:id", component: BiometricViewer },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/credit-history/:id", component: InternalCreditDocument },
   { path: "/pakoman-digital-loan/credit-appraisals/documents/:reportType/reports/:appraisalId", component: ReportDocument },
 
   // REPORT AND SUMMARY
-  { path: "/pakoman-digital-loan/reports/mis-report",component:  MisReport},
+  { path: "/pakoman-digital-loan/reports/mis-report", component: MisReport },
 
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name
@@ -63,6 +67,9 @@ const authProtectedRoutes = [
 const publicRoutes = [
   { path: "/pakoman-digital-loan/logout", component: Logout },
   { path: "/pakoman-digital-loan/login", component: Login },
+  { path: "/pakoman-digital-loan/redirect", component: RedirectPage },
+  { path: "/pakoman-digital-loan/openidconnect/oauth2client", component: CommonOauth2Logout },
+  { path: "/pakoman-digital-loan/role", component: UserRoleSelecter },
 ]
 
 export { publicRoutes, authProtectedRoutes }

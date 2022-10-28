@@ -148,10 +148,9 @@ const IntialDetails = (props) => {
                         {msas?.pepName === true && <Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/pep/${props.clientele.idx}`} className="btn btn-danger btn-sm"><i className="bx bx-file-find font-size-16 align-middle me-2"></i>POLITICALLY EXPOSED PERSON</Link>}
 
                         {"\u00A0\u00A0"}
-                        {msas?.sanName === true && <Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/sanc/${props.clientele.idx}`} className="btn btn-danger btn-sm" style={{margin: '4px'}}> <i className="bx bx-file-find font-size-16 align-middle me-2"></i>SANCTION LISTED PERSON</Link>}
+
+                        {msas?.sanName === true && <Link target="_blank" to={`/pakoman-digital-loan/credit-appraisals/documents/sanc/${props.clientele.idx}`} className="btn btn-danger btn-sm"> <i className="bx bx-file-find font-size-16 align-middle me-2"></i>SANCTION {"&"} MSAS DETAILS</Link>}
                       </td>
-
-
                     </>;
                   } else {
                     return <>

@@ -383,8 +383,9 @@ const LoanDetails = (props) => {
                   className="accordion-collapse"
                 >
                   <div className="accordion-body p-0 mt-4">
-                    <Row>
-                      <Col md="3">
+                    <Row className="container">
+                      <div>
+                        <Col md="3">
                         <Nav pills className="flex-column">
                           {businessLoanDetails && businessLoanDetails.map((item, index) => (
                             <NavItem key={index}>
@@ -403,19 +404,60 @@ const LoanDetails = (props) => {
                             </NavItem>
                           ))}
                         </Nav>
-                      </Col>
-                      <Col md="9">
+                        </Col>
+                      </div>
+                      <div className="col-12 col-md-12 col-sm-12">
                         <TabContent
                           activeTab={toggleBusinessVerticalTab}
                           className="text-muted mt-4 mt-md-0"
                         >
                           {businessLoanDetails && businessLoanDetails.map((item, index) => (
                             <TabPane key={index} tabId={index}>
-                              <Row>
+                              <div className="row">
                                 <div className="text-muted d-flex">
-                                  <Grid container spacing={10}>
-                                    <Grid item className="grid-text">
-                                      <p>Business Name</p>
+                                  <div className="container row table-responsive-lg">
+                                    <div className="col-12 col-md-12 col-sm-12">
+                                      <table className="table table-borderless table-sm">
+                                        <tbody>
+                                          <tr>
+                                            <td className="grid-text"><p>Business Name</p></td>
+                                            <td><p>{item && item.bnsName ? item.bnsName : "\u00A0"}</p></td>
+                                          </tr>
+                                          <tr>
+                                            <td className="grid-text"><p>Nature of Business</p></td>
+                                            <td><p>{item && item.natureOfBns ? getValueByList(natureOfBusiness, item.natureOfBns) : "\u00A0"}</p></td>
+                                          </tr>
+                                          <tr>
+                                            <td className="grid-text"><p>Business Address</p></td>
+                                            <td><p>{item && item.bnsAddress ? item.bnsAddress : "\u00A0"}</p></td>
+                                          </tr>
+                                          <tr>
+                                            <td className="grid-text"><p>Phone No</p></td>
+                                            <td><p>{item && item.phoneNo ? item.phoneNo : "\u00A0"}</p></td>
+                                          </tr>
+                                          <tr>
+                                            <td className="grid-text"><p>Description</p></td>
+                                            <td><p>{item && item.description ? item.description : "\u00A0"}</p></td>
+                                          </tr>
+                                          <tr>
+                                            <td className="grid-text"><p>Previous Experience in Business</p></td>
+                                            <td><p>{item && item.prevExpInBns ? item.prevExpInBns : "\u00A0"}</p></td>
+                                          </tr>
+                                          <tr>
+                                            <td className="grid-text"><p>Ownership of Business Place</p></td>
+                                            <td><p>{item && item.ownOfBnsPlace ? getValueOwnershipOfLand(item.ownOfBnsPlace) : "\u00A0"}</p></td>
+                                          </tr>
+                                          <tr>
+                                            <td className="grid-text"><p>Business Assets + Stocks</p></td>
+                                            <td><p>{item && item.costOfBns ? item.costOfBns : "\u00A0"}</p></td>
+                                          </tr>
+                                          <tr>
+                                            <td className="grid-text"><p>Repeat Customer</p></td>
+                                            <td><p>{item && item.repeatCustomer ? getValueByList(repeatCustomers, item.repeatCustomer) : "\u00A0"}</p></td>
+                                          </tr>
+                                        </tbody>  
+                                      </table>
+                                      {/* <p>Business Name</p>
                                       <p>Nature of Business</p>
                                       <p>Business Address</p>
                                       <p>Phone No</p>
@@ -423,9 +465,9 @@ const LoanDetails = (props) => {
                                       <p>Previous Experience in Business</p>
                                       <p>Ownership of Business Place</p>
                                       <p>Business Assets + Stocks</p>
-                                      <p>Repeat Customer</p>
-                                    </Grid>
-                                    <Grid item>
+                                      <p>Repeat Customer</p> */}
+                                    </div>
+                                    {/* <div item className="col-6 col-md-6 col-sm-6">
                                       <p>{item && item.bnsName ? item.bnsName : "\u00A0"}</p>
                                       <p>{item && item.natureOfBns ? getValueByList(natureOfBusiness, item.natureOfBns) : "\u00A0"}</p>
                                       <p>{item && item.bnsAddress ? item.bnsAddress : "\u00A0"}</p>
@@ -436,14 +478,14 @@ const LoanDetails = (props) => {
                                       <p>{item && item.costOfBns ? item.costOfBns : "\u00A0"}</p>
                                       <p>{item && item.repeatCustomer ? getValueByList(repeatCustomers, item.repeatCustomer) : "\u00A0"}</p>
 
-                                    </Grid>
-                                  </Grid>
+                                    </div> */}
+                                  </div>
                                 </div>
-                              </Row>
+                              </div>
                             </TabPane>
                           ))}
                         </TabContent>
-                      </Col>
+                      </div>
                     </Row>
                   </div>
                 </Collapse>
@@ -472,8 +514,73 @@ const LoanDetails = (props) => {
                   <div className="accordion-body">
                     <Row>
                       <div className="text-muted d-flex">
-                        <Grid container spacing={10}>
-                          <Grid item className="grid-text">
+                        <div className="container row">
+                          <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                            <table className="table table-sm">
+                              <tbody>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Borrower District</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.borrowerDistrict ? liveStockLoanDetails.borrowerDistrict : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">S/O, W/O, D/O</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.sowodo ? liveStockLoanDetails.sowodo : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Loan Tenure in Days</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.loanTenure ? liveStockLoanDetails.loanTenure : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Insurance Company</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.insCompany ? liveStockLoanDetails.insCompany : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Date of Policy Issued</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.policyIssuedDate ? new moment(liveStockLoanDetails.policyIssuedDate).format("Y-MM-DD") : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">{'\u00A0'}</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.policyExpiredDate ? new moment(liveStockLoanDetails.policyExpiredDate).format("Y-MM-DD") : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Premium Paid Receipt No</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.receiptNo ? liveStockLoanDetails.receiptNo : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Premium Rate</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.premiumRate ? liveStockLoanDetails.premiumRate : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Animal/ Crop</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.animalOrCrop ? liveStockLoanDetails.animalOrCrop : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Number of Animals Insured</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.buffaloes ? "Buffaloes: " + liveStockLoanDetails.buffaloes : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">{'\u00A0'}</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.cows ? "Cows: " + liveStockLoanDetails.cows : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">{'\u00A0'}</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.bulls ? "Bulls: " + liveStockLoanDetails.bulls : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Collateral Against which Loan Given</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.collateral ? liveStockLoanDetails.collateral : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Number of Times Claim Lodged</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.claimLodged ? liveStockLoanDetails.claimLodged : "\u00A0"}</p></td>
+                                </tr>
+                              </tbody>
+                            </table>
+
+                          </div>
+
+
+                          {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                             <p>Borrower District</p>
                             <p>S/O, W/O, D/O</p>
                             <p>Loan Tenure in Days</p>
@@ -488,8 +595,8 @@ const LoanDetails = (props) => {
                             <p>{'\u00A0'}</p>
                             <p>Collateral Against which Loan Given</p>
                             <p>Number of Times Claim Lodged</p>
-                          </Grid>
-                          <Grid item>
+                          </div>
+                          <div item className="col-6 col-md-6 col-sm-6">
                             <p>{liveStockLoanDetails && liveStockLoanDetails.borrowerDistrict ? liveStockLoanDetails.borrowerDistrict : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.sowodo ? liveStockLoanDetails.sowodo : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.loanTenure ? liveStockLoanDetails.loanTenure : "\u00A0"}</p>
@@ -504,9 +611,59 @@ const LoanDetails = (props) => {
                             <p>{liveStockLoanDetails && liveStockLoanDetails.bulls ? "Bulls: " + liveStockLoanDetails.bulls : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.collateral ? liveStockLoanDetails.collateral : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.claimLodged ? liveStockLoanDetails.claimLodged : "\u00A0"}</p>
-                          </Grid>
+                          </div> */}
 
-                          <Grid item className="grid-text">
+                          <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                            <table className="table table-sm">
+                              <tbody>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Animal Tagging</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.animalTagging ? liveStockLoanDetails.animalTagging : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Purpose of Loan</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.purposeOfLoan ? getValueByList(loanPurpose, liveStockLoanDetails.purposeOfLoan) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Nature of the borrower</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.natureOfTheBorrower ? getValueNatureOfBorrowe(liveStockLoanDetails.natureOfTheBorrower) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Ownership of Land</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.ownOfLand ? getValueOwnershipOfLand(liveStockLoanDetails.ownOfLand) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Floods Factor</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.floodsFactor ? getValueByList(floodFactors, liveStockLoanDetails.floodsFactor) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Irrigation</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.irrigation ? getValueByList(irrigations, liveStockLoanDetails.irrigation) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Methods use for Agriculture Machineries</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.methods ? getValueByList(methodUseAgriMachine, liveStockLoanDetails.methods) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Proof of Cultivation</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.proofOfCult ? getValueByList(cultivationProofs, liveStockLoanDetails.proofOfCult) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Experience in Cultivation</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.expInCult ? liveStockLoanDetails.expInCult : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Market Check through Field Verification</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.marketCheck ? getValueByList(fieldVerification, liveStockLoanDetails.marketCheck) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Agri Secured</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.agriSecured ? liveStockLoanDetails.agriSecured : "\u00A0"}</p></td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>  
+                          {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                             <p>Animal Tagging</p>
                             <p>Purpose of Loan</p>
                             <p>Nature of the borrower</p>
@@ -518,8 +675,8 @@ const LoanDetails = (props) => {
                             <p>Experience in Cultivation</p>
                             <p>Market Check through Field Verification</p>
                             <p>Agri Secured</p>
-                          </Grid>
-                          <Grid item>
+                          </div> */}
+                          {/* <div item className="col-6 col-md-6 col-sm-6">
                             <p>{liveStockLoanDetails && liveStockLoanDetails.animalTagging ? liveStockLoanDetails.animalTagging : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.purposeOfLoan ? getValueByList(loanPurpose, liveStockLoanDetails.purposeOfLoan) : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.natureOfTheBorrower ? getValueNatureOfBorrowe(liveStockLoanDetails.natureOfTheBorrower) : "\u00A0"}</p>
@@ -531,18 +688,18 @@ const LoanDetails = (props) => {
                             <p>{liveStockLoanDetails && liveStockLoanDetails.expInCult ? liveStockLoanDetails.expInCult : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.marketCheck ? getValueByList(fieldVerification, liveStockLoanDetails.marketCheck) : "\u00A0"}</p>
                             <p>{liveStockLoanDetails && liveStockLoanDetails.agriSecured ? liveStockLoanDetails.agriSecured : "\u00A0"}</p>
-                          </Grid>
+                          </div> */}
 
-                          <Grid item >
+                          <div className="col-12 col-md-12 col-sm-12">
                             {/* TODO */}
                             <Card className="witness-signature-card">
                               <p>Customer Signature</p>
                               {signature && signature.length > 0 && signature.map((sign, index) => (
-                                sign.status === "A" && <AsyncImage src={sign.imgPath} key={index} />
+                                sign.status === "A" && <AsyncImage src={sign.hashIdentifier} key={index} />
                               ))}
                             </Card>
-                          </Grid>
-                        </Grid>
+                          </div>
+                        </div>
                       </div>
                     </Row>
                   </div>
@@ -572,9 +729,54 @@ const LoanDetails = (props) => {
                   <div className="accordion-body">
                     <Row>
                       <div className="text-muted d-flex">
-                        <Grid container spacing={10}>
-                          <Grid item className="grid-text">
-                            <p>Nature of the borrower</p>
+                        <div className="container row">
+                          <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                            <table className="table table-borderless table-sm">
+                              <tbody>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Nature of the borrower</p></td>
+                                  <td><p  className="m-1">{cultivationLoanDetails && cultivationLoanDetails.natureOfTheBorrower ? getValueNatureOfBorrowe(cultivationLoanDetails.natureOfTheBorrower) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">{'\u00A0'}</p></td>
+                                  <td><p className="m-1">{cultivationLoanDetails && cultivationLoanDetails.ownOfCult ? getValueByList(ownOfCultivation, cultivationLoanDetails.ownOfCult) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Ownership of Land</p></td>
+                                  <td><p className="m-1">{cultivationLoanDetails && cultivationLoanDetails.ownOfLand ? getValueOwnershipOfLand(cultivationLoanDetails.ownOfLand) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Particulars of the owner of the land</p></td>
+                                  <td><p className="m-1">{cultivationLoanDetails && cultivationLoanDetails.ownName ? "Name: " + cultivationLoanDetails.ownName : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">{'\u00A0'}</p></td>
+                                  <td><p className="m-1">{cultivationLoanDetails && cultivationLoanDetails.ownCNIC ? "CNIC: " + cultivationLoanDetails.ownCNIC : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">{'\u00A0'}</p></td>
+                                  <td><p className="m-1">{cultivationLoanDetails && cultivationLoanDetails.ownAddress ? "Address: " + cultivationLoanDetails.ownAddress : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">{'\u00A0'}</p></td>
+                                  <td><p className="m-1">{cultivationLoanDetails && cultivationLoanDetails.ownContact ? "Contact: " + cultivationLoanDetails.ownContact : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">Land Under Cultivation in Acres</p></td>
+                                  <td><p className="m-1">{cultivationLoanDetails && cultivationLoanDetails.acresOwned ? "Owned: " + cultivationLoanDetails.acresOwned : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">{'\u00A0'}</p></td>
+                                  <td><p className="m-1">{cultivationLoanDetails && cultivationLoanDetails.acresRented ? "Rented: " + cultivationLoanDetails.acresRented : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td><p className="m-0 grid-text">{'\u00A0'}</p></td>
+                                  <td><p className="m-1">{cultivationLoanDetails && cultivationLoanDetails.acresTotal ? "Total: " + cultivationLoanDetails.acresTotal : "\u00A0"}</p></td>
+                                </tr>
+                              </tbody>
+                            </table>                            
+                          </div>
+                          {/* <p>Nature of the borrower</p>
                             <p>{'\u00A0'}</p>
                             <p>Ownership of Land</p>
                             <p>Particulars of the owner of the land</p>
@@ -583,9 +785,8 @@ const LoanDetails = (props) => {
                             <p>{'\u00A0'}</p>
                             <p>Land Under Cultivation in Acres</p>
                             <p>{'\u00A0'}</p>
-                            <p>{'\u00A0'}</p>
-                          </Grid>
-                          <Grid item>
+                            <p>{'\u00A0'}</p> */}
+                          {/* <div item className="col-6 col-md-6 col-sm-6">
                             <p>{cultivationLoanDetails && cultivationLoanDetails.natureOfTheBorrower ? getValueNatureOfBorrowe(cultivationLoanDetails.natureOfTheBorrower) : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.ownOfCult ? getValueByList(ownOfCultivation, cultivationLoanDetails.ownOfCult) : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.ownOfLand ? getValueOwnershipOfLand(cultivationLoanDetails.ownOfLand) : "\u00A0"}</p>
@@ -596,30 +797,69 @@ const LoanDetails = (props) => {
                             <p>{cultivationLoanDetails && cultivationLoanDetails.acresOwned ? "Owned: " + cultivationLoanDetails.acresOwned : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.acresRented ? "Rented: " + cultivationLoanDetails.acresRented : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.acresTotal ? "Total: " + cultivationLoanDetails.acresTotal : "\u00A0"}</p>
-                          </Grid>
+                          </div> */}
 
-                          <Grid item className="grid-text">
+                          <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                            <table className="table table-sm">
+                              <tbody>
+                                <tr>
+                                  <td className="m-0 grid-text"><p>Acres of Rabi</p></td>
+                                  <td className="m-1"><p>{cultivationLoanDetails && cultivationLoanDetails.acresOfRabi ? cultivationLoanDetails.acresOfRabi : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="m-0 grid-text"><p>Harvesting Date</p></td>
+                                  <td className="m-1"><p>{cultivationLoanDetails && cultivationLoanDetails.rabiHarvestingDate ? new moment(cultivationLoanDetails.rabiHarvestingDate).format("Y-MM-DD") : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="m-0 grid-text"><p>Cultivation Date </p></td>
+                                  <td className="m-1"><p>{cultivationLoanDetails && cultivationLoanDetails.rabiCultivationDate ? new moment(cultivationLoanDetails.rabiCultivationDate).format("Y-MM-DD") : "\u00A0"}</p></td>
+                                </tr>
+
+                              </tbody>
+                            </table>
+                          </div>
+                          {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                             <p>Acres of Rabi</p>
                             <p>Harvesting Date</p>
                             <p>Cultivation Date </p>
-                          </Grid>
-                          <Grid item>
+                          </div>
+                          <div item className="col-6 col-md-6 col-sm-6">
                             <p>{cultivationLoanDetails && cultivationLoanDetails.acresOfRabi ? cultivationLoanDetails.acresOfRabi : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.rabiHarvestingDate ? new moment(cultivationLoanDetails.rabiHarvestingDate).format("Y-MM-DD") : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.rabiCultivationDate ? new moment(cultivationLoanDetails.rabiCultivationDate).format("Y-MM-DD") : "\u00A0"}</p>
-                          </Grid>
+                          </div> */}
 
-                          <Grid item className="grid-text">
+                          <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                            <table className="table table-sm">
+                              <tbody>
+                                <tr>
+                                  <td className="m-0 grid-text"><p>Acres of Kharif</p></td>
+                                  <td className="m-1"><p>{cultivationLoanDetails && cultivationLoanDetails.acresOfKharif ? cultivationLoanDetails.acresOfKharif : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="m-0 grid-text"><p>Harvesting Date</p></td>
+                                  <td className="m-1"><p>{cultivationLoanDetails && cultivationLoanDetails.kharifHarvestingDate ? new moment(cultivationLoanDetails.kharifHarvestingDate).format("Y-MM-DD") : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="m-0 grid-text"><p>Cultivation Date </p></td>
+                                  <td className="m-1"><p>{cultivationLoanDetails && cultivationLoanDetails.kharifCultivationDate ? new moment(cultivationLoanDetails.kharifCultivationDate).format("Y-MM-DD") : "\u00A0"}</p></td>
+                                </tr>
+
+                              </tbody>
+                            </table>
+                          </div>
+
+                          {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                             <p>Acres of Kharif</p>
                             <p>Harvesting Date</p>
                             <p>Cultivation Date</p>
-                          </Grid>
-                          <Grid item>
+                          </div>
+                          <div item className="col-6 col-md-6 col-sm-6">
                             <p>{cultivationLoanDetails && cultivationLoanDetails.acresOfKharif ? cultivationLoanDetails.acresOfKharif : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.kharifHarvestingDate ? new moment(cultivationLoanDetails.kharifHarvestingDate).format("Y-MM-DD") : "\u00A0"}</p>
                             <p>{cultivationLoanDetails && cultivationLoanDetails.kharifCultivationDate ? new moment(cultivationLoanDetails.kharifCultivationDate).format("Y-MM-DD") : "\u00A0"}</p>
-                          </Grid>
-                        </Grid>
+                          </div> */}
+                        </div>
                       </div>
                     </Row>
 
@@ -819,7 +1059,7 @@ const LoanDetails = (props) => {
                       <Card className="witness-signature-card">
                         <p>Customer Signature</p>
                         {signature && signature.length > 0 && signature.map((sign, index) => (
-                          sign.status === "A" && <AsyncImage src={sign.imgPath} key={index} />
+                          sign.status === "A" && <AsyncImage src={sign.hashIdentifier} key={index} />
                         ))}
                       </Card>
                     </Col>

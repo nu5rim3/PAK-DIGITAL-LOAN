@@ -5,12 +5,13 @@ import {
   LOGOUT_USER_SUCCESS,
   API_ERROR,
   SOCIAL_LOGIN,
+  USER_AUTHORIZATION
 } from "./actionTypes"
 
-export const loginUser = (user, history) => {
+export const loginUser = (user, history, response) => {
   return {
     type: LOGIN_USER,
-    payload: { user, history },
+    payload: { user, history, response },
   }
 }
 
@@ -46,5 +47,12 @@ export const socialLogin = (data, history, type) => {
   return {
     type: SOCIAL_LOGIN,
     payload: { data, history, type },
+  }
+}
+
+export const autherizationContextHandler = (userResponse, roleType) => {
+  return {
+    type: USER_AUTHORIZATION,
+    payload: { userResponse, roleType }
   }
 }
