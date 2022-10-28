@@ -12,6 +12,7 @@ import {
   postJwtLogin,
   postSocialLogin,
   getUserDetails,
+  postBackChanelLogout,
   postJwtRevokeToken
 } from "../../../helpers/fakebackend_helper"
 
@@ -31,18 +32,13 @@ function* loginUser({ payload: { user, history, response } }) {
       const userResponse = yield call(getUserDetails, userData.sub, response.access_token);
 
       if (userResponse !== undefined) {
-
-        //localStorage.setItem("role", userResponse.roles[0].code);
         localStorage.setItem("branch", userResponse.branches[0].code);
-
-        localStorage.setItem("authUser", JSON.stringify({ "uid": `${userResponse.idx}`, "username": `${userResponse.idx}`, "role": `${userResponse.roles[0].code}` }))
-        //yield put(loginSuccess({ "uid": `${userResponse.idx}`, "username": `${userResponse.idx}`, "role": `${userResponse.roles[0].code}` }))
+        localStorage.setItem("authUser", JSON.stringify({ "uid": `${userResponse.idx}`, "username": `${userResponse.idx}`, "role": `${userResponse.roles[0].code}` }));
       }
 
       history.push("/pakoman-digital-loan/role", {
         userResponse: userResponse
       })
-      //window.location.reload();
 
     } else if (process.env.REACT_APP_DEFAULTAUTH === "OAUTH2") {
 
@@ -109,19 +105,14 @@ function* logoutUser({ payload: { history } }) {
     history.push("/pakoman-digital-loan/redirect")
 
     const params = {
-      token: `${localStorage.getItem('access_token')}`,
-      token_type_hint: "access_token"
+      id_token_hint: `${localStorage.getItem('access_token')}`,
     }
 
-    const response = yield call(postJwtRevokeToken, new URLSearchParams(params));
+    localStorage.clear();
 
-    if (response != undefined, response != null) {
-      localStorage.clear();
-
-      setTimeout(() => {
-        window.location.replace(`${process.env.REACT_APP_IDENTITY_SERVER_URL}/oidc/logout`)
-      }, 1000);
-    }
+    setTimeout(() => {
+      window.location.replace(`${process.env.REACT_APP_IDENTITY_SERVER_URL}/oidc/logout?id_token_hint=${params.id_token_hint}&post_logout_redirect_uri=${process.env.REACT_APP_REDIRECT_BACK_CHANEL_LOGOUT_URL}`)
+    }, 1000);
 
     if (process.env.REACT_APP_DEFAULTAUTH === "firebase") {
       const response = yield call(fireBaseBackend.logout)
