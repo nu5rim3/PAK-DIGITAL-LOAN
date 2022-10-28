@@ -4,6 +4,7 @@ import {
   LOGOUT_USER,
   LOGOUT_USER_SUCCESS,
   API_ERROR,
+  USER_AUTHORIZATION
 } from "./actionTypes"
 
 const initialState = {
@@ -33,6 +34,9 @@ const login = (state = initialState, action) => {
       break
     case API_ERROR:
       state = { ...state, error: action.payload, loading: false }
+      break
+    case USER_AUTHORIZATION:
+      state = { ...state }
       break
     default:
       state = { ...state }

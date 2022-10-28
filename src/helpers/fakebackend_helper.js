@@ -173,23 +173,46 @@ export const postJwtRefresh = async () => {
   }
 }
 
-export const getUserDetails = (idx, token) => {
-  return get(`${url.GET_USER_DETAILS}/${idx}`, {
+export const getUserDetails = async (idx, token) => {
+  return await get(`${url.GET_USER_DETAILS}/${idx}`, {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   })
-  .then(response => {
-    if (response !== undefined) return response
-    throw response
-  }).catch(err => {
-    console.log(err);
-    var message
+    .then(response => {
+      if (response !== undefined) return response
+      throw response
+    }).catch(err => {
+      var message
       if (err === undefined) {
         message = "Sorry! you can't access the system. Please contact our support team."
       }
       throw message
-  })
+    })
+}
+
+// revoke the access token
+export const postJwtRevokeToken = (data) => {
+  const token = window.btoa(`${process.env.REACT_APP_AUTH_CLIENT_ID}:${process.env.REACT_APP_AUTH_CLIENT_SECRET}`)
+
+  const config = {
+    method: "POST",
+    body: data,
+    headers: {
+      'Authorization': `Basic ${token}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }
+  }
+  return fetch(`${API_URL}${url.POST_FAKE_JWT_REVOKE_TOKEN}`, config)
+    .then(response => {
+      if (response.status == 200) {
+        return response.text();
+      }
+      throw response;
+    })
+    .catch(err => {
+      throw err
+    })
 }
 
 // postForgetPwd

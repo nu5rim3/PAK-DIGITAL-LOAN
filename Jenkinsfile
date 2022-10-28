@@ -5,7 +5,7 @@ pipeline {
     }
     agent none
       stages {
-          stage('mvn build') {
+          stage('node build') {
           agent { docker { image 'fra.ocir.io/lolctech/fxapiuser/node:latest' } }
           steps{
               sh 'ls -la'

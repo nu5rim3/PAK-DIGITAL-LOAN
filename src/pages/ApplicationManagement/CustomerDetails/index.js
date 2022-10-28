@@ -265,96 +265,96 @@ const CustomerDetails = (props) => {
                   >
                     <div className="accordion-body">
                       <Row>
-                        <div className="text-muted d-flex">
+                        <div className="table-responsive-lg text-muted d-flex">
 
-                          <table className="table table-borderless">
+                          <table className="table table-sm">
                             <tbody>
                               <tr>
-                                <td><p className="m-0 grid-text">Organization Type</p></td>
-                                <td><p className="m-0">{master && master.stkOrgType ? getValueByList(organizations, master.stkOrgType) : "\u00A0"}</p></td>
+                                <td><p className="m-0 grid-text">Organization Type </p></td>
+                                <td><p className="m-1">{master && master.stkOrgType ? getValueByList(organizations, master.stkOrgType) : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Customer CNIC</p></td>
-                                <td><p className="m-0">{master && master.stkCNic ? master.stkCNic : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkCNic ? master.stkCNic : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">CNIC Issued Date</p></td>
-                                <td><p className="m-0">{master && master.stkCNicIssuedDate ? master.stkCNicIssuedDate : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkCNicIssuedDate ? master.stkCNicIssuedDate : "\u00A0"}</p></td>
                               </tr>
 
                               <tr>
                                 <td><p className="m-0 grid-text">CNIC Expired Date</p></td>
-                                <td><p className="m-0">{master && master.stkCNicExpDate ? master.stkCNicExpDate : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkCNicExpDate ? master.stkCNicExpDate : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">CNIC Status</p></td>
-                                <td><p className="m-0">{master && master.stkCNicStatus ? getValueByList(cnicStatus, master.stkCNicStatus) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkCNicStatus ? getValueByList(cnicStatus, master.stkCNicStatus) : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Customer Name</p></td>
-                                <td><p className="m-0">{master && master.stkCusName ? master.stkCusName : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkCusName ? master.stkCusName : "\u00A0"}</p></td>
                               </tr>
 
                               <tr>
                                 <td><p className="m-0 grid-text">Initials</p></td>
-                                <td><p className="m-0">{master && master.stkInitials ? master.stkInitials : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkInitials ? master.stkInitials : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Surname</p></td>
-                                <td><p className="m-0">{master && master.stkSurName ? master.stkSurName : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkSurName ? master.stkSurName : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Other Name</p></td>
-                                <td><p className="m-0">{master && master.stkOtherName ? master.stkOtherName : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkOtherName ? master.stkOtherName : "\u00A0"}</p></td>
                               </tr>
 
                               <tr>
                                 <td><p className="m-0 grid-text">Date of Birth</p></td>
-                                <td><p className="m-0">{master && master.stkDob ? master.stkDob : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkDob ? master.stkDob : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Age</p></td>
-                                <td><p className="m-0">{master && master.stkAge ? master.stkAge : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkAge ? master.stkAge : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Gender</p></td>
-                                <td><p className="m-0">{master && master.stkGender ? getValueByList(genders, master.stkGender) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkGender ? getValueByList(genders, master.stkGender) : "\u00A0"}</p></td>
                               </tr>
 
                               <tr>
                                 <td><p className="m-0 grid-text">Marital Status</p></td>
-                                <td><p className="m-0">{master && master.stkMaritialStatus ? getValueByList(maritalStatus, master.stkMaritialStatus) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkMaritialStatus ? getValueByList(maritalStatus, master.stkMaritialStatus) : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Title</p></td>
-                                <td><p className="m-0">{master && master.stkTitle ? getValueByList(titles, master.stkTitle) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkTitle ? getValueByList(titles, master.stkTitle) : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Father/ Husband Name</p></td>
-                                <td><p className="m-0">{master && master.stkFatherOrHusName ? master.stkFatherOrHusName : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkFatherOrHusName ? master.stkFatherOrHusName : "\u00A0"}</p></td>
                               </tr>
 
                               <tr>
                                 <td><p className="m-0 grid-text">No.of Dependents</p></td>
-                                <td><p className="m-0">{master && master.stkNumOfDependents ? master.stkNumOfDependents : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkNumOfDependents ? master.stkNumOfDependents : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">No.of Earners</p></td>
-                                <td><p className="m-0">{master && master.stkNumOfEarners ? master.stkNumOfEarners : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkNumOfEarners ? master.stkNumOfEarners : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Educational Qualification</p></td>
-                                <td><p className="m-0">{master && master.stkEduLevel ? getValueByList(educationalLevels, master.stkEduLevel) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkEduLevel ? getValueByList(educationalLevels, master.stkEduLevel) : "\u00A0"}</p></td>
                               </tr>
 
                               <tr>
                                 <td><p className="m-0 grid-text">Customer Code</p></td>
-                                <td><p className="m-0">{master && master.stkPhysDisability ? master.stkPhysDisability : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkPhysDisability ? master.stkPhysDisability : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Group/ Reference No</p></td>
-                                <td><p className="m-0">{master && master.stkGrpRefNo ? master.stkGrpRefNo : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkGrpRefNo ? master.stkGrpRefNo : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">There is a Physical Disability</p></td>
-                                <td><p className="m-0">{master && master.stkPhysDisabilityDesce ? master.stkPhysDisabilityDesce : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkPhysDisabilityDesce ? master.stkPhysDisabilityDesce : "\u00A0"}</p></td>
                               </tr>
 
                               <tr>
                                 <td><p className="m-0 grid-text">Description of Disability</p></td>
-                                <td><p className="m-0">{master && master.healthCondition ? getValueByList(healthConditions, master.healthCondition) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.healthCondition ? getValueByList(healthConditions, master.healthCondition) : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Head of Family</p></td>
-                                <td><p className="m-0">{master && master.headOfFamily ? getValueByList(headOfFamily, master.headOfFamily) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.headOfFamily ? getValueByList(headOfFamily, master.headOfFamily) : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">House Hold Contribution</p></td>
-                                <td><p className="m-0">{master && master.houseHoldCont ? getValueByList(houseHoldContribution, master.houseHoldCont) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.houseHoldCont ? getValueByList(houseHoldContribution, master.houseHoldCont) : "\u00A0"}</p></td>
                               </tr>
 
                               {/* <tr>
@@ -393,20 +393,20 @@ const CustomerDetails = (props) => {
                       <Row>
                         <div className="text-muted d-flex">
                           {contact.map((item, index) => (
-                            <Grid container spacing={12} key={index}>
-                              <Grid item className="grid-text">
+                            <div className="container row" style={{ width: "inherit" }} key={index}>
+                              <div className="col-6 col-md-6 grid-text">
                                 <span key={index}>
                                   <p>Phone No Type</p>
                                   <p>Phone No</p>
                                 </span>
-                              </Grid>
-                              <Grid item>
+                              </div>
+                              <div className="col-6 col-md-6"> 
                                 <span key={index}>
                                   <p>{item.phoneNoType}</p>
                                   <p>{item.phoneNo}</p>
                                 </span>
-                              </Grid>
-                            </Grid>
+                              </div>
+                            </div>
                           ))}
                         </div>
                       </Row>
@@ -414,13 +414,13 @@ const CustomerDetails = (props) => {
                       {contact.length > 0 && <hr></hr>}
 
                       <Row>
-                        <div className="text-muted d-flex">
+                        <div className="table-responsive-lg text-muted d-flex">
                           {residentials.map((residential, index) => (
-                            <table className="table table-borderless" key={index}>
+                            <table className="table table-sm" key={index}>
                               <tbody>
                                 <tr>
                                   <td><p className="m-0 grid-text">Address Type</p></td>
-                                  <td><p className="m-0">{residential && residential.addressType ? getValueAddressType(residential.addressType) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.addressType ? getValueAddressType(residential.addressType) : "\u00A0"}</p></td>
                                 </tr>
                                 {/* <tr>
                                   <td><p className="m-0 grid-text">Same as the Residential Address</p></td>
@@ -428,51 +428,51 @@ const CustomerDetails = (props) => {
                                 </tr> */}
                                 <tr>
                                   <td><p className="m-0 grid-text">Address Line 1</p></td>
-                                  <td><p className="m-0">{residential && residential.addressLine1 ? residential.addressLine1 : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.addressLine1 ? residential.addressLine1 : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Address Line 2</p></td>
-                                  <td><p className="m-0">{residential && residential.addressLine2 ? residential.addressLine2 : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.addressLine2 ? residential.addressLine2 : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Address Line 3</p></td>
-                                  <td><p className="m-0">{residential && residential.addressLine3 ? residential.addressLine3 : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.addressLine3 ? residential.addressLine3 : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Address Line 4</p></td>
-                                  <td><p className="m-0">{residential && residential.addressLine4 ? residential.addressLine4 : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.addressLine4 ? residential.addressLine4 : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Area</p></td>
-                                  <td><p className="m-0">{residential && residential.area ? getCommonAreaValues(residential.area) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.area ? getCommonAreaValues(residential.area) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">City</p></td>
-                                  <td><p className="m-0">{residential && residential.city ? residential.city : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.city ? residential.city : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Distric</p></td>
-                                  <td><p className="m-0">{residential && residential.district ? residential.district : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.district ? residential.district : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Province</p></td>
-                                  <td><p className="m-0">{residential && residential.province ? getValueByList(provinces, residential.province) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.province ? getValueByList(provinces, residential.province) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Community</p></td>
-                                  <td><p className="m-0">{residential && residential.community ? getValueByList(communities, residential.community) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.community ? getValueByList(communities, residential.community) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Nearby Popular Places</p></td>
-                                  <td><p className="m-0">{residential && residential.nearByPopPlc ? residential.nearByPopPlc : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.nearByPopPlc ? residential.nearByPopPlc : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Duration of Current Location</p></td>
-                                  <td><p className="m-0">{residential && residential.durOfCurrLoc ? residential.durOfCurrLoc : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.durOfCurrLoc ? residential.durOfCurrLoc : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Residence Type</p></td>
-                                  <td><p className="m-0">{residential && residential.residenceType ? getValueByList(residantals, residential.residenceType) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.residenceType ? getValueByList(residantals, residential.residenceType) : "\u00A0"}</p></td>
                                 </tr>
                               </tbody>
                             </table>
@@ -505,24 +505,34 @@ const CustomerDetails = (props) => {
                     className="accordion-collapse"
                   >
                     <div className="accordion-body">
-                      <Row>
+                      <div className="row">
                         <div className="text-muted d-flex">
-                          <Grid container spacing={12}>
-                            <Grid item className="grid-text">
-                              <p>Recipient Name</p>
-                              <p>Relationship</p>
-                              <p>CNIC No</p>
-                              <p>Phone No</p>
-                            </Grid>
-                            <Grid item>
-                              <p>{recipient && recipient.recipientName ? recipient.recipientName : "\u00A0"}</p>
-                              <p>{recipient && recipient.relationship ? getValueByList(relationship, recipient.relationship) : "\u00A0"}</p>
-                              <p>{recipient && recipient.cNicNo ? recipient.cNicNo : "\u00A0"}</p>
-                              <p>{recipient && recipient.phoneNo ? recipient.phoneNo : "\u00A0"}</p>
-                            </Grid>
-                          </Grid>
+                          <div className="row" style={{ width: "inherit" }}>
+                            <div className="table-responsive-md col-12 col-md-12 col-sm-12">
+                              <table className="table table-borderless table-sm">
+                                <tbody>
+                                  <tr>
+                                    <td className="grid-text"><p>Recipient Name</p></td>
+                                    <td><p>{recipient && recipient.recipientName ? recipient.recipientName : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="grid-text"><p>Relationship</p></td>
+                                    <td><p>{recipient && recipient.relationship ? getValueByList(relationship, recipient.relationship) : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="grid-text"><p>CNIC No</p></td>
+                                    <td><p>{recipient && recipient.cNicNo ? recipient.cNicNo : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="grid-text"><p>Phone No</p></td>
+                                    <td><p>{recipient && recipient.phoneNo ? recipient.phoneNo : "\u00A0"}</p></td>
+                                  </tr>
+                                </tbody>
+                              </table>                           
+                            </div>                            
+                          </div>
                         </div>
-                      </Row>
+                      </div>
                     </div>
                   </Collapse>
                 </div>
@@ -550,34 +560,72 @@ const CustomerDetails = (props) => {
                   >
                     <div className="accordion-body">
                       <Row>
-                        <div className="text-muted d-flex">
-                          <Grid container spacing={12}>
-                            <Grid item className="grid-text">
-                              <p>Occupation</p>
-                              <p>Sub Occupation</p>
-                              <p>How Did You Know About Us</p>
-                              <p>Sector</p>
-                              <p>Sub Sector</p>
-                            </Grid>
-                            <Grid item>
-                              <p>{other && other.occupation ? getValueByList(occupations, other.occupation) : "\u00A0"}</p>
-                              <p>{other && other.subOccupation ? other.subOccupation : "\u00A0"}</p>
-                              <p>{other && other.howDidYouKnow ? getValueByList(informationSources, other.howDidYouKnow) : "\u00A0"}</p>
-                              <p>{other && other.sector ? getValueByList(sectors, other.sector) : "\u00A0"}</p>
-                              <p>{other && other.subSector ? getValueByList(subSectors, other.subSector) : "\u00A0"}</p>
-                            </Grid>
+                        <div className=" text-muted d-flex">
+                          <div className="container row table-responsive-md col-12 col-md-12 col-sm-12">
+                            <table className="table table-borderless table-sm">
+                              <tbody>
+                                <tr>
+                                  <td className="grid-text"><p>Occupation</p></td>
+                                  <td><p>{other && other.occupation ? getValueByList(occupations, other.occupation) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="grid-text"><p>Sub Occupation</p></td>
+                                  <td><p>{other && other.subOccupation ? other.subOccupation : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="grid-text"><p>How Did You Know About Us</p></td>
+                                  <td><p>{other && other.howDidYouKnow ? getValueByList(informationSources, other.howDidYouKnow) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="grid-text"><p>Sector</p></td>
+                                  <td><p>{other && other.sector ? getValueByList(sectors, other.sector) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="grid-text"><p>Sub Sector</p></td>
+                                  <td><p>{other && other.subSector ? getValueByList(subSectors, other.subSector) : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="grid-text"><p>Savings Account Required</p></td>
+                                  <td><p>{other && other.savingsReq ? other.savingsReq : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="grid-text"><p>WHT Declaration</p></td>
+                                  <td><p>{other && other.whtDec ? other.whtDec : "\u00A0"}</p></td>
+                                </tr>
+                                <tr>
+                                  <td className="grid-text"> <p>PoliticallyExposedPerson</p></td>
+                                  <td><p>{other && other.poliExpo ? getValuePoliticallyExposed(other.poliExpo) : "\u00A0"}</p></td>
+                                </tr>
+                              {/* <div item className="col-6 col-md-4 col-sm-6 grid-text">
+                                <p>Occupation</p>
+                                <p>Sub Occupation</p>
+                                <p>How Did You Know About Us</p>
+                                <p>Sector</p>
+                                <p>Sub Sector</p>                                
+                              </div> */}
 
-                            <Grid item className="grid-text">
+
+                              {/* <div item className="col-6 col-md-4 col-sm-6">
+                                <p>{other && other.occupation ? getValueByList(occupations, other.occupation) : "\u00A0"}</p>
+                                <p>{other && other.subOccupation ? other.subOccupation : "\u00A0"}</p>
+                                <p>{other && other.howDidYouKnow ? getValueByList(informationSources, other.howDidYouKnow) : "\u00A0"}</p>
+                                <p>{other && other.sector ? getValueByList(sectors, other.sector) : "\u00A0"}</p>
+                                <p>{other && other.subSector ? getValueByList(subSectors, other.subSector) : "\u00A0"}</p>
+                              </div> */}
+                              </tbody>
+                            </table>
+
+                            {/* <div item className="col-6 col-md-4 col-sm-6 grid-text">
                               <p>Savings Account Required</p>
                               <p>WHT Declaration</p>
                               <p>PoliticallyExposedPerson</p>
-                            </Grid>
-                            <Grid item>
+                            </div>
+                            <div item className="col-6 col-md-4 col-sm-6">
                               <p>{other && other.savingsReq ? other.savingsReq : "\u00A0"}</p>
                               <p>{other && other.whtDec ? other.whtDec : "\u00A0"}</p>
                               <p>{other && other.poliExpo ? getValuePoliticallyExposed(other.poliExpo) : "\u00A0"}</p>
-                            </Grid>
-                          </Grid>
+                            </div> */}
+                          </div>
                         </div>
                       </Row>
                     </div>
@@ -608,19 +656,39 @@ const CustomerDetails = (props) => {
                     <div className="accordion-body">
                       <Row>
                         <div className="text-muted d-flex">
-                          <Grid container spacing={12}>
-                            <Grid item className="grid-text">
-                              <p>Bank</p>
+                          <div className="container row" >
+                            <div className="table-responsive-md col-12 col-md-12 col-sm-12 ">
+                              <table className="table table-borderless table-sm">
+                                <tbody>
+                                  <tr>
+                                    <td className="grid-text"><p>Bank</p></td>
+                                    <td><p>{cheque && cheque.bank ? getValueByList(banks, cheque.bank) : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="grid-text"><p>Cheque No</p></td>
+                                    <td><p>{cheque && cheque.chequeNo ? cheque.chequeNo : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="grid-text"><p>Account No</p></td>
+                                    <td><p>{cheque && cheque.accountNo ? cheque.accountNo : "\u00A0"}</p></td>
+                                  </tr>
+                                  <tr>
+                                    <td className="grid-text"><p>Account Title</p></td>
+                                    <td><p>{cheque && cheque.accountTitle ? cheque.accountTitle : "\u00A0"}</p></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                              {/* <p>Bank</p>
                               <p>Cheque No</p>
                               <p>Account No</p>
-                              <p>Account Title</p>
-                            </Grid>
-                            <Grid item>
+                              <p>Account Title</p> */}
+                            </div>
+                            {/* <div item className="col-6 col-md-6 col-sm-6">
                               <p>{cheque && cheque.bank ? getValueByList(banks, cheque.bank) : "\u00A0"}</p>
                               <p>{cheque && cheque.chequeNo ? cheque.chequeNo : "\u00A0"}</p>
                               <p>{cheque && cheque.accountNo ? cheque.accountNo : "\u00A0"}</p>
                               <p>{cheque && cheque.accountTitle ? cheque.accountTitle : "\u00A0"}</p>
-                            </Grid>
+                            </div> */}
 
                             {/* <Grid item className="grid-text">
                             <p>Bank</p>
@@ -634,7 +702,7 @@ const CustomerDetails = (props) => {
                             <p>{cheque && cheque.poliExpo ? cheque.poliExpo : "\u00A0"}</p>
                             <p>{cheque && cheque.status ? cheque.status : "\u00A0"}</p>
                           </Grid> */}
-                          </Grid>
+                          </div>
                         </div>
                       </Row>
                     </div>
