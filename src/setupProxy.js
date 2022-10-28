@@ -1,6 +1,6 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-module.exports = function(app) {
+module.exports = function (app) {
   app.use(
     '/pakoman-digital-loan/token',
     createProxyMiddleware({
@@ -55,7 +55,7 @@ module.exports = function(app) {
       },
     })
   );
-  
+
   app.use(
     '/pakoman-digital-loan/mobixCamsApproval',
     createProxyMiddleware({
@@ -66,7 +66,7 @@ module.exports = function(app) {
       },
     })
   );
-  
+
   app.use(
     '/pakoman-digital-loan/mobixCamsReport',
     createProxyMiddleware({
@@ -96,6 +96,17 @@ module.exports = function(app) {
       changeOrigin: true,
       pathRewrite: {
         '^/pakoman-digital-loan/oauth2/revoke': '/oauth2/revoke'
+      },
+    })
+  );
+
+  app.use(
+    '/pakoman-digital-loan/oidc/logout',
+    createProxyMiddleware({
+      target: process.env.REACT_APP_IDENTITY_SERVER_URL,
+      changeOrigin: true,
+      pathRewrite: {
+        '^/pakoman-digital-loan/oidc/logout': '/oidc/logout'
       },
     })
   );

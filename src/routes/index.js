@@ -6,6 +6,7 @@ import Login from "pages/Authentication/Login"
 import Logout from "pages/Authentication/Logout"
 import RedirectPage from "pages/Authentication/Redirect"
 import UserRoleSelecter from "pages/Authentication/LoginRoles"
+import CommonOauth2Logout from "pages/Authentication/CommonOauth2Logout"
 
 import Role from "pages/AccessAndPermission/Accounts/Role"
 import Member from "pages/AccessAndPermission/Accounts/Member"
@@ -67,6 +68,7 @@ const publicRoutes = [
   { path: "/pakoman-digital-loan/logout", component: Logout },
   { path: "/pakoman-digital-loan/login", component: Login },
   { path: "/pakoman-digital-loan/redirect", component: RedirectPage },
+  { path: "/pakoman-digital-loan/openidconnect/oauth2client", component: CommonOauth2Logout },
   { path: "/pakoman-digital-loan/role", component: UserRoleSelecter },
 ]
 

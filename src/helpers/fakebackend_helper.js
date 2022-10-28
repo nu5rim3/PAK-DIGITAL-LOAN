@@ -179,16 +179,16 @@ export const getUserDetails = async (idx, token) => {
       'Authorization': `Bearer ${token}`
     }
   })
-  .then(response => {
-    if (response !== undefined) return response
-    throw response
-  }).catch(err => {
-    var message
+    .then(response => {
+      if (response !== undefined) return response
+      throw response
+    }).catch(err => {
+      var message
       if (err === undefined) {
         message = "Sorry! you can't access the system. Please contact our support team."
       }
       throw message
-  })
+    })
 }
 
 // revoke the access token

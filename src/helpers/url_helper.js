@@ -9,6 +9,7 @@ export const GET_USER_DETAILS = "/mobixCamsCommon/v1/users"
 export const POST_FAKE_PASSWORD_FORGET = "/fake-forget-pwd"
 export const POST_FAKE_JWT_PASSWORD_FORGET = "/jwt-forget-pwd"
 export const SOCIAL_LOGIN = "/social-login"
+export const OIDC_LOGOUT = "/oidc/logout"
 
 //PROFILE
 export const POST_EDIT_JWT_PROFILE = "/post-jwt-profile"
