@@ -37,7 +37,7 @@ const Create = (props) => {
   const { register, control, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
-    const userRoles = data.role.map((r) => ({ "code": r }))
+    const userRoles = data.role.split(",").map((v) => v.trim()).map((r) => ({ "code": r }));
 
     var payload = {
       "idx": data.idx,
