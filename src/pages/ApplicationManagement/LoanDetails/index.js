@@ -386,24 +386,24 @@ const LoanDetails = (props) => {
                     <Row className="container">
                       <div>
                         <Col md="3">
-                        <Nav pills className="flex-column">
-                          {businessLoanDetails && businessLoanDetails.map((item, index) => (
-                            <NavItem key={index}>
-                              <NavLink
-                                style={{ cursor: "pointer" }}
-                                className={classnames({
-                                  "mb-2": true,
-                                  active: toggleBusinessVerticalTab === index,
-                                })}
-                                onClick={() => {
-                                  toggleBusinessVertical(index);
-                                }}
-                              >
-                                Business 0{index + 1}
-                              </NavLink>
-                            </NavItem>
-                          ))}
-                        </Nav>
+                          <Nav pills className="flex-column">
+                            {businessLoanDetails && businessLoanDetails.map((item, index) => (
+                              <NavItem key={index}>
+                                <NavLink
+                                  style={{ cursor: "pointer" }}
+                                  className={classnames({
+                                    "mb-2": true,
+                                    active: toggleBusinessVerticalTab === index,
+                                  })}
+                                  onClick={() => {
+                                    toggleBusinessVertical(index);
+                                  }}
+                                >
+                                  Business 0{index + 1}
+                                </NavLink>
+                              </NavItem>
+                            ))}
+                          </Nav>
                         </Col>
                       </div>
                       <div className="col-12 col-md-12 col-sm-12">
@@ -445,7 +445,7 @@ const LoanDetails = (props) => {
                                           </tr>
                                           <tr>
                                             <td className="grid-text"><p>Ownership of Business Place</p></td>
-                                            <td><p>{item && item.ownOfBnsPlace ? getValueOwnershipOfLand(item.ownOfBnsPlace) : "\u00A0"}</p></td>
+                                            <td><p>{item && item.ownOfBnsPlace ? getValueByList(businessOwnerships, item.ownOfBnsPlace) : "\u00A0"}</p></td>
                                           </tr>
                                           <tr>
                                             <td className="grid-text"><p>Business Assets + Stocks</p></td>
@@ -455,7 +455,7 @@ const LoanDetails = (props) => {
                                             <td className="grid-text"><p>Repeat Customer</p></td>
                                             <td><p>{item && item.repeatCustomer ? getValueByList(repeatCustomers, item.repeatCustomer) : "\u00A0"}</p></td>
                                           </tr>
-                                        </tbody>  
+                                        </tbody>
                                       </table>
                                       {/* <p>Business Name</p>
                                       <p>Nature of Business</p>
@@ -662,7 +662,7 @@ const LoanDetails = (props) => {
                                 </tr>
                               </tbody>
                             </table>
-                          </div>  
+                          </div>
                           {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                             <p>Animal Tagging</p>
                             <p>Purpose of Loan</p>
@@ -735,7 +735,7 @@ const LoanDetails = (props) => {
                               <tbody>
                                 <tr>
                                   <td><p className="m-0 grid-text">Nature of the borrower</p></td>
-                                  <td><p  className="m-1">{cultivationLoanDetails && cultivationLoanDetails.natureOfTheBorrower ? getValueNatureOfBorrowe(cultivationLoanDetails.natureOfTheBorrower) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{cultivationLoanDetails && cultivationLoanDetails.natureOfTheBorrower ? getValueNatureOfBorrowe(cultivationLoanDetails.natureOfTheBorrower) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">{'\u00A0'}</p></td>
@@ -774,7 +774,7 @@ const LoanDetails = (props) => {
                                   <td><p className="m-1">{cultivationLoanDetails && cultivationLoanDetails.acresTotal ? "Total: " + cultivationLoanDetails.acresTotal : "\u00A0"}</p></td>
                                 </tr>
                               </tbody>
-                            </table>                            
+                            </table>
                           </div>
                           {/* <p>Nature of the borrower</p>
                             <p>{'\u00A0'}</p>
