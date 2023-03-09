@@ -115,7 +115,7 @@ const MisReport = (props) => {
   const { register, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
 
   const onSubmit = async (data) => {
-    if (userDetails.roles[0].code === 'CRO' || userDetails.roles[0].code === 'CO' || userDetails.roles[0].code === 'BHO') {
+    if (userDetails.roles[0].code === 'CO' || userDetails.roles[0].code === 'BHO') {
       data.branch = userDetails.branches[0].code;
 
     }
@@ -155,7 +155,7 @@ const MisReport = (props) => {
 
   const exportToExcel = async () => {
     var exportData = watch();
-    if (userDetails.roles[0].code === 'CRO' || userDetails.roles[0].code === 'CO' || userDetails.roles[0].code === 'BHO') {
+    if (userDetails.roles[0].code === 'CO' || userDetails.roles[0].code === 'BHO') {
       exportData.branch = userDetails.branches[0].code;
 
     }
@@ -185,7 +185,7 @@ const MisReport = (props) => {
       if (_isMounted) {
         setBranches(branchResponse);
         setUserDetails(userDetailsResponse)
-        if (userDetailsResponse.roles[0].code === 'CRO' || userDetailsResponse.roles[0].code === 'CO' || userDetailsResponse.roles[0].code === 'BHO') {
+        if (userDetailsResponse.roles[0].code === 'CO' || userDetailsResponse.roles[0].code === 'BHO') {
           setIsBranch(false);
 
         }
