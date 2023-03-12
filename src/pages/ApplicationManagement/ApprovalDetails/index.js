@@ -36,6 +36,14 @@ import {
   getActiveStep,
 } from "services/approval.service";
 
+import Button from '@material-ui/core/Button';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+
+
 const ApprovalDetails = (props) => {
 
   const { appraisalId } = useParams();
@@ -60,6 +68,22 @@ const ApprovalDetails = (props) => {
   const [obExceptionalAccn, setObExceptionalAccn] = useState(true);
   const [caExceptionalAccn, setCaExceptionalAccn] = useState(true);
   const [commentAccn, setCommentAccn] = useState(true);
+
+  const [open, setOpen] = React.useState(false);
+  const [type, setType] = React.useState('');
+
+  const handleClickOpen = (type) => {
+    setType(type);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setType('');
+    setStepRefresh(true);
+    setIsLoadingStep(false);
+    setOpen(false);
+  };
+
 
   const toggleObVertical = (tab) => {
     if (verticalObActiveTab !== tab) setVerticalObActiveTab(tab);
@@ -211,9 +235,10 @@ const ApprovalDetails = (props) => {
     }
   }
 
-  const createActionApprovalStep = async (type) => {
+  const createActionApprovalStep = async () => {
     var value = document.getElementById(`step_comment`).value;
     if (value === "") {
+      setOpen(false);
       document.getElementById(`step_error_comment`).classList.remove("d-none")
       return;
     }
@@ -235,7 +260,7 @@ const ApprovalDetails = (props) => {
       setStepRefresh(true);
       setIsLoadingStep(false);
       document.getElementById(`step_comment`).value = "";
-
+      setOpen(false);
       setTimeout(() => {
         window.location.reload();
       }, 3000);
@@ -581,7 +606,7 @@ const ApprovalDetails = (props) => {
                               </div>
                               <div className="form-group mt-3 d-flex justify-content-end align-items-center">
                                 <button className="btn btn-danger w-md me-2" ref={approvalBtnRef}
-                                  onClick={() => createActionApprovalStep("J")}
+                                  onClick={() => handleClickOpen("J")}
                                 >
                                   <SyncLoader loading={isLoadingStep}>
                                     <i className="bx bx-x-circle font-size-16 me-2" />
@@ -589,7 +614,7 @@ const ApprovalDetails = (props) => {
                                   </SyncLoader>
                                 </button>
                                 <button className="btn btn-warning w-md me-2" ref={approvalBtnRef}
-                                  onClick={() => createActionApprovalStep("R")}
+                                  onClick={() => handleClickOpen("R")}
                                 >
                                   <SyncLoader loading={isLoadingStep}>
                                     <i className="bx bxs-log-out-circle font-size-16 me-2" />
@@ -597,7 +622,7 @@ const ApprovalDetails = (props) => {
                                   </SyncLoader>
                                 </button>
                                 <button type="submit" className="btn btn-success w-md" ref={approvalBtnRef}
-                                  onClick={() => createActionApprovalStep("A")}
+                                  onClick={() => handleClickOpen("A")}
                                 >
                                   <SyncLoader loading={isLoadingStep}>
                                     <i className="bx bxs-check-circle font-size-16 me-2" />
@@ -617,6 +642,32 @@ const ApprovalDetails = (props) => {
           </div>
         </Col>
       </Loader>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">
+          {
+            type == 'J' ? "Reject" : type == 'R' ? "Return" : type == 'A' ? "Approve" : ""
+          }
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">{
+            type == 'J' ? "Are you sure do you want to reject this appriasal?" :
+              type == 'R' ? "Are you sure do you want to return this appriasal?" :
+                type == 'A' ? "Are you sure do you want to approve this appriasal?" : ""
+          }
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button style={{ color: 'gray' }} onClick={handleClose}>No</Button>
+          <Button style={{ color: 'white', backgroundColor: '#34c38f' }}
+            onClick={createActionApprovalStep} autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Row>
   );
 }
