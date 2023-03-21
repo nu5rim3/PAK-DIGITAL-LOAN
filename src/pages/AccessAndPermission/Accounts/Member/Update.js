@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import PropTypes, { string } from "prop-types";
 import React, { useEffect, useState } from "react";
 import {
   Container,
@@ -40,6 +40,8 @@ const Update = (props) => {
   const [successMessage, setSuccessMessage] = useState(null);
 
   const { register, control, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
+
+  const [userRole, setUserRole] = useState('');
 
   const onSubmit = async (data) => {
     const userRoles = data.role.toString().split(",").map((v) => v.trim()).map((r) => ({ "code": r }));
@@ -101,6 +103,23 @@ const Update = (props) => {
     console.log();
   }
 
+  const filterSelectedRoles = (options, value) => {
+    let _filteredValue = [];
+    let _value = '';
+
+    if (!!value && typeof value == 'string') {
+      _value = value;
+    }
+
+    _value = _value.replace(/\s/g, '');
+    const _formattedValue = _value.split(',');
+
+    if (!!options && !!options.length && options.length > 0) {
+      _filteredValue = options.filter(c => _formattedValue.includes(c.value))
+    }
+    return _filteredValue;
+  }
+
   useEffect(() => {
     var _isMounted = true;
 
@@ -113,6 +132,8 @@ const Update = (props) => {
       }
 
       if (props.data !== null && props.data !== undefined) {
+        console.log('USER ROLES : ' + props.data.roles);
+        setUserRole(props.data.roles);
         setValue("idx", props.data.idx);
         setValue("userName", props.data.userName);
         setValue("mobileNo", props.data.mobileNo);
@@ -248,10 +269,20 @@ const Update = (props) => {
                       name="role"
                       rules={{ required: true }}
                       render={({ field: { onChange, value, ref, onBlur } }) => (
+
+                        // <Select
+                        //   onBlur={onBlur}
+                        //   inputRef={ref}
+                        //   value={options.filter(c => value.includes(c.value))}
+                        //   onChange={val => onChange(val.map(c => c.value))}
+                        //   options={options}
+                        //   isMulti
+                        // />
+
                         <Select
                           onBlur={onBlur}
                           inputRef={ref}
-                          value={options.filter(c => value.includes(c.value))}
+                          value={filterSelectedRoles(options, value)}
                           onChange={val => onChange(val.map(c => c.value))}
                           options={options}
                           isMulti
