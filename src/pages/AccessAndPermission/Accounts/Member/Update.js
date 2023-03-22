@@ -41,8 +41,6 @@ const Update = (props) => {
 
   const { register, control, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
 
-  const [userRole, setUserRole] = useState('');
-
   const onSubmit = async (data) => {
     const userRoles = data.role.toString().split(",").map((v) => v.trim()).map((r) => ({ "code": r }));
 
@@ -77,6 +75,7 @@ const Update = (props) => {
         setIsLoading(false);
         setSuccessMessage("User updated successfully.");
         reset();
+        props.onSuccessfulUpdate()
         setTimeout(() => {
           setSuccessMessage(null);
           props.toggel();
@@ -120,6 +119,13 @@ const Update = (props) => {
     return _filteredValue;
   }
 
+  var handleChange = (selectedOption) => {
+    if (!!selectedOption && !!selectedOption.length && selectedOption.length > 0) {
+      const values = selectedOption.map(option => option.value);
+      setValue("role", values.toString());
+    }
+  };
+
   useEffect(() => {
     var _isMounted = true;
 
@@ -132,8 +138,6 @@ const Update = (props) => {
       }
 
       if (props.data !== null && props.data !== undefined) {
-        console.log('USER ROLES : ' + props.data.roles);
-        setUserRole(props.data.roles);
         setValue("idx", props.data.idx);
         setValue("userName", props.data.userName);
         setValue("mobileNo", props.data.mobileNo);
@@ -283,7 +287,7 @@ const Update = (props) => {
                           onBlur={onBlur}
                           inputRef={ref}
                           value={filterSelectedRoles(options, value)}
-                          onChange={val => onChange(val.map(c => c.value))}
+                          onChange={handleChange}
                           options={options}
                           isMulti
                         />
@@ -384,6 +388,7 @@ Update.propTypes = {
   isOpen: PropTypes.bool,
   toggel: PropTypes.func,
   data: PropTypes.object,
+  onSuccessfulUpdate: PropTypes.func,
 }
 
 export default Update;

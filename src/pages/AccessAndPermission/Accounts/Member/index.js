@@ -190,7 +190,7 @@ const Member = (props) => {
             </Col>
 
             <Create toggel={toggelCreateModal} isOpen={isOpenCreate} />
-            <Update toggel={toggelUpdateModal} isOpen={isOpenUpdate} data={data} />
+            <Update toggel={toggelUpdateModal} isOpen={isOpenUpdate} data={data} onSuccessfulUpdate={() => console.log('Data Feteched')} />
 
           </Row>
         </Container>
