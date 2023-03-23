@@ -49,6 +49,7 @@ const ApprovalDetails = (props) => {
   const { appraisalId } = useParams();
 
   const approvalBtnRef = useRef();
+  const caApprovalBtnRef = useRef();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingOb, setIsLoadingOb] = useState(false);
@@ -87,6 +88,7 @@ const ApprovalDetails = (props) => {
   };
 
   const handleCaClose = () => {
+    setStepRefresh(true);
     setCaOpen(false);
   };
 
@@ -97,6 +99,7 @@ const ApprovalDetails = (props) => {
   };
 
   const handleCaRejectClose = () => {
+    setStepRefresh(true);
     setCaRejectOpen(false);
   };
 
@@ -238,7 +241,6 @@ const ApprovalDetails = (props) => {
   };
 
   const onSubmitCaApproval = () => {
-    console.log('TEST');
     var value = document.getElementById(`ca_comment_${index1}`).value;
     if (value === "") {
       document.getElementById(`ca_error_comment_${index1}`).classList.remove("d-none")
@@ -251,6 +253,10 @@ const ApprovalDetails = (props) => {
       "approvalIdx": item.idx,
       "appraisalIdx": item.appraisalIdx,
       "action": "A"
+    }
+
+    if (caApprovalBtnRef.current) {
+      caApprovalBtnRef.current.setAttribute("disabled", "disabled");
     }
 
     createCaApprovals(payload);
@@ -289,6 +295,10 @@ const ApprovalDetails = (props) => {
       "action": "R"
     }
 
+    if (caApprovalBtnRef.current) {
+      caApprovalBtnRef.current.setAttribute("disabled", "disabled");
+    }
+
     createCaApprovals(payload);
   };
 
@@ -305,7 +315,13 @@ const ApprovalDetails = (props) => {
     setIsLoadingCa(true);
     const commentResponse = await createApprovalComment(data);
     if (commentResponse !== undefined) {
+      setStepRefresh(true);
       setIsLoadingCa(false);
+      setCaOpen(false);
+      setCaRejectOpen(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     }
   }
 
@@ -626,7 +642,8 @@ const ApprovalDetails = (props) => {
                                               Reject
                                             </SyncLoader>
                                           </button> */}
-                                          <button onClick={() => handleCaRejectClickOpen(index, item)} className="btn btn-danger w-md me-2">
+                                          <button onClick={() => handleCaRejectClickOpen(index, item)} className="btn btn-danger w-md me-2"
+                                            ref={caApprovalBtnRef}>
                                             <SyncLoader loading={isLoadingCa}>
                                               <i className="bx bx-x-circle font-size-16 me-2" />
                                               Reject
@@ -638,7 +655,8 @@ const ApprovalDetails = (props) => {
                                               Approve
                                             </SyncLoader>
                                           </button> */}
-                                          <button onClick={() => handleCaClickOpen(index, item)} className="btn btn-success w-md">
+                                          <button onClick={() => handleCaClickOpen(index, item)} className="btn btn-success w-md"
+                                            ref={caApprovalBtnRef}>
                                             <SyncLoader loading={isLoadingCa}>
                                               <i className="bx bxs-check-circle font-size-16 me-2" />
                                               Approve
@@ -827,7 +845,7 @@ const ApprovalDetails = (props) => {
           }
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">{            
+          <DialogContentText id="alert-dialog-description">{
             "Are you sure do you want to approve this exceptional approval?"
           }
           </DialogContentText>
