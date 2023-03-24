@@ -88,7 +88,6 @@ const ApprovalDetails = (props) => {
   };
 
   const handleCaClose = () => {
-    setStepRefresh(true);
     setCaOpen(false);
   };
 
@@ -99,7 +98,6 @@ const ApprovalDetails = (props) => {
   };
 
   const handleCaRejectClose = () => {
-    setStepRefresh(true);
     setCaRejectOpen(false);
   };
 
@@ -315,13 +313,12 @@ const ApprovalDetails = (props) => {
     setIsLoadingCa(true);
     const commentResponse = await createApprovalComment(data);
     if (commentResponse !== undefined) {
-      setStepRefresh(true);
       setIsLoadingCa(false);
       setCaOpen(false);
       setCaRejectOpen(false);
       setTimeout(() => {
         window.location.reload();
-      }, 3000);
+      }, 500);
     }
   }
 
