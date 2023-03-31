@@ -370,7 +370,7 @@ const ApprovalDetails = (props) => {
 
     var payload = {
       "appraisalIdx": appraisalId,
-      "stepAction": type,
+      "stepAction": rejectType,
       "comment": value
     }
 
