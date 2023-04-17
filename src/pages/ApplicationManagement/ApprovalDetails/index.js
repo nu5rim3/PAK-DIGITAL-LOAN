@@ -328,7 +328,8 @@ const ApprovalDetails = (props) => {
       setOpen(false);
       setCaOpen(false);
       setCaRejectOpen(false);
-      document.getElementById(`step_error_comment`).classList.remove("d-none")
+      // document.getElementById(`step_error_comment`).classList.remove("d-none")
+      document.getElementById(`err_step_comment`).classList.remove("d-none")
       return;
     }
 
@@ -362,13 +363,14 @@ const ApprovalDetails = (props) => {
     var value = document.getElementById(`step_comment`).value;
     if (value === "") {
       setRejectOpen(false);
-      document.getElementById(`step_error_comment`).classList.remove("d-none")
+      // document.getElementById(`step_error_comment`).classList.remove("d-none")
+      document.getElementById(`err_step_comment`).classList.remove("d-none")
       return;
     }
 
     var payload = {
       "appraisalIdx": appraisalId,
-      "stepAction": type,
+      "stepAction": rejectType,
       "comment": value
     }
 
