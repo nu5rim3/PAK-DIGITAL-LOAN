@@ -335,7 +335,7 @@ export const getValueOwnershipOfLand = (key) => {
 };
 
 export const getValueNatureOfBorrowe = (key) => {
-    switch(key) {
+    switch (key) {
         case "OWNER": return "Owner";
         case "TENANTCROPPER": return "Tenant/Shared Cropper";
         case "OWNERTENANT": return "Owner cum Tenant";
@@ -402,23 +402,23 @@ export const getValueOfClientele = (key) => {
 
 export const getValueOfVerification = (key) => {
     switch (key) {
-        case "RUL_CNIC_ID_VERIFICATION": return {display: true, modal: false, link: false};
-        case "RUL_CNIC_NAME_VERIFICATION": return {display: true, modal: false, link: false};
-        case "RUL_CLI_OTP_VERIFICATION": return {display: true, modal: false, link: false};
-        case "RUL_ECIB_VERIFICATION": return {display: true, modal: false, link: true};
-        case "RUL_BIOMETRIC_VERIFICATION": return {display: true, modal: true, link: false};
-        case "RUL_TC_CALCULATION": return {display: false, modal: true, link: false};
-        case "RUL_GET_LOAN_DETAILS": return {display: false, modal: true, link: false};
-        case "RUL_INTERNAL_CRIB": return {display: true, modal: true, link: false};
+        case "RUL_CNIC_ID_VERIFICATION": return { display: true, modal: false, link: false };
+        case "RUL_CNIC_NAME_VERIFICATION": return { display: true, modal: false, link: false };
+        case "RUL_CLI_OTP_VERIFICATION": return { display: true, modal: false, link: false };
+        case "RUL_ECIB_VERIFICATION": return { display: true, modal: false, link: true };
+        case "RUL_BIOMETRIC_VERIFICATION": return { display: true, modal: true, link: false };
+        case "RUL_TC_CALCULATION": return { display: false, modal: true, link: false };
+        case "RUL_GET_LOAN_DETAILS": return { display: false, modal: true, link: false };
+        case "RUL_INTERNAL_CRIB": return { display: true, modal: true, link: false };
         default: return {};
     }
 };
 
 export const getObExceptionals = (key) => {
     switch (key) {
-        case "BLACKLIST" : return "Blacklist";
-        case "MSASPRO" : return "MSAS Pro";
-        case "INTCRIB" : return "Internal CRIB";
+        case "BLACKLIST": return "Blacklist";
+        case "MSASPRO": return "MSAS Pro";
+        case "INTCRIB": return "Internal CRIB";
     }
 };
 

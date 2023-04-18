@@ -1,4 +1,4 @@
-import PropTypes from "prop-types";
+import PropTypes, { string } from "prop-types";
 import React, { useEffect, useState } from "react";
 import {
   Container,
@@ -75,6 +75,7 @@ const Update = (props) => {
         setIsLoading(false);
         setSuccessMessage("User updated successfully.");
         reset();
+        props.onSuccessfulUpdate()
         setTimeout(() => {
           setSuccessMessage(null);
           props.toggel();
@@ -100,6 +101,30 @@ const Update = (props) => {
   const verifyUser = (value) => {
     console.log();
   }
+
+  const filterSelectedRoles = (options, value) => {
+    let _filteredValue = [];
+    let _value = '';
+
+    if (!!value && typeof value == 'string') {
+      _value = value;
+    }
+
+    _value = _value.replace(/\s/g, '');
+    const _formattedValue = _value.split(',');
+
+    if (!!options && !!options.length && options.length > 0) {
+      _filteredValue = options.filter(c => _formattedValue.includes(c.value))
+    }
+    return _filteredValue;
+  }
+
+  var handleChange = (selectedOption) => {
+    if (!!selectedOption && !!selectedOption.length && selectedOption.length > 0) {
+      const values = selectedOption.map(option => option.value);
+      setValue("role", values.toString());
+    }
+  };
 
   useEffect(() => {
     var _isMounted = true;
@@ -248,11 +273,21 @@ const Update = (props) => {
                       name="role"
                       rules={{ required: true }}
                       render={({ field: { onChange, value, ref, onBlur } }) => (
+
+                        // <Select
+                        //   onBlur={onBlur}
+                        //   inputRef={ref}
+                        //   value={options.filter(c => value.includes(c.value))}
+                        //   onChange={val => onChange(val.map(c => c.value))}
+                        //   options={options}
+                        //   isMulti
+                        // />
+
                         <Select
                           onBlur={onBlur}
                           inputRef={ref}
-                          value={options.filter(c => value.includes(c.value))}
-                          onChange={val => onChange(val.map(c => c.value))}
+                          value={filterSelectedRoles(options, value)}
+                          onChange={handleChange}
                           options={options}
                           isMulti
                         />
@@ -353,6 +388,7 @@ Update.propTypes = {
   isOpen: PropTypes.bool,
   toggel: PropTypes.func,
   data: PropTypes.object,
+  onSuccessfulUpdate: PropTypes.func,
 }
 
 export default Update;

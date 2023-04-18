@@ -36,11 +36,20 @@ import {
   getActiveStep,
 } from "services/approval.service";
 
+import Button from '@material-ui/core/Button';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+
+
 const ApprovalDetails = (props) => {
 
   const { appraisalId } = useParams();
 
   const approvalBtnRef = useRef();
+  const caApprovalBtnRef = useRef();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingOb, setIsLoadingOb] = useState(false);
@@ -60,6 +69,59 @@ const ApprovalDetails = (props) => {
   const [obExceptionalAccn, setObExceptionalAccn] = useState(true);
   const [caExceptionalAccn, setCaExceptionalAccn] = useState(true);
   const [commentAccn, setCommentAccn] = useState(true);
+
+  const [open, setOpen] = React.useState(false);
+  const [type, setType] = React.useState('');
+
+  const [rejectOpen, setRejectOpen] = React.useState(false);
+  const [rejectType, setRejectType] = React.useState('');
+
+  const [index1, setIndex1] = useState(0);
+  const [item, setItem] = useState({});
+  const [caOpen, setCaOpen] = useState(false);
+  const [rejectCaOpen, setCaRejectOpen] = useState(false);
+
+  const handleCaClickOpen = (mIndex, item) => {
+    setIndex1(mIndex);
+    setItem(item);
+    setCaOpen(true);
+  };
+
+  const handleCaClose = () => {
+    setCaOpen(false);
+  };
+
+  const handleCaRejectClickOpen = (mIndex, item) => {
+    setIndex1(mIndex);
+    setItem(item);
+    setCaRejectOpen(true);
+  };
+
+  const handleCaRejectClose = () => {
+    setCaRejectOpen(false);
+  };
+
+  const handleClickOpen = (type) => {
+    setType(type);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setStepRefresh(true);
+    setIsLoadingStep(false);
+    setOpen(false);
+  };
+
+  const handleClickRejectOpen = (type) => {
+    setRejectType(type);
+    setRejectOpen(true);
+  };
+
+  const handleRejectClose = () => {
+    setStepRefresh(true);
+    setIsLoadingStep(false);
+    setRejectOpen(false);
+  };
 
   const toggleObVertical = (tab) => {
     if (verticalObActiveTab !== tab) setVerticalObActiveTab(tab);
@@ -176,6 +238,28 @@ const ApprovalDetails = (props) => {
     createCaApprovals(payload);
   };
 
+  const onSubmitCaApproval = () => {
+    var value = document.getElementById(`ca_comment_${index1}`).value;
+    if (value === "") {
+      document.getElementById(`ca_error_comment_${index1}`).classList.remove("d-none")
+      return;
+    }
+
+    var payload = {
+      "comment": value,
+      "appType": "CA",
+      "approvalIdx": item.idx,
+      "appraisalIdx": item.appraisalIdx,
+      "action": "A"
+    }
+
+    if (caApprovalBtnRef.current) {
+      caApprovalBtnRef.current.setAttribute("disabled", "disabled");
+    }
+
+    createCaApprovals(payload);
+  };
+
   const onSubmitCaReject = (index, item) => {
     var value = document.getElementById(`ca_comment_${index}`).value;
     if (value === "") {
@@ -189,6 +273,28 @@ const ApprovalDetails = (props) => {
       "approvalIdx": item.idx,
       "appraisalIdx": item.appraisalIdx,
       "action": "R"
+    }
+
+    createCaApprovals(payload);
+  };
+
+  const onSubmitCaRejection = () => {
+    var value = document.getElementById(`ca_comment_${index1}`).value;
+    if (value === "") {
+      document.getElementById(`ca_error_comment_${index1}`).classList.remove("d-none")
+      return;
+    }
+
+    var payload = {
+      "comment": value,
+      "appType": "CA",
+      "approvalIdx": item.idx,
+      "appraisalIdx": item.appraisalIdx,
+      "action": "R"
+    }
+
+    if (caApprovalBtnRef.current) {
+      caApprovalBtnRef.current.setAttribute("disabled", "disabled");
     }
 
     createCaApprovals(payload);
@@ -208,13 +314,22 @@ const ApprovalDetails = (props) => {
     const commentResponse = await createApprovalComment(data);
     if (commentResponse !== undefined) {
       setIsLoadingCa(false);
+      setCaOpen(false);
+      setCaRejectOpen(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }
   }
 
-  const createActionApprovalStep = async (type) => {
+  const createActionApprovalStep = async () => {
     var value = document.getElementById(`step_comment`).value;
     if (value === "") {
-      document.getElementById(`step_error_comment`).classList.remove("d-none")
+      setOpen(false);
+      setCaOpen(false);
+      setCaRejectOpen(false);
+      // document.getElementById(`step_error_comment`).classList.remove("d-none")
+      document.getElementById(`err_step_comment`).classList.remove("d-none")
       return;
     }
 
@@ -235,7 +350,42 @@ const ApprovalDetails = (props) => {
       setStepRefresh(true);
       setIsLoadingStep(false);
       document.getElementById(`step_comment`).value = "";
+      setOpen(false);
+      setCaOpen(false);
+      setCaRejectOpen(false);
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    }
+  }
 
+  const createActionApprovalRejectStep = async () => {
+    var value = document.getElementById(`step_comment`).value;
+    if (value === "") {
+      setRejectOpen(false);
+      // document.getElementById(`step_error_comment`).classList.remove("d-none")
+      document.getElementById(`err_step_comment`).classList.remove("d-none")
+      return;
+    }
+
+    var payload = {
+      "appraisalIdx": appraisalId,
+      "stepAction": rejectType,
+      "comment": value
+    }
+
+    // disable button action
+    if (approvalBtnRef.current) {
+      approvalBtnRef.current.setAttribute("disabled", "disabled");
+    }
+
+    setIsLoadingStep(true);
+    const stepResponse = await createApprovalStep(payload);
+    if (stepResponse !== null) {
+      setStepRefresh(true);
+      setIsLoadingStep(false);
+      document.getElementById(`step_comment`).value = "";
+      setRejectOpen(false);
       setTimeout(() => {
         window.location.reload();
       }, 3000);
@@ -485,13 +635,27 @@ const ApprovalDetails = (props) => {
                                           {<span id={`ca_error_comment_${index}`} className="text-danger d-none">This field is required</span>}
                                         </div>
                                         {verifyUserWithLevel(item.roleCode) === true && item.status === "P" && <div className="form-group mt-3 d-flex justify-content-end align-items-center">
-                                          <button onClick={() => onSubmitCaReject(index, item)} className="btn btn-danger w-md me-2">
+                                          {/* <button onClick={() => onSubmitCaReject(index, item)} className="btn btn-danger w-md me-2">
+                                            <SyncLoader loading={isLoadingCa}>
+                                              <i className="bx bx-x-circle font-size-16 me-2" />
+                                              Reject
+                                            </SyncLoader>
+                                          </button> */}
+                                          <button onClick={() => handleCaRejectClickOpen(index, item)} className="btn btn-danger w-md me-2"
+                                            ref={caApprovalBtnRef}>
                                             <SyncLoader loading={isLoadingCa}>
                                               <i className="bx bx-x-circle font-size-16 me-2" />
                                               Reject
                                             </SyncLoader>
                                           </button>
-                                          <button onClick={() => onSubmitCaApprove(index, item)} className="btn btn-success w-md">
+                                          {/* <button onClick={() => onSubmitCaApprove(index, item)} className="btn btn-success w-md">
+                                            <SyncLoader loading={isLoadingCa}>
+                                              <i className="bx bxs-check-circle font-size-16 me-2" />
+                                              Approve
+                                            </SyncLoader>
+                                          </button> */}
+                                          <button onClick={() => handleCaClickOpen(index, item)} className="btn btn-success w-md"
+                                            ref={caApprovalBtnRef}>
                                             <SyncLoader loading={isLoadingCa}>
                                               <i className="bx bxs-check-circle font-size-16 me-2" />
                                               Approve
@@ -581,7 +745,7 @@ const ApprovalDetails = (props) => {
                               </div>
                               <div className="form-group mt-3 d-flex justify-content-end align-items-center">
                                 <button className="btn btn-danger w-md me-2" ref={approvalBtnRef}
-                                  onClick={() => createActionApprovalStep("J")}
+                                  onClick={() => handleClickRejectOpen("J")}
                                 >
                                   <SyncLoader loading={isLoadingStep}>
                                     <i className="bx bx-x-circle font-size-16 me-2" />
@@ -589,7 +753,7 @@ const ApprovalDetails = (props) => {
                                   </SyncLoader>
                                 </button>
                                 <button className="btn btn-warning w-md me-2" ref={approvalBtnRef}
-                                  onClick={() => createActionApprovalStep("R")}
+                                  onClick={() => handleClickOpen("R")}
                                 >
                                   <SyncLoader loading={isLoadingStep}>
                                     <i className="bx bxs-log-out-circle font-size-16 me-2" />
@@ -597,7 +761,7 @@ const ApprovalDetails = (props) => {
                                   </SyncLoader>
                                 </button>
                                 <button type="submit" className="btn btn-success w-md" ref={approvalBtnRef}
-                                  onClick={() => createActionApprovalStep("A")}
+                                  onClick={() => handleClickOpen("A")}
                                 >
                                   <SyncLoader loading={isLoadingStep}>
                                     <i className="bx bxs-check-circle font-size-16 me-2" />
@@ -617,6 +781,108 @@ const ApprovalDetails = (props) => {
           </div>
         </Col>
       </Loader>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">
+          {
+            type == 'R' ? "Return" : type == 'A' ? "Approve" : ""
+          }
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">{
+            type == 'R' ? "Are you sure do you want to return this appriasal?" :
+              type == 'A' ? "Are you sure do you want to approve this appriasal?" : ""
+          }
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button style={{ color: 'white', backgroundColor: '#34c38f' }}
+            onClick={createActionApprovalStep} autoFocus>
+            {
+              type == 'R' ? "Return" :
+                type == 'A' ? "Approve" : ""
+            }
+          </Button>
+          <Button style={{ color: 'gray' }} onClick={handleClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={rejectOpen}
+        onClose={handleRejectClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title" style={{ color: '#DC4C64', alignContent: "center" }}>
+          {
+            rejectType == 'J' ? "Warning!" : ""
+          }
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">{
+            rejectType == 'J' ? "Are you sure do you want to reject this appriasal?" : ""
+          }
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button style={{ color: 'white', backgroundColor: '#DC4C64' }}
+            onClick={createActionApprovalRejectStep} autoFocus>
+            Reject
+          </Button>
+          <Button style={{ color: 'gray' }} onClick={handleRejectClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={caOpen}
+        onClose={handleCaClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">
+          {
+            "Approve"
+          }
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">{
+            "Are you sure do you want to approve this exceptional approval?"
+          }
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button style={{ color: 'white', backgroundColor: '#34c38f' }}
+            onClick={onSubmitCaApproval} autoFocus>
+            {
+              "Approve"
+            }
+          </Button>
+          <Button style={{ color: 'gray' }} onClick={handleCaClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={rejectCaOpen}
+        onClose={handleCaRejectClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title" style={{ color: '#DC4C64', alignContent: "center" }}>
+          {
+            "Warning!"
+          }
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">{
+            "Are you sure do you want to reject this exceptional approval?"
+          }
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button style={{ color: 'white', backgroundColor: '#DC4C64' }}
+            onClick={onSubmitCaRejection} autoFocus>
+            Reject
+          </Button>
+          <Button style={{ color: 'gray' }} onClick={handleCaRejectClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
     </Row>
   );
 }
