@@ -136,7 +136,7 @@ const IncomeExpensesDetails = (props) => {
     setIsLoading(true);
 
     const fetchData = async () => {
-      if (props.active === "6") {
+      if (props.active === "7") {
 
 
         const tcDetails = await getTcDetails(appraisalId);

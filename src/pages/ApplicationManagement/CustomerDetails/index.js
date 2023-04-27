@@ -140,7 +140,7 @@ const CustomerDetails = (props) => {
     setIsLoading(true);
 
     const fetchData = async () => {
-      if (props.active === "2") {
+      if (props.active === "3") {
 
         var idx = null;
 
@@ -400,7 +400,7 @@ const CustomerDetails = (props) => {
                                   <p>Phone No</p>
                                 </span>
                               </div>
-                              <div className="col-6 col-md-6"> 
+                              <div className="col-6 col-md-6">
                                 <span key={index}>
                                   <p>{item.phoneNoType}</p>
                                   <p>{item.phoneNo}</p>
@@ -528,8 +528,8 @@ const CustomerDetails = (props) => {
                                     <td><p>{recipient && recipient.phoneNo ? recipient.phoneNo : "\u00A0"}</p></td>
                                   </tr>
                                 </tbody>
-                              </table>                           
-                            </div>                            
+                              </table>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -596,7 +596,7 @@ const CustomerDetails = (props) => {
                                   <td className="grid-text"> <p>PoliticallyExposedPerson</p></td>
                                   <td><p>{other && other.poliExpo ? getValuePoliticallyExposed(other.poliExpo) : "\u00A0"}</p></td>
                                 </tr>
-                              {/* <div item className="col-6 col-md-4 col-sm-6 grid-text">
+                                {/* <div item className="col-6 col-md-4 col-sm-6 grid-text">
                                 <p>Occupation</p>
                                 <p>Sub Occupation</p>
                                 <p>How Did You Know About Us</p>
@@ -605,7 +605,7 @@ const CustomerDetails = (props) => {
                               </div> */}
 
 
-                              {/* <div item className="col-6 col-md-4 col-sm-6">
+                                {/* <div item className="col-6 col-md-4 col-sm-6">
                                 <p>{other && other.occupation ? getValueByList(occupations, other.occupation) : "\u00A0"}</p>
                                 <p>{other && other.subOccupation ? other.subOccupation : "\u00A0"}</p>
                                 <p>{other && other.howDidYouKnow ? getValueByList(informationSources, other.howDidYouKnow) : "\u00A0"}</p>

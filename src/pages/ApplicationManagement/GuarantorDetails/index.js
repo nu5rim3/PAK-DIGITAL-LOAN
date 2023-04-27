@@ -158,7 +158,7 @@ const GuarantorDetails = (props) => {
     setIsLoading(true);
 
     const fetchData = async () => {
-      if (props.active === "3") {
+      if (props.active === "4") {
 
         const tcDetails = await getTcDetails(appraisalId);
         if (_isMounted) {
@@ -324,7 +324,7 @@ const GuarantorDetails = (props) => {
                               </table>
                             </div>
 
-                            
+
 
                             {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>Organization Type</p>
@@ -521,7 +521,7 @@ const GuarantorDetails = (props) => {
                       <Row>
                         <div className="table-responsive-lg text-muted d-flex">
                           {residentials.map((residential, index) => (
-                             <table className="table table-sm" key={index}>
+                            <table className="table table-sm" key={index}>
                               <tbody>
                                 <tr>
                                   <td><p className="m-0 grid-text">Address Type</p></td>
@@ -672,7 +672,7 @@ const GuarantorDetails = (props) => {
                                     <td className="m-1"><p>{income && income.totMonIncome ? income.totMonIncome : "\u00A0"}</p></td>
                                   </tr>
                                 </tbody>
-                                
+
                               </table>
                             </div>
                             {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">

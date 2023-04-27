@@ -37,7 +37,7 @@ const AccordionBody = (props) => {
                 className="accordion-collapse"
               >
                 <div className="accordion-body">
-                    {props.children}
+                  {props.children}
                 </div>
               </Collapse>
             </div>

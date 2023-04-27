@@ -33,6 +33,12 @@ import CombinedReports from "../components/ApprasialLayout/ReportLayout";
 
 import MisReport from "pages/Reports/MisReport"
 
+//GOLD LOAN SUMMARY
+import IndexGoldSmith from "pages/GoldLoan/Goldsmith"
+// import ReportGoldSmith from "pages/Gold Loan/Goldsmith/GoldsmithReport"
+import IndexMarcketValue from "pages/GoldLoan/MarketValue"
+// import GoldRateReport from "pages/Gold Loan/MarketValue/GoldRateReport"
+
 const authProtectedRoutes = [
 
   // ACCESS AND PERMISSIONS
@@ -57,6 +63,12 @@ const authProtectedRoutes = [
 
   // REPORT AND SUMMARY
   { path: "/pakoman-digital-loan/reports/mis-report", component: MisReport },
+
+  // GOLD LOAN SUMMARY
+  { path: "/pakoman-digital-loan/gold-loan-summary/index-goldsmith", component: IndexGoldSmith },
+  // { path: "/pakoman-digital-loan/gold-loan-summary/report-goldsmith", component: ReportGoldSmith },
+  { path: "/pakoman-digital-loan/gold-loan-summary/index-marketvalue", component: IndexMarcketValue },
+  // { path: "/pakoman-digital-loan/gold-loan-summary/report-marketvalue", component: GoldRateReport },
 
   // this route should be at the end of all other routes
   // eslint-disable-next-line react/display-name

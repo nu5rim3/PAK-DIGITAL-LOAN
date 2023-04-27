@@ -61,7 +61,7 @@ const GeoDetails = (props) => {
     setIsLoading(true);
 
     const fetchData = async () => {
-      if (props.active === "13") {
+      if (props.active === "14") {
         const responseImages = await getAllImages(appraisalId);
 
         if (responseImages != undefined && _isMounted) {
