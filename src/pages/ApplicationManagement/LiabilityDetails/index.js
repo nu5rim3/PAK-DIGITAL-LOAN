@@ -49,7 +49,7 @@ const LiabilityDetails = (props) => {
     setIsLoading(true);
 
     const fetchData = async () => {
-      if (props.active === "7") {
+      if (props.active === "8") {
         const LiabilityResponse = await getLiabilityDetails(appraisalId);
         if (_isMounted) {
           setLiabilityDetails(LiabilityResponse);

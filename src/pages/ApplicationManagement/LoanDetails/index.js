@@ -193,7 +193,7 @@ const LoanDetails = (props) => {
     setIsLoading(true);
 
     const fetchData = async () => {
-      if (props.active === "5") {
+      if (props.active === "6") {
 
         const tcDetails = await getTcDetails(appraisalId);
         if (_isMounted) {

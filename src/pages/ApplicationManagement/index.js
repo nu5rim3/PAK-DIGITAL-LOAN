@@ -34,6 +34,7 @@ import ApprovalDetails from "./ApprovalDetails";
 import {
   getOnBoardClienteles
 } from "services/on_board.service";
+import GoldLoanDetails from "./GoldLoanDetails";
 const Appraisal = () => {
 
   const { appraisalId } = useParams();
@@ -83,52 +84,56 @@ const Appraisal = () => {
                     <OnBoardingDetails active={"1"} />
                   </AccordionBody>
 
+                  <AccordionBody title="GOLD LOAN DETAILS">
+                    <GoldLoanDetails active={"2"} />
+                  </AccordionBody>
+
                   <AccordionBody title="CUSTOMER DETAILS">
-                    <CustomerDetails active={"2"} />
+                    <CustomerDetails active={"3"} />
                   </AccordionBody>
 
                   <AccordionBody title="GUARANTOR DETAILS">
-                    <GuarantorDetails active={"3"} />
+                    <GuarantorDetails active={"4"} />
                   </AccordionBody>
 
                   <AccordionBody title="WITNESS DETAILS">
-                    <WitnessDetails active={"4"} />
+                    <WitnessDetails active={"5"} />
                   </AccordionBody>
 
                   <AccordionBody title="LOAN DETAILS">
-                    <LoanDetails active={"5"} />
+                    <LoanDetails active={"6"} />
                   </AccordionBody>
 
                   <AccordionBody title="CASH FLOW DETAILS">
-                    <IncomeExpensesDetails active={"6"} />
+                    <IncomeExpensesDetails active={"7"} />
                   </AccordionBody>
 
                   <AccordionBody title="LIABILITY DETAILS">
-                    <LiabilityDetails active={"7"} />
+                    <LiabilityDetails active={"8"} />
                   </AccordionBody>
 
                   <AccordionBody title="CREDIT SCORE DETAILS">
-                    <CreditScoringDetails active={"8"} />
+                    <CreditScoringDetails active={"9"} />
                   </AccordionBody>
 
                   <AccordionBody title="IMAGE DETAILS">
-                    <ImageDetails active={"9"} />
+                    <ImageDetails active={"10"} />
                   </AccordionBody>
 
                   <AccordionBody title="GEO DETAILS">
-                    <GeoDetails active={"13"} />
+                    <GeoDetails active={"14"} />
                   </AccordionBody>
 
                   <AccordionBody title="CUSTOMER UNDERTAKING">
-                    <UndertakingDetails active={"12"} />
+                    <UndertakingDetails active={"13"} />
                   </AccordionBody>
 
                   <AccordionBody title="REPORT DETAILS">
-                    <ReportDetails active={"11"} />
+                    <ReportDetails active={"12"} />
                   </AccordionBody>
 
                   <AccordionBody title="APPROVAL DETAILS">
-                    <ApprovalDetails active={"10"} />
+                    <ApprovalDetails active={"11"} />
                   </AccordionBody>
 
                 </CardBody>

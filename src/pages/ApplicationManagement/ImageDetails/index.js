@@ -34,20 +34,20 @@ const ImageDetails = (props) => {
     setIsLoading(true);
 
     const fetchData = async () => {
-      if (props.active === "9") {
+      if (props.active === "10") {
 
         const images = await getAllImages(appraisalId);
-        
-        const result = [...images.reduce((r, { imgMasterCategory, imgSubCategory, hashIdentifier}) => {
+
+        const result = [...images.reduce((r, { imgMasterCategory, imgSubCategory, hashIdentifier }) => {
           r.has(imgMasterCategory) || r.set(imgMasterCategory, {
             imgMasterCategory,
             images: []
           });
 
           r.get(imgMasterCategory).images.push({ imgSubCategory, hashIdentifier });
-          
+
           return r;
-        }, new Map).values()];        
+        }, new Map).values()];
 
         setGroups(result);
         setIsLoading(false);
@@ -88,7 +88,7 @@ const ImageDetails = (props) => {
         <button onClick={() => exportToPdf(appraisalId)} className="btn btn-success w-md me-2">
 
           <i className="far fa-file-pdf font-size-16 me-2" />
-                                              Export
+          Export
 
         </button>
       </div>

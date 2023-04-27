@@ -75,7 +75,7 @@ const WitnessDetails = (props) => {
     setIsLoading(true);
 
     const fetchData = async () => {
-      if (props.active === "4") {
+      if (props.active === "5") {
 
         const masterResponse = await getMasterData(appraisalId);
         if (_isMounted && masterResponse !== undefined && masterResponse.length > 0) {
@@ -157,7 +157,7 @@ const WitnessDetails = (props) => {
                                   <tr>
                                     <td className="m-0 grid-text"><p>Witness CNIC</p></td>
                                     <td className="m-1"><p>{master && master.stkCNic ? master.stkCNic : "\u00A0"}</p></td>
-                                  </tr> 
+                                  </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>Witness Full Name</p></td>
                                     <td className="m-1"><p>{master && master.stkCusName ? master.stkCusName : "\u00A0"}</p></td>
@@ -188,7 +188,7 @@ const WitnessDetails = (props) => {
                                   </tr>
                                 </tbody>
                               </table>
-                            </div>  
+                            </div>
 
                             {/* <div item className="col-6 col-md-6 col-sm-6 grid-text">
                               <p>Witness CNIC</p>
@@ -217,7 +217,7 @@ const WitnessDetails = (props) => {
                                   <tr>
                                     <td className="m-0 grid-text"><p>Area</p></td>
                                     <td className="m-1"><p>{residential && residential.area ? residential.area : "\u00A0"}</p></td>
-                                  </tr> 
+                                  </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>City</p></td>
                                     <td className="m-1"><p>{residential && residential.city ? residential.city : "\u00A0"}</p></td>
@@ -229,7 +229,7 @@ const WitnessDetails = (props) => {
                                   <tr>
                                     <td className="m-0 grid-text"><p>Province</p></td>
                                     <td className="m-1"><p>{residential && residential.province ? residential.province : "\u00A0"}</p></td>
-                                  </tr>                                  
+                                  </tr>
                                 </tbody>
                               </table>
                             </div>
