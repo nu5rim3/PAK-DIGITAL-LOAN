@@ -37,7 +37,7 @@ const DeactivateGoldRates = (props) => {
             setSuccessMessage(null);
             props.toggel();
             window.location.reload(true);
-          }, 3000);
+          }, 2000);
         } else if (res?.status === 500) {
           setIsLoading(false);
           setErrorMessage("Rate Deactivated failed.");
@@ -45,7 +45,7 @@ const DeactivateGoldRates = (props) => {
             setErrorMessage(null);
             props.toggel();
             window.location.reload(true);
-          }, 3000);
+          }, 2000);
         } else {
           setIsLoading(false);
           setErrorMessage(res.data?.message);
@@ -53,7 +53,7 @@ const DeactivateGoldRates = (props) => {
             setErrorMessage(null);
             props.toggel();
             window.location.reload(true);
-          }, 3000);
+          }, 2000);
         }
       }).catch(err => console.log(err));
     }
@@ -69,18 +69,6 @@ const DeactivateGoldRates = (props) => {
       >
         <div className="modal-body" >
           <Row>
-            {/* <button
-              onClick={() => {
-                props.toggel();
-              }}
-              type="button"
-              className="close"
-              data-dismiss="modal"
-              aria-label="Close"
-              style={{ fontSize: 'medium', marginBottom: '10px' }}
-            >
-              <span aria-hidden="true">&times;</span>
-            </button> */}
             <form onSubmit={handleSubmit(onSubmit)}>
               <Col md={12}>
                 {successMessage && <Alert color="danger">{successMessage}</Alert>}
@@ -89,23 +77,19 @@ const DeactivateGoldRates = (props) => {
                 {errorMessage && <Alert color="danger">{errorMessage}</Alert>}
               </Col>
               <ModalBody style={{ fontSize: 'medium', color: 'red', display: 'flex', justifyContent: 'center', marginTop: '10px' }} color="danger">
-                Are You Sure You Want To Deactivate This User?
+                Are You Sure You Want To Deactivate This Record?
               </ModalBody>
 
               <div className="mt-3 d-flex justify-content-center">
                 <button type="submit" className="btn btn-danger w-md m-1">
-                  <Loader loading={isLoading}>
-                    <i className="bx bx-trash font-size-18 me-2" ></i>
-                    Deactivate
-                  </Loader>
+                  {/* <i className="bx bx-trash font-size-18 me-2" ></i> */}
+                  Deactivate
                 </button>
                 <button type="submit" className="btn btn-primary w-md m-1" onClick={() => {
                   props.toggel();
                 }}>
-                  <Loader loading={isLoading}>
-                    <i className="bx bx-undo font-size-20 me-2" ></i>
-                    Cancel
-                  </Loader>
+                  {/* <i className="bx bx-undo font-size-20 me-2" ></i> */}
+                  Cancel
                 </button>
               </div>
             </form>

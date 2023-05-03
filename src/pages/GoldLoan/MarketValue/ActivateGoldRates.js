@@ -43,7 +43,7 @@ const ActivateGoldRates = (props) => {
           setSuccessMessage(null);
           props.toggel();
           window.location.reload(true);
-        }, 3000);
+        }, 2000);
       } else if (res?.status === 500) {
         setIsLoading(false);
         setErrorMessage("Rates update failed.");
@@ -51,7 +51,7 @@ const ActivateGoldRates = (props) => {
           setErrorMessage(null);
           props.toggel();
           window.location.reload(true);
-        }, 3000);
+        }, 2000);
       } else {
         setIsLoading(false);
         setErrorMessage(res.data?.message);
@@ -59,7 +59,7 @@ const ActivateGoldRates = (props) => {
           setErrorMessage(null);
           props.toggel();
           window.location.reload(true);
-        }, 3000);
+        }, 2000);
       }
     }).catch(err => console.log(err));
   };
@@ -137,7 +137,6 @@ const ActivateGoldRates = (props) => {
                         id="valueStatus"
                         {...register("valueStatus", { required: false })}
                       >
-                        <option value="">Choose...</option>
                         <option value="A">Activate</option>
                         <option value="D">Deactivate</option>
                       </select>

@@ -51,6 +51,7 @@ const IndexMarcketValue = (props) => {
 
   const getLabel = (item) => {
     item.id = item.id;
+    item.valueDate = item.valueDate;
     item.creationDate = item.creationDate;
     item.valueAmount = item.valueAmount;
     item.lastModifiedBy = item.lastModifiedBy;
@@ -99,7 +100,7 @@ const IndexMarcketValue = (props) => {
         <Row>
           <Col>
             <div className="d-flex ">
-              <button className="btn btn-success btn-sm d-flex align-items-space-between"
+              <button className="btn btn-success btn-sm d-flex align-items-space-between m-1"
                 onClick={() => toggelActivateModal(item)}>
                 <i className="bx bx-revision font-size-16"></i>
                 <p className="m-0">Activate</p>
@@ -116,18 +117,23 @@ const IndexMarcketValue = (props) => {
   const items = {
     columns: [
       {
-        field: 'creationDate',
-        label: 'Created Date',
+        field: 'valueDate',
+        label: 'Value Date',
         sort: "asc",
       },
       {
         field: 'valueAmount',
-        label: 'Gold Rate Per Gram',
+        label: 'Gold Rate(1g)',
         sort: "asc",
       },
       {
         field: 'valueAmount',
         label: 'Amount',
+        sort: "asc",
+      },
+      {
+        field: 'creationDate',
+        label: 'Created Date',
         sort: "asc",
       },
       {

@@ -22,6 +22,13 @@ const RegisterGoldRates = (props) => {
 
   const { register, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
 
+  function handleInputChange(event) {
+    const inputValue = event.target.value;
+    const strippedValue = inputValue.replace(/,/g, "");
+    const formattedValue = strippedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    event.target.value = formattedValue;
+  }
+
   const onSubmit = async (data) => {
 
     var payload = {
@@ -41,7 +48,7 @@ const RegisterGoldRates = (props) => {
           setSuccessMessage(null);
           props.toggel();
           window.location.reload(true);
-        }, 3000);
+        }, 2000);
       } else if (res?.status === 500) {
         setIsLoading(false);
         setErrorMessage("Rates creation failed.");
@@ -49,7 +56,7 @@ const RegisterGoldRates = (props) => {
           setErrorMessage(null);
           props.toggel();
           window.location.reload(true);
-        }, 3000);
+        }, 2000);
       } else {
         setIsLoading(false);
         setErrorMessage(res.data?.message);
@@ -57,7 +64,7 @@ const RegisterGoldRates = (props) => {
           setErrorMessage(null);
           props.toggel();
           window.location.reload(true);
-        }, 3000);
+        }, 2000);
       }
     }).catch(err => console.log(err));
   };
@@ -100,7 +107,7 @@ const RegisterGoldRates = (props) => {
                   <div className="form-group row">
                     <label
                       htmlFor="date-input"
-                      className="col-md-4 col-form-label">Date : </label>
+                      className="col-md-4 col-form-label">Value Date : </label>
                     <div className="col-md-9">
                       <input {...register("valueDate", { required: false })}
                         className="form-control"
@@ -114,11 +121,12 @@ const RegisterGoldRates = (props) => {
                   <div className="form-group row">
                     <label
                       htmlFor="market-value"
-                      className="col-form-label">Market Value : </label>
+                      className="col-form-label">Gold Rate per Gram : </label>
                     <div className="col-md-12">
-                      <input {...register("valueAmount", { required: true })}
+                      <input {...register("valueAmount", { required: true, pattern: /^[^A-Za-z]*$/ })}
                         className="form-control"
                         type="text"
+                        onChange={handleInputChange}
                         name="valueAmount" id="valueAmount" />
                     </div>
                     {errors.valueAmount && <span className="error">This field is required</span>}

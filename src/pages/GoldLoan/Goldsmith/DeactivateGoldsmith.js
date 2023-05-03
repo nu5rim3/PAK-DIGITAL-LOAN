@@ -9,7 +9,6 @@ import {
 } from "reactstrap";
 
 import { useForm } from "react-hook-form";
-import Loader from "components/SyncLoader";
 
 //APIs
 import { deactivateGoldsmith } from "services/goldsmith.service";
@@ -64,7 +63,6 @@ const DeactivateGoldsmith = (props) => {
       <Modal
         size="md"
         isOpen={props.isOpen}
-      // centered="true"
       >
         <div className="modal-body"
         // style={{ background: 'rgba(242, 131, 131,.5)' }}
@@ -78,23 +76,19 @@ const DeactivateGoldsmith = (props) => {
                 {errorMessage && <Alert color="danger">{errorMessage}</Alert>}
               </Col>
               <ModalBody style={{ fontSize: 'medium', color: 'red', display: 'flex', justifyContent: 'center', marginTop: '10px' }} color="danger">
-                Are You Sure You Want To Deactivate This User?
+                Are You Sure You Want To Deactivate This Record?
               </ModalBody>
 
               <div className="mt-3 d-flex justify-content-center">
                 <button type="submit" className="btn btn-danger w-md m-1">
-                  <Loader loading={isLoading}>
-                    <i className="bx bx-trash font-size-18 me-2" ></i>
-                    Deactivate
-                  </Loader>
+                  {/* <i className="bx bx-trash font-size-18 me-2" ></i> */}
+                  Deactivate
                 </button>
                 <button type="submit" className="btn btn-primary w-md m-1" onClick={() => {
                   props.toggel();
                 }}>
-                  <Loader loading={isLoading}>
-                    <i className="bx bx-undo font-size-20 me-2" ></i>
-                    Cancel
-                  </Loader>
+                  {/* <i className="bx bx-undo font-size-20 me-2" ></i> */}
+                  Cancel
                 </button>
               </div>
             </form>
