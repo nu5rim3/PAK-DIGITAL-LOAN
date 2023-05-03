@@ -48,7 +48,7 @@ const ActivateGoldsmith = (props) => {
           setSuccessMessage(null);
           props.toggel();
           window.location.reload(true);
-        }, 3000);
+        }, 2000);
       } else if (res?.status === 500) {
         setIsLoading(false);
         setErrorMessage("User updated failed.");
@@ -56,7 +56,7 @@ const ActivateGoldsmith = (props) => {
           setErrorMessage(null);
           props.toggel();
           window.location.reload(true);
-        }, 3000);
+        }, 2000);
       } else {
         setIsLoading(false);
         setErrorMessage(res.data?.message);
@@ -64,7 +64,7 @@ const ActivateGoldsmith = (props) => {
           setErrorMessage(null);
           props.toggel();
           window.location.reload(true);
-        }, 3000);
+        }, 2000);
       }
     }).catch(err => console.log(err));
   };
@@ -108,14 +108,14 @@ const ActivateGoldsmith = (props) => {
   return (
     <Row>
       <Modal
-        size="lg"
+        size="md"
         isOpen={props.isOpen}
       >
         <div className="modal-header">
           <h5
             className="modal-title mt-0"
           >
-            Update Goldsmith
+            Activate Goldsmith
           </h5>
           <button
             onClick={() => {
@@ -140,7 +140,7 @@ const ActivateGoldsmith = (props) => {
                 {errorMessage && <Alert color="danger">{errorMessage}</Alert>}
               </Col>
               <Row>
-                <Col md={6}>
+                <Col md={12}>
                   <div className="mb-3">
                     <label htmlFor="goldsmithStatus">Status</label>
                     <select
@@ -148,7 +148,6 @@ const ActivateGoldsmith = (props) => {
                       id="goldsmithStatus"
                       {...register("goldsmithStatus", { required: false })}
                     >
-                      <option value="">Choose...</option>
                       <option value="A">Activate</option>
                       <option value="D">Deactivate</option>
                     </select>

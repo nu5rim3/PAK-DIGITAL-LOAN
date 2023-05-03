@@ -46,7 +46,7 @@ const RegisterGoldSmith = (props) => {
           setSuccessMessage(null);
           props.toggel();
           window.location.reload(true);
-        }, 3000);
+        }, 2000);
       } else if (res?.status === 500) {
         setIsLoading(false);
         setErrorMessage("User creation failed.");
@@ -54,7 +54,7 @@ const RegisterGoldSmith = (props) => {
           setErrorMessage(null);
           props.toggel();
           window.location.reload(true);
-        }, 3000);
+        }, 2000);
       } else {
         setIsLoading(false);
         setErrorMessage(res.data?.message);
@@ -62,7 +62,7 @@ const RegisterGoldSmith = (props) => {
           setErrorMessage(null);
           props.toggel();
           window.location.reload(true);
-        }, 3000);
+        }, 2000);
       }
     }).catch(err => console.log(err));
   };
@@ -98,6 +98,7 @@ const RegisterGoldSmith = (props) => {
           </h5>
           <button
             onClick={() => {
+              window.location.reload(true);
               props.toggel();
             }}
             type="button"
@@ -166,46 +167,47 @@ const RegisterGoldSmith = (props) => {
                       className="form-control"
                       id="contactNumber"
                       placeholder="Enter Contact Number"
-                      {...register("contactNumber", { required: true })}
+                      {...register("contactNumber", { required: true, pattern: /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/ })}
                     />
                     {errors.contactNumber && <span className="text-danger">This field is required</span>}
                   </div>
                 </Col>
-                <Col md={6}>
+                <Row><label>ADDRESS</label></Row>
+                <Col md={4}>
                   <div className="mb-3">
-                    <label htmlFor="address">Address</label>
+                    <label htmlFor="address">Address Line 1</label>
                     <input
                       type="text"
                       className="form-control"
                       id="address"
-                      placeholder="Enter Address"
+                      placeholder="Line 1"
                       {...register("address", { required: true })}
                     />
                     {errors.address && <span className="text-danger">This field is required</span>}
                   </div>
                 </Col>
-                <Col md={6}>
+                <Col md={4}>
                   <div className="mb-3">
-                    <label htmlFor="addLineOne">Line 1</label>
+                    <label htmlFor="addLineOne">Address Line 2</label>
                     <input
                       type="text"
                       className="form-control"
                       id="addLineOne"
-                      placeholder="Address Line 1"
+                      placeholder="Line 2"
                       {...register("addLineOne", { required: true })}
                     />
                     {errors.addLineOne && <span className="text-danger">This field is required</span>}
                   </div>
                 </Col>
-                <Col md={6}>
+                <Col md={4}>
                   <div className="mb-3">
-                    <label htmlFor="addLineTwo">Line 2</label>
+                    <label htmlFor="addLineTwo">Address Line 3</label>
                     <input
                       type="text"
                       className="form-control"
                       id="addLineTwo"
-                      placeholder="Address Line 2"
-                      {...register("addLineTwo", { required: true })}
+                      placeholder="Line 3"
+                      {...register("addLineTwo", { required: false })}
                     />
                     {errors.addLineTwo && <span className="text-danger">This field is required</span>}
                   </div>

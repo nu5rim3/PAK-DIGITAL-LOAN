@@ -97,7 +97,7 @@ const IndexGoldSmith = (props) => {
         <Row>
           <Col>
             <div className="d-flex ">
-              <button className="btn btn-success btn-sm d-flex align-items-space-around"
+              <button className="btn btn-success btn-sm d-flex align-items-space-around m-1"
                 onClick={() => toggelActivateModal(item)}>
                 <i className="bx bx-revision font-size-16"></i>
                 <p className="m-0">Activate</p>
