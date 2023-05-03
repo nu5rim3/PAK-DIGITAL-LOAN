@@ -120,7 +120,7 @@ const GoldLoanDetails = (props) => {
                               </tr>
                               <tr>
                                 <td className="grid-text">Net Weight </td>
-                                <td>{goldLoanDetails && goldLoanDetails.denNetWeight}</td>
+                                <td>{goldLoanDetails && goldLoanDetails.goldNetWeight}</td>
                               </tr>
                               <tr>
                                 <td className="grid-text">Gold Rate per Gram</td>
