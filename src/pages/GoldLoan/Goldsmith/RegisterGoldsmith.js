@@ -169,7 +169,7 @@ const RegisterGoldSmith = (props) => {
                       placeholder="Enter Contact Number"
                       {...register("contactNumber", { required: true, pattern: /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/ })}
                     />
-                    {errors.contactNumber && <span className="text-danger">This field is required</span>}
+                    {errors.contactNumber && <span className="text-danger">This field is required & use correct format</span>}
                   </div>
                 </Col>
                 <Row><label>ADDRESS</label></Row>
