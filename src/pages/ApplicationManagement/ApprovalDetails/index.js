@@ -431,7 +431,7 @@ const ApprovalDetails = (props) => {
     var _isMounted = true;
 
     const fetchData = async () => {
-      if (props.active === "10") {
+      if (props.active === "11") {
         const stepsResponse = await getAllApprovalSteps(appraisalId);
         if (_isMounted) {
           setSteps(stepsResponse);
