@@ -191,21 +191,21 @@ const SidebarContent = props => {
               </Link>
             </li>  */}
 
-            {activePermission(permission) && <><li className="menu-title">{props.t("Gold Loan Details")}</li></>}
+            {activePermission(permission) && <><li className="menu-title">{props.t("Gold Loan Details")}</li>
+              <li>
+                <Link to="/pakoman-digital-loan/gold-loan-summary/index-goldsmith" className="">
+                  <i className='bx bx-book-bookmark' ></i>
+                  <span>{props.t("Goldsmith")}</span>
+                </Link>
+              </li>
 
-            <li>
-              <Link to="/pakoman-digital-loan/gold-loan-summary/index-goldsmith" className="">
-                <i className='bx bx-book-bookmark' ></i>
-                <span>{props.t("Goldsmith")}</span>
-              </Link>
-            </li>
-
-            <li>
-              <Link to="/pakoman-digital-loan/gold-loan-summary/index-marketvalue" className="">
-                <i className='bx bx-bar-chart' ></i>
-                <span>{props.t("Gold Rate Per Gram")}</span>
-              </Link>
-            </li>
+              <li>
+                <Link to="/pakoman-digital-loan/gold-loan-summary/index-marketvalue" className="">
+                  <i className='bx bx-bar-chart' ></i>
+                  <span>{props.t("Gold Rate Per Gram")}</span>
+                </Link>
+              </li>
+            </>}
 
             {/*<li>
               <Link to="#" className="">
