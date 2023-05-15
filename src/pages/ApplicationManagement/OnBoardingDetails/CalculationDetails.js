@@ -120,6 +120,17 @@ const CalculationDetails = (props) => {
               <td className="align-middle">{amountsOfTcDetails !== null && formatNumber(amountsOfTcDetails?.object?.facilityDetails[0]?.instalment)}</td>
             </tr>
             }
+            {tcDetails != null && tcDetails?.pTrhdMethod === 'B' && amountsOfTcDetails != null && amountsOfTcDetails?.object?.facilityDetails.length > 0 && <tr>
+              <td className="align-middle grid-text">Rental Amount</td>
+              <td className="align-middle">{amountsOfTcDetails !== null && formatNumber(amountsOfTcDetails?.object?.facilityDetails[0]?.instalment)}</td>
+
+              <td className="align-middle grid-text">Rental Method</td>
+              {tcDetails?.pTrhdColMeth === 'Q' && <td className="align-middle">Quarterly</td>}
+              {tcDetails?.pTrhdColMeth === 'A' && <td className="align-middle">Annually</td>}
+              {tcDetails?.pTrhdColMeth === 'BA' && <td className="align-middle">Bi - annually</td>}
+              {tcDetails?.pTrhdColMeth === 'HY' && <td className="align-middle">Half yearly</td>}
+            </tr>
+            }
           </tbody>
         </table>
 
