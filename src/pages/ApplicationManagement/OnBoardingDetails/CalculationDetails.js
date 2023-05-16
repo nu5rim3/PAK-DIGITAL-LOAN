@@ -151,6 +151,21 @@ const CalculationDetails = (props) => {
         </table>
         }
 
+        {tcDetails != null && tcDetails?.pTrhdMethod === 'B' && amountsOfTcDetails != null && amountsOfTcDetails?.object?.facilityDetails.length > 0 && <table className="table table-responsive">
+          <thead>
+            <tr>
+              <th className="align-middle grid-text">Seq</th>
+              <th className="align-middle grid-text">Months</th>
+              <th className="align-middle grid-text">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {amountsOfTcDetails != null && getRentalDetails(amountsOfTcDetails?.object?.facilityDetails)}
+
+          </tbody>
+        </table>
+        }
+
       </Loader>
     </div>
   );
