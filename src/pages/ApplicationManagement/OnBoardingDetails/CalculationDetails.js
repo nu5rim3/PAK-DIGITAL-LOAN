@@ -120,12 +120,38 @@ const CalculationDetails = (props) => {
               <td className="align-middle">{amountsOfTcDetails !== null && formatNumber(amountsOfTcDetails?.object?.facilityDetails[0]?.instalment)}</td>
             </tr>
             }
+            {tcDetails != null && tcDetails?.pTrhdMethod === 'B' && amountsOfTcDetails != null && amountsOfTcDetails?.object?.facilityDetails.length > 0 && <tr>
+              <td className="align-middle grid-text">Rental Amount</td>
+              <td className="align-middle">{amountsOfTcDetails !== null && formatNumber(amountsOfTcDetails?.object?.facilityDetails[0]?.instalment)}</td>
+
+              <td className="align-middle grid-text">Rental Method</td>
+              {tcDetails?.pTrhdColMeth === 'Q' && <td className="align-middle">Quarterly</td>}
+              {tcDetails?.pTrhdColMeth === 'A' && <td className="align-middle">Annually</td>}
+              {tcDetails?.pTrhdColMeth === 'BA' && <td className="align-middle">Bi - annually</td>}
+              {tcDetails?.pTrhdColMeth === 'HY' && <td className="align-middle">Half yearly</td>}
+            </tr>
+            }
           </tbody>
         </table>
 
 
 
         {tcDetails != null && tcDetails?.pTrhdMethod === 'S' && amountsOfTcDetails != null && amountsOfTcDetails?.object?.facilityDetails.length > 0 && <table className="table table-responsive">
+          <thead>
+            <tr>
+              <th className="align-middle grid-text">Seq</th>
+              <th className="align-middle grid-text">Months</th>
+              <th className="align-middle grid-text">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {amountsOfTcDetails != null && getRentalDetails(amountsOfTcDetails?.object?.facilityDetails)}
+
+          </tbody>
+        </table>
+        }
+
+        {tcDetails != null && tcDetails?.pTrhdMethod === 'B' && amountsOfTcDetails != null && amountsOfTcDetails?.object?.facilityDetails.length > 0 && <table className="table table-responsive">
           <thead>
             <tr>
               <th className="align-middle grid-text">Seq</th>

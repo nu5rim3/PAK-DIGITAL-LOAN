@@ -77,7 +77,7 @@ const CreditScoringDetails = (props) => {
     setIsLoading(true);
 
     const fetchData = async () => {
-      if (props.active === "8") {
+      if (props.active === "9") {
         const tcDetails = await getTcDetails(appraisalId);
         if (_isMounted && tcDetails !== undefined) {
           setTcDetails(tcDetails);

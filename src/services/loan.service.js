@@ -43,3 +43,7 @@ export const getSignature = async (appraisalId, type) => {
 export const getContractDetails = async (appraisalId) => {
     return await get(`/mobixCamsLoan/v1/appraisals/sync-log/${appraisalId}/block/INIT_FACILITY_SYNC_BLOCK`).catch(err => console.log(err));
 };
+
+export const getGoldLoanDetails = async (appraisalId) => {
+    return await get(`/mobixCamsCredit/v1/gold-loan/${appraisalId}/appraisalId`).catch(err => console.log(err));
+};

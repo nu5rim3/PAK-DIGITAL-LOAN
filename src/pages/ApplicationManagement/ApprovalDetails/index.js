@@ -398,7 +398,7 @@ const ApprovalDetails = (props) => {
     setIsLoading(true);
 
     const fetchData = async () => {
-      if (props.active === "10") {
+      if (props.active === "11") {
 
         const userDetails = localStorage.getItem("authUser");
         const user = JSON.parse(userDetails);
@@ -431,7 +431,7 @@ const ApprovalDetails = (props) => {
     var _isMounted = true;
 
     const fetchData = async () => {
-      if (props.active === "10") {
+      if (props.active === "11") {
         const stepsResponse = await getAllApprovalSteps(appraisalId);
         if (_isMounted) {
           setSteps(stepsResponse);
