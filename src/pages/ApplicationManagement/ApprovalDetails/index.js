@@ -27,14 +27,18 @@ import {
   getObExceptionals
 } from "services/common.service";
 import {
-  getAllOnBoardingApprovals,
+  //getAllOnBoardingApprovals, 
   getAllExceptionalApprovals,
   createApprovalComment,
   getAllApprovalSteps,
   createApprovalStep,
   verifyApprovalUser,
-  getActiveStep,
+  // getActiveStep,
 } from "services/approval.service";
+
+import {
+  getAllOriginationApproval
+} from "services/origination.service"
 
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -58,10 +62,10 @@ const ApprovalDetails = (props) => {
   const [obRefresh, setObRefresh] = useState(false);
   const [stepRefresh, setStepRefresh] = useState(false);
   const [findUser, setFindUser] = useState(null);
-  const [activeStep, setActiveStep] = useState(null);
+  //const [activeStep, setActiveStep] = useState(null);
 
   const [steps, setSteps] = useState([]);
-  const [onBoardingApprovals, setOnBoardingApprovals] = useState([]);
+  //const [onBoardingApprovals, setOnBoardingApprovals] = useState([]);
   const [exceptionalApprovals, setExceptionalApprovals] = useState([]);
   const [verticalObActiveTab, setVerticalObActiveTab] = useState(0);
   const [verticalCaActiveTab, setVerticalCaActiveTab] = useState(0);
@@ -80,6 +84,8 @@ const ApprovalDetails = (props) => {
   const [item, setItem] = useState({});
   const [caOpen, setCaOpen] = useState(false);
   const [rejectCaOpen, setCaRejectOpen] = useState(false);
+
+  const [originationApproval, setOriginationApproval] = useState([])
 
   const handleCaClickOpen = (mIndex, item) => {
     setIndex1(mIndex);
@@ -158,16 +164,32 @@ const ApprovalDetails = (props) => {
     return false;
   }
 
+  // const verifyActiveStepAndUser = () => {
+  //   var result = false;
+  //   if ((findUser !== null && findUser !== undefined) && (activeStep !== null && activeStep !== undefined)) {
+  //     result = (findUser.group.code === activeStep.workflowStep.name && activeStep.stepAction === "P");
+  //     return result;
+  //   }
+
+  //   if ((activeStep !== null && activeStep !== undefined)) {
+  //     var role = localStorage.getItem("role");
+  //     result = (role === activeStep.workflowStep.roleCode && activeStep.stepAction === "P");
+  //     return result;
+  //   }
+
+  //   return result;
+  // }
+
   const verifyActiveStepAndUser = () => {
     var result = false;
-    if ((findUser !== null && findUser !== undefined) && (activeStep !== null && activeStep !== undefined)) {
-      result = (findUser.group.code === activeStep.workflowStep.name && activeStep.stepAction === "P");
+    if ((findUser !== null && findUser !== undefined) && (originationApproval.approvalStepDto !== null && originationApproval.approvalStepDto !== undefined)) {
+      result = (findUser.group.code === originationApproval.approvalStepDto.workflowStep.name && originationApproval.approvalStepDto.stepAction === "P");
       return result;
     }
 
-    if ((activeStep !== null && activeStep !== undefined)) {
+    if ((originationApproval.approvalStepDto !== null && originationApproval.approvalStepDto !== undefined)) {
       var role = localStorage.getItem("role");
-      result = (role === activeStep.workflowStep.roleCode && activeStep.stepAction === "P");
+      result = (role === originationApproval.approvalStepDto.workflowStep.roleCode && originationApproval.approvalStepDto.stepAction === "P");
       return result;
     }
 
@@ -178,9 +200,16 @@ const ApprovalDetails = (props) => {
     return exceptionalApprovals.filter((item) => item.status === "P").length > 0;
   }
 
+  //check this 
+  // const verifyOnBoardingApprovals = () => {
+  //   if ((onBoardingApprovals !== null && onBoardingApprovals !== undefined) && (activeStep !== null && activeStep !== undefined)) {
+  //     return onBoardingApprovals.filter((item) => item.status === "P").length > 0 && activeStep.workflowStep.name === "AG_LEVEL_2";
+  //   }
+  // }
+
   const verifyOnBoardingApprovals = () => {
-    if ((onBoardingApprovals !== null && onBoardingApprovals !== undefined) && (activeStep !== null && activeStep !== undefined)) {
-      return onBoardingApprovals.filter((item) => item.status === "P").length > 0 && activeStep.workflowStep.name === "AG_LEVEL_2";
+    if ((originationApproval.requestDtoList !== null && originationApproval.requestDtoList !== undefined) && (originationApproval.approvalStepDto !== null && originationApproval.approvalStepDto !== undefined)) {
+      return originationApproval.requestDtoList.filter((item) => item.status === "P").length > 0 && originationApproval.approvalStepDto.workflowStep.name === "AG_LEVEL_2";
     }
   }
 
@@ -403,16 +432,25 @@ const ApprovalDetails = (props) => {
         const userDetails = localStorage.getItem("authUser");
         const user = JSON.parse(userDetails);
 
-        const onBoardingApprovals = await getAllOnBoardingApprovals(appraisalId);
+        //const onBoardingApprovals = await getAllOnBoardingApprovals(appraisalId);
         const exceptionalApprovals = await getAllExceptionalApprovals(appraisalId);
         const userVerify = await verifyApprovalUser(user.username);
-        const activeStep = await getActiveStep(appraisalId);
+        //const activeStep = await getActiveStep(appraisalId);
+
+        const approvalOrigination = await getAllOriginationApproval(appraisalId);
+        // console.log(approvalOrigination)
+        // console.log(approvalOrigination.approvalStepDto)
+        // console.log(approvalOrigination.approvalStepDto.workflowStep)
+        // console.log(approvalOrigination.approvalStepDto.workflowStep.name
+        // )
+
 
         if (_isMounted) {
-          setOnBoardingApprovals(onBoardingApprovals);
+          //setOnBoardingApprovals(onBoardingApprovals);
           setExceptionalApprovals(exceptionalApprovals);
           setFindUser(userVerify);
-          setActiveStep(activeStep);
+          //setActiveStep(activeStep);
+          setOriginationApproval(approvalOrigination);
         }
 
         setIsLoading(false);
@@ -484,7 +522,7 @@ const ApprovalDetails = (props) => {
                         <Row>
                           <Col md="3">
                             <Nav pills className="flex-column">
-                              {onBoardingApprovals.map((item, index) => (
+                              {originationApproval.requestDtoList?.map((item, index) => (
                                 <NavItem key={index}>
                                   <NavLink
                                     style={{ cursor: "pointer" }}
@@ -510,7 +548,7 @@ const ApprovalDetails = (props) => {
                             <TabContent
                               activeTab={verticalObActiveTab}
                               className="text-muted" >
-                              {onBoardingApprovals.map((item, index) => (
+                              {originationApproval.requestDtoList?.map((item, index) => (
                                 <TabPane key={index} tabId={index}>
                                   <Row>
                                     <Col md="12">
