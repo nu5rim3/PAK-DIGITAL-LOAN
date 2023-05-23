@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import MetaTags from 'react-meta-tags';
 import { useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 import {
   Card,
   CardBody,
@@ -30,17 +31,24 @@ import GeoDetails from "./GeoDetails";
 import UndertakingDetails from "./CustomerDetails/undertaking";
 import ReportDetails from "./ReportDetails";
 import ApprovalDetails from "./ApprovalDetails";
+import GoldLoanDetails from "./GoldLoanDetails";
+
 // APIs
 import {
   getOnBoardClienteles
 } from "services/on_board.service";
-import GoldLoanDetails from "./GoldLoanDetails";
-const Appraisal = () => {
+import {
+  getAllOriginationCredit
+} from "services/origination.service"
+
+const Appraisal = (props) => {
 
   const { appraisalId } = useParams();
 
   const [customIconActiveTab, setcustomIconActiveTab] = useState("1");
   const [isReturned, setReturned] = useState({});
+  const [goldLoanData, isGoldLoanData] = useState([]);
+
   const toggleIconCustom = tab => {
     if (customIconActiveTab !== tab) {
       setcustomIconActiveTab(tab);
@@ -57,6 +65,12 @@ const Appraisal = () => {
 
       }
 
+      const creditRespose = await getAllOriginationCredit(appraisalId, props.product);
+      console.log(creditRespose);
+      if (_isMounted && creditRespose !== undefined) {
+        isGoldLoanData(creditRespose);
+      }
+
     };
 
     fetchData();
@@ -64,7 +78,7 @@ const Appraisal = () => {
     return () => {
       _isMounted = false;
     };
-  });
+  }, [props.product]);
   return (
     <React.Fragment>
       <div className="page-content">
@@ -84,9 +98,11 @@ const Appraisal = () => {
                     <OnBoardingDetails active={"1"} />
                   </AccordionBody>
 
-                  <AccordionBody title="GOLD LOAN DETAILS">
-                    <GoldLoanDetails active={"2"} />
-                  </AccordionBody>
+                  {goldLoanData.goldLoanAppDto != null &&
+                    <AccordionBody title="GOLD LOAN DETAILS">
+                      <GoldLoanDetails active={"2"} />
+                    </AccordionBody>
+                  }
 
                   <AccordionBody title="CUSTOMER DETAILS">
                     <CustomerDetails active={"3"} />
@@ -144,6 +160,10 @@ const Appraisal = () => {
       </div>
     </React.Fragment>
   )
+}
+
+Appraisal.propTypes = {
+  product: PropTypes.string
 }
 
 export default Appraisal;
