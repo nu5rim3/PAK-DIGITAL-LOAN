@@ -51,6 +51,7 @@ const Appraisal = (props) => {
   const [customIconActiveTab, setcustomIconActiveTab] = useState("1");
   const [isReturned, setReturned] = useState({});
   const [goldLoanData, isGoldLoanData] = useState({});
+  const [goldProduct, isGoldProduct] = useState(false);
 
   const toggleIconCustom = tab => {
     if (customIconActiveTab !== tab) {
@@ -75,9 +76,14 @@ const Appraisal = (props) => {
       // }
 
       const productResponse = await getTcDetails(appraisalId);
-      console.log('PRODUCT_RESPONSE : ', productResponse);
       if (_isMounted && productResponse !== undefined) {
         isGoldLoanData(productResponse);
+
+        if (productResponse.pTrhdLType === 'EG') {
+          isGoldProduct(true)
+        } else if (productResponse.pTrhdLType === 'GL') {
+          isGoldProduct(true)
+        }
       }
 
     };
@@ -107,7 +113,7 @@ const Appraisal = (props) => {
                     <OnBoardingDetails active={"1"} />
                   </AccordionBody>
 
-                  {(goldLoanData.pTrhdLType === "EG" || goldLoanData.pTrhdLType === "GL") &&
+                  {goldProduct &&
                     <AccordionBody title="GOLD LOAN DETAILS">
                       <GoldLoanDetails active={"2"} />
                     </AccordionBody>
@@ -117,7 +123,7 @@ const Appraisal = (props) => {
                     <CustomerDetails active={"3"} />
                   </AccordionBody>
 
-                  {(goldLoanData.pTrhdLType !== "EG" || goldLoanData.pTrhdLType !== "GL") &&
+                  {!goldProduct &&
                     <AccordionBody title="GUARANTOR DETAILS">
                       <GuarantorDetails active={"4"} />
                     </AccordionBody>
@@ -139,7 +145,7 @@ const Appraisal = (props) => {
                     <LiabilityDetails active={"8"} />
                   </AccordionBody>
 
-                  {(goldLoanData.pTrhdLType !== "EG" || goldLoanData.pTrhdLType !== "GL") &&
+                  {!goldProduct &&
                     <AccordionBody title="CREDIT SCORE DETAILS">
                       <CreditScoringDetails active={"9"} />
                     </AccordionBody>
