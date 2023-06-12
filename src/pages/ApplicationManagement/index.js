@@ -108,9 +108,11 @@ const Appraisal = (props) => {
                     <CustomerDetails active={"3"} />
                   </AccordionBody>
 
-                  <AccordionBody title="GUARANTOR DETAILS">
-                    <GuarantorDetails active={"4"} />
-                  </AccordionBody>
+                  {goldLoanData.goldLoanAppDto != null &&
+                    <AccordionBody title="GUARANTOR DETAILS">
+                      <GuarantorDetails active={"4"} />
+                    </AccordionBody>
+                  }
 
                   <AccordionBody title="WITNESS DETAILS">
                     <WitnessDetails active={"5"} />
