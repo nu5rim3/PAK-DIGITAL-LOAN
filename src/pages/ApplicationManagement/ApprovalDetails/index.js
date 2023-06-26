@@ -239,6 +239,7 @@ const ApprovalDetails = (props) => {
   };
 
   const onSubmitCaApproval = () => {
+    var submitApprovalCount = 0;
     var value = document.getElementById(`ca_comment_${index1}`).value;
     if (value === "") {
       document.getElementById(`ca_error_comment_${index1}`).classList.remove("d-none")
@@ -257,7 +258,11 @@ const ApprovalDetails = (props) => {
       caApprovalBtnRef.current.setAttribute("disabled", "disabled");
     }
 
-    createCaApprovals(payload);
+    if (submitApprovalCount == 0) {
+      createCaApprovals(payload);
+      submitApprovalCount = submitApprovalCount + 1;
+    }
+
   };
 
   const onSubmitCaReject = (index, item) => {
@@ -279,6 +284,7 @@ const ApprovalDetails = (props) => {
   };
 
   const onSubmitCaRejection = () => {
+    var submitRejectionCount = 0;
     var value = document.getElementById(`ca_comment_${index1}`).value;
     if (value === "") {
       document.getElementById(`ca_error_comment_${index1}`).classList.remove("d-none")
@@ -297,7 +303,11 @@ const ApprovalDetails = (props) => {
       caApprovalBtnRef.current.setAttribute("disabled", "disabled");
     }
 
-    createCaApprovals(payload);
+    if (submitRejectionCount == 0) {
+      createCaApprovals(payload);
+      submitRejectionCount = submitRejectionCount + 1;
+    }
+
   };
 
   const createObApprovals = async (data) => {
@@ -323,6 +333,7 @@ const ApprovalDetails = (props) => {
   }
 
   const createActionApprovalStep = async () => {
+    var approveActionCount = 0;
     var value = document.getElementById(`step_comment`).value;
     if (value === "") {
       setOpen(false);
@@ -345,21 +356,26 @@ const ApprovalDetails = (props) => {
     }
 
     setIsLoadingStep(true);
-    const stepResponse = await createApprovalStep(payload);
-    if (stepResponse !== null) {
-      setStepRefresh(true);
-      setIsLoadingStep(false);
-      document.getElementById(`step_comment`).value = "";
-      setOpen(false);
-      setCaOpen(false);
-      setCaRejectOpen(false);
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
+
+    if (approveActionCount == 0) {
+      const stepResponse = await createApprovalStep(payload);
+      if (stepResponse !== null) {
+        setStepRefresh(true);
+        setIsLoadingStep(false);
+        document.getElementById(`step_comment`).value = "";
+        setOpen(false);
+        setCaOpen(false);
+        setCaRejectOpen(false);
+        approveActionCount = approveActionCount + 1;
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+      }
     }
   }
 
   const createActionApprovalRejectStep = async () => {
+    var rejectActionCount = 0;
     var value = document.getElementById(`step_comment`).value;
     if (value === "") {
       setRejectOpen(false);
@@ -380,15 +396,19 @@ const ApprovalDetails = (props) => {
     }
 
     setIsLoadingStep(true);
-    const stepResponse = await createApprovalStep(payload);
-    if (stepResponse !== null) {
-      setStepRefresh(true);
-      setIsLoadingStep(false);
-      document.getElementById(`step_comment`).value = "";
-      setRejectOpen(false);
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
+
+    if (approveActionCount == 0) {
+      const stepResponse = await createApprovalStep(payload);
+      if (stepResponse !== null) {
+        setStepRefresh(true);
+        setIsLoadingStep(false);
+        document.getElementById(`step_comment`).value = "";
+        setRejectOpen(false);
+        rejectActionCount = rejectActionCount + 1;
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+      }
     }
   }
 
