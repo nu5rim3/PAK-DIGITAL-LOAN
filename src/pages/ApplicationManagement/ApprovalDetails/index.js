@@ -80,6 +80,7 @@ const ApprovalDetails = (props) => {
   const [item, setItem] = useState({});
   const [caOpen, setCaOpen] = useState(false);
   const [rejectCaOpen, setCaRejectOpen] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const handleCaClickOpen = (mIndex, item) => {
     setIndex1(mIndex);
@@ -239,7 +240,7 @@ const ApprovalDetails = (props) => {
   };
 
   const onSubmitCaApproval = () => {
-    var submitApprovalCount = 0;
+    setIsButtonDisabled(true);
     var value = document.getElementById(`ca_comment_${index1}`).value;
     if (value === "") {
       document.getElementById(`ca_error_comment_${index1}`).classList.remove("d-none")
@@ -257,11 +258,7 @@ const ApprovalDetails = (props) => {
     if (caApprovalBtnRef.current) {
       caApprovalBtnRef.current.setAttribute("disabled", "disabled");
     }
-
-    if (submitApprovalCount == 0) {
-      createCaApprovals(payload);
-      submitApprovalCount = submitApprovalCount + 1;
-    }
+    createCaApprovals(payload);
 
   };
 
@@ -284,7 +281,7 @@ const ApprovalDetails = (props) => {
   };
 
   const onSubmitCaRejection = () => {
-    var submitRejectionCount = 0;
+    setIsButtonDisabled(true);
     var value = document.getElementById(`ca_comment_${index1}`).value;
     if (value === "") {
       document.getElementById(`ca_error_comment_${index1}`).classList.remove("d-none")
@@ -303,10 +300,7 @@ const ApprovalDetails = (props) => {
       caApprovalBtnRef.current.setAttribute("disabled", "disabled");
     }
 
-    if (submitRejectionCount == 0) {
-      createCaApprovals(payload);
-      submitRejectionCount = submitRejectionCount + 1;
-    }
+    createCaApprovals(payload);
 
   };
 
@@ -333,7 +327,7 @@ const ApprovalDetails = (props) => {
   }
 
   const createActionApprovalStep = async () => {
-    var approveActionCount = 0;
+    setIsButtonDisabled(true);
     var value = document.getElementById(`step_comment`).value;
     if (value === "") {
       setOpen(false);
@@ -357,25 +351,24 @@ const ApprovalDetails = (props) => {
 
     setIsLoadingStep(true);
 
-    if (approveActionCount == 0) {
-      const stepResponse = await createApprovalStep(payload);
-      if (stepResponse !== null) {
-        setStepRefresh(true);
-        setIsLoadingStep(false);
-        document.getElementById(`step_comment`).value = "";
-        setOpen(false);
-        setCaOpen(false);
-        setCaRejectOpen(false);
-        approveActionCount = approveActionCount + 1;
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
-      }
+    const stepResponse = await createApprovalStep(payload);
+    if (stepResponse !== null) {
+      setStepRefresh(true);
+      setIsLoadingStep(false);
+      document.getElementById(`step_comment`).value = "";
+      setOpen(false);
+      setCaOpen(false);
+      setCaRejectOpen(false);
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     }
+
   }
 
   const createActionApprovalRejectStep = async () => {
-    var rejectActionCount = 0;
+    setIsButtonDisabled(true);
     var value = document.getElementById(`step_comment`).value;
     if (value === "") {
       setRejectOpen(false);
@@ -397,19 +390,18 @@ const ApprovalDetails = (props) => {
 
     setIsLoadingStep(true);
 
-    if (approveActionCount == 0) {
-      const stepResponse = await createApprovalStep(payload);
-      if (stepResponse !== null) {
-        setStepRefresh(true);
-        setIsLoadingStep(false);
-        document.getElementById(`step_comment`).value = "";
-        setRejectOpen(false);
-        rejectActionCount = rejectActionCount + 1;
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
-      }
+    const stepResponse = await createApprovalStep(payload);
+    if (stepResponse !== null) {
+      setStepRefresh(true);
+      setIsLoadingStep(false);
+      document.getElementById(`step_comment`).value = "";
+      setRejectOpen(false);
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     }
+
   }
 
   useEffect(() => {
@@ -820,7 +812,7 @@ const ApprovalDetails = (props) => {
         </DialogContent>
         <DialogActions>
           <Button style={{ color: 'white', backgroundColor: '#34c38f' }}
-            onClick={createActionApprovalStep} autoFocus>
+            onClick={createActionApprovalStep} autoFocus disabled={isButtonDisabled}>
             {
               type == 'R' ? "Return" :
                 type == 'A' ? "Approve" : ""
@@ -847,7 +839,7 @@ const ApprovalDetails = (props) => {
         </DialogContent>
         <DialogActions>
           <Button style={{ color: 'white', backgroundColor: '#DC4C64' }}
-            onClick={createActionApprovalRejectStep} autoFocus>
+            onClick={createActionApprovalRejectStep} autoFocus disabled={isButtonDisabled}>
             Reject
           </Button>
           <Button style={{ color: 'gray' }} onClick={handleRejectClose}>Cancel</Button>
@@ -871,7 +863,7 @@ const ApprovalDetails = (props) => {
         </DialogContent>
         <DialogActions>
           <Button style={{ color: 'white', backgroundColor: '#34c38f' }}
-            onClick={onSubmitCaApproval} autoFocus>
+            onClick={onSubmitCaApproval} autoFocus disabled={isButtonDisabled}>
             {
               "Approve"
             }
@@ -897,7 +889,7 @@ const ApprovalDetails = (props) => {
         </DialogContent>
         <DialogActions>
           <Button style={{ color: 'white', backgroundColor: '#DC4C64' }}
-            onClick={onSubmitCaRejection} autoFocus>
+            onClick={onSubmitCaRejection} autoFocus disabled={isButtonDisabled}>
             Reject
           </Button>
           <Button style={{ color: 'gray' }} onClick={handleCaRejectClose}>Cancel</Button>
