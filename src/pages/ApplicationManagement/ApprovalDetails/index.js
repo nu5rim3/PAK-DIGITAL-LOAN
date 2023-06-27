@@ -81,6 +81,7 @@ const ApprovalDetails = (props) => {
   const [caOpen, setCaOpen] = useState(false);
   const [rejectCaOpen, setCaRejectOpen] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   const handleCaClickOpen = (mIndex, item) => {
     setIndex1(mIndex);
@@ -158,6 +159,18 @@ const ApprovalDetails = (props) => {
 
     return false;
   }
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (inputValue.trim() === '') {
+      alert('Please enter a value');
+      return;
+    }
+  };
 
   const verifyActiveStepAndUser = () => {
     var result = false;
@@ -240,7 +253,7 @@ const ApprovalDetails = (props) => {
   };
 
   const onSubmitCaApproval = () => {
-    setIsButtonDisabled(true);
+
     var value = document.getElementById(`ca_comment_${index1}`).value;
     if (value === "") {
       document.getElementById(`ca_error_comment_${index1}`).classList.remove("d-none")
@@ -258,6 +271,7 @@ const ApprovalDetails = (props) => {
     if (caApprovalBtnRef.current) {
       caApprovalBtnRef.current.setAttribute("disabled", "disabled");
     }
+    setIsButtonDisabled(true);
     createCaApprovals(payload);
 
   };
@@ -281,7 +295,7 @@ const ApprovalDetails = (props) => {
   };
 
   const onSubmitCaRejection = () => {
-    setIsButtonDisabled(true);
+
     var value = document.getElementById(`ca_comment_${index1}`).value;
     if (value === "") {
       document.getElementById(`ca_error_comment_${index1}`).classList.remove("d-none")
@@ -300,6 +314,7 @@ const ApprovalDetails = (props) => {
       caApprovalBtnRef.current.setAttribute("disabled", "disabled");
     }
 
+    setIsButtonDisabled(true);
     createCaApprovals(payload);
 
   };
@@ -327,7 +342,6 @@ const ApprovalDetails = (props) => {
   }
 
   const createActionApprovalStep = async () => {
-    setIsButtonDisabled(true);
     var value = document.getElementById(`step_comment`).value;
     if (value === "") {
       setOpen(false);
@@ -349,6 +363,7 @@ const ApprovalDetails = (props) => {
       approvalBtnRef.current.setAttribute("disabled", "disabled");
     }
 
+    setIsButtonDisabled(true);
     setIsLoadingStep(true);
 
     const stepResponse = await createApprovalStep(payload);
@@ -368,7 +383,7 @@ const ApprovalDetails = (props) => {
   }
 
   const createActionApprovalRejectStep = async () => {
-    setIsButtonDisabled(true);
+
     var value = document.getElementById(`step_comment`).value;
     if (value === "") {
       setRejectOpen(false);
@@ -388,6 +403,7 @@ const ApprovalDetails = (props) => {
       approvalBtnRef.current.setAttribute("disabled", "disabled");
     }
 
+    setIsButtonDisabled(true);
     setIsLoadingStep(true);
 
     const stepResponse = await createApprovalStep(payload);
