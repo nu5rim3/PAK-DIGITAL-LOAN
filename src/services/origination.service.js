@@ -7,6 +7,7 @@ export const getAllCompletedAppraisals = (data) => {
     return get(`/mobixCamsLoan/v1/appraisals/completed?role=${role}&branch=${branch}&status=${data.status}&appraisalId=${data.appraisalId}&fromDate=${data.fromDate}&toDate=${data.toDate}`);
 };
 
+
 export const getAllOriginationCommon = async (productCode) => {
     return await get(`/mobixCamsCommon/v1/common-details/product/${productCode}`);
 };

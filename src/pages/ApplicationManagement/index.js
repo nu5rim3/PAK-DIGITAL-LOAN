@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import MetaTags from 'react-meta-tags';
 import { useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 import {
   Card,
   CardBody,
@@ -30,17 +31,28 @@ import GeoDetails from "./GeoDetails";
 import UndertakingDetails from "./CustomerDetails/undertaking";
 import ReportDetails from "./ReportDetails";
 import ApprovalDetails from "./ApprovalDetails";
+import GoldLoanDetails from "./GoldLoanDetails";
+
 // APIs
 import {
   getOnBoardClienteles
 } from "services/on_board.service";
-import GoldLoanDetails from "./GoldLoanDetails";
-const Appraisal = () => {
+import {
+  getAllOriginationCredit
+} from "services/origination.service";
+import {
+  getTcDetails
+} from "services/tc.service";
+
+const Appraisal = (props) => {
 
   const { appraisalId } = useParams();
 
   const [customIconActiveTab, setcustomIconActiveTab] = useState("1");
   const [isReturned, setReturned] = useState({});
+  const [goldLoanData, isGoldLoanData] = useState({});
+  const [goldProduct, isGoldProduct] = useState(false);
+
   const toggleIconCustom = tab => {
     if (customIconActiveTab !== tab) {
       setcustomIconActiveTab(tab);
@@ -57,6 +69,23 @@ const Appraisal = () => {
 
       }
 
+      // const creditRespose = await getAllOriginationCredit(appraisalId, props.product);
+      // console.log(creditRespose);
+      // if (_isMounted && creditRespose !== undefined) {
+      //   isGoldLoanData(creditRespose);
+      // }
+
+      const productResponse = await getTcDetails(appraisalId);
+      if (_isMounted && productResponse !== undefined) {
+        isGoldLoanData(productResponse);
+
+        if (productResponse.pTrhdLType === 'EG') {
+          isGoldProduct(true)
+        } else if (productResponse.pTrhdLType === 'GL') {
+          isGoldProduct(true)
+        }
+      }
+
     };
 
     fetchData();
@@ -64,7 +93,7 @@ const Appraisal = () => {
     return () => {
       _isMounted = false;
     };
-  });
+  }, [props.product]);
   return (
     <React.Fragment>
       <div className="page-content">
@@ -84,17 +113,21 @@ const Appraisal = () => {
                     <OnBoardingDetails active={"1"} />
                   </AccordionBody>
 
-                  <AccordionBody title="GOLD LOAN DETAILS">
-                    <GoldLoanDetails active={"2"} />
-                  </AccordionBody>
+                  {goldProduct &&
+                    <AccordionBody title="GOLD LOAN DETAILS">
+                      <GoldLoanDetails active={"2"} />
+                    </AccordionBody>
+                  }
 
                   <AccordionBody title="CUSTOMER DETAILS">
                     <CustomerDetails active={"3"} />
                   </AccordionBody>
 
-                  <AccordionBody title="GUARANTOR DETAILS">
-                    <GuarantorDetails active={"4"} />
-                  </AccordionBody>
+                  {!goldProduct &&
+                    <AccordionBody title="GUARANTOR DETAILS">
+                      <GuarantorDetails active={"4"} />
+                    </AccordionBody>
+                  }
 
                   <AccordionBody title="WITNESS DETAILS">
                     <WitnessDetails active={"5"} />
@@ -112,9 +145,11 @@ const Appraisal = () => {
                     <LiabilityDetails active={"8"} />
                   </AccordionBody>
 
-                  <AccordionBody title="CREDIT SCORE DETAILS">
-                    <CreditScoringDetails active={"9"} />
-                  </AccordionBody>
+                  {!goldProduct &&
+                    <AccordionBody title="CREDIT SCORE DETAILS">
+                      <CreditScoringDetails active={"9"} />
+                    </AccordionBody>
+                  }
 
                   <AccordionBody title="IMAGE DETAILS">
                     <ImageDetails active={"10"} />
@@ -144,6 +179,10 @@ const Appraisal = () => {
       </div>
     </React.Fragment>
   )
+}
+
+Appraisal.propTypes = {
+  product: PropTypes.string
 }
 
 export default Appraisal;
