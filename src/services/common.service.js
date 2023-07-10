@@ -4,6 +4,7 @@ export const getAllIdentifications = async () => {
     return await get(`/mobixCamsCommon/v1/identifications`).catch(err => console.log(err));
 };
 
+//change
 export const getAllTitiles = async () => {
     return await get(`/mobixCamsCommon/v1/titles`).catch(err => console.log(err));
 };
@@ -12,18 +13,22 @@ export const getAllCustomerTypes = async () => {
     return await get(`/mobixCamsCommon/v1/customers/types`).catch(err => console.log(err));
 };
 
+//change
 export const getAllGenders = async () => {
     return await get(`/mobixCamsCommon/v1/genders`).catch(err => console.log(err));
 };
 
+//change
 export const getAllProvinces = async () => {
     return await get(`/mobixCamsCommon/v1/provinces`).catch(err => console.log(err));
 };
 
+//change
 export const getAllCommiunities = async () => {
     return await get(`/mobixCamsCommon/v1/communities`).catch(err => console.log(err));
 };
 
+//change
 export const getAllNatureOfEmp = async () => {
     return await get(`/mobixCamsCommon/v1/employment-categories`).catch(err => console.log(err));
 };
@@ -36,6 +41,7 @@ export const getAllNationalaties = async () => {
     return await get(`/mobixCamsCommon/v1/nationalities`).catch(err => console.log(err));
 };
 
+//change
 export const getAllCnicStatus = async () => {
     return await get(`/mobixCamsCommon/v1/cnic-status`).catch(err => console.log(err));
 };
@@ -44,14 +50,17 @@ export const getAllLanguageList = async () => {
     return await get(`/mobixCamsCommon/v1/languages`).catch(err => console.log(err));
 };
 
+//change
 export const getAllMaritialStatus = async () => {
     return await get(`/mobixCamsCommon/v1/marital-list`).catch(err => console.log(err));
 };
 
+//change
 export const getAllInformationSources = async () => {
     return await get(`/mobixCamsCommon/v1/information-sources`).catch(err => console.log(err));
 };
 
+//change
 export const getAllEducationalLevels = async () => {
     return await get(`/mobixCamsCommon/v1/education-levels`).catch(err => console.log(err));
 };
@@ -60,6 +69,7 @@ export const getAllBanks = async () => {
     return await get(`/mobixCamsCommon/v1/banks`).catch(err => console.log(err));
 };
 
+//change
 export const getAllPdBanks = async () => {
     return await get(`/mobixCamsCommon/v1/pd-banks`).catch(err => console.log(err));
 };
@@ -80,10 +90,12 @@ export const getAllSuppliers = async () => {
     return await get(`/mobixCamsCommon/v1/suppliers`).catch(err => console.log(err));
 };
 
+//change
 export const getAllResidantals = async () => {
     return await get(`/mobixCamsCommon/v1/residential-types`).catch(err => console.log(err));
 };
 
+//change
 export const getAllGuarantorRelations = async () => {
     return await get(`/mobixCamsCommon/v1/fml-details`).catch(err => console.log(err));
 };
@@ -92,10 +104,12 @@ export const getAllOrganizations = async () => {
     return await get(`/mobixCamsCommon/v1/organizations`).catch(err => console.log(err));
 };
 
+//change
 export const getAllSectors = async () => {
     return await get(`/mobixCamsCommon/v1/sectors`).catch(err => console.log(err));
 };
 
+//change
 export const getAllSubSectors = async () => {
     return await get(`/mobixCamsCommon/v1/sub-sectors`).catch(err => console.log(err));
 };
@@ -108,6 +122,7 @@ export const getAllBusinessPartners = async () => {
     return await get(`/mobixCamsCommon/v1/business-partners`).catch(err => console.log(err));
 };
 
+//change
 export const getAllOccupations = async () => {
     return await get(`/mobixCamsCommon/v1/occupations`).catch(err => console.log(err));
 };
@@ -146,6 +161,7 @@ export const getAllOtherIncomeSources = async (product) => {
     return await get(`/mobixCamsCommon/v1/other-source-income/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllHouseHoldContribution = async (product) => {
     return await get(`/mobixCamsCommon/v1/house-hold/products/${product}`).catch(err => console.log(err));
 };
@@ -154,6 +170,7 @@ export const getAllBusinessExperiance = async (product) => {
     return await get(`/mobixCamsCommon/v1/business-experiences/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllBusinessOwnerships = async (product) => {
     return await get(`/mobixCamsCommon/v1/business-ownerships/products/${product}`).catch(err => console.log(err));
 };
@@ -162,10 +179,12 @@ export const getAllDebitBurdens = async (product) => {
     return await get(`/mobixCamsCommon/v1/debt-burdens/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllApplicantDistance = async (product) => {
     return await get(`/mobixCamsCommon/v1/applicant-distances/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllSalaryInformation = async (product) => {
     return await get(`/mobixCamsCommon/v1/salary-information/products/${product}`).catch(err => console.log(err));
 };
@@ -182,6 +201,7 @@ export const getAllEcibCreditHistory = async (product) => {
     return await get(`/mobixCamsCommon/v1/ecib-credit-history/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllRepeatCustomers = async (product) => {
     return await get(`/mobixCamsCommon/v1/repeat-customers/products/${product}`).catch(err => console.log(err));
 };
@@ -218,38 +238,47 @@ export const getAllNoDependents = async (product) => {
     return await get(`/mobixCamsCommon/v1/dependents/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllHeadOfFamily = async (product) => {
     return await get(`/mobixCamsCommon/v1/fml-heads/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllHelthConditions = async (product) => {
     return await get(`/mobixCamsCommon/v1/health-conditions/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllLoanPurpose = async (product) => {
     return await get(`/mobixCamsCommon/v1/loan-purposes/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllFloodFactors = async (product) => {
     return await get(`/mobixCamsCommon/v1/floods-factors/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllIrrigations = async (product) => {
     return await get(`/mobixCamsCommon/v1/irrigations/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllFieldVerification = async (product) => {
     return await get(`/mobixCamsCommon/v1/field-verifications/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllCultivationOwnership = async (product) => {
     return await get(`/mobixCamsCommon/v1/cultivation-ownerships/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllMethodUseAgriMachine = async (product) => {
     return await get(`/mobixCamsCommon/v1/agri-methods/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllCultivationProofs = async (product) => {
     return await get(`/mobixCamsCommon/v1/cultivation-proofs/products/${product}`).catch(err => console.log(err));
 };
@@ -286,18 +315,22 @@ export const getAllIncomeSourcesCredit = async (product) => {
     return await get(`/mobixCamsCommon/v1/income-sources/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllOwnershipResidance = async (product) => {
     return await get(`/mobixCamsCommon/v1/ownership-residences/products/${product}`).catch(err => console.log(err));
 };
 
+//change
 export const getAllNatureOfBusiness = async () => {
     return await get(`/mobixCamsCommon/v1/nature-of-businesses`).catch(err => console.log(err));
 };
 
+//change
 export const getAllJobs = async () => {
     return await get(`/mobixCamsCommon/v1/jobs`).catch(err => console.log(err));
 };
 
+//change
 export const getAllOtherIncomeCategories = async () => {
     return await get(`/mobixCamsCommon/v1/other-income-categories`).catch(err => console.log(err));
 };
@@ -321,6 +354,10 @@ export const getAllCros = async () => {
 export const verifyProfileUser = async (user) => {
     return await get(`/mobixCamsCommon/v1/marketeers/${user}`).catch(err => console.log(err));
 };
+
+export const getOriginationCommon = async (productCode) => {
+    return await get(`/mobixCamsCommon/v1/common-details/product/${productCode}`).catch(err => console.log(err))
+}
 
 /* HARDCODED KEY VALUES */
 
