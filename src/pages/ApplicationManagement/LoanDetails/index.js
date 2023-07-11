@@ -47,6 +47,11 @@ import {
   getAllOtherIncomeCategories,
   getValueOwnershipOfLand,
 } from "services/common.service";
+
+import {
+  getOriginationCommon
+} from "services/common.service";
+
 import {
   getTcDetails,
 } from "services/tc.service";
@@ -77,21 +82,22 @@ const LoanDetails = (props) => {
   /* COMMON */
   const [jobs, setJobs] = useState([]);
   const [natureOfEmp, setNatureOfEmp] = useState([]);
-  const [applicantDistance, setApplicantDistance] = useState([]);
-  const [salaryInformation, setSalaryInformation] = useState([]);
-  const [repeatCustomers, setRepeatCustomers] = useState([]);
+  // const [applicantDistance, setApplicantDistance] = useState([]);
+  // const [salaryInformation, setSalaryInformation] = useState([]);
+  // const [repeatCustomers, setRepeatCustomers] = useState([]);
   const [natureOfBusiness, setNatureOfBusiness] = useState([]);
-  const [businessOwnerships, setBusinessOwnerships] = useState([]);
-  const [loanPurpose, setLoanPurpose] = useState([]);
-  const [ownOfCultivation, setOwnOfCultivation] = useState([]);
-  const [valueNatureOfBorrowe, setValueNatureOfBorrowe] = useState([]);
-  const [ownershipResidance, setOwnershipResidance] = useState([]);
-  const [floodFactors, setFloodFactors] = useState([]);
-  const [irrigations, setIrrigations] = useState([]);
-  const [methodUseAgriMachine, setMethodUseAgriMachine] = useState([]);
-  const [cultivationProofs, setCultivationProofs] = useState([]);
-  const [fieldVerification, setFieldVerification] = useState([]);
+  // const [businessOwnerships, setBusinessOwnerships] = useState([]);
+  // const [loanPurpose, setLoanPurpose] = useState([]);
+  // const [ownOfCultivation, setOwnOfCultivation] = useState([]);
+  // const [valueNatureOfBorrowe, setValueNatureOfBorrowe] = useState([]);
+  // const [ownershipResidance, setOwnershipResidance] = useState([]);
+  // const [floodFactors, setFloodFactors] = useState([]);
+  // const [irrigations, setIrrigations] = useState([]);
+  // const [methodUseAgriMachine, setMethodUseAgriMachine] = useState([]);
+  // const [cultivationProofs, setCultivationProofs] = useState([]);
+  // const [fieldVerification, setFieldVerification] = useState([]);
   const [otherIncomeCategories, setOtherIncomeCategories] = useState([]);
+  const [originationCommon, setOriginationCommon] = useState([]);
 
   const [tcDetails, setTcDetails] = useState({});
   const [salaryLoanDetails, setSalaryLoanDetails] = useState(null);
@@ -202,32 +208,34 @@ const LoanDetails = (props) => {
 
         /* COMMON */
         if (tcDetails !== undefined) {
-          const applicantDistanceResponse = await getAllApplicantDistance(tcDetails.pTrhdLType);
-          const salaryInfoResponse = await getAllSalaryInformation(tcDetails.pTrhdLType);
-          const repeatCusResponse = await getAllRepeatCustomers(tcDetails.pTrhdLType);
-          const bnsOwnershipResponse = await getAllBusinessOwnerships(tcDetails.pTrhdLType);
-          const loanPurposeResponse = await getAllLoanPurpose(tcDetails.pTrhdLType);
-          const cultOwnResponse = await getAllCultivationOwnership(tcDetails.pTrhdLType);
-          const ownerResidanceResponse = await getAllOwnershipResidance(tcDetails.pTrhdLType);
-          const floodFactResponse = await getAllFloodFactors(tcDetails.pTrhdLType);
-          const irrigationResponse = await getAllIrrigations(tcDetails.pTrhdLType);
-          const agriMachineResponse = await getAllMethodUseAgriMachine(tcDetails.pTrhdLType);
-          const cultivationProofResponse = await getAllCultivationProofs(tcDetails.pTrhdLType);
-          const fieldVeriResponse = await getAllFieldVerification(tcDetails.pTrhdLType);
+          // const applicantDistanceResponse = await getAllApplicantDistance(tcDetails.pTrhdLType);
+          // const salaryInfoResponse = await getAllSalaryInformation(tcDetails.pTrhdLType);
+          // const repeatCusResponse = await getAllRepeatCustomers(tcDetails.pTrhdLType);
+          // const bnsOwnershipResponse = await getAllBusinessOwnerships(tcDetails.pTrhdLType);
+          // const loanPurposeResponse = await getAllLoanPurpose(tcDetails.pTrhdLType);
+          // const cultOwnResponse = await getAllCultivationOwnership(tcDetails.pTrhdLType);
+          // const ownerResidanceResponse = await getAllOwnershipResidance(tcDetails.pTrhdLType);
+          // const floodFactResponse = await getAllFloodFactors(tcDetails.pTrhdLType);
+          // const irrigationResponse = await getAllIrrigations(tcDetails.pTrhdLType);
+          // const agriMachineResponse = await getAllMethodUseAgriMachine(tcDetails.pTrhdLType);
+          // const cultivationProofResponse = await getAllCultivationProofs(tcDetails.pTrhdLType);
+          // const fieldVeriResponse = await getAllFieldVerification(tcDetails.pTrhdLType);
+          const originationCommonResponce = await getOriginationCommon(tcDetails.pTrhdLType);
 
           if (_isMounted) {
-            setApplicantDistance(applicantDistanceResponse);
-            setSalaryInformation(salaryInfoResponse);
-            setRepeatCustomers(repeatCusResponse);
-            setBusinessOwnerships(bnsOwnershipResponse);
-            setLoanPurpose(loanPurposeResponse);
-            setOwnOfCultivation(cultOwnResponse);
-            setOwnershipResidance(ownerResidanceResponse);
-            setFloodFactors(floodFactResponse);
-            setIrrigations(irrigationResponse);
-            setMethodUseAgriMachine(agriMachineResponse);
-            setCultivationProofs(cultivationProofResponse);
-            setFieldVerification(fieldVeriResponse);
+            // setApplicantDistance(applicantDistanceResponse);
+            // setSalaryInformation(salaryInfoResponse);
+            // setRepeatCustomers(repeatCusResponse);
+            // setBusinessOwnerships(bnsOwnershipResponse);
+            // setLoanPurpose(loanPurposeResponse);
+            // setOwnOfCultivation(cultOwnResponse);
+            // setOwnershipResidance(ownerResidanceResponse);
+            // setFloodFactors(floodFactResponse);
+            // setIrrigations(irrigationResponse);
+            // setMethodUseAgriMachine(agriMachineResponse);
+            // setCultivationProofs(cultivationProofResponse);
+            // setFieldVerification(fieldVeriResponse);
+            setOriginationCommon(originationCommonResponce);
           }
         }
 
@@ -315,25 +323,25 @@ const LoanDetails = (props) => {
                                 <td><p className="m-0 grid-text">Profession</p></td>
                                 <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.profession ? salaryLoanDetails.profession : "\u00A0"}</p></td>
                                 <td><p className="m-0 grid-text">Nature of Employment</p></td>
-                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.natureOfEmp ? getValueByList(natureOfEmp, salaryLoanDetails.natureOfEmp) : "\u00A0"}</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.natureOfEmp ? getValueByList(originationCommon.employmentCategoryDtoList, salaryLoanDetails.natureOfEmp) : "\u00A0"}</p></td>
                               </tr>
                               <tr>
                                 <td><p className="m-0 grid-text">Source of Income</p></td>
                                 <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.sourceOfIncome ? salaryLoanDetails.sourceOfIncome : "\u00A0"}</p></td>
                                 <td><p className="m-0 grid-text">Residence or working place of applicant is above 15km, <br></br> of branch / service center.</p></td>
-                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.residenceOrWorking ? getValueByList(applicantDistance, salaryLoanDetails.residenceOrWorking) : "\u00A0"}</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.residenceOrWorking ? getValueByList(originationCommon.applicantDistanceDtoList, salaryLoanDetails.residenceOrWorking) : "\u00A0"}</p></td>
                               </tr>
                               <tr>
                                 <td><p className="m-0 grid-text">Employer</p></td>
                                 <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.employer ? salaryLoanDetails.employer : "\u00A0"}</p></td>
                                 <td><p className="m-0 grid-text">Salary information, Proof of Salary</p></td>
-                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.proofOfSalary ? getValueByList(salaryInformation, salaryLoanDetails.proofOfSalary) : "\u00A0"}</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.proofOfSalary ? getValueByList(originationCommon.salaryInformationDtoList, salaryLoanDetails.proofOfSalary) : "\u00A0"}</p></td>
                               </tr>
                               <tr>
                                 <td><p className="m-0 grid-text">Type of Business</p></td>
-                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.typeOfBusiness ? getValueByList(natureOfBusiness, salaryLoanDetails.typeOfBusiness) : "\u00A0"}</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.typeOfBusiness ? getValueByList(originationCommon.natureOfBusinessDtoList, salaryLoanDetails.typeOfBusiness) : "\u00A0"}</p></td>
                                 <td><p className="m-0 grid-text">Repeat Customer</p></td>
-                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.repeatCustomer ? getValueByList(repeatCustomers, salaryLoanDetails.repeatCustomer) : "\u00A0"}</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.repeatCustomer ? getValueByList(originationCommon.repeatCustomerDtoList, salaryLoanDetails.repeatCustomer) : "\u00A0"}</p></td>
                               </tr>
                               <tr>
                                 <td><p className="m-0 grid-text">Designation</p></td>
@@ -351,7 +359,7 @@ const LoanDetails = (props) => {
                               </tr>
                               <tr>
                                 <td><p className="m-0 grid-text">Type of Job</p></td>
-                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.typeOfJob ? getValueByList(jobs, salaryLoanDetails.typeOfJob) : "\u00A0"}</p></td>
+                                <td><p className="m-0">{salaryLoanDetails && salaryLoanDetails.typeOfJob ? getValueByList(originationCommon.typeOfJobDtoList, salaryLoanDetails.typeOfJob) : "\u00A0"}</p></td>
                               </tr>
                             </tbody>
                           </table>
@@ -425,7 +433,7 @@ const LoanDetails = (props) => {
                                           </tr>
                                           <tr>
                                             <td className="grid-text"><p>Nature of Business</p></td>
-                                            <td><p>{item && item.natureOfBns ? getValueByList(natureOfBusiness, item.natureOfBns) : "\u00A0"}</p></td>
+                                            <td><p>{item && item.natureOfBns ? getValueByList(originationCommon.natureOfBusinessDtoList, item.natureOfBns) : "\u00A0"}</p></td>
                                           </tr>
                                           <tr>
                                             <td className="grid-text"><p>Business Address</p></td>
@@ -445,7 +453,7 @@ const LoanDetails = (props) => {
                                           </tr>
                                           <tr>
                                             <td className="grid-text"><p>Ownership of Business Place</p></td>
-                                            <td><p>{item && item.ownOfBnsPlace ? getValueByList(businessOwnerships, item.ownOfBnsPlace) : "\u00A0"}</p></td>
+                                            <td><p>{item && item.ownOfBnsPlace ? getValueByList(originationCommon.businessPlaceOwnershipDtoList, item.ownOfBnsPlace) : "\u00A0"}</p></td>
                                           </tr>
                                           <tr>
                                             <td className="grid-text"><p>Business Assets + Stocks</p></td>
@@ -453,7 +461,7 @@ const LoanDetails = (props) => {
                                           </tr>
                                           <tr>
                                             <td className="grid-text"><p>Repeat Customer</p></td>
-                                            <td><p>{item && item.repeatCustomer ? getValueByList(repeatCustomers, item.repeatCustomer) : "\u00A0"}</p></td>
+                                            <td><p>{item && item.repeatCustomer ? getValueByList(originationCommon.repeatCustomerDtoList, item.repeatCustomer) : "\u00A0"}</p></td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -622,7 +630,7 @@ const LoanDetails = (props) => {
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Purpose of Loan</p></td>
-                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.purposeOfLoan ? getValueByList(loanPurpose, liveStockLoanDetails.purposeOfLoan) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.purposeOfLoan ? getValueByList(originationCommon.loanPurposeDtoList, liveStockLoanDetails.purposeOfLoan) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Nature of the borrower</p></td>
@@ -634,19 +642,19 @@ const LoanDetails = (props) => {
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Floods Factor</p></td>
-                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.floodsFactor ? getValueByList(floodFactors, liveStockLoanDetails.floodsFactor) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.floodsFactor ? getValueByList(originationCommon.floodsFactorDtoList, liveStockLoanDetails.floodsFactor) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Irrigation</p></td>
-                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.irrigation ? getValueByList(irrigations, liveStockLoanDetails.irrigation) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.irrigation ? getValueByList(originationCommon.irrigationDtoList, liveStockLoanDetails.irrigation) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Methods use for Agriculture Machineries</p></td>
-                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.methods ? getValueByList(methodUseAgriMachine, liveStockLoanDetails.methods) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.methods ? getValueByList(originationCommon.agriMethodDtoList, liveStockLoanDetails.methods) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Proof of Cultivation</p></td>
-                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.proofOfCult ? getValueByList(cultivationProofs, liveStockLoanDetails.proofOfCult) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.proofOfCult ? getValueByList(originationCommon.proofOfCultivationDtoList, liveStockLoanDetails.proofOfCult) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Experience in Cultivation</p></td>
@@ -654,7 +662,7 @@ const LoanDetails = (props) => {
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Market Check through Field Verification</p></td>
-                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.marketCheck ? getValueByList(fieldVerification, liveStockLoanDetails.marketCheck) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{liveStockLoanDetails && liveStockLoanDetails.marketCheck ? getValueByList(originationCommon.fieldVerificationDtoList, liveStockLoanDetails.marketCheck) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Agri Secured</p></td>
@@ -739,7 +747,7 @@ const LoanDetails = (props) => {
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">{'\u00A0'}</p></td>
-                                  <td><p className="m-1">{cultivationLoanDetails && cultivationLoanDetails.ownOfCult ? getValueByList(ownOfCultivation, cultivationLoanDetails.ownOfCult) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{cultivationLoanDetails && cultivationLoanDetails.ownOfCult ? getValueByList(originationCommon.farmCultivationOwnershipDtoList, cultivationLoanDetails.ownOfCult) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Ownership of Land</p></td>
@@ -952,13 +960,13 @@ const LoanDetails = (props) => {
                               <p>{cultivationLoanDetails && cultivationLoanDetails.loanLimitTotal ? cultivationLoanDetails.loanLimitTotal : "\u00A0"}</p>
                             </Col>
                           </Row>
-                          <p>{cultivationLoanDetails && cultivationLoanDetails.purposeOfLoan ? getValueByList(loanPurpose, cultivationLoanDetails.purposeOfLoan) : "\u00A0"}</p>
-                          <p>{cultivationLoanDetails && cultivationLoanDetails.floodsFactor ? getValueByList(floodFactors, cultivationLoanDetails.floodsFactor) : "\u00A0"}</p>
-                          <p>{cultivationLoanDetails && cultivationLoanDetails.irrigation ? getValueByList(irrigations, cultivationLoanDetails.irrigation) : "\u00A0"}</p>
-                          <p>{cultivationLoanDetails && cultivationLoanDetails.methods ? getValueByList(methodUseAgriMachine, cultivationLoanDetails.methods) : "\u00A0"}</p>
-                          <p>{cultivationLoanDetails && cultivationLoanDetails.proofOfCult ? getValueByList(cultivationProofs, cultivationLoanDetails.proofOfCult) : "\u00A0"}</p>
+                          <p>{cultivationLoanDetails && cultivationLoanDetails.purposeOfLoan ? getValueByList(originationCommon.loanPurposeDtoList, cultivationLoanDetails.purposeOfLoan) : "\u00A0"}</p>
+                          <p>{cultivationLoanDetails && cultivationLoanDetails.floodsFactor ? getValueByList(originationCommon.floodsFactorDtoList, cultivationLoanDetails.floodsFactor) : "\u00A0"}</p>
+                          <p>{cultivationLoanDetails && cultivationLoanDetails.irrigation ? getValueByList(originationCommon.irrigationDtoList, cultivationLoanDetails.irrigation) : "\u00A0"}</p>
+                          <p>{cultivationLoanDetails && cultivationLoanDetails.methods ? getValueByList(originationCommon.agriMethodDtoList, cultivationLoanDetails.methods) : "\u00A0"}</p>
+                          <p>{cultivationLoanDetails && cultivationLoanDetails.proofOfCult ? getValueByList(originationCommon.proofOfCultivationDtoList, cultivationLoanDetails.proofOfCult) : "\u00A0"}</p>
                           <p>{cultivationLoanDetails && cultivationLoanDetails.expInCult ? cultivationLoanDetails.expInCult : "\u00A0"}</p>
-                          <p>{cultivationLoanDetails && cultivationLoanDetails.marketCheck ? getValueByList(fieldVerification, cultivationLoanDetails.marketCheck) : "\u00A0"}</p>
+                          <p>{cultivationLoanDetails && cultivationLoanDetails.marketCheck ? getValueByList(originationCommon.fieldVerificationDtoList, cultivationLoanDetails.marketCheck) : "\u00A0"}</p>
                           <p>{cultivationLoanDetails && cultivationLoanDetails.agriSecured ? cultivationLoanDetails.agriSecured : "\u00A0"}</p>
                         </Col>
                       </div>
@@ -1392,7 +1400,7 @@ const LoanDetails = (props) => {
                                   </Col>
 
                                   <Col xs={8}>
-                                    <p>{item && getValueByList(otherIncomeCategories, item.incomeCategory)}</p>
+                                    <p>{item && getValueByList(originationCommon.otherIncomeCategoryDtoList, item.incomeCategory)}</p>
                                     <p>{item && item.description}</p>
                                   </Col>
                                 </div>

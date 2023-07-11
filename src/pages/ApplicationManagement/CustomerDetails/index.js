@@ -15,41 +15,27 @@ import Loader from "components/Loader";
 
 // APIs
 import {
-  getAllOrganizations,
-  getAllMaritialStatus,
-  getAllCnicStatus,
-  getAllTitiles,
-  getAllGenders,
-  getAllEducationalLevels,
-  getAllHeadOfFamily,
-  getAllHouseHoldContribution,
-  getAllHelthConditions,
-  getAllCommiunities,
-  getAllResidantals,
-  getAllOccupations,
-  getAllProvinces,
-  /* SUB OCCUPATION */
-  getAllInformationSources,
-  getAllSectors,
-  getAllSubSectors,
   /* HWT DECLARATION */
   getValuePoliticallyExposed,
-  getAllPdBanks,
-  getAllGuarantorRelations,
   getValueAddressType,
   getCommonAreaValues,
 } from "services/common.service";
 import {
   getTcDetails,
 } from "services/tc.service";
+//change
 import {
-  getMasterData,
-  contactInformation,
-  residentialInformation,
-  recipientInformation,
-  otherInformation,
-  pdChequeInformation
+  getMasterData
 } from "services/customer.service";
+
+import {
+  getOriginationClientele
+} from "services/customer.service";
+
+import {
+  getOriginationCommon
+} from "services/common.service";
+
 import {
   getValueByList
 } from "services/util.service";
@@ -60,33 +46,16 @@ const CustomerDetails = (props) => {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  /* COMMON */
-  const [organizations, setOrganizations] = useState([]);
-  const [maritalStatus, setMaritalStatus] = useState([]);
-  const [cnicStatus, setCnicStatus] = useState([]);
-  const [titles, setTitles] = useState([]);
-  const [genders, setGenders] = useState([]);
-  const [educationalLevels, setEducationalLevels] = useState([]);
-  const [headOfFamily, setHeadOfFamily] = useState([]);
-  const [houseHoldContribution, setHouseHoldContribution] = useState([]);
-  const [healthConditions, setHealthConditions] = useState([]);
-  const [communities, setCommunities] = useState([]);
-  const [residantals, setResidantals] = useState([]);
-  const [occupations, setOccupations] = useState([]);
-  const [informationSources, setInformationSources] = useState([]);
-  const [sectors, setSectors] = useState([]);
-  const [subSectors, setSubSectors] = useState([]);
-  const [banks, setBanks] = useState([]);
-  const [provinces, setProvinces] = useState([]);
-  const [relationship, setRelationship] = useState([]);
-
   const [tcDetails, setTcDetails] = useState({});
-  const [master, setMaster] = useState({});
+
+  const [master, setMaster] = useState([]);
   const [contact, setContact] = useState([]);
   const [residentials, setResidentials] = useState([]);
   const [recipient, setRecipient] = useState({});
   const [other, setOther] = useState({});
   const [cheque, setCheque] = useState({});
+  const [originationClientele, setOriginationClientele] = useState([]);
+  const [originationCommon, setOriginationCommon] = useState([]);
 
   const [personalCol, setPersonalCol] = useState(true);
   const [addressCol, setAddressCol] = useState(true);
@@ -149,35 +118,14 @@ const CustomerDetails = (props) => {
           setTcDetails(tcDetails);
         }
 
-        /* COMMON */
-        const organizations = await getAllOrganizations();
-        const maritalStatusResponse = await getAllMaritialStatus();
-        const cnicStatusResponse = await getAllCnicStatus();
-        const titlesResponse = await getAllTitiles();
-        const genderResponse = await getAllGenders();
-        const educationalLevelsResponse = await getAllEducationalLevels();
-        const communitiesResponse = await getAllCommiunities();
-        const residantalsResponse = await getAllResidantals();
-        const occupationsResponse = await getAllOccupations();
-        const informationSourcesResponse = await getAllInformationSources();
-        const sectorsResponse = await getAllSectors();
-        const subSectorsResponse = await getAllSubSectors();
-        const banksResponse = await getAllPdBanks();
-        const provinceResponse = await getAllProvinces();
-        const relationshipResponse = await getAllGuarantorRelations();
-
         if (tcDetails !== undefined) {
-          const headOfFamilyResponse = await getAllHeadOfFamily(tcDetails.pTrhdLType);
-          const houseHoldContributionResponse = await getAllHouseHoldContribution(tcDetails.pTrhdLType);
-          const healthConditionsResponse = await getAllHelthConditions(tcDetails.pTrhdLType);
+          const originationCommonResponce = await getOriginationCommon(tcDetails.pTrhdLType);
 
           if (_isMounted) {
-            setHeadOfFamily(headOfFamilyResponse);
-            setHouseHoldContribution(houseHoldContributionResponse);
-            setHealthConditions(healthConditionsResponse);
+            setOriginationCommon(originationCommonResponce);
           }
-        }
 
+        }
         /* APPRAISAL */
         const masterResponse = await getMasterData(appraisalId);
         if (_isMounted && masterResponse.length > 0) {
@@ -188,35 +136,15 @@ const CustomerDetails = (props) => {
           }
         }
 
-        const contactResponse = await contactInformation(idx);
-        const residentialResponse = await residentialInformation(idx);
-        const recipientResponse = await recipientInformation(idx);
-        const otherResponse = await otherInformation(idx);
-        const chequeResponse = await pdChequeInformation(idx);
+        const originationClienteleResponce = await getOriginationClientele(appraisalId, idx);
 
         if (_isMounted) {
-          /* COMMON */
-          setOrganizations(organizations);
-          setMaritalStatus(maritalStatusResponse);
-          setCnicStatus(cnicStatusResponse);
-          setTitles(titlesResponse);
-          setGenders(genderResponse);
-          setEducationalLevels(educationalLevelsResponse);
-          setCommunities(communitiesResponse);
-          setResidantals(residantalsResponse);
-          setOccupations(occupationsResponse);
-          setInformationSources(informationSourcesResponse);
-          setSectors(sectorsResponse);
-          setSubSectors(subSectorsResponse);
-          setBanks(banksResponse);
-          setProvinces(provinceResponse);
-          setRelationship(relationshipResponse);
-
-          setContact(contactResponse);
-          setResidentials(residentialResponse);
-          setRecipient(recipientResponse[0]);
-          setOther(otherResponse[0]);
-          setCheque(chequeResponse[0]);
+          setOriginationClientele(originationClienteleResponce);
+          setContact(originationClienteleResponce.contactDetailsDtoList);
+          setResidentials(originationClienteleResponce.residenceInfoDtoList);
+          setRecipient(originationClienteleResponce.recipientDetailsDtoList[0]);
+          setOther(originationClienteleResponce.otherInfoDetailsDtoList[0]);
+          setCheque(originationClienteleResponce.postDatedChequeDtoList[0]);
 
           setIsLoading(false);
         }
@@ -229,6 +157,10 @@ const CustomerDetails = (props) => {
       _isMounted = false;
     };
   }, [props.active]);
+
+  //console.log("String common :", originationCommon);
+  // console.log("clientle :", originationClientele);
+  // console.log("master :", master);
 
   return (
     <Row>
@@ -271,7 +203,7 @@ const CustomerDetails = (props) => {
                             <tbody>
                               <tr>
                                 <td><p className="m-0 grid-text">Organization Type </p></td>
-                                <td><p className="m-1">{master && master.stkOrgType ? getValueByList(organizations, master.stkOrgType) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkOrgType ? getValueByList(originationCommon.organizationTypeDtoList, master.stkOrgType) : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Customer CNIC</p></td>
                                 <td><p className="m-1">{master && master.stkCNic ? master.stkCNic : "\u00A0"}</p></td>
@@ -285,7 +217,7 @@ const CustomerDetails = (props) => {
                                 <td><p className="m-1">{master && master.stkCNicExpDate ? master.stkCNicExpDate : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">CNIC Status</p></td>
-                                <td><p className="m-1">{master && master.stkCNicStatus ? getValueByList(cnicStatus, master.stkCNicStatus) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkCNicStatus ? getValueByList(originationCommon.cnicStatusDtoList, master.stkCNicStatus) : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Customer Name</p></td>
                                 <td><p className="m-1">{master && master.stkCusName ? master.stkCusName : "\u00A0"}</p></td>
@@ -310,15 +242,15 @@ const CustomerDetails = (props) => {
                                 <td><p className="m-1">{master && master.stkAge ? master.stkAge : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Gender</p></td>
-                                <td><p className="m-1">{master && master.stkGender ? getValueByList(genders, master.stkGender) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkGender ? getValueByList(originationCommon.genderDtoList, master.stkGender) : "\u00A0"}</p></td>
                               </tr>
 
                               <tr>
                                 <td><p className="m-0 grid-text">Marital Status</p></td>
-                                <td><p className="m-1">{master && master.stkMaritialStatus ? getValueByList(maritalStatus, master.stkMaritialStatus) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkMaritialStatus ? getValueByList(originationCommon.maritalTypeDtoList, master.stkMaritialStatus) : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Title</p></td>
-                                <td><p className="m-1">{master && master.stkTitle ? getValueByList(titles, master.stkTitle) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkTitle ? getValueByList(originationCommon.titleDtoList, master.stkTitle) : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Father/ Husband Name</p></td>
                                 <td><p className="m-1">{master && master.stkFatherOrHusName ? master.stkFatherOrHusName : "\u00A0"}</p></td>
@@ -332,7 +264,7 @@ const CustomerDetails = (props) => {
                                 <td><p className="m-1">{master && master.stkNumOfEarners ? master.stkNumOfEarners : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Educational Qualification</p></td>
-                                <td><p className="m-1">{master && master.stkEduLevel ? getValueByList(educationalLevels, master.stkEduLevel) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkEduLevel ? getValueByList(originationCommon.educationLevelDtoList, master.stkEduLevel) : "\u00A0"}</p></td>
                               </tr>
 
                               <tr>
@@ -348,13 +280,13 @@ const CustomerDetails = (props) => {
 
                               <tr>
                                 <td><p className="m-0 grid-text">Description of Disability</p></td>
-                                <td><p className="m-1">{master && master.healthCondition ? getValueByList(healthConditions, master.healthCondition) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.healthCondition ? getValueByList(originationCommon.healthConditionsDtoList, master.healthCondition) : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Head of Family</p></td>
-                                <td><p className="m-1">{master && master.headOfFamily ? getValueByList(headOfFamily, master.headOfFamily) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.headOfFamily ? getValueByList(originationCommon.headOfFamilyDetailsDtoList, master.headOfFamily) : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">House Hold Contribution</p></td>
-                                <td><p className="m-1">{master && master.houseHoldCont ? getValueByList(houseHoldContribution, master.houseHoldCont) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.houseHoldCont ? getValueByList(originationCommon.houseHoldDetailsDtoList, master.houseHoldCont) : "\u00A0"}</p></td>
                               </tr>
 
                               {/* <tr>
@@ -456,11 +388,11 @@ const CustomerDetails = (props) => {
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Province</p></td>
-                                  <td><p className="m-1">{residential && residential.province ? getValueByList(provinces, residential.province) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.province ? getValueByList(originationCommon.provinceDtoList, residential.province) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Community</p></td>
-                                  <td><p className="m-1">{residential && residential.community ? getValueByList(communities, residential.community) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.community ? getValueByList(originationCommon.communityDtoList, residential.community) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Nearby Popular Places</p></td>
@@ -472,7 +404,7 @@ const CustomerDetails = (props) => {
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Residence Type</p></td>
-                                  <td><p className="m-1">{residential && residential.residenceType ? getValueByList(residantals, residential.residenceType) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.residenceType ? getValueByList(originationCommon.residentialTypeDtoList, residential.residenceType) : "\u00A0"}</p></td>
                                 </tr>
                               </tbody>
                             </table>
@@ -517,7 +449,7 @@ const CustomerDetails = (props) => {
                                   </tr>
                                   <tr>
                                     <td className="grid-text"><p>Relationship</p></td>
-                                    <td><p>{recipient && recipient.relationship ? getValueByList(relationship, recipient.relationship) : "\u00A0"}</p></td>
+                                    <td><p>{recipient && recipient.relationship ? getValueByList(originationCommon.familyDetailsDtoList, recipient.relationship) : "\u00A0"}</p></td>
                                   </tr>
                                   <tr>
                                     <td className="grid-text"><p>CNIC No</p></td>
@@ -566,7 +498,7 @@ const CustomerDetails = (props) => {
                               <tbody>
                                 <tr>
                                   <td className="grid-text"><p>Occupation</p></td>
-                                  <td><p>{other && other.occupation ? getValueByList(occupations, other.occupation) : "\u00A0"}</p></td>
+                                  <td><p>{other && other.occupation ? getValueByList(originationCommon.occupationDtoList, other.occupation) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td className="grid-text"><p>Sub Occupation</p></td>
@@ -574,15 +506,15 @@ const CustomerDetails = (props) => {
                                 </tr>
                                 <tr>
                                   <td className="grid-text"><p>How Did You Know About Us</p></td>
-                                  <td><p>{other && other.howDidYouKnow ? getValueByList(informationSources, other.howDidYouKnow) : "\u00A0"}</p></td>
+                                  <td><p>{other && other.howDidYouKnow ? getValueByList(originationCommon.sourceOfInformationDtoList, other.howDidYouKnow) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td className="grid-text"><p>Sector</p></td>
-                                  <td><p>{other && other.sector ? getValueByList(sectors, other.sector) : "\u00A0"}</p></td>
+                                  <td><p>{other && other.sector ? getValueByList(originationCommon.sectorDtoList, other.sector) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td className="grid-text"><p>Sub Sector</p></td>
-                                  <td><p>{other && other.subSector ? getValueByList(subSectors, other.subSector) : "\u00A0"}</p></td>
+                                  <td><p>{other && other.subSector ? getValueByList(originationCommon.subSectorDtoList, other.subSector) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td className="grid-text"><p>Savings Account Required</p></td>
@@ -662,7 +594,7 @@ const CustomerDetails = (props) => {
                                 <tbody>
                                   <tr>
                                     <td className="grid-text"><p>Bank</p></td>
-                                    <td><p>{cheque && cheque.bank ? getValueByList(banks, cheque.bank) : "\u00A0"}</p></td>
+                                    <td><p>{cheque && cheque.bank ? getValueByList(originationCommon.pdBankDtoList, cheque.bank) : "\u00A0"}</p></td>
                                   </tr>
                                   <tr>
                                     <td className="grid-text"><p>Cheque No</p></td>
@@ -718,7 +650,8 @@ const CustomerDetails = (props) => {
 };
 
 CustomerDetails.propTypes = {
-  active: PropTypes.string
+  active: PropTypes.string,
+  product: PropTypes.string
 };
 
 export default CustomerDetails;
