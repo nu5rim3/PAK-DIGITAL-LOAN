@@ -89,6 +89,10 @@ const ApprovalDetails = (props) => {
 
   const [originationApproval, setOriginationApproval] = useState([])
 
+  const [obExceptionalIndex, setObExceptionalIndex] = useState(0);
+  const [obExpOpen, setObExpOpen] = useState(false);
+  const [obExpRejectOpen, setObExpRejectOpen] = useState(false);
+
   const handleCaClickOpen = (mIndex, item) => {
     setIndex1(mIndex);
     setItem(item);
@@ -108,6 +112,26 @@ const ApprovalDetails = (props) => {
   const handleCaRejectClose = () => {
     setCaRejectOpen(false);
   };
+
+  const handleObExceptionalClickApproveOpen = (obIndex, item) => {
+    setObExceptionalIndex(obIndex);
+    setItem(item);
+    setObExpOpen(true);
+  }
+
+  const handleObExceptionalClose = () => {
+    setObExpOpen(false);
+  }
+
+  const handleObExceptionalRejectClickOpen = (obIndex, item) => {
+    setObExceptionalIndex(obIndex);
+    setItem(item);
+    setObExpRejectOpen(true);
+  }
+
+  const handleObExceptionalRejectClose = () => {
+    setObExpRejectOpen(false);
+  }
 
   const handleClickOpen = (type) => {
     setType(type);
@@ -229,10 +253,10 @@ const ApprovalDetails = (props) => {
     }
   }
 
-  const onSubmitObApproval = (index, item) => {
-    var value = document.getElementById(`ob_comment_${index}`).value;
+  const onSubmitObApproval = () => {
+    var value = document.getElementById(`ob_comment_${obExceptionalIndex}`).value;
     if (value === "") {
-      document.getElementById(`ob_error_comment_${index}`).classList.remove("d-none")
+      document.getElementById(`ob_error_comment_${obExceptionalIndex}`).classList.remove("d-none")
       return;
     }
 
@@ -247,10 +271,10 @@ const ApprovalDetails = (props) => {
     createObApprovals(payload);
   };
 
-  const onSubmitObReject = (index, item) => {
-    var value = document.getElementById(`ob_comment_${index}`).value;
+  const onSubmitObReject = () => {
+    var value = document.getElementById(`ob_comment_${obExceptionalIndex}`).value;
     if (value === "") {
-      document.getElementById(`ob_error_comment_${index}`).classList.remove("d-none")
+      document.getElementById(`ob_error_comment_${obExceptionalIndex}`).classList.remove("d-none")
       return;
     }
 
@@ -599,13 +623,13 @@ const ApprovalDetails = (props) => {
                                           {<span id={`ob_error_comment_${index}`} className="text-danger d-none">This field is required</span>}
                                         </div>
                                         {item.status === "P" && findUser?.group?.code === "AG_LEVEL_2" && <div className="form-group mt-3 d-flex justify-content-end align-items-center">
-                                          <button onClick={() => onSubmitObReject(index, item)} className="btn btn-danger w-md me-2">
+                                          <button onClick={() => handleObExceptionalRejectClickOpen(index, item)} className="btn btn-danger w-md me-2" >
                                             <SyncLoader loading={isLoadingOb}>
                                               <i className="bx bx-x-circle font-size-16 me-2" />
                                               Reject
                                             </SyncLoader>
                                           </button>
-                                          <button onClick={() => onSubmitObApproval(index, item)} className="btn btn-success w-md">
+                                          <button onClick={() => handleObExceptionalClickApproveOpen(index, item)} className="btn btn-success w-md">
                                             <SyncLoader loading={isLoadingOb}>
                                               <i className="bx bxs-check-circle font-size-16 me-2" />
                                               Approve
@@ -949,6 +973,56 @@ const ApprovalDetails = (props) => {
             Reject
           </Button>
           <Button style={{ color: 'gray' }} onClick={handleCaRejectClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={obExpOpen}
+        onClose={handleObExceptionalRejectClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">
+          {
+            "Approve"
+          }
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">{
+            "Are you sure do you want to approve this exceptional approval?"
+          }
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button style={{ color: 'white', backgroundColor: '#34c38f' }}
+            onClick={onSubmitObApproval} autoFocus disabled={isButtonDisabled}>
+            {
+              "Approve"
+            }
+          </Button>
+          <Button style={{ color: 'gray' }} onClick={handleObExceptionalClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={obExpRejectOpen}
+        onClose={handleObExceptionalRejectClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title" style={{ color: '#DC4C64', alignContent: "center" }}>
+          {
+            "Warning!"
+          }
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">{
+            "Are you sure do you want to reject this exceptional approval?"
+          }
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button style={{ color: 'white', backgroundColor: '#DC4C64' }}
+            onClick={onSubmitObReject} autoFocus disabled={isButtonDisabled}>
+            Reject
+          </Button>
+          <Button style={{ color: 'gray' }} onClick={handleObExceptionalRejectClose}>Cancel</Button>
         </DialogActions>
       </Dialog>
     </Row>
