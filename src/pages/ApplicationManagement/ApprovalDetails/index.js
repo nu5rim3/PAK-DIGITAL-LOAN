@@ -269,10 +269,13 @@ const ApprovalDetails = (props) => {
       "clienteleIdx": item.clienteleIdx
     }
 
-    createObApprovals(payload);
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
+    const obApprovalResponse = createObApprovals(payload);
+    if (obApprovalResponse !== undefined) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    }
+
   };
 
   const onSubmitObReject = () => {
@@ -291,10 +294,12 @@ const ApprovalDetails = (props) => {
       "clienteleIdx": item.clienteleIdx
     }
 
-    createObApprovals(payload);
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
+    const obRejectResponse = createObApprovals(payload);
+    if (obRejectResponse !== undefined) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    }
   };
 
   const onSubmitCaApprove = (index, item) => {
