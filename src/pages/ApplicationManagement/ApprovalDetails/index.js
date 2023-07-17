@@ -265,10 +265,14 @@ const ApprovalDetails = (props) => {
       "appType": "OB",
       "approvalIdx": item.idx,
       "appraisalIdx": item.appraisalIdx,
-      "action": "A"
+      "action": "A",
+      "clienteleIdx": item.clienteleIdx
     }
 
     createObApprovals(payload);
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   const onSubmitObReject = () => {
@@ -283,10 +287,14 @@ const ApprovalDetails = (props) => {
       "appType": "OB",
       "approvalIdx": item.idx,
       "appraisalIdx": item.appraisalIdx,
-      "action": "R"
+      "action": "R",
+      "clienteleIdx": item.clienteleIdx
     }
 
     createObApprovals(payload);
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
   };
 
   const onSubmitCaApprove = (index, item) => {
