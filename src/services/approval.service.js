@@ -3,60 +3,60 @@ import { get, post, put } from "helpers/api_helper";
 /* *********** GROUP *********** */
 
 /* TODO: Proxy */
-export const getAllApprovalGroups = async() => {
+export const getAllApprovalGroups = async () => {
     return await get("/mobixCamsApproval/v1/approvals/groups");
 };
 
 /* *********** USER *********** */
 
 /* TODO: Proxy */
-export const getAllApprovalUsers = async() => {
+export const getAllApprovalUsers = async () => {
     return await get("/mobixCamsApproval/v1/approvals/users");
 };
 
-export const createApprovalUser = async(data) => {
+export const createApprovalUser = async (data) => {
     return await post("/mobixCamsApproval/v1/approvals/users", data);
 };
 
-export const updateApprovalUser = async(idx, data) => {
+export const updateApprovalUser = async (idx, data) => {
     return await put(`/mobixCamsApproval/v1/approvals/users/${idx}`, data);
 };
 
 /* *********** WORKFLOW *********** */
-export const getAllApprovalWorkflows = async() => {
+export const getAllApprovalWorkflows = async () => {
     return await get("/mobixCamsApproval/v1/approvals/workflows");
 };
 
 /* *********** APPROVAL *********** */
-export const getAllOnBoardingApprovals = async(appraisalId) => {
+export const getAllOnBoardingApprovals = async (appraisalId) => {
     return await get(`/mobixCamsApproval/v1/approvals/on-boarding/${appraisalId}`);
 };
 
-export const getAllExceptionalApprovals = async(appraisalId) => {
+export const getAllExceptionalApprovals = async (appraisalId) => {
     return await get(`/mobixCamsApproval/v1/approvals/appraisal/${appraisalId}`);
 };
 
-export const createApprovalComment = async(data) => {
+export const createApprovalComment = async (data) => {
     return await post("/mobixCamsApproval/v1/approvals/comments", data);
 };
 
-export const getAllApprovalSteps = async(appraisalId) => {
+export const getAllApprovalSteps = async (appraisalId) => {
     return await get(`/mobixCamsApproval/v1/approvals/steps/${appraisalId}`);
 }
 
-export const createApprovalStep = async(data) => {
+export const createApprovalStep = async (data) => {
     return await post("/mobixCamsApproval/v1/approvals/steps", data);
 }
 
 /* *********** VERIFICATIONS *********** */
-export const verifyApprovalUser = async(username) => {
+export const verifyApprovalUser = async (username) => {
     return await get(`/mobixCamsApproval/v1/approvals/users/${username}`);
 }
 
-export const getActiveStep = async(appraisalId) => {
+export const getActiveStep = async (appraisalId) => {
     return await get(`/mobixCamsApproval/v1/approvals/active/steps/${appraisalId}`);
 };
 
-export const getObApprovalByParams = async(appraisalId, clienteleId, type) => {
+export const getObApprovalByParams = async (appraisalId, clienteleId, type) => {
     return await get(`/mobixCamsApproval/v1/approvals/on-boarding/appraisals/${appraisalId}/clienteles/${clienteleId}/type/${type}`);
 };
