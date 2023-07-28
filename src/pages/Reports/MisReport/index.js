@@ -140,7 +140,7 @@ const MisReport = (props) => {
     item.customerName = item.clienteleCustomer.fullName;
     item.loanProduct = item.creditReportVo.loanProduct;
     item.requestedLoanAmount = item.creditReportVo.requestedLoanAmount;
-    item.createdDate = moment(item.createdDate).format("DD-MM-YYYY HH:mm:ss");
+    item.createdDate = item.createdDate;
     item.userIdx = item.userIdx;
     item.nextActionPendingRole = item.nextActionPendingRole;
     return item;
