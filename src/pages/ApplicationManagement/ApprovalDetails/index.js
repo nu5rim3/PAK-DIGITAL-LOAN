@@ -27,14 +27,18 @@ import {
   getObExceptionals
 } from "services/common.service";
 import {
-  getAllOnBoardingApprovals,
+  //getAllOnBoardingApprovals, 
   getAllExceptionalApprovals,
   createApprovalComment,
   getAllApprovalSteps,
   createApprovalStep,
   verifyApprovalUser,
-  getActiveStep,
+  // getActiveStep,
 } from "services/approval.service";
+
+import {
+  getAllOriginationApproval
+} from "services/origination.service"
 
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -58,10 +62,10 @@ const ApprovalDetails = (props) => {
   const [obRefresh, setObRefresh] = useState(false);
   const [stepRefresh, setStepRefresh] = useState(false);
   const [findUser, setFindUser] = useState(null);
-  const [activeStep, setActiveStep] = useState(null);
+  //const [activeStep, setActiveStep] = useState(null);
 
   const [steps, setSteps] = useState([]);
-  const [onBoardingApprovals, setOnBoardingApprovals] = useState([]);
+  //const [onBoardingApprovals, setOnBoardingApprovals] = useState([]);
   const [exceptionalApprovals, setExceptionalApprovals] = useState([]);
   const [verticalObActiveTab, setVerticalObActiveTab] = useState(0);
   const [verticalCaActiveTab, setVerticalCaActiveTab] = useState(0);
@@ -80,6 +84,14 @@ const ApprovalDetails = (props) => {
   const [item, setItem] = useState({});
   const [caOpen, setCaOpen] = useState(false);
   const [rejectCaOpen, setCaRejectOpen] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+  const [originationApproval, setOriginationApproval] = useState([])
+
+  const [obExceptionalIndex, setObExceptionalIndex] = useState(0);
+  const [obExpOpen, setObExpOpen] = useState(false);
+  const [obExpRejectOpen, setObExpRejectOpen] = useState(false);
 
   const handleCaClickOpen = (mIndex, item) => {
     setIndex1(mIndex);
@@ -100,6 +112,26 @@ const ApprovalDetails = (props) => {
   const handleCaRejectClose = () => {
     setCaRejectOpen(false);
   };
+
+  const handleObExceptionalClickApproveOpen = (obIndex, item) => {
+    setObExceptionalIndex(obIndex);
+    setItem(item);
+    setObExpOpen(true);
+  }
+
+  const handleObExceptionalClose = () => {
+    setObExpOpen(false);
+  }
+
+  const handleObExceptionalRejectClickOpen = (obIndex, item) => {
+    setObExceptionalIndex(obIndex);
+    setItem(item);
+    setObExpRejectOpen(true);
+  }
+
+  const handleObExceptionalRejectClose = () => {
+    setObExpRejectOpen(false);
+  }
 
   const handleClickOpen = (type) => {
     setType(type);
@@ -158,16 +190,46 @@ const ApprovalDetails = (props) => {
     return false;
   }
 
+
+  // const verifyActiveStepAndUser = () => {
+  //   var result = false;
+  //   if ((findUser !== null && findUser !== undefined) && (activeStep !== null && activeStep !== undefined)) {
+  //     result = (findUser.group.code === activeStep.workflowStep.name && activeStep.stepAction === "P");
+  //     return result;
+  //   }
+
+  //   if ((activeStep !== null && activeStep !== undefined)) {
+  //     var role = localStorage.getItem("role");
+  //     result = (role === activeStep.workflowStep.roleCode && activeStep.stepAction === "P");
+  //     return result;
+  //   }
+
+  //   return result;
+  // }
+
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (inputValue.trim() === '') {
+      alert('Please enter a value');
+      return;
+    }
+  };
+
+
   const verifyActiveStepAndUser = () => {
     var result = false;
-    if ((findUser !== null && findUser !== undefined) && (activeStep !== null && activeStep !== undefined)) {
-      result = (findUser.group.code === activeStep.workflowStep.name && activeStep.stepAction === "P");
+    if ((findUser !== null && findUser !== undefined) && (originationApproval.approvalStepDto !== null && originationApproval.approvalStepDto !== undefined)) {
+      result = (findUser.group.code === originationApproval.approvalStepDto.workflowStep.name && originationApproval.approvalStepDto.stepAction === "P");
       return result;
     }
 
-    if ((activeStep !== null && activeStep !== undefined)) {
+    if ((originationApproval.approvalStepDto !== null && originationApproval.approvalStepDto !== undefined)) {
       var role = localStorage.getItem("role");
-      result = (role === activeStep.workflowStep.roleCode && activeStep.stepAction === "P");
+      result = (role === originationApproval.approvalStepDto.workflowStep.roleCode && originationApproval.approvalStepDto.stepAction === "P");
       return result;
     }
 
@@ -178,16 +240,23 @@ const ApprovalDetails = (props) => {
     return exceptionalApprovals.filter((item) => item.status === "P").length > 0;
   }
 
+  //check this 
+  // const verifyOnBoardingApprovals = () => {
+  //   if ((onBoardingApprovals !== null && onBoardingApprovals !== undefined) && (activeStep !== null && activeStep !== undefined)) {
+  //     return onBoardingApprovals.filter((item) => item.status === "P").length > 0 && activeStep.workflowStep.name === "AG_LEVEL_2";
+  //   }
+  // }
+
   const verifyOnBoardingApprovals = () => {
-    if ((onBoardingApprovals !== null && onBoardingApprovals !== undefined) && (activeStep !== null && activeStep !== undefined)) {
-      return onBoardingApprovals.filter((item) => item.status === "P").length > 0 && activeStep.workflowStep.name === "AG_LEVEL_2";
+    if ((originationApproval.requestDtoList !== null && originationApproval.requestDtoList !== undefined) && (originationApproval.approvalStepDto !== null && originationApproval.approvalStepDto !== undefined)) {
+      return originationApproval.requestDtoList.filter((item) => item.status === "P").length > 0 && originationApproval.approvalStepDto.workflowStep.name === "AG_LEVEL_2";
     }
   }
 
-  const onSubmitObApproval = (index, item) => {
-    var value = document.getElementById(`ob_comment_${index}`).value;
+  const onSubmitObApproval = () => {
+    var value = document.getElementById(`ob_comment_${obExceptionalIndex}`).value;
     if (value === "") {
-      document.getElementById(`ob_error_comment_${index}`).classList.remove("d-none")
+      document.getElementById(`ob_error_comment_${obExceptionalIndex}`).classList.remove("d-none")
       return;
     }
 
@@ -196,16 +265,23 @@ const ApprovalDetails = (props) => {
       "appType": "OB",
       "approvalIdx": item.idx,
       "appraisalIdx": item.appraisalIdx,
-      "action": "A"
+      "action": "A",
+      "clienteleIdx": item.clienteleIdx
     }
 
-    createObApprovals(payload);
+    const obApprovalResponse = createObApprovals(payload);
+    if (obApprovalResponse !== undefined) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    }
+
   };
 
-  const onSubmitObReject = (index, item) => {
-    var value = document.getElementById(`ob_comment_${index}`).value;
+  const onSubmitObReject = () => {
+    var value = document.getElementById(`ob_comment_${obExceptionalIndex}`).value;
     if (value === "") {
-      document.getElementById(`ob_error_comment_${index}`).classList.remove("d-none")
+      document.getElementById(`ob_error_comment_${obExceptionalIndex}`).classList.remove("d-none")
       return;
     }
 
@@ -214,10 +290,16 @@ const ApprovalDetails = (props) => {
       "appType": "OB",
       "approvalIdx": item.idx,
       "appraisalIdx": item.appraisalIdx,
-      "action": "R"
+      "action": "R",
+      "clienteleIdx": item.clienteleIdx
     }
 
-    createObApprovals(payload);
+    const obRejectResponse = createObApprovals(payload);
+    if (obRejectResponse !== undefined) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    }
   };
 
   const onSubmitCaApprove = (index, item) => {
@@ -239,6 +321,7 @@ const ApprovalDetails = (props) => {
   };
 
   const onSubmitCaApproval = () => {
+
     var value = document.getElementById(`ca_comment_${index1}`).value;
     if (value === "") {
       document.getElementById(`ca_error_comment_${index1}`).classList.remove("d-none")
@@ -256,8 +339,9 @@ const ApprovalDetails = (props) => {
     if (caApprovalBtnRef.current) {
       caApprovalBtnRef.current.setAttribute("disabled", "disabled");
     }
-
+    setIsButtonDisabled(true);
     createCaApprovals(payload);
+
   };
 
   const onSubmitCaReject = (index, item) => {
@@ -279,6 +363,7 @@ const ApprovalDetails = (props) => {
   };
 
   const onSubmitCaRejection = () => {
+
     var value = document.getElementById(`ca_comment_${index1}`).value;
     if (value === "") {
       document.getElementById(`ca_error_comment_${index1}`).classList.remove("d-none")
@@ -297,7 +382,9 @@ const ApprovalDetails = (props) => {
       caApprovalBtnRef.current.setAttribute("disabled", "disabled");
     }
 
+    setIsButtonDisabled(true);
     createCaApprovals(payload);
+
   };
 
   const createObApprovals = async (data) => {
@@ -344,7 +431,9 @@ const ApprovalDetails = (props) => {
       approvalBtnRef.current.setAttribute("disabled", "disabled");
     }
 
+    setIsButtonDisabled(true);
     setIsLoadingStep(true);
+
     const stepResponse = await createApprovalStep(payload);
     if (stepResponse !== null) {
       setStepRefresh(true);
@@ -353,13 +442,16 @@ const ApprovalDetails = (props) => {
       setOpen(false);
       setCaOpen(false);
       setCaRejectOpen(false);
+
       setTimeout(() => {
         window.location.reload();
       }, 3000);
     }
+
   }
 
   const createActionApprovalRejectStep = async () => {
+
     var value = document.getElementById(`step_comment`).value;
     if (value === "") {
       setRejectOpen(false);
@@ -379,17 +471,21 @@ const ApprovalDetails = (props) => {
       approvalBtnRef.current.setAttribute("disabled", "disabled");
     }
 
+    setIsButtonDisabled(true);
     setIsLoadingStep(true);
+
     const stepResponse = await createApprovalStep(payload);
     if (stepResponse !== null) {
       setStepRefresh(true);
       setIsLoadingStep(false);
       document.getElementById(`step_comment`).value = "";
       setRejectOpen(false);
+
       setTimeout(() => {
         window.location.reload();
       }, 3000);
     }
+
   }
 
   useEffect(() => {
@@ -403,16 +499,25 @@ const ApprovalDetails = (props) => {
         const userDetails = localStorage.getItem("authUser");
         const user = JSON.parse(userDetails);
 
-        const onBoardingApprovals = await getAllOnBoardingApprovals(appraisalId);
+        //const onBoardingApprovals = await getAllOnBoardingApprovals(appraisalId);
         const exceptionalApprovals = await getAllExceptionalApprovals(appraisalId);
         const userVerify = await verifyApprovalUser(user.username);
-        const activeStep = await getActiveStep(appraisalId);
+        //const activeStep = await getActiveStep(appraisalId);
+
+        const approvalOrigination = await getAllOriginationApproval(appraisalId);
+        // console.log(approvalOrigination)
+        // console.log(approvalOrigination.approvalStepDto)
+        // console.log(approvalOrigination.approvalStepDto.workflowStep)
+        // console.log(approvalOrigination.approvalStepDto.workflowStep.name
+        // )
+
 
         if (_isMounted) {
-          setOnBoardingApprovals(onBoardingApprovals);
+          //setOnBoardingApprovals(onBoardingApprovals);
           setExceptionalApprovals(exceptionalApprovals);
           setFindUser(userVerify);
-          setActiveStep(activeStep);
+          //setActiveStep(activeStep);
+          setOriginationApproval(approvalOrigination);
         }
 
         setIsLoading(false);
@@ -484,7 +589,7 @@ const ApprovalDetails = (props) => {
                         <Row>
                           <Col md="3">
                             <Nav pills className="flex-column">
-                              {onBoardingApprovals.map((item, index) => (
+                              {originationApproval.requestDtoList?.map((item, index) => (
                                 <NavItem key={index}>
                                   <NavLink
                                     style={{ cursor: "pointer" }}
@@ -510,7 +615,7 @@ const ApprovalDetails = (props) => {
                             <TabContent
                               activeTab={verticalObActiveTab}
                               className="text-muted" >
-                              {onBoardingApprovals.map((item, index) => (
+                              {originationApproval.requestDtoList?.map((item, index) => (
                                 <TabPane key={index} tabId={index}>
                                   <Row>
                                     <Col md="12">
@@ -531,13 +636,13 @@ const ApprovalDetails = (props) => {
                                           {<span id={`ob_error_comment_${index}`} className="text-danger d-none">This field is required</span>}
                                         </div>
                                         {item.status === "P" && findUser?.group?.code === "AG_LEVEL_2" && <div className="form-group mt-3 d-flex justify-content-end align-items-center">
-                                          <button onClick={() => onSubmitObReject(index, item)} className="btn btn-danger w-md me-2">
+                                          <button onClick={() => handleObExceptionalRejectClickOpen(index, item)} className="btn btn-danger w-md me-2" >
                                             <SyncLoader loading={isLoadingOb}>
                                               <i className="bx bx-x-circle font-size-16 me-2" />
                                               Reject
                                             </SyncLoader>
                                           </button>
-                                          <button onClick={() => onSubmitObApproval(index, item)} className="btn btn-success w-md">
+                                          <button onClick={() => handleObExceptionalClickApproveOpen(index, item)} className="btn btn-success w-md">
                                             <SyncLoader loading={isLoadingOb}>
                                               <i className="bx bxs-check-circle font-size-16 me-2" />
                                               Approve
@@ -800,7 +905,7 @@ const ApprovalDetails = (props) => {
         </DialogContent>
         <DialogActions>
           <Button style={{ color: 'white', backgroundColor: '#34c38f' }}
-            onClick={createActionApprovalStep} autoFocus>
+            onClick={createActionApprovalStep} autoFocus disabled={isButtonDisabled}>
             {
               type == 'R' ? "Return" :
                 type == 'A' ? "Approve" : ""
@@ -827,7 +932,7 @@ const ApprovalDetails = (props) => {
         </DialogContent>
         <DialogActions>
           <Button style={{ color: 'white', backgroundColor: '#DC4C64' }}
-            onClick={createActionApprovalRejectStep} autoFocus>
+            onClick={createActionApprovalRejectStep} autoFocus disabled={isButtonDisabled}>
             Reject
           </Button>
           <Button style={{ color: 'gray' }} onClick={handleRejectClose}>Cancel</Button>
@@ -851,7 +956,7 @@ const ApprovalDetails = (props) => {
         </DialogContent>
         <DialogActions>
           <Button style={{ color: 'white', backgroundColor: '#34c38f' }}
-            onClick={onSubmitCaApproval} autoFocus>
+            onClick={onSubmitCaApproval} autoFocus disabled={isButtonDisabled}>
             {
               "Approve"
             }
@@ -877,10 +982,60 @@ const ApprovalDetails = (props) => {
         </DialogContent>
         <DialogActions>
           <Button style={{ color: 'white', backgroundColor: '#DC4C64' }}
-            onClick={onSubmitCaRejection} autoFocus>
+            onClick={onSubmitCaRejection} autoFocus disabled={isButtonDisabled}>
             Reject
           </Button>
           <Button style={{ color: 'gray' }} onClick={handleCaRejectClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={obExpOpen}
+        onClose={handleObExceptionalRejectClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">
+          {
+            "Approve"
+          }
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">{
+            "Are you sure do you want to approve this exceptional approval?"
+          }
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button style={{ color: 'white', backgroundColor: '#34c38f' }}
+            onClick={onSubmitObApproval} autoFocus disabled={isButtonDisabled}>
+            {
+              "Approve"
+            }
+          </Button>
+          <Button style={{ color: 'gray' }} onClick={handleObExceptionalClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={obExpRejectOpen}
+        onClose={handleObExceptionalRejectClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title" style={{ color: '#DC4C64', alignContent: "center" }}>
+          {
+            "Warning!"
+          }
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">{
+            "Are you sure do you want to reject this exceptional approval?"
+          }
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button style={{ color: 'white', backgroundColor: '#DC4C64' }}
+            onClick={onSubmitObReject} autoFocus disabled={isButtonDisabled}>
+            Reject
+          </Button>
+          <Button style={{ color: 'gray' }} onClick={handleObExceptionalRejectClose}>Cancel</Button>
         </DialogActions>
       </Dialog>
     </Row>

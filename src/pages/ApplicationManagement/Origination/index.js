@@ -67,7 +67,7 @@ const Origination = (props) => {
         sort: "asc",
       },
       {
-        field: 'lastModifiedDate',
+        field: 'creationDate',
         label: 'Created At',
         sort: "asc",
       },
@@ -109,7 +109,7 @@ const Origination = (props) => {
     item.customerCnic = item.clienteles[0].identificationNumber;
     item.customerName = item.clienteles[0].fullName;
     item.createdBy = item.clienteles[0].createdBy;
-    item.createdAt = moment(item.lastModifiedDate).format("DD-MM-YYYY HH:mm:ss");
+    item.creationDate = moment(item.lastModifiedDate).format("DD-MM-yyyy HH:mm:ss");
     item.isReturned = item.isReturned;
     return item;
   }

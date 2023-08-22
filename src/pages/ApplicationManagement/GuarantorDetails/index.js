@@ -33,6 +33,11 @@ import {
   getAllResidantals,
   getValueAddressType,
 } from "services/common.service";
+
+import {
+  getOriginationCommon
+} from "services/common.service";
+
 import {
   getTcDetails,
   getAmountsOfTcDetails,
@@ -57,15 +62,16 @@ const GuarantorDetails = (props) => {
   const [isLoading, setIsLoading] = useState(true);
 
   /* COMMON */
-  const [maritalStatus, setMaritalStatus] = useState([]);
-  const [cnicStatus, setCnicStatus] = useState([]);
-  const [titles, setTitles] = useState([]);
-  const [genders, setGenders] = useState([]);
-  const [educationalLevels, setEducationalLevels] = useState([]);
-  const [headOfFamily, setHeadOfFamily] = useState([]);
-  const [houseHoldContribution, setHouseHoldContribution] = useState([]);
-  const [communities, setCommunities] = useState([]);
-  const [residantals, setResidantals] = useState([]);
+  // const [maritalStatus, setMaritalStatus] = useState([]);
+  // const [cnicStatus, setCnicStatus] = useState([]);
+  // const [titles, setTitles] = useState([]);
+  // const [genders, setGenders] = useState([]);
+  // const [educationalLevels, setEducationalLevels] = useState([]);
+  // const [headOfFamily, setHeadOfFamily] = useState([]);
+  // const [houseHoldContribution, setHouseHoldContribution] = useState([]);
+  // const [communities, setCommunities] = useState([]);
+  // const [residantals, setResidantals] = useState([]);
+  const [originationCommon, setOriginationCommon] = useState([]);
 
   const [tcDetails, setTcDetails] = useState({});
   const [peoples, setPeoples] = useState([]);
@@ -178,36 +184,41 @@ const GuarantorDetails = (props) => {
           setCustomer(masterResponse.filter(item => item.stkType === "C")[0]);
         }
 
+        //change
         /* COMMON */
-        const maritalStatusResponse = await getAllMaritialStatus();
-        const cnicStatusResponse = await getAllCnicStatus();
-        const titlesResponse = await getAllTitiles();
-        const genderResponse = await getAllGenders();
-        const educationalLevelsResponse = await getAllEducationalLevels();
-        const communitiesResponse = await getAllCommiunities();
-        const residantalsResponse = await getAllResidantals();
+        // const maritalStatusResponse = await getAllMaritialStatus();
+        // const cnicStatusResponse = await getAllCnicStatus();
+        // const titlesResponse = await getAllTitiles();
+        // const genderResponse = await getAllGenders();
+        // const educationalLevelsResponse = await getAllEducationalLevels();
+        // const communitiesResponse = await getAllCommiunities();
+        // const residantalsResponse = await getAllResidantals();
 
         if (tcDetails !== undefined) {
-          const headOfFamilyResponse = await getAllHeadOfFamily(tcDetails.pTrhdLType);
-          const houseHoldContributionResponse = await getAllHouseHoldContribution(tcDetails.pTrhdLType);
+          const originationCommonResponce = await getOriginationCommon(tcDetails.pTrhdLType);
+          // const headOfFamilyResponse = await getAllHeadOfFamily(tcDetails.pTrhdLType);
+          // const houseHoldContributionResponse = await getAllHouseHoldContribution(tcDetails.pTrhdLType);
           if (_isMounted) {
-            setHeadOfFamily(headOfFamilyResponse);
-            setHouseHoldContribution(houseHoldContributionResponse);
+            // setHeadOfFamily(headOfFamilyResponse);
+            // setHouseHoldContribution(houseHoldContributionResponse);
+            setOriginationCommon(originationCommonResponce);
+
+            setIsLoading(false);
           }
         }
 
-        if (_isMounted) {
-          /* COMMON */
-          setMaritalStatus(maritalStatusResponse);
-          setCnicStatus(cnicStatusResponse);
-          setTitles(titlesResponse);
-          setGenders(genderResponse);
-          setEducationalLevels(educationalLevelsResponse);
-          setCommunities(communitiesResponse);
-          setResidantals(residantalsResponse);
+        // if (_isMounted) {
+        //   /* COMMON */
+        //   setMaritalStatus(maritalStatusResponse);
+        //   setCnicStatus(cnicStatusResponse);
+        //   setTitles(titlesResponse);
+        //   setGenders(genderResponse);
+        //   setEducationalLevels(educationalLevelsResponse);
+        //   setCommunities(communitiesResponse);
+        //   setResidantals(residantalsResponse);
 
-          setIsLoading(false);
-        }
+        //   setIsLoading(false);
+        // }
       }
     };
 
@@ -302,7 +313,7 @@ const GuarantorDetails = (props) => {
                                   </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>Marital Status</p></td>
-                                    <td className="m-1"><p>{master && master.stkMaritialStatus ? getValueByList(maritalStatus, master.stkMaritialStatus) : "\u00A0"}</p></td>
+                                    <td className="m-1"><p>{master && master.stkMaritialStatus ? getValueByList(originationCommon.maritalTypeDtoList, master.stkMaritialStatus) : "\u00A0"}</p></td>
                                   </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>No.of Dependents</p></td>
@@ -357,7 +368,7 @@ const GuarantorDetails = (props) => {
                                   </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>CNIC Status</p></td>
-                                    <td className="m-1"><p>{master && master.stkCNicStatus ? getValueByList(cnicStatus, master.stkCNicStatus) : "\u00A0"}</p></td>
+                                    <td className="m-1"><p>{master && master.stkCNicStatus ? getValueByList(originationCommon.cnicStatusDtoList, master.stkCNicStatus) : "\u00A0"}</p></td>
                                   </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>Surname</p></td>
@@ -369,7 +380,7 @@ const GuarantorDetails = (props) => {
                                   </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>Title</p></td>
-                                    <td className="m-1"><p>{master && master.stkTitle ? getValueByList(titles, master.stkTitle) : "\u00A0"}</p></td>
+                                    <td className="m-1"><p>{master && master.stkTitle ? getValueByList(originationCommon.titleDtoList, master.stkTitle) : "\u00A0"}</p></td>
                                   </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>No.of Earners</p></td>
@@ -381,7 +392,7 @@ const GuarantorDetails = (props) => {
                                   </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>Head of Family</p></td>
-                                    <td className="m-1"><p>{master && master.headOfFamily ? getValueByList(headOfFamily, master.headOfFamily) : "\u00A0"}</p></td>
+                                    <td className="m-1"><p>{master && master.headOfFamily ? getValueByList(originationCommon.headOfFamilyDetailsDtoList, master.headOfFamily) : "\u00A0"}</p></td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -425,7 +436,7 @@ const GuarantorDetails = (props) => {
                                   </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>Gender</p></td>
-                                    <td className="m-1"><p>{master && master.stkGender ? getValueByList(genders, master.stkGender) : "\u00A0"}</p></td>
+                                    <td className="m-1"><p>{master && master.stkGender ? getValueByList(originationCommon.genderDtoList, master.stkGender) : "\u00A0"}</p></td>
                                   </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>Father/ Husband Name</p></td>
@@ -433,7 +444,7 @@ const GuarantorDetails = (props) => {
                                   </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>Educational Qualification</p></td>
-                                    <td className="m-1"><p>{master && master.stkEduLevel ? getValueByList(educationalLevels, master.stkEduLevel) : "\u00A0"}</p></td>
+                                    <td className="m-1"><p>{master && master.stkEduLevel ? getValueByList(originationCommon.educationLevelDtoList, master.stkEduLevel) : "\u00A0"}</p></td>
                                   </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>There is a Physical Disability</p></td>
@@ -441,7 +452,7 @@ const GuarantorDetails = (props) => {
                                   </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>House Hold Contribution</p></td>
-                                    <td className="m-1"><p>{master && master.houseHoldCont ? getValueByList(houseHoldContribution, master.houseHoldCont) : "\u00A0"}</p></td>
+                                    <td className="m-1"><p>{master && master.houseHoldCont ? getValueByList(originationCommon.houseHoldDetailsDtoList, master.houseHoldCont) : "\u00A0"}</p></td>
                                   </tr>
                                 </tbody>
                               </table>
@@ -565,7 +576,7 @@ const GuarantorDetails = (props) => {
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Community</p></td>
-                                  <td><p className="m-1">{residential && residential.community ? getValueByList(communities, residential.community) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.community ? getValueByList(originationCommon.communityDtoList, residential.community) : "\u00A0"}</p></td>
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Nearby Popular Places</p></td>
@@ -577,7 +588,7 @@ const GuarantorDetails = (props) => {
                                 </tr>
                                 <tr>
                                   <td><p className="m-0 grid-text">Residence Type</p></td>
-                                  <td><p className="m-1">{residential && residential.residenceType ? getValueByList(residantals, residential.residenceType) : "\u00A0"}</p></td>
+                                  <td><p className="m-1">{residential && residential.residenceType ? getValueByList(originationCommon.residentialTypeDtoList, residential.residenceType) : "\u00A0"}</p></td>
                                 </tr>
                               </tbody>
                             </table>
