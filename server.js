@@ -5,8 +5,8 @@ var httpProxy = require('http-proxy')
 var cors = require('cors')
 var proxy = httpProxy.createProxyServer()
 
-var IDENTITY_SERVER_URL = 'https://pakauthuat.lolc.lk';
-var MIDDLEWARE_BASE_URL = 'https://pomicroapiuat.lolc.lk';
+var IDENTITY_SERVER_URL = 'https://pakauth.lolc.com.pk';
+var MIDDLEWARE_BASE_URL = 'https://pomicroapi.lolc.com.pk';
 
 app.use(cors());
 
