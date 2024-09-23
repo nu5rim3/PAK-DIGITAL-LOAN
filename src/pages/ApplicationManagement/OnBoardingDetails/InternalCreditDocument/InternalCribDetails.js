@@ -72,7 +72,17 @@ const InternalCribDetails = () => {
           <p className="m-0 grid-text text-center">{internalCrib && internalCrib != undefined && internalCrib.activeLoans ? internalCrib.activeLoans : "-"}</p>
         </Col>
       </Row>
-
+    <Row className="border border-success rounded p-3 mb-3">
+        <Col md={4}>
+          <p className="m-0 grid-text">Future Outstanding Amount</p>
+        </Col>
+        <Col md={4}>
+          <p className="m-0 grid-text text-center">-</p>
+        </Col>
+        <Col md={4}>
+          <p className="m-0 grid-text text-center">{internalCrib && internalCrib != undefined && internalCrib.futureOutstandingAmount ? internalCrib.futureOutstandingAmount : "-"}</p>
+        </Col>
+      </Row>
       <Row className="border border-success rounded p-3 mb-3">
         <Col md={4}>
           <p className="m-0 grid-text">Total Active Loan Amount</p>

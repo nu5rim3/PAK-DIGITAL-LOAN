@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import MetaTags from "react-meta-tags";
 import {
   Row,
+  Table
 } from "reactstrap";
 
 // APIs
 import {
-  getCustomerDetails,
+  getCustomerCreditScoreDetails,
   getSummaryDetails,
 } from "services/scoring.service";
 
@@ -26,7 +27,7 @@ const CustomerDetails = (props) => {
 
     const fetchData = async () => {
       if (props.product != "" && props.appraisalId != "") {
-        const customerResponse = await getCustomerDetails(props.product, props.appraisalId);
+        const customerResponse = await getCustomerCreditScoreDetails(props.product, props.appraisalId);
         const summaryResponse = await getSummaryDetails(props.appraisalId);
         if (_isMounted) {
           setCustomerDetails(customerResponse);
@@ -48,25 +49,41 @@ const CustomerDetails = (props) => {
   return (<Row>
     <Loader loading={isLoading} >
       <div className="text-muted d-flex">
-        <table className="table table-borderless">
-          <tbody>
+        <Table>
+          <tbody className="lg-4">
             <tr>
-              <td><p className="m-0 grid-text">Customer Name</p></td>
+              <td><p className="m-0 grid-text p-0">Customer Name</p></td>
               <td><p className="m-0">{customerDetails && customerDetails.stkCusName ? customerDetails.stkCusName : ""}</p></td>
-            </tr>
-            <tr>
+
+              <td><p className="m-0 grid-text">Applied Loan Amount</p></td>
+              <td><p className="m-0">{customerDetails && customerDetails.loanAmount ? customerDetails.loanAmount : ""}</p></td>
+
               <td><p className="m-0 grid-text">Customer CNIC</p></td>
               <td><p className="m-0">{customerDetails && customerDetails.stkCNic ? customerDetails.stkCNic : ""}</p></td>
             </tr>
             <tr>
+              {/* <td><p className="m-0 grid-text">Repayment Frequency</p></td>
+              <td><p className="m-0">{customerDetails && customerDetails.loanTenure ? customerDetails.loanTenure : ""}</p></td> */}
+
               <td><p className="m-0 grid-text">Date of Birth</p></td>
               <td><p className="m-0">{customerDetails && customerDetails.stkDob ? customerDetails.stkDob : ""}</p></td>
+
+              <td><p className="m-0 grid-text">Loan Tenure</p></td>
+              <td><p className="m-0">{customerDetails && customerDetails.loanTenure ? customerDetails.loanTenure : ""}</p></td>
             </tr>
+
             <tr>
               <td><p className="m-0 grid-text">Product</p></td>
               <td><p className="m-0">{customerDetails && customerDetails.prodName ? customerDetails.prodName : ""}</p></td>
+
+              <td><p className="m-0 grid-text">Business Sector</p></td>
+              <td><p className="m-0">{customerDetails && customerDetails.businessSector ? customerDetails.businessSector : ""}</p></td>
+
+              {/* <td><p className="m-0 grid-text">Agri Sector</p></td>
+              <td><p className="m-0">{customerDetails && customerDetails.prodName ? customerDetails.prodName : ""}</p></td>
+             */}
             </tr>
-            <tr>
+            {/* <tr>
               <td><p className="m-0 grid-text">Applied Loan Amount</p></td>
               <td><p className="m-0">{customerDetails && customerDetails.loanAmount ? customerDetails.loanAmount : ""}</p></td>
             </tr>
@@ -74,8 +91,8 @@ const CustomerDetails = (props) => {
               <td><p className="m-0 grid-text">Loan Tenure</p></td>
               <td><p className="m-0">{customerDetails && customerDetails.loanTenure ? customerDetails.loanTenure : ""}</p></td>
               <td><p className="m-0">Months</p></td>
-            </tr>
-            <tr>
+            </tr> */}
+            {/* <tr>
               <td><p className="m-0 grid-text">Branch/SC Approval Authority?</p></td>
               <td><p className="m-0">{summary && summary.approvalAuthority ? summary.approvalAuthority : ""}</p></td>
             </tr>
@@ -84,10 +101,10 @@ const CustomerDetails = (props) => {
               <td><p className="m-0">{summary && summary.loanCycle ? summary.loanCycle : ""}</p></td>
             </tr>
             <tr>
-              <td><p className="m-0 grid-text">Branch</p></td>
-              {/* TODO: Get details from the logged user */}
-              {/* <td><p className="m-0">{customerDetails && customerDetails ? customerDetails : ""}</p></td> */}
-            </tr>
+              <td><p className="m-0 grid-text">Branch</p></td> */}
+            {/* TODO: Get details from the logged user */}
+            {/* <td><p className="m-0">{customerDetails && customerDetails ? customerDetails : ""}</p></td> */}
+            {/* </tr>
             <tr>
               <td><p className="m-0 grid-text">Net Savings Amount/ Net Salary Amount</p></td>
               <td><p className="m-0">{customerDetails && customerDetails.netSalary ? customerDetails.netSalary : ""}</p></td>
@@ -99,9 +116,9 @@ const CustomerDetails = (props) => {
             <tr>
               <td><p className="m-0 grid-text">O/S balance ( ECIB)</p></td>
               <td><p className="m-0">{customerDetails && customerDetails.balanceOS ? customerDetails.balanceOS : ""}</p></td>
-            </tr>
+            </tr> */}
           </tbody>
-        </table>
+        </Table>
       </div>
     </Loader>
   </Row>)

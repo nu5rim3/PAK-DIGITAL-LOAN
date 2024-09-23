@@ -135,6 +135,9 @@ const SidebarContent = props => {
                   <li>
                     <Link to="/pakoman-digital-loan/access-and-permission/members">{props.t("Members")}</Link>
                   </li>
+                  <li>
+                    <Link to="/pakoman-digital-loan/access-and-permission/employees">{props.t("Business Introducers")}</Link>
+                  </li>
                 </ul>
               </li></>}
 
@@ -172,24 +175,33 @@ const SidebarContent = props => {
 
             {activePermission(permission) && <><li className="menu-title">{props.t("Report and Summary")}</li></>}
 
-            <li>
+              <li>
               <Link to="/pakoman-digital-loan/reports/mis-report" className="">
                 <i className="bx bxs-report"></i>
                 <span>{props.t("MIS Report")}</span>
               </Link>
             </li>
-            {/* <li>
-              <Link to="/pakoman-digital-loan/gold-loan-summary/report-goldsmith" className="">
-                <i className='bx bx-bar-chart-square'></i>
-                <span>{props.t("Goldsmith Report")}</span>
+            {activePermission(permission) && <><li>
+              <Link to="/pakoman-digital-loan/reports/facility-report" className="">
+                <i className="bx bxs-report"></i>
+                <span>{props.t("Gold Facility Report")}</span>
               </Link>
             </li>
-            <li>
-              <Link to="/pakoman-digital-loan/gold-loan-summary/report-marketvalue" className="">
-                <i className='bx bx-bar-chart-square'></i>
-                <span>{props.t("Gold Rate Report")}</span>
-              </Link>
-            </li>  */}
+              <li>
+                <Link to="/pakoman-digital-loan/reports/term-deposit-report" className="">
+                  <i className="bx bxs-report"></i>
+                  <span>{props.t("Term Deposit Report")}</span>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/pakoman-digital-loan/reports/bi-report" className="">
+                  <i className="bx bxs-report"></i>
+                  <span>{props.t("BI Report")}</span>
+                </Link>
+              </li>
+              </>}
+
 
             {activePermission(permission) && <><li className="menu-title">{props.t("Gold Loan Details")}</li>
               <li>
@@ -223,7 +235,7 @@ const SidebarContent = props => {
           </ul>
         </div>
       </SimpleBar>
-    </React.Fragment>
+    </React.Fragment >
   )
 }
 

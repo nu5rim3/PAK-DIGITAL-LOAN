@@ -269,18 +269,18 @@ const CustomerDetails = (props) => {
 
                               <tr>
                                 <td><p className="m-0 grid-text">Customer Code</p></td>
-                                <td><p className="m-1">{master && master.stkPhysDisability ? master.stkPhysDisability : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkCusCode ? master.stkCusCode : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Group/ Reference No</p></td>
                                 <td><p className="m-1">{master && master.stkGrpRefNo ? master.stkGrpRefNo : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">There is a Physical Disability</p></td>
-                                <td><p className="m-1">{master && master.stkPhysDisabilityDesce ? master.stkPhysDisabilityDesce : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkPhysDisability ? (master.stkPhysDisability == 'true' ? 'Yes' : 'No') : "\u00A0"}</p></td>
                               </tr>
 
                               <tr>
                                 <td><p className="m-0 grid-text">Description of Disability</p></td>
-                                <td><p className="m-1">{master && master.healthCondition ? getValueByList(originationCommon.healthConditionsDtoList, master.healthCondition) : "\u00A0"}</p></td>
+                                <td><p className="m-1">{master && master.stkPhysDisabilityDesce ? master.stkPhysDisabilityDesce : "\u00A0"}</p></td>
 
                                 <td><p className="m-0 grid-text">Head of Family</p></td>
                                 <td><p className="m-1">{master && master.headOfFamily ? getValueByList(originationCommon.headOfFamilyDetailsDtoList, master.headOfFamily) : "\u00A0"}</p></td>

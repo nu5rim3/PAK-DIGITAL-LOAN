@@ -108,7 +108,7 @@ const WitnessDetails = (props) => {
                       <thead>
                         <tr>
                           <th>Name</th>
-                          <th>Surname</th>
+                          {/* <th>Surname</th> */}
                           <th>CNIC</th>
                           <th>Action</th>
                         </tr>
@@ -117,7 +117,7 @@ const WitnessDetails = (props) => {
                         {peoples.map((item, index) => (
                           <tr key={index}>
                             <td>{item.stkCusName}</td>
-                            <td>{item.stkSurName}</td>
+                            {/* <td>{item.stkSurName}</td> */}
                             <td>{item.stkCNic}</td>
                             <td><Button color="success" size="sm" onClick={() => onLoadData(item, index)}><i className="bx bx-file-find font-size-16 align-middle me-2"></i>Load</Button></td>
                           </tr>
@@ -139,7 +139,7 @@ const WitnessDetails = (props) => {
                       onClick={handlePersonalAccn}
                       style={{ cursor: "pointer" }}
                     >
-                      <p>ITNESS PERSONAL INFORMATION</p>
+                      <p>WITNESS PERSONAL INFORMATION</p>
                     </button>
                   </h2>
 
@@ -168,7 +168,7 @@ const WitnessDetails = (props) => {
                                   </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>Address Type</p></td>
-                                    <td className="m-1"><p>{master && master.addressType ? getValueAddressType(master.addressType) : "\u00A0"}</p></td>
+                                    <td className="m-1"><p>{residential && residential.addressType ? getValueAddressType(residential.addressType) : "\u00A0"}</p></td>
                                   </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>Address Line 1</p></td>

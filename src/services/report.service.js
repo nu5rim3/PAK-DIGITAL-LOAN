@@ -19,3 +19,15 @@ export const getMisReport = (data) => {
 export const getMisReportSummary = (data) => {
     return get(`/mobixCamsReport/v1/reports/mis-reports?cro=${data.cro}&branch=${data.branch}&status=${data.status}&appraisalId=${data.appraisalId}&fromDate=${data.fromDate}&toDate=${data.toDate}`);
 };
+
+export const getFacilityReport = (data) => {
+    return file(`/mobixCamsReport/v1/reports/gold-loan-facility-reports/report.xlsx?status=${data.status}&fromDate=${data.fromDate}&toDate=${data.toDate}`);
+};
+
+export const getBusinessIntroducerReport = (data) => {
+    return file(`/mobixCamsReport/v1/reports/business-introducer/report.xlsx?status=${data.status}&fromDate=${data.fromDate}&toDate=${data.toDate}`);
+};
+
+export const getTermDepositReport = (data) => {
+    return file(`/mobixCamsReport/v1/reports/term-deposit/report.xlsx?status=${data.status}&fromDate=${data.fromDate}&toDate=${data.toDate}`);
+};

@@ -10,7 +10,7 @@ import CommonOauth2Logout from "pages/Authentication/CommonOauth2Logout"
 
 import Role from "pages/AccessAndPermission/Accounts/Role"
 import Member from "pages/AccessAndPermission/Accounts/Member"
-
+import Employee from "pages/AccessAndPermission/Accounts/Employee"
 // APPROVAL AND RETIFICATION
 import Group from "pages/ApprovalAndRetification/Group"
 import GroupUser from "pages/ApprovalAndRetification/User"
@@ -32,7 +32,9 @@ import CombinedReports from "../components/ApprasialLayout/ReportLayout";
 // REPORT AND SUMMARY
 
 import MisReport from "pages/Reports/MisReport"
-
+import FacilityReport from "pages/Reports/FacilityReport"
+import TermDepositReport from "pages/Reports/TermDepositReport"
+import BiReport from "pages/Reports/BiReport"
 //GOLD LOAN SUMMARY
 import IndexGoldSmith from "pages/GoldLoan/Goldsmith"
 // import ReportGoldSmith from "pages/Gold Loan/Goldsmith/GoldsmithReport"
@@ -44,7 +46,7 @@ const authProtectedRoutes = [
   // ACCESS AND PERMISSIONS
   { path: "/pakoman-digital-loan/access-and-permission/roles", component: Role },
   { path: "/pakoman-digital-loan/access-and-permission/members", component: Member },
-
+  { path: "/pakoman-digital-loan/access-and-permission/employees", component: Employee },
   // APPROVAL AND RETIFICATION
   { path: "/pakoman-digital-loan/approval-and-retification/groups", component: Group },
   { path: "/pakoman-digital-loan/approval-and-retification/users", component: GroupUser },
@@ -63,7 +65,9 @@ const authProtectedRoutes = [
 
   // REPORT AND SUMMARY
   { path: "/pakoman-digital-loan/reports/mis-report", component: MisReport },
-
+  { path: "/pakoman-digital-loan/reports/facility-report", component: FacilityReport },
+  { path: "/pakoman-digital-loan/reports/term-deposit-report", component: TermDepositReport },
+  { path: "/pakoman-digital-loan/reports/bi-report", component: BiReport },
   // GOLD LOAN SUMMARY
   { path: "/pakoman-digital-loan/gold-loan-summary/index-goldsmith", component: IndexGoldSmith },
   // { path: "/pakoman-digital-loan/gold-loan-summary/report-goldsmith", component: ReportGoldSmith },

@@ -114,6 +114,8 @@ const ApprovalDetails = (props) => {
   };
 
   const handleObExceptionalClickApproveOpen = (obIndex, item) => {
+    console.log("obIndex", obIndex);
+    console.log("item", item);
     setObExceptionalIndex(obIndex);
     setItem(item);
     setObExpOpen(true);
@@ -272,7 +274,7 @@ const ApprovalDetails = (props) => {
     const obApprovalResponse = createObApprovals(payload);
     if (obApprovalResponse !== undefined) {
       setTimeout(() => {
-        window.location.reload();
+        // window.location.reload();
       }, 500);
     }
 
@@ -389,6 +391,7 @@ const ApprovalDetails = (props) => {
 
   const createObApprovals = async (data) => {
     setIsLoadingOb(true);
+    console.log("data ", JSON.stringify(data))
     const commentResponse = await createApprovalComment(data);
     if (commentResponse !== undefined) {
       setIsLoadingOb(false);
@@ -487,7 +490,6 @@ const ApprovalDetails = (props) => {
     }
 
   }
-
   useEffect(() => {
     var _isMounted = true;
 
@@ -589,7 +591,7 @@ const ApprovalDetails = (props) => {
                         <Row>
                           <Col md="3">
                             <Nav pills className="flex-column">
-                              {originationApproval.requestDtoList?.map((item, index) => (
+                              {originationApproval.requestDtoList ?.map((item, index) => (
                                 <NavItem key={index}>
                                   <NavLink
                                     style={{ cursor: "pointer" }}
@@ -615,7 +617,7 @@ const ApprovalDetails = (props) => {
                             <TabContent
                               activeTab={verticalObActiveTab}
                               className="text-muted" >
-                              {originationApproval.requestDtoList?.map((item, index) => (
+                              {originationApproval.requestDtoList ?.map((item, index) => (
                                 <TabPane key={index} tabId={index}>
                                   <Row>
                                     <Col md="12">
@@ -635,7 +637,7 @@ const ApprovalDetails = (props) => {
                                           ></textarea>
                                           {<span id={`ob_error_comment_${index}`} className="text-danger d-none">This field is required</span>}
                                         </div>
-                                        {item.status === "P" && findUser?.group?.code === "AG_LEVEL_2" && <div className="form-group mt-3 d-flex justify-content-end align-items-center">
+                                        {item.status === "P" && findUser ?.group ?.code === "AG_LEVEL_2" && <div className="form-group mt-3 d-flex justify-content-end align-items-center">
                                           <button onClick={() => handleObExceptionalRejectClickOpen(index, item)} className="btn btn-danger w-md me-2" >
                                             <SyncLoader loading={isLoadingOb}>
                                               <i className="bx bx-x-circle font-size-16 me-2" />
@@ -688,7 +690,7 @@ const ApprovalDetails = (props) => {
                         <Row>
                           <Col md="3">
                             <Nav pills className="flex-column">
-                              {exceptionalApprovals?.map((item, index) => (
+                              {exceptionalApprovals ?.map((item, index) => (
                                 <NavItem key={index}>
                                   <NavLink
                                     style={{ cursor: "pointer" }}
@@ -714,7 +716,7 @@ const ApprovalDetails = (props) => {
                             <TabContent
                               activeTab={verticalCaActiveTab}
                               className="text-muted" >
-                              {exceptionalApprovals?.map((item, index) => (
+                              {exceptionalApprovals ?.map((item, index) => (
                                 <TabPane key={index} tabId={index}>
                                   <Row>
                                     <Col md="12">
@@ -831,7 +833,7 @@ const ApprovalDetails = (props) => {
                                               <p className="m-0 me-2">{item.lastModifiedBy}</p>
                                               <p className="m-0 me-2">{"•"}</p>
                                               <i className="bx bxs-calendar font-size-14 me-2" />
-                                              <p className="text-muted m-0">{moment(item.lastModifiedDate).format("YYYY-MM-DD | HH:MM:SS")}</p>
+                                              <p className="text-muted m-0">{moment(item.lastModifiedDate).format("YYYY-MM-DD | HH:mm:ss")}</p>
                                             </div>}
                                           </div>
                                         </div>

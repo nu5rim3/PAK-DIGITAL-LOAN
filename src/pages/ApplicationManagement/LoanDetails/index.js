@@ -220,7 +220,7 @@ const LoanDetails = (props) => {
           // const agriMachineResponse = await getAllMethodUseAgriMachine(tcDetails.pTrhdLType);
           // const cultivationProofResponse = await getAllCultivationProofs(tcDetails.pTrhdLType);
           // const fieldVeriResponse = await getAllFieldVerification(tcDetails.pTrhdLType);
-          const originationCommonResponce = await getOriginationCommon(tcDetails.pTrhdLType);
+          const originationCommonResponse = await getOriginationCommon(tcDetails.pTrhdLType);
 
           if (_isMounted) {
             // setApplicantDistance(applicantDistanceResponse);
@@ -235,7 +235,7 @@ const LoanDetails = (props) => {
             // setMethodUseAgriMachine(agriMachineResponse);
             // setCultivationProofs(cultivationProofResponse);
             // setFieldVerification(fieldVeriResponse);
-            setOriginationCommon(originationCommonResponce);
+            setOriginationCommon(originationCommonResponse);
           }
         }
 

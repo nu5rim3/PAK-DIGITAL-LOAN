@@ -10,7 +10,7 @@ import Loader from "components/Loader";
 
 // APIs
 import {
-  getSummaryDetails,
+  getCustomerCreditScoreDetails,
 } from "services/scoring.service";
 
 const FinalSummary = (props) => {
@@ -24,8 +24,9 @@ const FinalSummary = (props) => {
     setIsLoading(true);
 
     const fetchData = async () => {
+       
       if (props.product != "" && props.appraisalId != "") {
-        const summaryResponse = await getSummaryDetails(props.appraisalId);
+        const summaryResponse = await getCustomerCreditScoreDetails(props.product, props.appraisalId);
         if (_isMounted) {
           setSummary(summaryResponse);
 
@@ -58,22 +59,22 @@ const FinalSummary = (props) => {
 
         </Col>}
 
-        {summary && summary.riskStatus && <Col md={12} className="mt-3">
+        {summary && summary.riskLevel && <Col md={12} className="mt-3">
           <div className="border border-warning rounded text-center p-3">
-            <p className="m-0 grid-text">{summary && summary.riskStatus ? summary.riskStatus : ""}</p>
+            <p className="m-0 grid-text">{summary && summary.riskLevel ? summary.riskLevel : ""}</p>
           </div>
 
         </Col>}
 
-        {summary && summary.maxLoanAmount && <Col md={12} className="mt-3">
+        {summary && summary.loanAmount && <Col md={12} className="mt-3">
           <div className="border border-warning rounded text-center p-3">
             <p className="m-0 grid-text">Maximum loan Amount</p>
           </div>
         </Col>}
 
-        {summary && summary.maxLoanAmount && <Col md={12} className="mt-3">
+        {summary && summary.loanAmount && <Col md={12} className="mt-3">
           <div className="border border-warning rounded text-center p-3">
-            <p className="m-0 grid-text">{summary && summary.maxLoanAmount ? summary.maxLoanAmount : ""}</p>
+            <p className="m-0 grid-text">{summary && summary.loanAmount ? summary.loanAmount : ""}</p>
           </div>
         </Col>}
       </Loader>

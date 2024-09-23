@@ -30,6 +30,10 @@ import Loader from "components/Loader";
 import {
   getTcDetails,
 } from "services/tc.service"
+import CreditScoreCusDetails from "./CreditScoreCustomerDetails";
+import CreditScoreBusinessFacts from "./CreditScoreBusiness";
+import SummaryBar from "./Summary";
+
 
 const CreditScoringDetails = (props) => {
 
@@ -115,13 +119,42 @@ const CreditScoringDetails = (props) => {
                       className={classnames(
                         "accordion-button",
                         "fw-medium",
+                        { collapsed: !guarantorAccn }
+                      )}
+                      type="button"
+                      onClick={handleGuarantorAccn}
+                      style={{ cursor: "pointer" }}
+                    >
+                      FINAL CREDIT SCORING SUMMARY
+                    </button>
+                  </h2>
+
+                  <Collapse
+                    isOpen={guarantorAccn}
+                    className="accordion-collapse"
+                  >
+                    <div className="accordion-body">
+                      <SummaryBar product={tcDetails !== undefined ? tcDetails.pTrhdLType : ""} appraisalId={appraisalId} />
+                    </div>
+                  </Collapse>
+                </div>
+
+                <div className="accordion-item">
+                  <h2
+                    className="accordion-header"
+                    id="headingFlushThree"
+                  >
+                    <button
+                      className={classnames(
+                        "accordion-button",
+                        "fw-medium",
                         { collapsed: !customerAccn }
                       )}
                       type="button"
                       onClick={handleCustomerAccn}
                       style={{ cursor: "pointer" }}
                     >
-                      CUSTOMER DETAILS
+                      INITIAL DETAILS OF CUSTOMER
                     </button>
                   </h2>
 
@@ -150,7 +183,7 @@ const CreditScoringDetails = (props) => {
                       onClick={handleSummaryAccn}
                       style={{ cursor: "pointer" }}
                     >
-                      SUMMARY DETAILS
+                      CREDIT SCORES FOR CUSTOMER DETAILS
                     </button>
                   </h2>
 
@@ -158,8 +191,11 @@ const CreditScoringDetails = (props) => {
                     isOpen={summaryAccn}
                     className="accordion-collapse"
                   >
-                    <div className="accordion-body">
+                    {/* <div className="accordion-body">
                       <SummaryDetails product={tcDetails !== undefined ? tcDetails.pTrhdLType : ""} appraisalId={appraisalId} />
+                    </div> */}
+                    <div className="accordion-body">
+                      <CreditScoreCusDetails product={tcDetails !== undefined ? tcDetails.pTrhdLType : ""} appraisalId={appraisalId} />
                     </div>
                   </Collapse>
                 </div>
@@ -179,7 +215,7 @@ const CreditScoringDetails = (props) => {
                       onClick={handleGuarantorAccn}
                       style={{ cursor: "pointer" }}
                     >
-                      GUARANTOR DETAILS
+                      CREDIT SCORES FOR BUSINESS RELATED FACTS
                     </button>
                   </h2>
 
@@ -187,13 +223,16 @@ const CreditScoringDetails = (props) => {
                     isOpen={guarantorAccn}
                     className="accordion-collapse"
                   >
-                    <div className="accordion-body">
+                    {/* <div className="accordion-body">
                       <GuarantorDetails product={tcDetails !== undefined ? tcDetails.pTrhdLType : ""} appraisalId={appraisalId} />
+                    </div> */}
+                    <div className="accordion-body">
+                      <CreditScoreBusinessFacts product={tcDetails !== undefined ? tcDetails.pTrhdLType : ""} appraisalId={appraisalId} />
                     </div>
                   </Collapse>
                 </div>
 
-                <div className="accordion-item">
+                {/* <div className="accordion-item">
                   <h2
                     className="accordion-header"
                     id="headingFlushThree"
@@ -220,7 +259,7 @@ const CreditScoringDetails = (props) => {
                       <FinalSummary product={tcDetails !== undefined ? tcDetails.pTrhdLType : ""} appraisalId={appraisalId} />
                     </div>
                   </Collapse>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
