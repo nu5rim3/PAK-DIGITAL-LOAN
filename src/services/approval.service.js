@@ -35,7 +35,7 @@ export const getAllOnBoardingApprovals = async (appraisalId) => {
 export const getAllExceptionalApprovals = async (appraisalId) => {
     return await get(`/mobixCamsApproval/v1/approvals/appraisal/${appraisalId}`);
 };
-
+  
 export const createApprovalComment = async (data) => {
     return await post("/mobixCamsApproval/v1/approvals/comments", data);
 };

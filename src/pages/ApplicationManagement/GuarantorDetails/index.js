@@ -304,8 +304,8 @@ const GuarantorDetails = (props) => {
                                     <td className="m-1"><p>{master && master.stkCNicExpDate ? master.stkCNicExpDate : "\u00A0"}</p></td>
                                   </tr>
                                   <tr>
-                                    <td className="m-0 grid-text"><p>{master && master.stkInitials ? master.stkInitials : "\u00A0"}</p><p>Initials</p></td>
-                                    <td className="m-1"></td>
+                                    <td className="m-0 grid-text"><p>Initials</p></td>
+                                    <td className="m-1"><p>{master && master.stkInitials ? master.stkInitials : "\u00A0"}</p></td>
                                   </tr>
                                   <tr>
                                     <td className="m-0 grid-text"><p>Date of Birth</p></td>

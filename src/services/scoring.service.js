@@ -15,3 +15,7 @@ export const getGuarantorDetails = async (productCode, appraisalId) => {
 export const getEcibReport = async (cNic) => {
     return await file(`/mobixCamsCredit/v1/credit/ecib/resources/${cNic}`);
 };
+
+export const getCustomerCreditScoreDetails = async (productCode, appraisalId) => {
+    return await get(`/mobixCamsCredit/v1/credits-scores/products/${productCode}/appraisals/${appraisalId}`);
+};

@@ -141,6 +141,7 @@ const Member = (props) => {
 
     const fetchData = async () => {
       const userResponse = await getAllUsers(PAGE, SIZE);
+            console.log("userResponse", userResponse)
       if (_isMounted && userResponse !== undefined) {
         var data = userResponse.content.map(item => modernization(item));
         setUsers(data);

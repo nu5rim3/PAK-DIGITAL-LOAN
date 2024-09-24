@@ -83,6 +83,11 @@ const Appraisal = (props) => {
           isGoldProduct(true)
         } else if (productResponse.pTrhdLType === 'GL') {
           isGoldProduct(true)
+        } else if (productResponse.pTrhdLType === 'GN') {
+          isGoldProduct(true)
+
+        } else if (productResponse.pTrhdLType === 'MG') {
+          isGoldProduct(true)
         }
       }
 
