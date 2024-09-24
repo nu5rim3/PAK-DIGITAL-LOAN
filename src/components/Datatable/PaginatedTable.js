@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import { Row, Col } from "reactstrap"
 
 // datatable related plugins
@@ -48,9 +48,10 @@ const PaginatedTable = props => {
         noBottomColumns
         data={{
           columns: props.items.columns,
-          rows: props.tableData.content,
+          rows: props?.tableData?.content ?? [],
         }}
         paging={false}
+        searching={false}
       />
 
       <div className="d-flex flex-row-reverse">{pagination()}</div>

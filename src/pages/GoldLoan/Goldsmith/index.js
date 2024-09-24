@@ -19,17 +19,22 @@ import Breadcrumbs from "components/Common/Breadcrumb"
 import UpdateGoldsmith from "./UpdateGoldsmith"
 import Deactivate from "./DeactivateGoldsmith"
 import ActivateGoldsmith from "./ActivateGoldsmith"
+import Loader from "components/SyncLoader"
+import Search from "components/Search/Search"
 
 const IndexGoldSmith = props => {
   const [goldsmith, setGoldsmith] = useState([])
+  const [isMounted, setIsMounted] = useState(false)
+  const [searchData, setSearchData] = useState({})
   const [goldsmithTableData, setGoldsmithTableData] = useState([])
   const [isOpenCreate, setIsOpenCreate] = useState(false)
   const [isOpenUpdate, setIsOpenUpdate] = useState(false)
   const [isDeactivate, setIsDecivate] = useState(false)
   const [isOpenActivate, setIsOpenActivate] = useState(false)
-  const [branches, setBranches] = useState(null)
   const [data, setData] = useState(null)
   const [page, setPage] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isReset, setIsReset] = useState(false)
 
   const toggelCreateModal = () => {
     setIsOpenCreate(!isOpenCreate)
@@ -160,31 +165,42 @@ const IndexGoldSmith = props => {
     return item
   }
 
-  useEffect(() => {
-    var _isMounted = true
-
-    const fetchData = async () => {
-      const goldsmithResponse = await getAllGoldsmiths(page)
-      setGoldsmithTableData(goldsmithResponse)
-      const branchesResponse = await getAllBranches()
-      if (
-        _isMounted &&
-        branchesResponse !== undefined &&
-        goldsmithResponse !== undefined
-      ) {
-        var data = goldsmithResponse.content.map(item => modernization(item))
-        // console.log("[data] - ", data)
-        setGoldsmith(data)
-        setBranches(branchesResponse)
-      }
+  const fetchData = async () => {
+    setIsMounted(true)
+    setIsLoading(true)
+    const shop = searchData?.searchFeild === "Shop" ? searchData.search : ""
+    const owner = searchData?.searchFeild === "Owner" ? searchData.search : ""
+    const branch = searchData?.searchFeild === "Branch" ? searchData.search : ""
+    if (isReset) {
     }
 
+    const goldsmithResponse = await getAllGoldsmiths(
+      searchData.search === "" && isReset ? 0 : page,
+      shop,
+      owner,
+      branch
+    )
+
+    setGoldsmithTableData(goldsmithResponse)
+    setIsLoading(false)
+    setIsReset(false)
+    if (isMounted && goldsmithResponse !== undefined) {
+      var data = goldsmithResponse.content.map(item => modernization(item))
+      setGoldsmith(data)
+    }
+  }
+
+  useEffect(() => {
     fetchData()
 
     return () => {
-      _isMounted = false
+      setIsMounted(false)
     }
-  }, [page])
+  }, [page, searchData, isReset])
+
+  useEffect(() => {
+    setPage(0)
+  }, [isReset])
 
   return (
     <React.Fragment>
@@ -207,7 +223,7 @@ const IndexGoldSmith = props => {
                     </p>
 
                     <button
-                      className="btn btn-primary btn-sm d-flex justify-content-between align-items-center"
+                      className="btn btn-primary d-flex justify-content-between align-items-center"
                       onClick={() => toggelCreateModal(true)}
                     >
                       <i className="bx bxs-plus-square font-size-18 me-1"></i>
@@ -215,6 +231,12 @@ const IndexGoldSmith = props => {
                     </button>
                   </div>
 
+                  <Search
+                    searchItems={["Branch", "Shop", "Owner"]}
+                    setSearchData={setSearchData}
+                    isLoading={isLoading}
+                    setRest={setIsReset}
+                  />
                   <PaginatedTable
                     items={items}
                     tableData={goldsmithTableData}
