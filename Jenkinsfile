@@ -1,3 +1,4 @@
+
 pipeline {
   environment {
     def con_name = "mobix-cams-digital-loan-web"
@@ -57,3 +58,4 @@ pipeline {
     }
   }
 }
+
