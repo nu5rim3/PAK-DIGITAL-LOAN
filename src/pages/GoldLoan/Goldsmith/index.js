@@ -223,10 +223,10 @@ const IndexGoldSmith = props => {
                     </p>
 
                     <button
-                      className="btn btn-primary d-flex justify-content-between align-items-center"
+                      className="btn btn-primary btn-sm d-flex justify-content-between align-items-center"
                       onClick={() => toggelCreateModal(true)}
                     >
-                      <i className="bx bxs-plus-square font-size-18 me-1"></i>
+                      <i className="bx bxs-plus-square font-size-16 me-1" />
                       <p className="m-0">Register Goldsmith</p>
                     </button>
                   </div>
