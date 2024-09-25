@@ -84,7 +84,7 @@ const GeoDetails = props => {
   }, [props.active])
 
   const getCatagoryColor = category => {
-    console.log("[category] - ", category)
+    // console.log("[category] - ", category)
     switch (category) {
       case "GEO_DETAILS_BHO":
         return { color: "#F44546", categoryName: "Branch Manager" }

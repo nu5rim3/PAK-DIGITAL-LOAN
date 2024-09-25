@@ -184,7 +184,7 @@ const IndexGoldSmith = props => {
     setGoldsmithTableData(goldsmithResponse)
     setIsLoading(false)
     setIsReset(false)
-    if (isMounted && goldsmithResponse !== undefined) {
+    if (goldsmithResponse !== undefined) {
       var data = goldsmithResponse.content.map(item => modernization(item))
       setGoldsmith(data)
     }
