@@ -1,7 +1,7 @@
 import PropTypes from "prop-types"
 import React, { useEffect, useRef, useState } from "react"
 
-// //Import Scrollbar
+// Import Scrollbar
 import SimpleBar from "simplebar-react"
 
 // MetisMenu
@@ -9,7 +9,7 @@ import MetisMenu from "metismenujs"
 import { withRouter } from "react-router-dom"
 import { Link } from "react-router-dom"
 
-//i18n
+// i18n
 import { withTranslation } from "react-i18next"
 
 const SidebarContent = props => {
@@ -19,12 +19,12 @@ const SidebarContent = props => {
   // Permission groups
   const permission = ["ADMIN"]
 
-  // Use ComponentDidMount and ComponentDidUpdate method symultaniously
   useEffect(() => {
     const pathName = props.location.pathname
 
     const initMenu = () => {
-      new MetisMenu("#side-menu")
+      new MetisMenu("#side-menu") // Reinitialize MetisMenu for the sidebar
+
       let matchingMenuItem = null
       const ul = document.getElementById("side-menu")
       const items = ul.getElementsByTagName("a")
@@ -77,41 +77,22 @@ const SidebarContent = props => {
   }
 
   function activateParentDropdown(item) {
+    // Clear active state from previous items
+    document.querySelectorAll(".mm-active").forEach(el => {
+      el.classList.remove("mm-active")
+    })
+
     item.classList.add("active")
-    const parent = item.parentElement
-    const parent2El = parent.childNodes[1]
-    if (parent2El && parent2El.id !== "side-menu") {
-      parent2El.classList.add("mm-show")
-    }
+    let parent = item.parentElement
 
-    if (parent) {
+    while (parent && parent.id !== "side-menu") {
       parent.classList.add("mm-active")
-      const parent2 = parent.parentElement
-
-      if (parent2) {
-        parent2.classList.add("mm-show") // ul tag
-
-        const parent3 = parent2.parentElement // li tag
-
-        if (parent3) {
-          parent3.classList.add("mm-active") // li
-          parent3.childNodes[0].classList.add("mm-active") //a
-          const parent4 = parent3.parentElement // ul
-          if (parent4) {
-            parent4.classList.add("mm-show") // ul
-            const parent5 = parent4.parentElement
-            if (parent5) {
-              parent5.classList.add("mm-show") // li
-              parent5.childNodes[0].classList.add("mm-active") // a tag
-            }
-          }
-        }
+      parent = parent.parentElement.closest("li") // Traverse up to the next list item
+      if (parent) {
+        parent.classList.add("mm-active")
       }
-      scrollElement(item)
-      return false
     }
     scrollElement(item)
-    return false
   }
 
   return (
@@ -128,10 +109,9 @@ const SidebarContent = props => {
                   </Link>
                 </li>
                 <li className="menu-title">
-                  {props.t("Access and Permisssion")}{" "}
+                  {props.t("Access and Permission")}{" "}
                 </li>
 
-                {/* <ul className="sub-menu" aria-expanded="false"> */}
                 <li>
                   <Link to="/pakoman-digital-loan/access-and-permission/roles">
                     <i className="bx bxs-user-account"></i>
@@ -150,7 +130,6 @@ const SidebarContent = props => {
                     <span>{props.t("Business Introducers")}</span>
                   </Link>
                 </li>
-                {/* </ul> */}
               </>
             )}
 
@@ -273,20 +252,6 @@ const SidebarContent = props => {
                 </li>
               </>
             )}
-
-            {/*<li>
-              <Link to="#" className="">
-                <i className="bx bxs-report"></i>
-                <span>{props.t("Report 01")}</span>
-              </Link>
-            </li>
-
-            <li>
-              <Link to="#" className="">
-                <i className="bx bxs-report"></i>
-                <span>{props.t("Report 01")}</span>
-              </Link>
-            </li> */}
           </ul>
         </div>
       </SimpleBar>

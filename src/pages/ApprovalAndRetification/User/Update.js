@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import PropTypes from "prop-types"
+import React, { useEffect, useState } from "react"
 import {
   Container,
   Row,
@@ -9,107 +9,107 @@ import {
   CardTitle,
   Modal,
   Alert,
-} from "reactstrap";
+} from "reactstrap"
 
-import { useForm } from "react-hook-form";
+import { useForm } from "react-hook-form"
 
-import Loader from "components/SyncLoader";
+import Loader from "components/SyncLoader"
 
 import {
   getAllApprovalGroups,
   updateApprovalUser,
-} from "services/approval.service";
+} from "services/approval.service"
 
-const Update = (props) => {
+const Update = props => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [groups, setGroups] = useState([])
+  const [success, setSuccess] = useState(null)
+  const [error, setError] = useState(null)
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [groups, setGroups] = useState([]);
-  const [success, setSuccess] = useState(null);
-  const [error, setError] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm()
 
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm();
-
-  const onSubmit = async (data) => {
+  const onSubmit = async data => {
     var payload = {
-      "group": {
-        "code": data.group
+      group: {
+        code: data.group,
       },
-      "userIdx": data.userIdx.trim(),
-      "status": data.status
+      userIdx: data.userIdx.trim(),
+      status: data.status,
     }
 
-    setIsLoading(true);
+    setIsLoading(true)
 
-    await updateApprovalUser(props.data.userIdx, payload).then(res => {
-      setIsLoading(false);
-      setSuccess("User has been updated successfully.");
+    await updateApprovalUser(props.data.userIdx, payload)
+      .then(res => {
+        setIsLoading(false)
+        setSuccess("User has been updated successfully.")
 
-      setTimeout(() => {
-        setSuccess(null);
-        props.toggel();
-      }, 3000);
-    }).catch(err => {
-      setIsLoading(false);
-      if (err.response.status) {
-        setError(err.response.data.message);
-      }
+        setTimeout(() => {
+          setSuccess(null)
+          props.toggel()
+        }, 3000)
+      })
+      .catch(err => {
+        setIsLoading(false)
+        if (err.response.status) {
+          setError(err.response.data.message)
+        }
 
-      setTimeout(() => {
-        setError(null);
-      }, 3000);
-    });
-  };
+        setTimeout(() => {
+          setError(null)
+        }, 3000)
+      })
+  }
 
-  const getStatusValue = (value) => {
+  const getStatusValue = value => {
     if (value === "Active") {
-      return "A";
+      return "A"
     } else {
-      return "I";
+      return "I"
     }
   }
 
-  const findUser = (value) => {
-    console.log();
+  const findUser = value => {
+    console.log()
   }
 
   useEffect(() => {
-    var _isMounted = true;
+    var _isMounted = true
 
     const fetchData = async () => {
-      const groupsResponse = await getAllApprovalGroups();
+      const groupsResponse = await getAllApprovalGroups()
       if (_isMounted && groupsResponse !== undefined) {
-        setGroups(groupsResponse);
+        setGroups(groupsResponse)
 
         if (props.data !== null && props.data !== undefined) {
-          setValue("userIdx", props.data.userIdx);
-          setValue("group", props.data.groupCode);
-          setValue("status", getStatusValue(props.data.status));
+          setValue("userIdx", props.data.userIdx)
+          setValue("group", props.data.groupCode)
+          setValue("status", getStatusValue(props.data.status))
         }
       }
-    };
+    }
 
-    fetchData();
+    fetchData()
 
     return () => {
-      _isMounted = false;
+      _isMounted = false
     }
-  }, [props.data]);
+  }, [props.data])
 
   return (
     <Row>
-      <Modal
-        size="lg"
-        isOpen={props.isOpen}
-      >
+      <Modal size="lg" isOpen={props.isOpen}>
         <div className="modal-header">
-          <h5
-            className="modal-title mt-0"
-          >
-            Update Member
-          </h5>
+          <h5 className="modal-title mt-0">Update User</h5>
           <button
             onClick={() => {
-              props.toggel();
+              props.toggel()
             }}
             type="button"
             className="close"
@@ -131,7 +131,9 @@ const Update = (props) => {
                 </Col>
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="user-profile">User IDX</label>
+                    <label htmlFor="user-profile">
+                      User IDX<span className="text-danger">*</span>
+                    </label>
                     <div className="input-group mb-3">
                       <input
                         type="text"
@@ -140,35 +142,53 @@ const Update = (props) => {
                         {...register("userIdx", { required: true })}
                       />
                       <div className="input-group-append">
-                        <button className="btn btn-success"
+                        <button
+                          className="btn btn-success"
                           type="button"
-                          onClick={() => findUser()}>
+                          onClick={() => findUser()}
+                        >
                           Find
                         </button>
                       </div>
                     </div>
-                    {errors.userIdx && <span className="text-danger">This field is required</span>}
+                    {errors.userIdx && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
 
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="approval-group">Group</label>
+                    <label htmlFor="approval-group">
+                      Group<span className="text-danger">*</span>
+                    </label>
                     <select
                       className="form-control"
                       id="approval-group"
                       {...register("group", { required: true })}
                     >
                       <option value="">Choose...</option>
-                      {groups.map((item, index) => <option key={index} value={item.code}>{item.name}</option>)}
+                      {groups.map((item, index) => (
+                        <option key={index} value={item.code}>
+                          {item.name}
+                        </option>
+                      ))}
                     </select>
-                    {errors.branch && <span className="text-danger">This field is required</span>}
+                    {errors.branch && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
 
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="approval-user-status">Status</label>
+                    <label htmlFor="approval-user-status">
+                      Status<span className="text-danger">*</span>
+                    </label>
                     <select
                       className="form-control"
                       id="approval-user-status"
@@ -185,7 +205,7 @@ const Update = (props) => {
               <div className="mt-3 d-flex flex-row-reverse">
                 <button type="submit" className="btn btn-primary w-md">
                   <Loader loading={isLoading}>
-                    <i className="bx bx-save font-size-16 me-2" ></i>
+                    <i className="bx bx-save font-size-16 me-2"></i>
                     Update
                   </Loader>
                 </button>
@@ -195,7 +215,7 @@ const Update = (props) => {
         </div>
       </Modal>
     </Row>
-  );
+  )
 }
 
 Update.propTypes = {
@@ -204,4 +224,4 @@ Update.propTypes = {
   data: PropTypes.object,
 }
 
-export default Update;
+export default Update

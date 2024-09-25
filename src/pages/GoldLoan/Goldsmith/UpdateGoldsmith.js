@@ -1,125 +1,121 @@
-import PropTypes from "prop-types";
-import React, { useState, useEffect } from "react";
-import {
-  Row,
-  Col,
-  Alert,
-  Modal
-} from "reactstrap";
+import PropTypes from "prop-types"
+import React, { useState, useEffect } from "react"
+import { Row, Col, Alert, Modal } from "reactstrap"
 
-import { useForm } from "react-hook-form";
-import Loader from "components/SyncLoader";
+import { useForm } from "react-hook-form"
+import Loader from "components/SyncLoader"
 
-import { updateGoldsmith } from "services/goldsmith.service";
-import { getAllBranches } from "services/common.service";
+import { updateGoldsmith } from "services/goldsmith.service"
+import { getAllBranches } from "services/common.service"
 
-const UpdateGoldsmith = (props) => {
+const UpdateGoldsmith = props => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
+  const [branches, setBranches] = useState(null)
+  const [data, setData] = useState(null)
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
-  const [branches, setBranches] = useState(null);
-  const [data, setData] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    setError,
+    reset,
+    formState: { errors },
+  } = useForm()
 
-  const { register, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
-
-  const onSubmit = async (data) => {
-
+  const onSubmit = async data => {
     var payload = {
-      "branchIdFx": data.branchIdFx,
-      "shopName": data.shopName,
-      "ownerName": data.ownerName,
-      "contactNumber": data.contactNumber,
-      "address": data.address,
-      "addLineOne": data.addLineOne,
-      "addLineTwo": data.addLineTwo,
-      "goldsmithStatus": data.goldsmithStatus
+      branchIdFx: data.branchIdFx,
+      shopName: data.shopName,
+      ownerName: data.ownerName,
+      contactNumber: data.contactNumber,
+      address: data.address,
+      addLineOne: data.addLineOne,
+      addLineTwo: data.addLineTwo,
+      goldsmithStatus: data.goldsmithStatus,
     }
 
-    setIsLoading(true);
+    setIsLoading(true)
 
-    await updateGoldsmith(props.data.id, payload).then(res => {
-      if (res?.status === 200) {
-        setIsLoading(false);
-        setSuccessMessage("User updated successfully.");
-        reset();
-        setTimeout(() => {
-          setSuccessMessage(null);
-          props.toggel();
-          window.location.reload(true);
-        }, 2000);
-      } else if (res?.status === 500) {
-        setIsLoading(false);
-        setErrorMessage("User updated failed.");
-        setTimeout(() => {
-          setErrorMessage(null);
-          props.toggel();
-          window.location.reload(true);
-        }, 2000);
-      } else {
-        setIsLoading(false);
-        setErrorMessage(res.data?.message);
-        setTimeout(() => {
-          setErrorMessage(null);
-          props.toggel();
-          window.location.reload(true);
-        }, 2000);
-      }
-    }).catch(err => console.log(err));
-  };
+    await updateGoldsmith(props.data.id, payload)
+      .then(res => {
+        if (res?.status === 200) {
+          setIsLoading(false)
+          setSuccessMessage("User updated successfully.")
+          reset()
+          setTimeout(() => {
+            setSuccessMessage(null)
+            props.toggel()
+            window.location.reload(true)
+          }, 2000)
+        } else if (res?.status === 500) {
+          setIsLoading(false)
+          setErrorMessage("User updated failed.")
+          setTimeout(() => {
+            setErrorMessage(null)
+            props.toggel()
+            window.location.reload(true)
+          }, 2000)
+        } else {
+          setIsLoading(false)
+          setErrorMessage(res.data?.message)
+          setTimeout(() => {
+            setErrorMessage(null)
+            props.toggel()
+            window.location.reload(true)
+          }, 2000)
+        }
+      })
+      .catch(err => console.log(err))
+  }
 
-  const getStatusValue = (value) => {
+  const getStatusValue = value => {
     if (value === "ACTIVE") {
-      return "A";
+      return "A"
     } else {
-      return "D";
+      return "D"
     }
   }
 
   useEffect(() => {
-    var _isMounted = true;
+    var _isMounted = true
 
     const fetchData = async () => {
-      const branchResponse = await getAllBranches();
+      const branchResponse = await getAllBranches()
       if (_isMounted) {
-        setBranches(branchResponse);
+        setBranches(branchResponse)
       }
 
       if (props.data !== null && props.data !== undefined) {
-        setValue("branchIdFx", props.data.branchIdFx);
-        setValue("shopName", props.data.shopName);
-        setValue("ownerName", props.data.ownerName);
-        setValue("contactNumber", props.data.contactNumber);
-        setValue("address", props.data.address);
-        setValue("addLineOne", props.data.addLineOne);
-        setValue("addLineTwo", props.data.addLineTwo);
-        setValue("goldsmithStatus", getStatusValue(props.data.goldsmithStatus));
+        setValue("branchIdFx", props.data.branchIdFx)
+        setValue("shopName", props.data.shopName)
+        setValue("ownerName", props.data.ownerName)
+        setValue("contactNumber", props.data.contactNumber)
+        setValue("address", props.data.address)
+        setValue("addLineOne", props.data.addLineOne)
+        setValue("addLineTwo", props.data.addLineTwo)
+        setValue("goldsmithStatus", getStatusValue(props.data.goldsmithStatus))
       }
-    };
+    }
 
-    fetchData();
+    fetchData()
 
     return () => {
-      _isMounted = false;
+      _isMounted = false
     }
-  }, [props.data]);
+  }, [props.data])
 
   return (
     <Row>
-      <Modal
-        size="lg"
-        isOpen={props.isOpen}
-      >
+      <Modal size="lg" isOpen={props.isOpen}>
         <div className="modal-header">
-          <h5
-            className="modal-title mt-0"
-          >
-            Update Goldsmith
-          </h5>
+          <h5 className="modal-title mt-0">Update Goldsmith</h5>
           <button
             onClick={() => {
-              setData(null);
-              props.toggel();
+              setData(null)
+              props.toggel()
             }}
             type="button"
             className="close"
@@ -133,7 +129,9 @@ const UpdateGoldsmith = (props) => {
           <Row>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Col md={12}>
-                {successMessage && <Alert color="success">{successMessage}</Alert>}
+                {successMessage && (
+                  <Alert color="success">{successMessage}</Alert>
+                )}
               </Col>
               <Col md={12}>
                 {errorMessage && <Alert color="danger">{errorMessage}</Alert>}
@@ -141,21 +139,33 @@ const UpdateGoldsmith = (props) => {
               <Row>
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="branchIdFx">Branch</label>
+                    <label htmlFor="branchIdFx">
+                      Branch<span className="text-danger">*</span>
+                    </label>
                     <select
                       className="form-control"
                       id="branchIdFx"
                       {...register("branchIdFx", { required: true })}
                     >
                       <option value="">Choose...</option>
-                      {branches?.map((item, index) => <option key={index} value={item.code}>{item.description}</option>)}
+                      {branches?.map((item, index) => (
+                        <option key={index} value={item.code}>
+                          {item.description}
+                        </option>
+                      ))}
                     </select>
-                    {errors.branchIdFx && <span className="text-danger">This field is required</span>}
+                    {errors.branchIdFx && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="shopName">Shop Name</label>
+                    <label htmlFor="shopName">
+                      Shop Name<span className="text-danger">*</span>
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -163,12 +173,18 @@ const UpdateGoldsmith = (props) => {
                       placeholder="Enter Shop Name"
                       {...register("shopName", { required: true })}
                     />
-                    {errors.shopName && <span className="text-danger">This field is required</span>}
+                    {errors.shopName && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="ownerName">Owner Name</label>
+                    <label htmlFor="ownerName">
+                      Owner Name<span className="text-danger">*</span>
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -176,26 +192,44 @@ const UpdateGoldsmith = (props) => {
                       placeholder="Enter Owner Name"
                       {...register("ownerName", { required: true })}
                     />
-                    {errors.ownerName && <span className="text-danger">This field is required</span>}
+                    {errors.ownerName && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="contactNumber">Contact Number</label>
+                    <label htmlFor="contactNumber">
+                      Contact Number<span className="text-danger">*</span>
+                    </label>
                     <input
                       type="text"
                       className="form-control"
                       id="contactNumber"
                       placeholder="Enter Contact Number"
-                      {...register("contactNumber", { required: true, pattern: /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/ })}
+                      {...register("contactNumber", {
+                        required: true,
+                        pattern:
+                          /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/,
+                      })}
                     />
-                    {errors.contactNumber && <span className="text-danger">This field is required</span>}
+                    {errors.contactNumber && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
-                <Row><label>ADDRESS</label></Row>
+                <Row>
+                  <label>ADDRESS</label>
+                </Row>
                 <Col md={4}>
                   <div className="mb-3">
-                    <label htmlFor="address">Address Line 1</label>
+                    <label htmlFor="address">
+                      Address Line 1<span className="text-danger">*</span>
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -203,12 +237,18 @@ const UpdateGoldsmith = (props) => {
                       placeholder="Line 1"
                       {...register("address", { required: true })}
                     />
-                    {errors.address && <span className="text-danger">This field is required</span>}
+                    {errors.address && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
                 <Col md={4}>
                   <div className="mb-3">
-                    <label htmlFor="addLineOne">Address Line 2</label>
+                    <label htmlFor="addLineOne">
+                      Address Line 2<span className="text-danger">*</span>
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -216,7 +256,11 @@ const UpdateGoldsmith = (props) => {
                       placeholder="Line 2"
                       {...register("addLineOne", { required: true })}
                     />
-                    {errors.addLineOne && <span className="text-danger">This field is required</span>}
+                    {errors.addLineOne && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
                 <Col md={4}>
@@ -229,7 +273,11 @@ const UpdateGoldsmith = (props) => {
                       placeholder="Line 3"
                       {...register("addLineTwo", { required: false })}
                     />
-                    {errors.addLineTwo && <span className="text-danger">This field is required</span>}
+                    {errors.addLineTwo && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
               </Row>
@@ -237,7 +285,7 @@ const UpdateGoldsmith = (props) => {
               <div className="mt-3 d-flex flex-row-reverse">
                 <button type="submit" className="btn btn-success w-md">
                   <Loader loading={isLoading}>
-                    <i className="bx bx-save font-size-16 me-2" ></i>
+                    <i className="bx bx-save font-size-16 me-2"></i>
                     Update
                   </Loader>
                 </button>
@@ -247,7 +295,7 @@ const UpdateGoldsmith = (props) => {
         </div>
       </Modal>
     </Row>
-  );
+  )
 }
 
 UpdateGoldsmith.propTypes = {
@@ -257,4 +305,4 @@ UpdateGoldsmith.propTypes = {
   onSuccessfulUpdate: PropTypes.func,
 }
 
-export default UpdateGoldsmith;
+export default UpdateGoldsmith

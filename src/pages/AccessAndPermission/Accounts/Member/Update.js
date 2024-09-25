@@ -1,5 +1,5 @@
-import PropTypes, { string } from "prop-types";
-import React, { useEffect, useState } from "react";
+import PropTypes, { string } from "prop-types"
+import React, { useEffect, useState } from "react"
 import {
   Container,
   Row,
@@ -9,174 +9,180 @@ import {
   CardTitle,
   Modal,
   Alert,
-} from "reactstrap";
+} from "reactstrap"
 
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form"
 
-import Select from "react-select";
+import Select from "react-select"
 
-import Loader from "components/SyncLoader";
+import Loader from "components/SyncLoader"
 
-import {
-  getAllBranches,
-  verifyProfileUser,
-} from "services/common.service";
+import { getAllBranches, verifyProfileUser } from "services/common.service"
 
-import {
-  getRoles,
-} from "services/role.service";
+import { getRoles } from "services/role.service"
 
-import {
-  updateUser
-} from "services/user.service";
+import { updateUser } from "services/user.service"
 
-const Update = (props) => {
+const Update = props => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [roles, setRoles] = useState([])
+  const [branches, setBranches] = useState([])
+  const [data, setData] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [roles, setRoles] = useState([]);
-  const [branches, setBranches] = useState([]);
-  const [data, setData] = useState(null);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
+  const {
+    register,
+    control,
+    handleSubmit,
+    watch,
+    setValue,
+    setError,
+    reset,
+    formState: { errors },
+  } = useForm()
 
-  const { register, control, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
-
-  const onSubmit = async (data) => {
-    const userRoles = data.role.toString().split(",").map((v) => v.trim()).map((r) => ({ "code": r }));
+  const onSubmit = async data => {
+    const userRoles = data.role
+      .toString()
+      .split(",")
+      .map(v => v.trim())
+      .map(r => ({ code: r }))
 
     var payload = {
-      "idx": data.idx,
-      "userName": data.userName,
-      "mobileNo": data.mobileNo,
-      "email": data.email,
-      "branches": [
+      idx: data.idx,
+      userName: data.userName,
+      mobileNo: data.mobileNo,
+      email: data.email,
+      branches: [
         {
-          "code": data.branch,
-        }
+          code: data.branch,
+        },
       ],
 
-      "roles": userRoles,
+      roles: userRoles,
 
-      "devices": [
+      devices: [
         {
-          "code": data.device,
-          "model": data.model,
-        }
+          code: data.device,
+          model: data.model,
+        },
       ],
-      "meCode": (data?.meCode === "") ? null : data.meCode,
-      "profileUser": data.profileUser,
-      "status": data.status,
+      meCode: data?.meCode === "" ? null : data.meCode,
+      profileUser: data.profileUser,
+      status: data.status,
     }
 
-    setIsLoading(true);
+    setIsLoading(true)
 
-    await updateUser(props.data.idx, payload).then(res => {
-      if (res?.status === 200) {
-        setIsLoading(false);
-        setSuccessMessage("User updated successfully.");
-        reset();
-        props.onSuccessfulUpdate()
-        setTimeout(() => {
-          setSuccessMessage(null);
-          props.toggel();
-        }, 3000);
-      } else if (res?.status === 500) {
-        setIsLoading(false);
-        setErrorMessage("User update failed.");
-      } else {
-        setIsLoading(false);
-        setErrorMessage(res.data?.message);
-      }
-    }).catch(err => console.log(err));
-  };
+    await updateUser(props.data.idx, payload)
+      .then(res => {
+        if (res?.status === 200) {
+          setIsLoading(false)
+          setSuccessMessage("User updated successfully.")
+          reset()
+          props.onSuccessfulUpdate()
+          setTimeout(() => {
+            setSuccessMessage(null)
+            props.toggel()
+          }, 3000)
+        } else if (res?.status === 500) {
+          setIsLoading(false)
+          setErrorMessage("User update failed.")
+        } else {
+          setIsLoading(false)
+          setErrorMessage(res.data?.message)
+        }
+      })
+      .catch(err => console.log(err))
+  }
 
-  const getStatusValue = (value) => {
+  const getStatusValue = value => {
     if (value === "Active") {
-      return "A";
+      return "A"
     } else {
-      return "I";
+      return "I"
     }
   }
 
-  const verifyUser = (value) => {
-    console.log();
+  const verifyUser = value => {
+    console.log()
   }
 
   const filterSelectedRoles = (options, value) => {
-    let _filteredValue = [];
-    let _value = '';
+    let _filteredValue = []
+    let _value = ""
 
-    if (!!value && typeof value == 'string') {
-      _value = value;
+    if (!!value && typeof value == "string") {
+      _value = value
     }
 
-    _value = _value.replace(/\s/g, '');
-    const _formattedValue = _value.split(',');
+    _value = _value.replace(/\s/g, "")
+    const _formattedValue = _value.split(",")
 
     if (!!options && !!options.length && options.length > 0) {
       _filteredValue = options.filter(c => _formattedValue.includes(c.value))
     }
-    return _filteredValue;
+    return _filteredValue
   }
 
-  var handleChange = (selectedOption) => {
-    if (!!selectedOption && !!selectedOption.length && selectedOption.length > 0) {
-      const values = selectedOption.map(option => option.value);
-      setValue("role", values.toString());
+  var handleChange = selectedOption => {
+    if (
+      !!selectedOption &&
+      !!selectedOption.length &&
+      selectedOption.length > 0
+    ) {
+      const values = selectedOption.map(option => option.value)
+      setValue("role", values.toString())
     }
-  };
+  }
 
   useEffect(() => {
-    var _isMounted = true;
+    var _isMounted = true
 
     const fetchData = async () => {
-      const roleResponse = await getRoles();
-      const branchResponse = await getAllBranches();
+      const roleResponse = await getRoles()
+      const branchResponse = await getAllBranches()
       if (_isMounted) {
-        setRoles(roleResponse);
-        setBranches(branchResponse);
+        setRoles(roleResponse)
+        setBranches(branchResponse)
       }
 
       if (props.data !== null && props.data !== undefined) {
-        setValue("idx", props.data.idx);
-        setValue("userName", props.data.userName);
-        setValue("mobileNo", props.data.mobileNo);
-        setValue("email", props.data.email);
-        setValue("branch", props.data.branches[0]?.code);
-        setValue("role", props.data.roles);
-        setValue("device", props.data.devices[0].code);
-        setValue("model", props.data.devices[0].model);
-        setValue("profileUser", props.data?.profileUser);
-        setValue("meCode", props.data?.meCode);
-        setValue("status", getStatusValue(props.data.status));
+        setValue("idx", props.data.idx)
+        setValue("userName", props.data.userName)
+        setValue("mobileNo", props.data.mobileNo)
+        setValue("email", props.data.email)
+        setValue("branch", props.data.branches[0]?.code)
+        setValue("role", props.data.roles)
+        setValue("device", props.data.devices[0].code)
+        setValue("model", props.data.devices[0].model)
+        setValue("profileUser", props.data?.profileUser)
+        setValue("meCode", props.data?.meCode)
+        setValue("status", getStatusValue(props.data.status))
       }
-    };
+    }
 
-    fetchData();
+    fetchData()
 
     return () => {
-      _isMounted = false;
+      _isMounted = false
     }
-  }, [props.data]);
+  }, [props.data])
 
-  const options = roles.map((item, index) => { return { key: index, label: item.description, value: item.code } });
+  const options = roles.map((item, index) => {
+    return { key: index, label: item.description, value: item.code }
+  })
 
   return (
     <Row>
-      <Modal
-        size="lg"
-        isOpen={props.isOpen}
-      >
+      <Modal size="lg" isOpen={props.isOpen}>
         <div className="modal-header">
-          <h5
-            className="modal-title mt-0"
-          >
-            Update Member
-          </h5>
+          <h5 className="modal-title mt-0">Update Member</h5>
           <button
             onClick={() => {
-              setData(null);
-              props.toggel();
+              setData(null)
+              props.toggel()
             }}
             type="button"
             className="close"
@@ -190,7 +196,9 @@ const Update = (props) => {
           <Row>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Col md={12}>
-                {successMessage && <Alert color="success">{successMessage}</Alert>}
+                {successMessage && (
+                  <Alert color="success">{successMessage}</Alert>
+                )}
               </Col>
               <Col md={12}>
                 {errorMessage && <Alert color="danger">{errorMessage}</Alert>}
@@ -198,7 +206,10 @@ const Update = (props) => {
               <Row>
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="user-idx">User IDX (AD Login ID)</label>
+                    <label htmlFor="user-idx">
+                      User IDX (AD Login ID)
+                      <span className="text-danger">*</span>
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -206,13 +217,19 @@ const Update = (props) => {
                       placeholder="Enter User IDX"
                       {...register("idx", { required: true })}
                     />
-                    {errors.idx && <span className="text-danger">This field is required</span>}
+                    {errors.idx && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
 
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="user-profile">Profile Username (SYUS ID)</label>
+                    <label htmlFor="user-profile">
+                      Profile Username (SYUS ID)
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -232,13 +249,19 @@ const Update = (props) => {
                       placeholder="Enter CRO Code"
                       {...register("meCode", { required: false })}
                     />
-                    {errors.userName && <span className="text-danger">This field is required</span>}
+                    {errors.userName && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
 
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="user-name">User Name</label>
+                    <label htmlFor="user-name">
+                      User Name<span className="text-danger">*</span>
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -246,13 +269,19 @@ const Update = (props) => {
                       placeholder="Enter User Name"
                       {...register("userName", { required: true })}
                     />
-                    {errors.userName && <span className="text-danger">This field is required</span>}
+                    {errors.userName && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
 
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="user-email">Email</label>
+                    <label htmlFor="user-email">
+                      Email<span className="text-danger">*</span>
+                    </label>
                     <input
                       type="email"
                       className="form-control"
@@ -260,20 +289,25 @@ const Update = (props) => {
                       placeholder="Enter User Email"
                       {...register("email", { required: true })}
                     />
-                    {errors.email && <span className="text-danger">This field is required</span>}
+                    {errors.email && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
 
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="user-role">Role</label>
+                    <label htmlFor="user-role">
+                      Role<span className="text-danger">*</span>
+                    </label>
                     <Controller
                       control={control}
                       defaultValue={options}
                       name="role"
                       rules={{ required: true }}
                       render={({ field: { onChange, value, ref, onBlur } }) => (
-
                         // <Select
                         //   onBlur={onBlur}
                         //   inputRef={ref}
@@ -293,36 +327,60 @@ const Update = (props) => {
                         />
                       )}
                     />
-                    {errors.role && <span className="text-danger">This field is required</span>}
+                    {errors.role && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
 
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="user-branch">Branch</label>
+                    <label htmlFor="user-branch">
+                      Branch<span className="text-danger">*</span>
+                    </label>
                     <select
                       className="form-control"
                       id="user-branch"
                       {...register("branch", { required: true })}
                     >
                       <option value="">Choose...</option>
-                      {branches.map((item, index) => <option key={index} value={item.code}>{item.description}</option>)}
+                      {branches.map((item, index) => (
+                        <option key={index} value={item.code}>
+                          {item.description}
+                        </option>
+                      ))}
                     </select>
-                    {errors.branch && <span className="text-danger">This field is required</span>}
+                    {errors.branch && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
 
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="user-contact">Contact</label>
+                    <label htmlFor="user-contact">
+                      Contact<span className="text-danger">*</span>
+                    </label>
                     <input
                       type="text"
                       className="form-control"
                       id="user-contact"
                       placeholder="Enter User Contact"
-                      {...register("mobileNo", { required: true, pattern: /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/ })}
+                      {...register("mobileNo", {
+                        required: true,
+                        pattern:
+                          /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/,
+                      })}
                     />
-                    {errors.mobileNo && <span className="text-danger">This field is required</span>}
+                    {errors.mobileNo && (
+                      <span className="text-danger">
+                        This field is required
+                      </span>
+                    )}
                   </div>
                 </Col>
 
@@ -354,7 +412,9 @@ const Update = (props) => {
 
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="user-status">Status</label>
+                    <label htmlFor="user-status">
+                      Status<span className="text-danger">*</span>
+                    </label>
                     <select
                       className="form-control"
                       id="user-status"
@@ -371,7 +431,7 @@ const Update = (props) => {
               <div className="mt-3 d-flex flex-row-reverse">
                 <button type="submit" className="btn btn-primary w-md">
                   <Loader loading={isLoading}>
-                    <i className="bx bx-save font-size-16 me-2" ></i>
+                    <i className="bx bx-save font-size-16 me-2"></i>
                     Update
                   </Loader>
                 </button>
@@ -381,7 +441,7 @@ const Update = (props) => {
         </div>
       </Modal>
     </Row>
-  );
+  )
 }
 
 Update.propTypes = {
@@ -391,4 +451,4 @@ Update.propTypes = {
   onSuccessfulUpdate: PropTypes.func,
 }
 
-export default Update;
+export default Update

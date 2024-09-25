@@ -160,7 +160,10 @@ const Create = props => {
               <Row>
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="user-idx">User IDX (AD Login ID)</label>
+                    <label htmlFor="user-idx">
+                      User IDX (AD Login ID){" "}
+                      <span className="text-danger">*</span>
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -226,7 +229,9 @@ const Create = props => {
 
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="user-name">User Name</label>
+                    <label htmlFor="user-name">
+                      User Name<span className="text-danger">*</span>
+                    </label>
                     <input
                       type="text"
                       className="form-control"
@@ -244,7 +249,9 @@ const Create = props => {
 
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="user-email">Email</label>
+                    <label htmlFor="user-email">
+                      Email<span className="text-danger">*</span>
+                    </label>
                     <input
                       type="email"
                       className="form-control"
@@ -262,7 +269,9 @@ const Create = props => {
 
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="user-role">Role</label>
+                    <label htmlFor="user-role">
+                      Role<span className="text-danger">*</span>
+                    </label>
                     <Controller
                       control={control}
                       defaultValue={options}
@@ -290,7 +299,9 @@ const Create = props => {
 
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="user-branch">Branch</label>
+                    <label htmlFor="user-branch">
+                      Branch<span className="text-danger">*</span>
+                    </label>
                     <select
                       className="form-control"
                       id="user-branch"
@@ -313,7 +324,9 @@ const Create = props => {
                 {/* TODO: validation  */}
                 <Col md={6}>
                   <div className="mb-3">
-                    <label htmlFor="user-contact">Contact</label>
+                    <label htmlFor="user-contact">
+                      Contact<span className="text-danger">*</span>
+                    </label>
                     <input
                       type="text"
                       className="form-control"

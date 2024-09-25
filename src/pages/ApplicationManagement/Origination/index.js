@@ -275,12 +275,10 @@ const Origination = props => {
                       </Col>
                       <Col className="col mt-4">
                         <div className="d-flex justify-content-start">
-                          <button
-                            type="submit"
-                            className="btn btn-primary waves-effect waves-light"
-                          >
+                          <button type="submit" className="btn btn-primary ">
                             <span className="d-flex">
-                              <Loader loading={isLoading} />{" "}
+                              <Loader loading={isLoading} />
+                              {"  "}
                               <p className="m-0">Search</p>
                             </span>
                           </button>
