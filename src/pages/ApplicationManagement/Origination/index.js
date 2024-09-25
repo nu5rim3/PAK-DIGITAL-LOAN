@@ -1,175 +1,167 @@
-import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  CardBody,
-  CardTitle,
-} from "reactstrap";
+import PropTypes from "prop-types"
+import React, { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import { Container, Row, Col, Card, CardBody, CardTitle } from "reactstrap"
 
-import moment from "moment";
+import moment from "moment"
 
-import { useForm } from "react-hook-form";
+import { useForm } from "react-hook-form"
 
-import Loader from "components/SyncLoader";
+import Loader from "components/SyncLoader"
 
 //Import Breadcrumb
-import Breadcrumbs from "components/Common/Breadcrumb";
-import Table from "components/Datatable/Table";
+import Breadcrumbs from "components/Common/Breadcrumb"
+import Table from "components/Datatable/Table"
 
 // APIs
-import {
-  getAllCompletedAppraisals
-} from "services/origination.service";
+import { getAllCompletedAppraisals } from "services/origination.service"
 
-
-
-
-
-
-
-const Origination = (props) => {
-
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-
+const Origination = props => {
+  const [data, setData] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const items = {
     columns: [
       {
-        field: 'idx',
-        label: 'Appraisal ID',
+        field: "idx",
+        label: "Appraisal ID",
         sort: "asc",
       },
 
       {
-        field: 'contractNo',
-        label: 'Contarct ID',
+        field: "contractNo",
+        label: "Contarct ID",
         sort: "asc",
       },
       {
-        field: 'productName',
-        label: 'Product Name',
+        field: "productName",
+        label: "Product Name",
         sort: "asc",
       },
       {
-        field: 'customerCnic',
-        label: 'Customer CNIC',
+        field: "customerCnic",
+        label: "Customer CNIC",
         sort: "asc",
       },
       {
-        field: 'customerName',
-        label: 'Customer Name',
+        field: "customerName",
+        label: "Customer Name",
         sort: "asc",
       },
       {
-        field: 'creationDate',
-        label: 'Created At',
+        field: "creationDate",
+        label: "Created At",
         sort: "asc",
       },
       {
-        field: 'branchName',
-        label: 'Branch Name',
+        field: "branchName",
+        label: "Branch Name",
         sort: "asc",
       },
       {
-        field: 'createdBy',
-        label: 'Created By',
+        field: "createdBy",
+        label: "Created By",
         sort: "asc",
       },
       {
-        field: 'actions',
-        label: 'Action',
+        field: "actions",
+        label: "Action",
         sort: "asc",
-      }
+      },
     ],
-    rows: data
-  };
+    rows: data,
+  }
 
-  const { register, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    setError,
+    reset,
+    formState: { errors },
+  } = useForm()
 
-  const onSubmit = async (data) => {
-
-    setIsLoading(true);
-    const originationResponse = await getAllCompletedAppraisals(data);
+  const onSubmit = async data => {
+    setIsLoading(true)
+    const originationResponse = await getAllCompletedAppraisals(data)
     if (originationResponse !== undefined && originationResponse !== null) {
-      var data = originationResponse.map(item => modernization(item));
+      var data = originationResponse.map(item => modernization(item))
 
-      setData(data);
+      setData(data)
 
-      setIsLoading(false);
+      setIsLoading(false)
     }
   }
 
-  const getLabel = (item) => {
-    item.customerCnic = item.clienteles[0].identificationNumber;
-    item.customerName = item.clienteles[0].fullName;
-    item.createdBy = item.clienteles[0].createdBy;
-    item.creationDate = moment(item.lastModifiedDate).format("DD-MM-yyyy HH:mm:ss");
-    item.isReturned = item.isReturned;
-    return item;
+  const getLabel = item => {
+    item.customerCnic = item.clienteles[0].identificationNumber
+    item.customerName = item.clienteles[0].fullName
+    item.createdBy = item.clienteles[0].createdBy
+    item.creationDate = moment(item.lastModifiedDate).format(
+      "DD-MM-yyyy HH:mm:ss"
+    )
+    item.isReturned = item.isReturned
+    return item
   }
 
-  const getAction = (item) => {
+  const getAction = item => {
     item.actions = (
       <div className="d-flex align-items-center">
-        <Link to={`/pakoman-digital-loan/credit-appraisals/view/${item.idx}`} className="btn btn-primary btn-sm d-flex justify-content-between align-items-center">
+        <Link
+          to={`/pakoman-digital-loan/credit-appraisals/view/${item.idx}`}
+          className="btn btn-primary btn-sm d-flex justify-content-between align-items-center"
+        >
           <i className="bx bx-zoom-in font-size-16 me-1"></i>
           <p className="m-0">Preview</p>
         </Link>
       </div>
-    );
+    )
 
-    return item;
+    return item
   }
 
-  const getContractNo = (item) => {
+  const getContractNo = item => {
     if (item.status === "A") {
-      item.contractNo = JSON.parse(item.contractNo)?.object?.lchdContNo;
+      item.contractNo = JSON.parse(item.contractNo)?.object?.lchdContNo
     } else {
-      item.contractNo = item.contractNo;
+      item.contractNo = item.contractNo
     }
 
-    return item;
+    return item
   }
-  const getBackgroundColor = (item) => {
+  const getBackgroundColor = item => {
     if (item.isReturned === "Y") {
       item.idx = (
-        <span className="font-size-12  badge bg-warning rounded-pill">{item.idx}</span>
-      );
+        <span className="font-size-12  badge bg-warning rounded-pill">
+          {item.idx}
+        </span>
+      )
     } else {
-      item.idx = (
-        <span>{item.idx}</span>
-      );
+      item.idx = <span>{item.idx}</span>
     }
-    return item;
+    return item
   }
 
-  const modernization = (item) => {
-    item = getLabel(item);
-    item = getAction(item);
-    item = getContractNo(item);
-    item = getBackgroundColor(item);
-    return item;
+  const modernization = item => {
+    item = getLabel(item)
+    item = getAction(item)
+    item = getContractNo(item)
+    item = getBackgroundColor(item)
+    return item
   }
 
   useEffect(() => {
-    var _isMounted = true;
+    var _isMounted = true
 
-    const fetchData = async () => {
+    const fetchData = async () => {}
 
-    };
-
-    fetchData();
+    fetchData()
 
     return () => {
-      _isMounted = false;
-    };
-  }, []);
+      _isMounted = false
+    }
+  }, [])
 
   return (
     <React.Fragment>
@@ -186,20 +178,24 @@ const Origination = (props) => {
               <Card>
                 <CardBody>
                   <CardTitle className="h4">Appraisal Origination</CardTitle>
-                  <p className="card-title-desc">
-
-                  </p>
+                  <p className="card-title-desc"></p>
 
                   <form onSubmit={handleSubmit(onSubmit)}>
                     <Row className="my-4">
-                      <Col className="col-3">
+                      <Col className="col">
                         <div className="form-group row">
                           <label
                             htmlFor="example-date-input"
-                            className="col-md-4 col-form-label">Status : </label>
+                            className="col-md-4 col-form-label"
+                          >
+                            Status :{" "}
+                          </label>
                           <div className="col-md-9">
-                            <select className="form-control" name="status"
-                              {...register("status", { required: true })}>
+                            <select
+                              className="form-control"
+                              name="status"
+                              {...register("status", { required: true })}
+                            >
                               <option value="">-- Select --</option>
                               <option value="completed">Pending</option>
                               <option value="returned">Returned</option>
@@ -207,55 +203,86 @@ const Origination = (props) => {
                               <option value="rejected">Rejected</option>
                             </select>
                           </div>
-                          {errors.status && <span className="error">This field is required</span>}
+                          {errors.status && (
+                            <span className="error">
+                              This field is required
+                            </span>
+                          )}
                         </div>
                       </Col>
-                      <Col className="col-3">
+                      <Col className="col">
                         <div className="form-group row">
                           <label
                             htmlFor="example-date-input"
-                            className="col-md-4 col-form-label">ID : </label>
+                            className="col-md-4 col-form-label"
+                          >
+                            ID :{" "}
+                          </label>
                           <div className="col-md-9">
-                            <input {...register("appraisalId", { required: false })}
+                            <input
+                              {...register("appraisalId", { required: false })}
                               className="form-control"
                               type="text"
-                              name="appraisalId" id="appraisalId" />
+                              name="appraisalId"
+                              id="appraisalId"
+                            />
                           </div>
                         </div>
                       </Col>
-                      <Col className="col-3">
+                      <Col className="col">
                         <div className="form-group row">
                           <label
                             htmlFor="example-date-input"
-                            className="col-md-4 col-form-label">From : </label>
+                            className="col-md-4 col-form-label"
+                          >
+                            From :{" "}
+                          </label>
                           <div className="col-md-9">
-                            <input {...register("fromDate", { required: false })}
+                            <input
+                              {...register("fromDate", { required: false })}
                               className="form-control"
                               type="date"
-                              defaultValue={new Date().toISOString().slice(0, 10)}
-                              name="fromDate" id="fromDate" />
+                              defaultValue={new Date()
+                                .toISOString()
+                                .slice(0, 10)}
+                              name="fromDate"
+                              id="fromDate"
+                            />
                           </div>
                         </div>
                       </Col>
-                      <Col className="col-3">
+                      <Col className="col">
                         <div className="form-group row">
                           <label
                             htmlFor="example-date-input"
-                            className="col-md-4 col-form-label">To : </label>
+                            className="col-md-4 col-form-label"
+                          >
+                            To :{" "}
+                          </label>
                           <div className="col-md-9">
-                            <input {...register("toDate", { required: false })}
+                            <input
+                              {...register("toDate", { required: false })}
                               className="form-control"
                               type="date"
-                              defaultValue={new Date().toISOString().slice(0, 10)}
-                              name="toDate" id="toDate" />
+                              defaultValue={new Date()
+                                .toISOString()
+                                .slice(0, 10)}
+                              name="toDate"
+                              id="toDate"
+                            />
                           </div>
                         </div>
                       </Col>
-                      <Col className="col-12 mt-4">
-                        <div className="d-flex justify-content-end">
+                      <Col className="col mt-4">
+                        <div className="d-flex justify-content-start">
                           <button
-                            type="submit" className="btn btn-primary waves-effect waves-light">
-                            <span className="d-flex"><Loader loading={isLoading} /> <p className="m-0">Search</p></span>
+                            type="submit"
+                            className="btn btn-primary waves-effect waves-light"
+                          >
+                            <span className="d-flex">
+                              <Loader loading={isLoading} />{" "}
+                              <p className="m-0">Search</p>
+                            </span>
                           </button>
                         </div>
                       </Col>
@@ -263,7 +290,6 @@ const Origination = (props) => {
                   </form>
 
                   <Table items={items} />
-
                 </CardBody>
               </Card>
             </Col>
@@ -271,11 +297,11 @@ const Origination = (props) => {
         </Container>
       </div>
     </React.Fragment>
-  );
+  )
 }
 
 Origination.propTypes = {
   t: PropTypes.any,
-};
+}
 
-export default Origination;
+export default Origination
