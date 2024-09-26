@@ -42,12 +42,12 @@ const Search = props => {
               <Col className="p-0">
                 <button type="submit" className="btn btn-primary">
                   <Row className="">
-                    <Col>Search</Col>
                     {props.isLoading === true && (
                       <Col className="py-1">
                         <Loader loading={props.isLoading} />
                       </Col>
                     )}
+                    <Col>Search</Col>
                   </Row>
                 </button>
                 <button

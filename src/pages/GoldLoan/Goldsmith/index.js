@@ -19,7 +19,6 @@ import Breadcrumbs from "components/Common/Breadcrumb"
 import UpdateGoldsmith from "./UpdateGoldsmith"
 import Deactivate from "./DeactivateGoldsmith"
 import ActivateGoldsmith from "./ActivateGoldsmith"
-import Loader from "components/SyncLoader"
 import Search from "components/Search/Search"
 
 const IndexGoldSmith = props => {
@@ -171,8 +170,6 @@ const IndexGoldSmith = props => {
     const shop = searchData?.searchFeild === "Shop" ? searchData.search : ""
     const owner = searchData?.searchFeild === "Owner" ? searchData.search : ""
     const branch = searchData?.searchFeild === "Branch" ? searchData.search : ""
-    if (isReset) {
-    }
 
     const goldsmithResponse = await getAllGoldsmiths(
       searchData.search === "" && isReset ? 0 : page,
@@ -241,6 +238,7 @@ const IndexGoldSmith = props => {
                     items={items}
                     tableData={goldsmithTableData}
                     setPage={setPage}
+                    totalPages={goldsmithTableData.totalPages}
                   />
                 </CardBody>
               </Card>

@@ -21,7 +21,7 @@ const PaginatedTable = props => {
         previousLabel={"Previous"}
         nextLabel={"Next"}
         breakLabel={"..."}
-        pageCount={props.tableData?.totalPages || 0}
+        pageCount={props.totalPages || 0}
         marginPagesDisplayed={2}
         pageRangeDisplayed={4}
         previousClassName={"page-item"}
@@ -47,8 +47,8 @@ const PaginatedTable = props => {
         bordered
         noBottomColumns
         data={{
-          columns: props.items.columns,
-          rows: props?.tableData?.content ?? [],
+          columns: props?.items?.columns,
+          rows: props?.items?.rows ?? [],
         }}
         paging={false}
         searching={false}
@@ -63,6 +63,7 @@ PaginatedTable.propTypes = {
   items: PropTypes.object,
   tableData: PropTypes.object,
   setPage: PropTypes.func,
+  totalPages: PropTypes.number,
 }
 
 export default PaginatedTable

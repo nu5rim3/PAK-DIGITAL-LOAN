@@ -14,16 +14,22 @@ import Update from "./Update"
 
 // APIs
 import { getAllUsers } from "services/user.service"
+import PaginatedTable from "components/Datatable/PaginatedTable"
+import Search from "components/Search/Search"
 
 const Member = props => {
-  const PAGE = 0
+  const [page, setPage] = useState(0)
 
-  const SIZE = 1000
+  const SIZE = 7
 
   const [users, setUsers] = useState([])
+  const [usersTableData, setUsersTableData] = useState([])
+  const [searchData, setSearchData] = useState({})
   const [data, setData] = useState(null)
   const [isOpenCreate, setIsOpenCreate] = useState(false)
   const [isOpenUpdate, setIsOpenUpdate] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isReset, setIsReset] = useState(false)
 
   const toggelCreateModal = () => {
     setIsOpenCreate(!isOpenCreate)
@@ -83,7 +89,7 @@ const Member = props => {
       },
       {
         field: "userName",
-        label: "User Name",
+        label: "Name",
         sort: "asc",
       },
       {
@@ -94,11 +100,6 @@ const Member = props => {
       {
         field: "profileUser",
         label: "Profile User",
-        sort: "asc",
-      },
-      {
-        field: "status",
-        label: "Status",
         sort: "asc",
       },
       {
@@ -128,24 +129,40 @@ const Member = props => {
     return item
   }
 
+  const fetchData = async () => {
+    setIsLoading(true)
+    const idx = searchData?.searchFeild === "IDX" ? searchData.search : ""
+    const name = searchData?.searchFeild === "Name" ? searchData.search : ""
+    const role = searchData?.searchFeild === "Role" ? searchData.search : ""
+
+    const userResponse = await getAllUsers(
+      searchData.search === "" && isReset ? 0 : page,
+      idx,
+      name,
+      role,
+      SIZE
+    )
+    setUsersTableData(userResponse)
+    setIsLoading(false)
+    if (userResponse !== undefined) {
+      var data = userResponse.content.map(item => modernization(item))
+      setUsers(data)
+    }
+  }
+
   useEffect(() => {
     var _isMounted = true
-
-    const fetchData = async () => {
-      const userResponse = await getAllUsers(PAGE, SIZE)
-      console.log("userResponse", userResponse)
-      if (_isMounted && userResponse !== undefined) {
-        var data = userResponse.content.map(item => modernization(item))
-        setUsers(data)
-      }
-    }
 
     fetchData()
 
     return () => {
       _isMounted = false
     }
-  }, [])
+  }, [page, searchData, isReset])
+
+  useEffect(() => {
+    setPage(0)
+  }, [isReset])
 
   return (
     <React.Fragment>
@@ -179,7 +196,19 @@ const Member = props => {
                     </button>
                   </div>
 
-                  <Table items={items} />
+                  <Search
+                    searchItems={["IDX", "Name", "Role"]}
+                    setSearchData={setSearchData}
+                    isLoading={isLoading}
+                    setRest={setIsReset}
+                  />
+
+                  <PaginatedTable
+                    items={items}
+                    tableData={[]}
+                    setPage={setPage}
+                    totalPages={usersTableData.totalPages}
+                  />
                 </CardBody>
               </Card>
             </Col>
