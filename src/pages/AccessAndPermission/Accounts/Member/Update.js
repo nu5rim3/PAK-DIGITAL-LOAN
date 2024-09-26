@@ -378,7 +378,7 @@ const Update = props => {
                     />
                     {errors.mobileNo && (
                       <span className="text-danger">
-                        This field is required
+                        Enter a valid contact number
                       </span>
                     )}
                   </div>
