@@ -1,89 +1,84 @@
-import PropTypes from "prop-types";
-import React, { useState, useEffect } from "react";
-import {
-  Row,
-  Col,
-  Alert,
-  Modal
-} from "reactstrap";
+import PropTypes from "prop-types"
+import React, { useState, useEffect } from "react"
+import { Row, Col, Alert, Modal } from "reactstrap"
 
-import { useForm } from "react-hook-form";
-import Loader from "components/SyncLoader";
+import { useForm } from "react-hook-form"
+import Loader from "components/SyncLoader"
 
 // APIs
-import { saveGoldRates } from "services/gold-rate.service";
+import { saveGoldRates } from "services/gold-rate.service"
 
+const RegisterGoldRates = props => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
 
-const RegisterGoldRates = (props) => {
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
-
-  const { register, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    setError,
+    reset,
+    formState: { errors },
+  } = useForm()
 
   function handleInputChange(event) {
-    const inputValue = event.target.value;
-    const strippedValue = inputValue.replace(/,/g, "");
-    const formattedValue = strippedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    event.target.value = formattedValue;
+    const inputValue = event.target.value
+    const strippedValue = inputValue.replace(/,/g, "")
+    const formattedValue = strippedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    event.target.value = formattedValue
   }
 
-  const onSubmit = async (data) => {
-
+  const onSubmit = async data => {
     var payload = {
-      "valueDate": data.valueDate,
-      "valueAmount": data.valueAmount,
-      "valueComment": data.valueComment
+      valueDate: data.valueDate,
+      valueAmount: data.valueAmount,
+      valueComment: data.valueComment,
     }
 
-    setIsLoading(true);
+    setIsLoading(true)
 
-    await saveGoldRates(payload).then(res => {
-      if (res?.status === 200) {
-        setIsLoading(false);
-        setSuccessMessage("Rates successfully created.");
-        reset();
-        setTimeout(() => {
-          setSuccessMessage(null);
-          props.toggel();
-          window.location.reload(true);
-        }, 2000);
-      } else if (res?.status === 500) {
-        setIsLoading(false);
-        setErrorMessage("Rates creation failed.");
-        setTimeout(() => {
-          setErrorMessage(null);
-          props.toggel();
-          window.location.reload(true);
-        }, 2000);
-      } else {
-        setIsLoading(false);
-        setErrorMessage(res.data?.message);
-        setTimeout(() => {
-          setErrorMessage(null);
-          props.toggel();
-          window.location.reload(true);
-        }, 2000);
-      }
-    }).catch(err => console.log(err));
-  };
+    await saveGoldRates(payload)
+      .then(res => {
+        if (res?.status === 200) {
+          setIsLoading(false)
+          setSuccessMessage("Rates successfully created.")
+          reset()
+          setTimeout(() => {
+            setSuccessMessage(null)
+            props.toggel()
+            window.location.reload(true)
+          }, 2000)
+        } else if (res?.status === 500) {
+          setIsLoading(false)
+          setErrorMessage("Rates creation failed.")
+          setTimeout(() => {
+            setErrorMessage(null)
+            props.toggel()
+            window.location.reload(true)
+          }, 2000)
+        } else {
+          setIsLoading(false)
+          setErrorMessage(res.data?.message)
+          setTimeout(() => {
+            setErrorMessage(null)
+            props.toggel()
+            window.location.reload(true)
+          }, 2000)
+        }
+      })
+      .catch(err => console.log(err))
+  }
 
   return (
     <Row>
-      <Modal
-        size="lg"
-        isOpen={props.isOpen}
-      >
+      <Modal size="lg" isOpen={props.isOpen}>
         <div className="modal-header">
-          <h5
-            className="modal-title mt-0"
-          >
-            Register Gold Rates
-          </h5>
+          <h5 className="modal-title mt-0">Register Gold Rates</h5>
           <button
             onClick={() => {
-              props.toggel();
+              props.toggel()
             }}
             type="button"
             className="close"
@@ -97,7 +92,9 @@ const RegisterGoldRates = (props) => {
           <Row>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Col md={12}>
-                {successMessage && <Alert color="success">{successMessage}</Alert>}
+                {successMessage && (
+                  <Alert color="success">{successMessage}</Alert>
+                )}
               </Col>
               <Col md={12}>
                 {errorMessage && <Alert color="danger">{errorMessage}</Alert>}
@@ -107,50 +104,69 @@ const RegisterGoldRates = (props) => {
                   <div className="form-group row">
                     <label
                       htmlFor="date-input"
-                      className="col-md-4 col-form-label">Value Date : </label>
+                      className="col-md-4 col-form-label"
+                    >
+                      Value Date{" "}
+                    </label>
                     <div className="col-md-9">
-                      <input {...register("valueDate", { required: false })}
+                      <input
+                        {...register("valueDate", { required: false })}
                         className="form-control"
                         type="date"
                         defaultValue={new Date().toISOString().slice(0, 10)}
-                        name="valueDate" id="valueDate" />
+                        name="valueDate"
+                        id="valueDate"
+                      />
                     </div>
                   </div>
                 </Col>
                 <Col md={6}>
                   <div className="form-group row">
-                    <label
-                      htmlFor="market-value"
-                      className="col-form-label">Gold Rate per Gram : </label>
+                    <label htmlFor="market-value" className="col-form-label">
+                      Gold Rate per Gram<span className="text-danger">*</span>
+                    </label>
                     <div className="col-md-12">
-                      <input {...register("valueAmount", { required: true, pattern: /^[^A-Za-z]*$/ })}
+                      <input
+                        {...register("valueAmount", {
+                          required: true,
+                          pattern: /^[^A-Za-z]*$/,
+                        })}
                         className="form-control"
                         type="text"
                         onChange={handleInputChange}
-                        name="valueAmount" id="valueAmount" />
+                        name="valueAmount"
+                        id="valueAmount"
+                      />
                     </div>
-                    {errors.valueAmount && <span className="error">This field is required</span>}
+                    {errors.valueAmount && (
+                      <span className="error">This field is required</span>
+                    )}
                   </div>
                 </Col>
                 <Col md={12}>
                   <div className="form-group row">
-                    <label
-                      htmlFor="comment"
-                      className="col-form-label">Comment : </label>
+                    <label htmlFor="comment" className="col-form-label">
+                      Comment
+                    </label>
                     <div className="col-md-12">
-                      <input {...register("valueComment", { required: false })}
+                      <input
+                        {...register("valueComment", { required: false })}
                         className="form-control"
                         type="text"
-                        name="valueComment" id="valueComment" />
+                        name="valueComment"
+                        id="valueComment"
+                      />
                     </div>
-                    {errors.valueComment && <span className="error">This field is required</span>}
+                    {errors.valueComment && (
+                      <span className="error">This field is required</span>
+                    )}
                   </div>
                 </Col>
               </Row>
               <div className="mt-3 d-flex flex-row-reverse">
                 <button type="submit" className="btn btn-success w-md">
                   <Loader loading={isLoading}>
-                    <i className="bx bx-save font-size-16 me-2" ></i>
+                    <i className="bx bx-save font-size-16 me-2"></i>
                     Save
                   </Loader>
                 </button>
@@ -160,7 +176,7 @@ const RegisterGoldRates = (props) => {
         </div>
       </Modal>
     </Row>
-  );
+  )
 }
 
 RegisterGoldRates.propTypes = {
@@ -168,4 +184,4 @@ RegisterGoldRates.propTypes = {
   toggel: PropTypes.func,
 }
 
-export default RegisterGoldRates;
+export default RegisterGoldRates

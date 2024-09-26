@@ -13,13 +13,12 @@ const Loader = props => {
           <div className="loader-container fa-1x">
             <i className="loader-item fas fa-sync fa-spin text-white" />
           </div>
-
-          {props.loading === false && (
-            <div className="d-flex justify-content-center align-items-center">
-              {props.children}
-            </div>
-          )}
         </Row>
+      )}
+      {props.loading === false && (
+        <div className="d-flex justify-content-center align-items-center">
+          {props.children}
+        </div>
       )}
     </>
   )
