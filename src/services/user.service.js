@@ -1,5 +1,6 @@
 import { get, post, put, postResponse, putResponse } from "helpers/api_helper"
 
+// TODO: change the api after altering the BE
 export const getAllUsers = async (page, idx, name, role, size) => {
   return await get(`/mobixCamsCommon/v1/users?page=${page}&size=${size}`)
 }
