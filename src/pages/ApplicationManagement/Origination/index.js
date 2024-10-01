@@ -250,6 +250,8 @@ const Origination = props => {
                                   selected={field.value}
                                   dateFormat="yyyy-MM-dd"
                                   showYearDropdown
+                                  showMonthDropdown
+                                  scrollableMonthYearDropdown
                                   scrollableYearDropdown
                                   yearDropdownItemNumber={15}
                                 />
@@ -284,6 +286,8 @@ const Origination = props => {
                                   dateFormat="yyyy-MM-dd"
                                   showYearDropdown
                                   scrollableYearDropdown
+                                  showMonthDropdown
+                                  scrollableMonthYearDropdown
                                   yearDropdownItemNumber={15}
                                 />
                               )}
