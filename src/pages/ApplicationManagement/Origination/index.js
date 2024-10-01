@@ -181,7 +181,7 @@ const Origination = props => {
         <Container fluid>
           {/* Render Breadcrumb */}
           <Breadcrumbs
-            title={"Approval And Retification"}
+            title={"Application Management"}
             breadcrumbItem={"Origination"}
           />
 
@@ -318,7 +318,6 @@ const Origination = props => {
                       </Col>
                     </Row>
                   </form>
-
                   <Table items={items} />
                 </CardBody>
               </Card>
