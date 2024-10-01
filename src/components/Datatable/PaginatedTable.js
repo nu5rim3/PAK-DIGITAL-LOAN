@@ -61,7 +61,6 @@ const PaginatedTable = props => {
 
 PaginatedTable.propTypes = {
   items: PropTypes.object,
-  tableData: PropTypes.object,
   setPage: PropTypes.func,
   totalPages: PropTypes.number,
 }

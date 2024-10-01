@@ -236,7 +236,6 @@ const IndexGoldSmith = props => {
                   />
                   <PaginatedTable
                     items={items}
-                    tableData={goldsmithTableData}
                     setPage={setPage}
                     totalPages={goldsmithTableData.totalPages}
                   />

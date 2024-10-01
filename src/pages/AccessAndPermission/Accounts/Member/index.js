@@ -205,7 +205,6 @@ const Member = props => {
 
                   <PaginatedTable
                     items={items}
-                    tableData={[]}
                     setPage={setPage}
                     totalPages={usersTableData?.totalPages ?? 0}
                   />
