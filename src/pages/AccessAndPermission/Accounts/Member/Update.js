@@ -366,7 +366,7 @@ const Update = props => {
                       Contact<span className="text-danger">*</span>
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       id="user-contact"
                       placeholder="Enter User Contact"

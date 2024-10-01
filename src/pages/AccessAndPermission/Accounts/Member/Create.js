@@ -321,14 +321,13 @@ const Create = props => {
                     )}
                   </div>
                 </Col>
-                {/* TODO: validation  */}
                 <Col md={6}>
                   <div className="mb-3">
                     <label htmlFor="user-contact">
                       Contact<span className="text-danger">*</span>
                     </label>
                     <input
-                      type="text"
+                      type="number"
                       className="form-control"
                       id="user-contact"
                       placeholder="Enter User Contact"
