@@ -2,10 +2,12 @@ import PropTypes from "prop-types"
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { Container, Row, Col, Card, CardBody, CardTitle } from "reactstrap"
+import DatePicker from "react-datepicker"
 
+import "react-datepicker/dist/react-datepicker.css"
 import moment from "moment"
 
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 
 import Loader from "components/SyncLoader"
 
@@ -79,12 +81,17 @@ const Origination = props => {
     setValue,
     setError,
     reset,
+    control,
     formState: { errors },
   } = useForm()
 
   const onSubmit = async data => {
     setIsLoading(true)
-    const originationResponse = await getAllCompletedAppraisals(data)
+    const originationResponse = await getAllCompletedAppraisals({
+      ...data,
+      fromDate: moment(data.fromDate).format("YYYY-MM-DD"),
+      toDate: moment(data.toDate).format("YYYY-MM-DD"),
+    })
     if (originationResponse !== undefined && originationResponse !== null) {
       var data = originationResponse.map(item => modernization(item))
 
@@ -151,6 +158,11 @@ const Origination = props => {
     return item
   }
 
+  const onReset = () => {
+    setData([])
+    reset()
+  }
+
   useEffect(() => {
     var _isMounted = true
 
@@ -184,19 +196,13 @@ const Origination = props => {
                     <Row className="my-4">
                       <Col className="col">
                         <div className="form-group row">
-                          <label
-                            htmlFor="example-date-input"
-                            className="col-md-4 col-form-label"
-                          >
-                            Status :{" "}
-                          </label>
-                          <div className="col-md-9">
+                          <div className="col-md-12">
                             <select
                               className="form-control"
                               name="status"
                               {...register("status", { required: true })}
                             >
-                              <option value="">-- Select --</option>
+                              <option value="">Select Status</option>
                               <option value="completed">Pending</option>
                               <option value="returned">Returned</option>
                               <option value="active">Approved</option>
@@ -212,74 +218,100 @@ const Origination = props => {
                       </Col>
                       <Col className="col">
                         <div className="form-group row">
-                          <label
-                            htmlFor="example-date-input"
-                            className="col-md-4 col-form-label"
-                          >
-                            ID :{" "}
-                          </label>
-                          <div className="col-md-9">
+                          <div className="col-md-12">
                             <input
                               {...register("appraisalId", { required: false })}
                               className="form-control"
                               type="text"
                               name="appraisalId"
                               id="appraisalId"
+                              placeholder="Appraisal ID"
                             />
                           </div>
                         </div>
                       </Col>
                       <Col className="col">
                         <div className="form-group row">
-                          <label
-                            htmlFor="example-date-input"
-                            className="col-md-4 col-form-label"
-                          >
-                            From :{" "}
-                          </label>
-                          <div className="col-md-9">
-                            <input
-                              {...register("fromDate", { required: false })}
-                              className="form-control"
-                              type="date"
-                              defaultValue={new Date()
-                                .toISOString()
-                                .slice(0, 10)}
+                          <div className="col-md-12">
+                            <Controller
                               name="fromDate"
                               id="fromDate"
+                              control={control}
+                              defaultValue={null}
+                              rules={{
+                                required: true,
+                                message: "This field is required",
+                              }}
+                              render={({ field }) => (
+                                <DatePicker
+                                  className="form-control"
+                                  placeholderText="Select From Date"
+                                  onChange={date => field.onChange(date)}
+                                  selected={field.value}
+                                  dateFormat="yyyy-MM-dd"
+                                  showYearDropdown
+                                  scrollableYearDropdown
+                                  yearDropdownItemNumber={15}
+                                />
+                              )}
                             />
                           </div>
+                          {errors.fromDate && (
+                            <span className="error">
+                              This field is required
+                            </span>
+                          )}
                         </div>
                       </Col>
                       <Col className="col">
                         <div className="form-group row">
-                          <label
-                            htmlFor="example-date-input"
-                            className="col-md-4 col-form-label"
-                          >
-                            To :{" "}
-                          </label>
-                          <div className="col-md-9">
-                            <input
-                              {...register("toDate", { required: false })}
-                              className="form-control"
-                              type="date"
-                              defaultValue={new Date()
-                                .toISOString()
-                                .slice(0, 10)}
+                          <div className="col-md-12">
+                            <Controller
                               name="toDate"
                               id="toDate"
+                              control={control}
+                              defaultValue={null}
+                              rules={{
+                                required: true,
+                                message: "This field is required",
+                              }}
+                              render={({ field }) => (
+                                <DatePicker
+                                  className="form-control"
+                                  placeholderText="Select To Date"
+                                  onChange={date => field.onChange(date)}
+                                  selected={field.value}
+                                  dateFormat="yyyy-MM-dd"
+                                  showYearDropdown
+                                  scrollableYearDropdown
+                                  yearDropdownItemNumber={15}
+                                />
+                              )}
                             />
                           </div>
+                          {errors.toDate && (
+                            <span className="error">
+                              This field is required
+                            </span>
+                          )}
                         </div>
                       </Col>
-                      <Col className="col mt-4">
-                        <div className="d-flex justify-content-start">
+                      <Col className="col">
+                        <div className="d-flex justify-content-start gap-2">
                           <button type="submit" className="btn btn-primary ">
                             <span className="d-flex">
                               <Loader loading={isLoading} />
                               {"  "}
                               <p className="m-0">Search</p>
+                            </span>
+                          </button>
+
+                          <button
+                            onClick={() => onReset()}
+                            className="btn btn-danger "
+                          >
+                            <span className="d-flex">
+                              <p className="m-0">Reset</p>
                             </span>
                           </button>
                         </div>

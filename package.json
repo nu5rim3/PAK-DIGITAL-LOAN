@@ -72,7 +72,7 @@
     "react-circular-progressbar": "^2.0.4",
     "react-color": "^2.19.3",
     "react-countdown": "^2.3.2",
-    "react-datepicker": "^4.1.1",
+    "react-datepicker": "^4.25.0",
     "react-dom": "^17.0.2",
     "react-draft-wysiwyg": "^1.14.7",
     "react-drag-listview": "^0.1.8",
