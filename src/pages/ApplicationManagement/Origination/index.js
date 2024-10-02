@@ -106,7 +106,7 @@ const Origination = props => {
     item.customerName = item.clienteles[0].fullName
     item.createdBy = item.clienteles[0].createdBy
     item.creationDate = moment(item.lastModifiedDate).format(
-      "DD-MM-yyyy HH:mm:ss"
+      "yyyy-MM-DD HH:mm:ss"
     )
     item.isReturned = item.isReturned
     return item

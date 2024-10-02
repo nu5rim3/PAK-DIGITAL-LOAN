@@ -43,6 +43,8 @@ import DialogContentText from "@material-ui/core/DialogContentText"
 import DialogTitle from "@material-ui/core/DialogTitle"
 import Dialog from "@material-ui/core/Dialog"
 
+// TODO: _____modal close issue must fix
+
 const ApprovalDetails = props => {
   const { appraisalId } = useParams()
 
@@ -109,7 +111,7 @@ const ApprovalDetails = props => {
 
   const handleObExceptionalClickApproveOpen = (obIndex, item) => {
     // console.log("obIndex", obIndex);
-    // console.log("item", item);
+    // console.log("item", item)
     setObExceptionalIndex(obIndex)
     setItem(item)
     setObExpOpen(true)
@@ -346,6 +348,7 @@ const ApprovalDetails = props => {
   }
 
   const onSubmitCaApproval = () => {
+    // console.log("[onSubmitCaApproval]")
     var value = document.getElementById(`ca_comment_${index1}`).value
     if (value === "") {
       document
@@ -367,7 +370,7 @@ const ApprovalDetails = props => {
     }
     setIsButtonDisabled(true)
     createCaApprovals(payload)
-    setCaOpen(false)
+    setObExpOpen(false)
   }
 
   const onSubmitCaReject = (index, item) => {
@@ -417,12 +420,13 @@ const ApprovalDetails = props => {
 
   const createObApprovals = async data => {
     setIsLoadingOb(true)
-    console.log("data ", JSON.stringify(data))
+    // console.log("data ", JSON.stringify(data))
     const commentResponse = await createApprovalComment(data)
     if (commentResponse !== undefined) {
       setIsLoadingOb(false)
       setObRefresh(true)
     }
+    setObExpOpen(false)
   }
 
   const createCaApprovals = async data => {
