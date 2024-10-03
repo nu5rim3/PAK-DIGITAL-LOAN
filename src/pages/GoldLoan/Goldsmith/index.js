@@ -172,7 +172,7 @@ const IndexGoldSmith = props => {
     const branch = searchData?.searchFeild === "Branch" ? searchData.search : ""
 
     const goldsmithResponse = await getAllGoldsmiths(
-      searchData.search === "" && isReset ? 0 : page,
+      isReset ? 0 : page,
       shop,
       owner,
       branch
@@ -197,7 +197,7 @@ const IndexGoldSmith = props => {
 
   useEffect(() => {
     setPage(0)
-  }, [isReset])
+  }, [isReset, searchData.search])
 
   return (
     <React.Fragment>
