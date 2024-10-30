@@ -9,11 +9,7 @@ const Loader = props => {
   return (
     <>
       {props.loading && (
-        <Row style={{ marginRight: 5 }}>
-          <div className="loader-container fa-1x">
-            <i className="loader-item fas fa-sync fa-spin text-white" />
-          </div>
-        </Row>
+        <i className="loader-item fas fa-sync fa-spin text-white me-2" />
       )}
       {props.loading === false && (
         <div className="d-flex justify-content-center align-items-center">

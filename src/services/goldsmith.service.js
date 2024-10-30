@@ -4,11 +4,24 @@ export const createGoldSmith = async data => {
   return await postResponse(`/mobixCamsCommon/v1/goldsmith`, data)
 }
 
-export const getAllGoldsmiths = async (page, shop, owner, branch) => {
+export const getAllGoldsmiths = async (
+  page,
+  size,
+  shop,
+  owner,
+  branch,
+  fromDate,
+  toDate,
+  status
+) => {
   return await get(
     `/mobixCamsCommon/v1/goldsmith/filters?shop=${shop ?? ""}&owner=${
       owner ?? ""
-    }&fromDate&toDate&status&branch=${branch ?? ""}&page=${page ?? ""}&size=7`
+    }&fromDate=${fromDate ?? ""}&toDate=${
+      toDate ?? ""
+    }&status=${status}&branch=${branch ?? ""}&page=${page ?? ""}&size=${
+      size ?? 7
+    }`
   ).catch(err => console.log(err))
 }
 

@@ -9,10 +9,10 @@ import ReactPaginate from "react-paginate"
 //Import Breadcrumb
 import "./datatables.scss"
 
-const PaginatedTable = props => {
+const PaginatedTable = ({ totalPages, page, items, setPage }) => {
   const handlePageClick = data => {
     let selected = data.selected
-    props.setPage(selected)
+    setPage(selected)
   }
 
   const pagination = () => {
@@ -21,7 +21,7 @@ const PaginatedTable = props => {
         previousLabel={"Previous"}
         nextLabel={"Next"}
         breakLabel={"..."}
-        pageCount={props.totalPages || 0}
+        pageCount={totalPages || 0}
         marginPagesDisplayed={2}
         pageRangeDisplayed={4}
         previousClassName={"page-item"}
@@ -35,6 +35,7 @@ const PaginatedTable = props => {
         breakClassName={"page-item"}
         breakLinkClassName={"page-link"}
         onPageChange={handlePageClick}
+        forcePage={page}
       />
     )
   }
@@ -47,8 +48,8 @@ const PaginatedTable = props => {
         bordered
         noBottomColumns
         data={{
-          columns: props?.items?.columns,
-          rows: props?.items?.rows ?? [],
+          columns: items?.columns,
+          rows: items?.rows ?? [],
         }}
         paging={false}
         searching={false}
@@ -61,6 +62,7 @@ const PaginatedTable = props => {
 
 PaginatedTable.propTypes = {
   items: PropTypes.object,
+  page: PropTypes.number,
   setPage: PropTypes.func,
   totalPages: PropTypes.number,
 }

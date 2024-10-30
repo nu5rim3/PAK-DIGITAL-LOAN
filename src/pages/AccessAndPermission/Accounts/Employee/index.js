@@ -16,10 +16,27 @@ import ActivateEmployee from "./ActivateEmployee"
 // APIs
 import { getAllEmployees } from "services/employee.service"
 
-const Employee = props => {
-  const PAGE = 0
+import PaginatedTable from "components/Datatable/PaginatedTable"
+import Search from "components/Search/Search"
 
-  const SIZE = 1000
+const searchTags = [
+  { key: "empNo", value: "Employee No", type: "TEXT" },
+  { key: "empName", value: "Employee Name", type: "TEXT" },
+  { key: "empDisplayName", value: "Display Name", type: "TEXT" },
+  { key: "cnic", value: "Cnic", type: "TEXT" },
+  { key: "lastModifiedDate", value: "Last Modified Date", type: "DATE" },
+  { key: "status", value: "Status", type: "SELECT" },
+]
+
+const searchStatus = [
+  { label: "Active", value: "ACTIVE" },
+  { label: "Inactive", value: "INACTIVE" },
+]
+
+const Employee = props => {
+  const [page, setPage] = useState(0)
+
+  const SIZE = 7
 
   const [employees, setEmployees] = useState([])
   const [data, setData] = useState(null)
@@ -27,6 +44,12 @@ const Employee = props => {
   const [isOpenUpdate, setIsOpenUpdate] = useState(false)
   const [isDeactivate, setIsDecivate] = useState(false)
   const [isOpenActivate, setIsOpenActivate] = useState(false)
+
+  const [searchData, setSearchData] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
+  const [isReset, setIsReset] = useState(false)
+  const [tableData, setTableData] = useState([])
+  const [searchTriggered, setSearchTriggered] = useState(false)
 
   const toggelCreateModal = () => {
     setIsOpenCreate(!isOpenCreate)
@@ -47,10 +70,10 @@ const Employee = props => {
 
   const getLabel = item => {
     if (item.status === "A") {
-      item.status = "ACTIVE"
+      item.status = "Active"
       return item
     } else {
-      item.status = "INACTIVE"
+      item.status = "Inactive"
       return item
     }
   }
@@ -151,26 +174,54 @@ const Employee = props => {
     return item
   }
 
+  const fetchData = async () => {
+    setIsLoading(true)
+    const empNo =
+      searchData?.searchFeild === "Employee No" ? searchData.search : ""
+    const empName =
+      searchData?.searchFeild === "Employee Name" ? searchData.search : ""
+    const empDisplayName =
+      searchData?.searchFeild === "Display Name" ? searchData.search : ""
+    const cnic = searchData?.searchFeild === "Cnic" ? searchData.search : ""
+    const fromDate =
+      searchData?.searchFeild === "Last Modified Date"
+        ? searchData.fromDate
+        : ""
+    const toDate =
+      searchData?.searchFeild === "Last Modified Date" ? searchData.toDate : ""
+    const status = searchData?.searchFeild === "Status" ? searchData.status : ""
+
+    const employeeResponse = await getAllEmployees(
+      page,
+      SIZE,
+      empNo,
+      empName,
+      empDisplayName,
+      cnic,
+      fromDate,
+      toDate,
+      status
+    )
+
+    setTableData(employeeResponse?.data)
+    setIsLoading(false)
+    setSearchTriggered(false)
+    if (employeeResponse !== undefined) {
+      var data = employeeResponse.data?.content?.map(item =>
+        modernization(item)
+      )
+      setEmployees(data)
+    }
+  }
+
   useEffect(() => {
-    var _isMounted = true
+    setSearchTriggered(true)
+    setPage(0)
+  }, [isReset, searchData.searchFeild, searchData.status, searchData.search])
 
-    const fetchData = async () => {
-      const employeeResponse = await getAllEmployees(PAGE, SIZE)
-
-      if (_isMounted && employeeResponse !== undefined) {
-        var data = employeeResponse.data.content.map(item =>
-          modernization(item)
-        )
-        setEmployees(data)
-      }
-    }
-
+  useEffect(() => {
     fetchData()
-
-    return () => {
-      _isMounted = false
-    }
-  }, [])
+  }, [page, searchTriggered])
 
   return (
     <React.Fragment>
@@ -206,7 +257,21 @@ const Employee = props => {
                     </button>
                   </div>
 
-                  <Table items={items} />
+                  {/* Advence search */}
+                  <Search
+                    searchTags={searchTags}
+                    loading={isLoading}
+                    onReset={setIsReset}
+                    onSubmitSearch={setSearchData}
+                    status={searchStatus}
+                  />
+
+                  <PaginatedTable
+                    items={items}
+                    setPage={setPage}
+                    page={page}
+                    totalPages={tableData?.totalPages ?? 0}
+                  />
                 </CardBody>
               </Card>
             </Col>

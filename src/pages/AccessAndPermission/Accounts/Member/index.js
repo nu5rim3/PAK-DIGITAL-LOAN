@@ -1,6 +1,14 @@
 import PropTypes from "prop-types"
 import React, { useEffect, useState } from "react"
-import { Container, Row, Col, Card, CardBody, CardTitle } from "reactstrap"
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  CardBody,
+  CardTitle,
+  Button,
+} from "reactstrap"
 
 import moment from "moment"
 
@@ -13,9 +21,23 @@ import Create from "./Create"
 import Update from "./Update"
 
 // APIs
-import { getAllUsers } from "services/user.service"
+import { getAllFilterUsers } from "services/user.service"
 import PaginatedTable from "components/Datatable/PaginatedTable"
 import Search from "components/Search/Search"
+
+const searchTags = [
+  { key: "idx", value: "IDX", type: "TEXT" },
+  { key: "shop", value: "Name", type: "TEXT" },
+  { key: "role", value: "Role", type: "TEXT" },
+  { key: "profileUser", value: "Profile User", type: "TEXT" },
+  { key: "lastModifiedDate", value: "Last Modified Date", type: "DATE" },
+  { key: "status", value: "Status", type: "SELECT" },
+]
+
+const searchStatus = [
+  { label: "Active", value: "ACTIVE" },
+  { label: "Inactive", value: "INACTIVE" },
+]
 
 const Member = props => {
   const [page, setPage] = useState(0)
@@ -30,6 +52,7 @@ const Member = props => {
   const [isOpenUpdate, setIsOpenUpdate] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [isReset, setIsReset] = useState(false)
+  const [searchTriggered, setSearchTriggered] = useState(false)
 
   const toggelCreateModal = () => {
     setIsOpenCreate(!isOpenCreate)
@@ -134,16 +157,30 @@ const Member = props => {
     const idx = searchData?.searchFeild === "IDX" ? searchData.search : ""
     const name = searchData?.searchFeild === "Name" ? searchData.search : ""
     const role = searchData?.searchFeild === "Role" ? searchData.search : ""
+    const profileUser =
+      searchData?.searchFeild === "Profile User" ? searchData.search : ""
+    const fromDate =
+      searchData?.searchFeild === "Last Modified Date"
+        ? searchData.fromDate
+        : ""
+    const toDate =
+      searchData?.searchFeild === "Last Modified Date" ? searchData.toDate : ""
+    const status = searchData?.searchFeild === "Status" ? searchData.status : ""
 
-    const userResponse = await getAllUsers(
+    const userResponse = await getAllFilterUsers(
       searchData.search === "" && isReset ? 0 : page,
+      SIZE,
       idx,
       name,
       role,
-      SIZE
+      profileUser,
+      fromDate,
+      toDate,
+      status
     )
     setUsersTableData(userResponse)
     setIsLoading(false)
+    setSearchTriggered(false)
     if (userResponse !== undefined) {
       var data = userResponse.content.map(item => modernization(item))
       setUsers(data)
@@ -151,18 +188,13 @@ const Member = props => {
   }
 
   useEffect(() => {
-    var _isMounted = true
-
-    fetchData()
-
-    return () => {
-      _isMounted = false
-    }
-  }, [page, searchData, isReset])
+    setSearchTriggered(true)
+    setPage(0)
+  }, [isReset, searchData.searchFeild, searchData.status, searchData.search])
 
   useEffect(() => {
-    setPage(0)
-  }, [isReset])
+    fetchData()
+  }, [page, searchTriggered])
 
   return (
     <React.Fragment>
@@ -187,25 +219,29 @@ const Member = props => {
                       operators.
                     </p>
 
-                    <button
-                      className="btn btn-primary btn-sm d-flex justify-content-between align-items-center"
+                    <Button
+                      color="primary"
+                      size="sm"
+                      className="btn d-flex justify-content-between align-items-center"
                       onClick={() => toggelCreateModal(true)}
                     >
                       <i className="bx bxs-plus-square font-size-16 me-1"></i>
                       <p className="m-0">Create Member</p>
-                    </button>
+                    </Button>
                   </div>
-
+                  {/* Advence search */}
                   <Search
-                    searchItems={["IDX", "Name", "Role"]}
-                    setSearchData={setSearchData}
-                    isLoading={isLoading}
-                    setRest={setIsReset}
+                    searchTags={searchTags}
+                    loading={isLoading}
+                    onReset={setIsReset}
+                    onSubmitSearch={setSearchData}
+                    status={searchStatus}
                   />
 
                   <PaginatedTable
                     items={items}
                     setPage={setPage}
+                    page={page}
                     totalPages={usersTableData?.totalPages ?? 0}
                   />
                 </CardBody>

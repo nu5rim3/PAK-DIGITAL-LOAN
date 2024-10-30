@@ -7,6 +7,7 @@ import {
   CardBody,
   CardTitle,
   Badge,
+  Button,
 } from "reactstrap"
 
 //APIs
@@ -21,6 +22,19 @@ import Deactivate from "./DeactivateGoldsmith"
 import ActivateGoldsmith from "./ActivateGoldsmith"
 import Search from "components/Search/Search"
 
+const searchTags = [
+  { key: "branch", value: "Branch", type: "TEXT" },
+  { key: "shop", value: "Shop", type: "TEXT" },
+  { key: "owner", value: "Owner", type: "TEXT" },
+  { key: "updatedDate", value: "Updated Date", type: "DATE" },
+  { key: "status", value: "Status", type: "SELECT" },
+]
+
+const searchStatus = [
+  { label: "Active", value: "ACTIVE" },
+  { label: "Inactive", value: "INACTIVE" },
+]
+
 const IndexGoldSmith = props => {
   const [goldsmith, setGoldsmith] = useState([])
   const [isMounted, setIsMounted] = useState(false)
@@ -32,8 +46,10 @@ const IndexGoldSmith = props => {
   const [isOpenActivate, setIsOpenActivate] = useState(false)
   const [data, setData] = useState(null)
   const [page, setPage] = useState(0)
+  const SIZE = 7
   const [isLoading, setIsLoading] = useState(false)
   const [isReset, setIsReset] = useState(false)
+  const [searchTriggered, setSearchTriggered] = useState(false)
 
   const toggelCreateModal = () => {
     setIsOpenCreate(!isOpenCreate)
@@ -164,23 +180,36 @@ const IndexGoldSmith = props => {
     return item
   }
 
+  console.log("[searchData] - ", searchData)
+
   const fetchData = async () => {
     setIsMounted(true)
     setIsLoading(true)
+
     const shop = searchData?.searchFeild === "Shop" ? searchData.search : ""
     const owner = searchData?.searchFeild === "Owner" ? searchData.search : ""
     const branch = searchData?.searchFeild === "Branch" ? searchData.search : ""
+    const fromDate =
+      searchData?.searchFeild === "Updated Date" ? searchData.fromDate : ""
+    const toDate =
+      searchData?.searchFeild === "Updated Date" ? searchData.toDate : ""
+    const status = searchData?.searchFeild === "Status" ? searchData.status : ""
 
     const goldsmithResponse = await getAllGoldsmiths(
       isReset ? 0 : page,
+      SIZE,
       shop,
       owner,
-      branch
+      branch,
+      fromDate,
+      toDate,
+      status
     )
 
     setGoldsmithTableData(goldsmithResponse)
     setIsLoading(false)
     setIsReset(false)
+    setSearchTriggered(false)
     if (goldsmithResponse !== undefined) {
       var data = goldsmithResponse.content.map(item => modernization(item))
       setGoldsmith(data)
@@ -188,16 +217,13 @@ const IndexGoldSmith = props => {
   }
 
   useEffect(() => {
-    fetchData()
-
-    return () => {
-      setIsMounted(false)
-    }
-  }, [page, searchData, isReset])
+    setSearchTriggered(true)
+    setPage(0)
+  }, [isReset, searchData.searchFeild, searchData.status, searchData.search])
 
   useEffect(() => {
-    setPage(0)
-  }, [isReset, searchData.search])
+    fetchData()
+  }, [page, searchTriggered])
 
   return (
     <React.Fragment>
@@ -219,25 +245,29 @@ const IndexGoldSmith = props => {
                       Here the all registered Goldsmith Details.
                     </p>
 
-                    <button
-                      className="btn btn-primary btn-sm d-flex justify-content-between align-items-center"
+                    <Button
+                      color="primary"
+                      size="sm"
+                      className="d-flex justify-content-between align-items-center"
                       onClick={() => toggelCreateModal(true)}
                     >
                       <i className="bx bxs-plus-square font-size-16 me-1" />
                       <p className="m-0">Register Goldsmith</p>
-                    </button>
+                    </Button>
                   </div>
-
+                  {/* advance search */}
                   <Search
-                    searchItems={["Branch", "Shop", "Owner"]}
-                    setSearchData={setSearchData}
-                    isLoading={isLoading}
-                    setRest={setIsReset}
+                    searchTags={searchTags}
+                    loading={isLoading}
+                    onReset={setIsReset}
+                    onSubmitSearch={setSearchData}
+                    status={searchStatus}
                   />
                   <PaginatedTable
                     items={items}
                     setPage={setPage}
-                    totalPages={goldsmithTableData.totalPages}
+                    page={page}
+                    totalPages={goldsmithTableData?.totalPages ?? 0}
                   />
                 </CardBody>
               </Card>
