@@ -1,26 +1,26 @@
-import PropTypes from "prop-types";
-import MetaTags from "react-meta-tags";
-import React from "react";
+import PropTypes from "prop-types"
+import MetaTags from "react-meta-tags"
+import React from "react"
 
-import { Row, Col, CardBody, Card, Alert, Container } from "reactstrap";
+import { Row, Col, CardBody, Card, Alert, Container } from "reactstrap"
 
-import { withRouter, Link } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom"
 
 // service
-import { Authentication } from "services/auth.service";
+import { Authentication } from "services/auth.service"
 
 // import images
-import profile from "assets/images/profile-img.jpg";
+import profile from "assets/images/profile-img.jpg"
+import Footer from "../../components/HorizontalLayout/Footer"
 
 const Login = props => {
-
-  const service = Authentication();
+  const service = Authentication()
 
   const submitLogin = async () => {
     if (service.getAccessToken() == null) {
-      await service.authorize();
+      await service.authorize()
     }
-  };
+  }
 
   return (
     <React.Fragment>
@@ -51,10 +51,11 @@ const Login = props => {
                   </Row>
                 </div>
                 <CardBody className="pt-0">
+                  <div className="text-center p-2"></div>
                   <div className="text-center p-2">
-                  </div>
-                  <div className="text-center p-2">
-                    <h5 className="text-dark m-5">Mobix Passport Authentication Manager</h5>
+                    <h5 className="text-dark m-5">
+                      Mobix Passport Authentication Manager
+                    </h5>
                   </div>
                   <div className="mt-3 d-grid">
                     <button
@@ -72,8 +73,7 @@ const Login = props => {
                 <p>
                   © {new Date().getFullYear()} LOLC Technology Services Ltd.
                   <br></br>
-                  Crafted with{" "}
-                  <i className="mdi mdi-heart text-danger" /> by Mobile Solutions.
+                  Design & Develop by Mobile Solutions
                 </p>
               </div>
             </Col>
@@ -81,11 +81,11 @@ const Login = props => {
         </Container>
       </div>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default withRouter(Login);
+export default withRouter(Login)
 
 Login.propTypes = {
   history: PropTypes.object,
-};
+}
