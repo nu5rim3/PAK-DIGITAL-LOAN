@@ -33,8 +33,8 @@ const searchTags = [
 ]
 
 const searchStatus = [
-  { label: "Active", value: "Active" },
-  { label: "Inactive", value: "Inactive" },
+  { label: "Active", value: "ACTIVE" },
+  { label: "Inactive", value: "INACTIVE" },
 ]
 
 const IndexMarcketValue = props => {
