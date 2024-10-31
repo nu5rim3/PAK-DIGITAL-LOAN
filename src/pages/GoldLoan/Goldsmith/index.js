@@ -180,8 +180,6 @@ const IndexGoldSmith = props => {
     return item
   }
 
-  console.log("[searchData] - ", searchData)
-
   const fetchData = async () => {
     setIsMounted(true)
     setIsLoading(true)

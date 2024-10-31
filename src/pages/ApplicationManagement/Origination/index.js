@@ -1,7 +1,15 @@
 import PropTypes from "prop-types"
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { Container, Row, Col, Card, CardBody, CardTitle } from "reactstrap"
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  CardBody,
+  CardTitle,
+  Button,
+} from "reactstrap"
 import DatePicker from "react-datepicker"
 
 import "react-datepicker/dist/react-datepicker.css"
@@ -17,10 +25,15 @@ import Table from "components/Datatable/Table"
 
 // APIs
 import { getAllCompletedAppraisals } from "services/origination.service"
+import PaginatedTable from "components/Datatable/PaginatedTable"
 
 const Origination = props => {
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [page, setPage] = useState(0)
+  const SIZE = 7
+  const [isReset, setIsReset] = useState(false)
+  const [searchTriggered, setSearchTriggered] = useState(false)
 
   const items = {
     columns: [
@@ -85,7 +98,7 @@ const Origination = props => {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = async data => {
+  const onSubmitFetchData = async data => {
     setIsLoading(true)
     const originationResponse = await getAllCompletedAppraisals({
       ...data,
@@ -163,18 +176,6 @@ const Origination = props => {
     reset()
   }
 
-  useEffect(() => {
-    var _isMounted = true
-
-    const fetchData = async () => {}
-
-    fetchData()
-
-    return () => {
-      _isMounted = false
-    }
-  }, [])
-
   return (
     <React.Fragment>
       <div className="page-content">
@@ -192,7 +193,7 @@ const Origination = props => {
                   <CardTitle className="h4">Appraisal Origination</CardTitle>
                   <p className="card-title-desc"></p>
 
-                  <form onSubmit={handleSubmit(onSubmit)}>
+                  <form onSubmit={handleSubmit(onSubmitFetchData)}>
                     <Row className="my-4">
                       <Col className="col">
                         <div className="form-group row">
@@ -302,27 +303,30 @@ const Origination = props => {
                       </Col>
                       <Col className="col">
                         <div className="d-flex justify-content-start gap-2">
-                          <button type="submit" className="btn btn-primary ">
-                            <span className="d-flex">
-                              <Loader loading={isLoading} />
-                              {"  "}
-                              <p className="m-0">Search</p>
-                            </span>
-                          </button>
-
-                          <button
+                          <Button type="submit" color="primary">
+                            <Loader loading={isLoading} />
+                            Search
+                          </Button>
+                          <Button
+                            type="reset"
+                            color="danger"
+                            className="mx-1"
                             onClick={() => onReset()}
-                            className="btn btn-danger "
                           >
-                            <span className="d-flex">
-                              <p className="m-0">Reset</p>
-                            </span>
-                          </button>
+                            Reset
+                          </Button>
                         </div>
                       </Col>
                     </Row>
                   </form>
                   <Table items={items} />
+                  {/* TODO: replace later */}
+                  {/* <PaginatedTable
+                    items={items}
+                    page={page}
+                    setPage={setPage}
+                    totalPages={10}
+                  /> */}
                 </CardBody>
               </Card>
             </Col>
