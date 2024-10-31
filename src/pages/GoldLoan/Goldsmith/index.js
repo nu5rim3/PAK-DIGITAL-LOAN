@@ -231,18 +231,19 @@ const IndexGoldSmith = props => {
         <Container fluid>
           <Breadcrumbs
             title={"Gold Loan Details"}
-            breadcrumbItem={"Goldsmith"}
+            breadcrumbItem={"Goldsmiths"}
           />
 
           <Row>
             <Col className="col-12">
               <Card>
                 <CardBody>
-                  <CardTitle className="h4">Registered Goldsmiths</CardTitle>
+                  <CardTitle className="h4">Goldsmiths</CardTitle>
 
                   <div className="d-flex justify-content-between mb-4">
                     <p className="card-title-desc">
-                      Here the all registered Goldsmith Details.
+                      Goldsmiths are jewellers who come to the branch to
+                      evaluate gold assets.
                     </p>
 
                     <Button

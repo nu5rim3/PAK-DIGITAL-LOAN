@@ -121,7 +121,7 @@ const SidebarContent = props => {
                 <li>
                   <Link to="/pakoman-digital-loan/access-and-permission/members">
                     <i className="bx bx-id-card"></i>
-                    <span>{props.t("Members")}</span>
+                    <span>{props.t("System Users")}</span>
                   </Link>
                 </li>
                 <li>

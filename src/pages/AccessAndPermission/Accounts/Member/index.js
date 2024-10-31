@@ -203,20 +203,18 @@ const Member = props => {
           {/* Render Breadcrumb */}
           <Breadcrumbs
             title={"Access & Permission"}
-            breadcrumbItem={"Members"}
+            breadcrumbItem={"System Users"}
           />
 
           <Row>
             <Col className="col-12">
               <Card>
                 <CardBody>
-                  <CardTitle className="h4">System Members</CardTitle>
-
+                  <CardTitle className="h4">System Users</CardTitle>
                   <div className="d-flex justify-content-between mb-4">
                     <p className="card-title-desc">
-                      The system end members of the system refer to the people
-                      who use computers to perform their jobs, like desktop
-                      operators.
+                      The system users refer to the people who use Mobile and
+                      Computers to perform their jobs.
                     </p>
 
                     <Button

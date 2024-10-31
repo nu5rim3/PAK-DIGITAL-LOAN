@@ -261,19 +261,19 @@ const IndexMarcketValue = props => {
         <Container fluid>
           <Breadcrumbs
             title={"Gold Loan Details"}
-            breadcrumbItem={"Gold Rate"}
+            breadcrumbItem={"Gold Rate Per Gram"}
           />
 
           <Row>
             <Col className="col-12">
               <Card>
                 <CardBody>
-                  <CardTitle className="h4">Registered Gold Reates</CardTitle>
+                  <CardTitle className="h4">Gold Rate Per Gram</CardTitle>
 
                   <div className="d-flex justify-content-between mb-4">
                     <p className="card-title-desc">
-                      Here the all registered Gold Rates Per Gram According To
-                      The Market Details.
+                      Gold rate per gram is the price of one gram of gold on a
+                      particular date.
                     </p>
 
                     <button
