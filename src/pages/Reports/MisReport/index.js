@@ -43,7 +43,7 @@ const MisReport = (props) => {
 
   const [cros, setCros] = useState([]);
   const [userDetails, setUserDetails] = useState(null);
-  const [isBranch, setIsBranch] = useState(true);
+  const [isBranch, setIsBranch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -188,6 +188,8 @@ const MisReport = (props) => {
         if (userDetailsResponse.roles[0].code === 'CO' || userDetailsResponse.roles[0].code === 'BHO') {
           setIsBranch(false);
 
+        } else { {
+          setBranches(true)
         }
         if (userResponse !== undefined) {
 
