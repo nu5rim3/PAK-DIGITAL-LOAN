@@ -82,7 +82,7 @@ const ApprovalDetails = props => {
   const [rejectCaOpen, setCaRejectOpen] = useState(false)
   const [isButtonDisabled, setIsButtonDisabled] = useState(false)
   const [inputValue, setInputValue] = useState("")
-
+  const [loginRole, setLoginRole] = useState("")
   const [originationApproval, setOriginationApproval] = useState([])
 
   const [obExceptionalIndex, setObExceptionalIndex] = useState(0)
@@ -226,7 +226,7 @@ const ApprovalDetails = props => {
     ) {
       result =
         findUser.group.code ===
-          originationApproval.approvalStepDto.workflowStep.name &&
+        originationApproval.approvalStepDto.workflowStep.name &&
         originationApproval.approvalStepDto.stepAction === "P"
       return result
     }
@@ -457,6 +457,7 @@ const ApprovalDetails = props => {
       appraisalIdx: appraisalId,
       stepAction: type,
       comment: value,
+      role: loginRole
     }
 
     // disable button action
@@ -495,6 +496,7 @@ const ApprovalDetails = props => {
       appraisalIdx: appraisalId,
       stepAction: rejectType,
       comment: value,
+      role: loginRole
     }
 
     // disable button action
@@ -525,8 +527,11 @@ const ApprovalDetails = props => {
     const fetchData = async () => {
       if (props.active === "11") {
         const userDetails = localStorage.getItem("authUser")
-        const user = JSON.parse(userDetails)
 
+        //  const userDetailsResponse = await getUserById(obj.username);
+        const user = JSON.parse(userDetails)
+        console.log("user " + user.role)
+        setLoginRole(user.role);
         //const onBoardingApprovals = await getAllOnBoardingApprovals(appraisalId);
         const exceptionalApprovals = await getAllExceptionalApprovals(
           appraisalId
@@ -702,7 +707,7 @@ const ApprovalDetails = props => {
                                           </div>
                                           {item.status === "P" &&
                                             findUser?.group?.code ===
-                                              "AG_LEVEL_2" && (
+                                            "AG_LEVEL_2" && (
                                               <div className="form-group mt-3 d-flex justify-content-end align-items-center">
                                                 <button
                                                   onClick={() =>
@@ -852,8 +857,8 @@ const ApprovalDetails = props => {
                                               ) === false
                                                 ? true
                                                 : item.comments !== null
-                                                ? true
-                                                : false
+                                                  ? true
+                                                  : false
                                             }
                                             defaultValue={
                                               item.comments !== null
@@ -1097,8 +1102,8 @@ const ApprovalDetails = props => {
             {type == "R"
               ? "Are you sure do you want to return this appriasal?"
               : type == "A"
-              ? "Are you sure do you want to approve this appriasal?"
-              : ""}
+                ? "Are you sure do you want to approve this appriasal?"
+                : ""}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

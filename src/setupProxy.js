@@ -6,7 +6,6 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
-      secure: false,
       pathRewrite: {
         '^/pakoman-digital-loan/token': '/token'
       },
@@ -18,7 +17,6 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
-      secure: false,
       pathRewrite: {
         '^/pakoman-digital-loan/mobixCamsCommon': '/mobixCamsCommon'
       },
@@ -30,7 +28,6 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
-      secure: false,
       pathRewrite: {
         '^/pakoman-digital-loan/mobixCamsClientele': '/mobixCamsClientele'
       },
@@ -42,7 +39,6 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
-      secure: false,
       pathRewrite: {
         '^/pakoman-digital-loan/mobixCamsCredit': '/mobixCamsCredit'
       },
@@ -54,7 +50,6 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
-      secure: false,
       pathRewrite: {
         '^/pakoman-digital-loan/mobixCamsLoan': '/mobixCamsLoan'
       },
@@ -66,7 +61,6 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
-      secure: false,
       pathRewrite: {
         '^/pakoman-digital-loan/mobixCamsApproval': '/mobixCamsApproval'
       },
@@ -78,7 +72,6 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: process.env.REACT_APP_MIDDLEWARE_BASE_URL,
       changeOrigin: true,
-      secure: false,
       pathRewrite: {
         '^/pakoman-digital-loan/mobixCamsReport': '/mobixCamsReport'
       },
@@ -90,7 +83,6 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: process.env.REACT_APP_IDENTITY_SERVER_URL,
       changeOrigin: true,
-      secure: false,
       pathRewrite: {
         '^/pakoman-digital-loan/oauth2/token': '/oauth2/token'
       },
@@ -102,7 +94,6 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: process.env.REACT_APP_IDENTITY_SERVER_URL,
       changeOrigin: true,
-      secure: false,
       pathRewrite: {
         '^/pakoman-digital-loan/oauth2/revoke': '/oauth2/revoke'
       },
@@ -114,7 +105,6 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: process.env.REACT_APP_IDENTITY_SERVER_URL,
       changeOrigin: true,
-      secure: false,
       pathRewrite: {
         '^/pakoman-digital-loan/oidc/logout': '/oidc/logout'
       },
