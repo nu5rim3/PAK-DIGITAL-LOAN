@@ -203,13 +203,11 @@ const Employee = props => {
       status
     )
 
-    setTableData(employeeResponse?.data)
+    setTableData(employeeResponse?.content)
     setIsLoading(false)
     setSearchTriggered(false)
     if (employeeResponse !== undefined) {
-      var data = employeeResponse.data?.content?.map(item =>
-        modernization(item)
-      )
+      var data = employeeResponse.content?.map(item => modernization(item))
       setEmployees(data)
     }
   }
