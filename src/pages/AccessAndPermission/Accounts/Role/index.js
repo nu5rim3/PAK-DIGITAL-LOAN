@@ -4,7 +4,6 @@ import { Container, Row, Col, Card, CardBody, CardTitle } from "reactstrap"
 
 //Import Breadcrumb
 import Breadcrumbs from "components/Common/Breadcrumb"
-import Table from "components/Datatable/Table"
 
 // APIs
 import { getfilterRoles } from "services/role.service"
@@ -65,25 +64,6 @@ const Role = props => {
     ],
     rows: roles,
   }
-
-  // useEffect(() => {
-  //   var _isMounted = true
-
-  //   const fetchData = async () => {
-  //     const roleResponse = await getRoles()
-  //     // getfilterRoles
-  //     if (_isMounted && roleResponse !== undefined) {
-  //       var data = roleResponse.map(item => getLabel(item))
-  //       setRoles(data)
-  //     }
-  //   }
-
-  //   fetchData()
-
-  //   return () => {
-  //     _isMounted = false
-  //   }
-  // }, [])
 
   const fetchData = async () => {
     setIsLoading(true)
