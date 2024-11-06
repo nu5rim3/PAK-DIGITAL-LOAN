@@ -35,8 +35,8 @@ const searchTags = [
 ]
 
 const searchStatus = [
-  { label: "Active", value: "ACTIVE" },
-  { label: "Inactive", value: "INACTIVE" },
+  { label: "Active", value: "A" },
+  { label: "Inactive", value: "I" },
 ]
 
 const Member = props => {
