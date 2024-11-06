@@ -7,12 +7,35 @@ import Breadcrumbs from "components/Common/Breadcrumb"
 import Table from "components/Datatable/Table"
 
 // APIs
-import { getRoles } from "services/role.service"
+import { getfilterRoles } from "services/role.service"
+
+import PaginatedTable from "components/Datatable/PaginatedTable"
+import Search from "components/Search/Search"
+
+const searchTags = [
+  { key: "code", value: "Code", type: "TEXT" },
+  { key: "description", value: "Description", type: "TEXT" },
+  { key: "status", value: "Status", type: "SELECT" },
+]
+
+const searchStatus = [
+  { label: "Active", value: "A" },
+  { label: "Inactive", value: "I" },
+]
 
 const Role = props => {
   const [roles, setRoles] = useState([])
+  const [page, setPage] = useState(0)
 
-  const getLabel = item => {
+  const SIZE = 7
+
+  const [searchData, setSearchData] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
+  const [isReset, setIsReset] = useState(false)
+  const [tableData, setTableData] = useState([])
+  const [searchTriggered, setSearchTriggered] = useState(false)
+
+  const modernization = item => {
     if (item.status === "A") {
       item.status = "Active"
       return item
@@ -43,23 +66,57 @@ const Role = props => {
     rows: roles,
   }
 
+  // useEffect(() => {
+  //   var _isMounted = true
+
+  //   const fetchData = async () => {
+  //     const roleResponse = await getRoles()
+  //     // getfilterRoles
+  //     if (_isMounted && roleResponse !== undefined) {
+  //       var data = roleResponse.map(item => getLabel(item))
+  //       setRoles(data)
+  //     }
+  //   }
+
+  //   fetchData()
+
+  //   return () => {
+  //     _isMounted = false
+  //   }
+  // }, [])
+
+  const fetchData = async () => {
+    setIsLoading(true)
+    const code = searchData?.searchFeild === "Code" ? searchData.search : ""
+    const description =
+      searchData?.searchFeild === "Description" ? searchData.search : ""
+    const status = searchData?.searchFeild === "Status" ? searchData.status : ""
+
+    const tableResponse = await getfilterRoles(
+      status,
+      code,
+      description,
+      page,
+      SIZE
+    )
+
+    setTableData(tableResponse)
+    setIsLoading(false)
+    setSearchTriggered(false)
+    if (tableResponse !== undefined) {
+      var data = tableResponse.content?.map(item => modernization(item))
+      setRoles(data)
+    }
+  }
+
   useEffect(() => {
-    var _isMounted = true
+    setSearchTriggered(true)
+    setPage(0)
+  }, [isReset, searchData.searchFeild, searchData.status, searchData.search])
 
-    const fetchData = async () => {
-      const roleResponse = await getRoles()
-      if (_isMounted && roleResponse !== undefined) {
-        var data = roleResponse.map(item => getLabel(item))
-        setRoles(data)
-      }
-    }
-
+  useEffect(() => {
     fetchData()
-
-    return () => {
-      _isMounted = false
-    }
-  }, [])
+  }, [page, searchTriggered])
 
   return (
     <React.Fragment>
@@ -79,7 +136,21 @@ const Role = props => {
                     authorized users.
                   </p>
 
-                  <Table items={items} />
+                  {/* Advence search */}
+                  <Search
+                    searchTags={searchTags}
+                    loading={isLoading}
+                    onReset={setIsReset}
+                    onSubmitSearch={setSearchData}
+                    status={searchStatus}
+                  />
+
+                  <PaginatedTable
+                    items={items}
+                    setPage={setPage}
+                    page={page}
+                    totalPages={tableData?.totalPages ?? 0}
+                  />
                 </CardBody>
               </Card>
             </Col>
