@@ -79,7 +79,7 @@ const Update = props => {
       .then(res => {
         if (res?.status === 200) {
           setIsLoading(false)
-          setSuccessMessage("User updated successfully.")
+          setSuccessMessage("User Updated Successfully.")
           reset()
           props.onSuccessfulUpdate()
           setTimeout(() => {
@@ -88,7 +88,7 @@ const Update = props => {
           }, 3000)
         } else if (res?.status === 500) {
           setIsLoading(false)
-          setErrorMessage("User update failed.")
+          setErrorMessage("User Update Failed.")
         } else {
           setIsLoading(false)
           setErrorMessage(res.data?.message)
@@ -159,7 +159,7 @@ const Update = props => {
         setValue("model", props.data.devices[0].model)
         setValue("profileUser", props.data?.profileUser)
         setValue("meCode", props.data?.meCode)
-        setValue("status", getStatusValue(props.data.status))
+        setValue("status", getStatusValue(props.data?.status))
       }
     }
 
