@@ -34,7 +34,7 @@ const searchTags = [
 
 const searchStatus = [
   { label: "Active", value: "A" },
-  { label: "Inactive", value: "I" },
+  { label: "Inactive", value: "D" },
 ]
 
 const IndexMarcketValue = props => {
