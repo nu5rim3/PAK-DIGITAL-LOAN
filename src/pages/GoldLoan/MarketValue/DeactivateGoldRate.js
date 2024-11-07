@@ -1,82 +1,93 @@
-import PropTypes from "prop-types";
-import React, { useState } from "react";
-import {
-  Row,
-  Col,
-  Alert,
-  Modal,
-  ModalBody,
-  ModalHeader
-} from "reactstrap";
+import PropTypes from "prop-types"
+import React, { useState } from "react"
+import { Row, Col, Alert, Modal, ModalBody, ModalHeader } from "reactstrap"
 
-import { useForm } from "react-hook-form";
-import Loader from "components/SyncLoader";
+import { useForm } from "react-hook-form"
+import Loader from "components/SyncLoader"
 
 //APIs
-import { deacivateGoldRates } from "services/gold-rate.service";
+import { deacivateGoldRates } from "services/gold-rate.service"
 
-const DeactivateGoldRates = (props) => {
+const DeactivateGoldRates = props => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [successMessage, setSuccessMessage] = useState(null)
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    setError,
+    reset,
+    formState: { errors },
+  } = useForm()
 
-  const { register, handleSubmit, watch, setValue, setError, reset, formState: { errors } } = useForm();
-
-  const onSubmit = async (data) => {
-
-    setIsLoading(true);
+  const onSubmit = async data => {
+    setIsLoading(true)
 
     if (props.data !== undefined && props.data !== null) {
-      await deacivateGoldRates(props.data?.id).then(res => {
-        if (res?.status === 200) {
-          setIsLoading(false);
-          setSuccessMessage("Rate Deactivated successfully.");
-          reset();
-          setTimeout(() => {
-            setSuccessMessage(null);
-            props.toggel();
-            window.location.reload(true);
-          }, 2000);
-        } else if (res?.status === 500) {
-          setIsLoading(false);
-          setErrorMessage("Rate Deactivated failed.");
-          setTimeout(() => {
-            setErrorMessage(null);
-            props.toggel();
-            window.location.reload(true);
-          }, 2000);
-        } else {
-          setIsLoading(false);
-          setErrorMessage(res.data?.message);
-          setTimeout(() => {
-            setErrorMessage(null);
-            props.toggel();
-            window.location.reload(true);
-          }, 2000);
-        }
-      }).catch(err => console.log(err));
+      await deacivateGoldRates(props.data?.id)
+        .then(res => {
+          if (res?.status === 200) {
+            setIsLoading(false)
+            setSuccessMessage("Rate Deactivated Successfully.")
+            reset()
+            setTimeout(() => {
+              setSuccessMessage(null)
+              props.toggel()
+              window.location.reload(true)
+            }, 2000)
+          } else if (res?.status === 500) {
+            setIsLoading(false)
+            setErrorMessage("Rate Deactivated Failed.")
+            setTimeout(() => {
+              setErrorMessage(null)
+              props.toggel()
+              window.location.reload(true)
+            }, 2000)
+          } else {
+            setIsLoading(false)
+            setErrorMessage(res.data?.message)
+            setTimeout(() => {
+              setErrorMessage(null)
+              props.toggel()
+              window.location.reload(true)
+            }, 2000)
+          }
+        })
+        .catch(err => console.log(err))
     }
-
-  };
+  }
 
   return (
     <Row>
       <Modal
         size="md"
         isOpen={props.isOpen}
-      // centered="true"
+        // centered="true"
       >
-        <div className="modal-body" >
+        <div className="modal-body">
           <Row>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Col md={12}>
-                {successMessage && <Alert color="danger">{successMessage}</Alert>}
+                {successMessage && (
+                  <Alert color="danger">{successMessage}</Alert>
+                )}
               </Col>
               <Col md={12}>
                 {errorMessage && <Alert color="danger">{errorMessage}</Alert>}
               </Col>
-              <ModalBody style={{ fontSize: 'medium', color: 'red', display: 'flex', justifyContent: 'center', marginTop: '10px' }} color="danger">
+              <ModalBody
+                style={{
+                  fontSize: "medium",
+                  color: "red",
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "10px",
+                }}
+                color="danger"
+              >
                 Are You Sure You Want To Deactivate This Record?
               </ModalBody>
 
@@ -85,9 +96,13 @@ const DeactivateGoldRates = (props) => {
                   {/* <i className="bx bx-trash font-size-18 me-2" ></i> */}
                   Deactivate
                 </button>
-                <button type="submit" className="btn btn-primary w-md m-1" onClick={() => {
-                  props.toggel();
-                }}>
+                <button
+                  type="submit"
+                  className="btn btn-primary w-md m-1"
+                  onClick={() => {
+                    props.toggel()
+                  }}
+                >
                   {/* <i className="bx bx-undo font-size-20 me-2" ></i> */}
                   Cancel
                 </button>
@@ -97,7 +112,7 @@ const DeactivateGoldRates = (props) => {
         </div>
       </Modal>
     </Row>
-  );
+  )
 }
 
 DeactivateGoldRates.propTypes = {
@@ -107,4 +122,4 @@ DeactivateGoldRates.propTypes = {
   data: PropTypes.object,
 }
 
-export default DeactivateGoldRates;
+export default DeactivateGoldRates

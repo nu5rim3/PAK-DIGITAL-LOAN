@@ -43,7 +43,7 @@ const RegisterGoldRates = props => {
       .then(res => {
         if (res?.status === 200) {
           setIsLoading(false)
-          setSuccessMessage("Rates successfully created.")
+          setSuccessMessage("Rates Successfully Created.")
           reset()
           setTimeout(() => {
             setSuccessMessage(null)
@@ -52,7 +52,7 @@ const RegisterGoldRates = props => {
           }, 2000)
         } else if (res?.status === 500) {
           setIsLoading(false)
-          setErrorMessage("Rates creation failed.")
+          setErrorMessage("Rates Creation Failed.")
           setTimeout(() => {
             setErrorMessage(null)
             props.toggel()

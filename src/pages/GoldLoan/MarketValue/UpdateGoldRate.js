@@ -44,7 +44,7 @@ const UpdateGoldRates = props => {
       .then(res => {
         if (res?.status === 200) {
           setIsLoading(false)
-          setSuccessMessage("Rates successfully updated.")
+          setSuccessMessage("Rates Successfully Updated.")
           reset()
           setTimeout(() => {
             setSuccessMessage(null)
@@ -53,7 +53,7 @@ const UpdateGoldRates = props => {
           }, 2000)
         } else if (res?.status === 500) {
           setIsLoading(false)
-          setErrorMessage("Rates update failed.")
+          setErrorMessage("Rates Update Failed.")
           setTimeout(() => {
             setErrorMessage(null)
             props.toggel()
