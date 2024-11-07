@@ -12,18 +12,39 @@ import Table from "components/Datatable/Table"
 import Create from "./Create"
 import Update from "./Update"
 
+import PaginatedTable from "components/Datatable/PaginatedTable"
+import Search from "components/Search/Search"
+
 // APIs
-import { getAllApprovalUsers } from "services/approval.service"
+import { getAllFilterApprovalUsers } from "services/approval.service"
+
+const searchTags = [
+  { key: "userId", value: "User ID", type: "TEXT" },
+  { key: "groupCode", value: "Group Code", type: "TEXT" },
+  { key: "groupName", value: "Group Name", type: "TEXT" },
+  { key: "lastModifiedDate", value: "Last Modified Date", type: "DATE" },
+  { key: "status", value: "Status", type: "SELECT" },
+]
+
+const searchStatus = [
+  { label: "Active", value: "A" },
+  { label: "Inactive", value: "I" },
+]
 
 const Member = props => {
-  const PAGE = 0
-
-  const SIZE = 1000
+  const SIZE = 7
 
   const [users, setUsers] = useState([])
   const [data, setData] = useState(null)
   const [isOpenCreate, setIsOpenCreate] = useState(false)
   const [isOpenUpdate, setIsOpenUpdate] = useState(false)
+
+  const [page, setPage] = useState(0)
+  const [searchData, setSearchData] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
+  const [isReset, setIsReset] = useState(false)
+  const [tableData, setTableData] = useState([])
+  const [searchTriggered, setSearchTriggered] = useState(false)
 
   const toggelCreateModal = () => {
     setIsOpenCreate(!isOpenCreate)
@@ -35,13 +56,13 @@ const Member = props => {
   }
 
   const getLabel = item => {
-    if (item.status === "A") {
-      item.status = "Active"
+    if (item.groupStatus === "A") {
+      item.groupStatus = "Active"
     } else {
-      item.status = "Inactive"
+      item.groupStatus = "Inactive"
     }
-    item.groupCode = item.group.code
-    item.groupName = item.group.name
+    item.groupCode = item.groupCode
+    item.groupName = item.groupName
     return item
   }
 
@@ -68,7 +89,7 @@ const Member = props => {
   const items = {
     columns: [
       {
-        field: "userIdx",
+        field: "groupUserIdx",
         label: "IDX",
         sort: "asc",
       },
@@ -88,7 +109,7 @@ const Member = props => {
         sort: "asc",
       },
       {
-        field: "status",
+        field: "groupStatus",
         label: "Status",
         sort: "asc",
       },
@@ -108,23 +129,50 @@ const Member = props => {
     return item
   }
 
+  const fetchData = async () => {
+    setIsLoading(true)
+    const userId =
+      searchData?.searchFeild === "User ID" ? searchData.search : ""
+    const groupCode =
+      searchData?.searchFeild === "Group Code" ? searchData.search : ""
+    const groupName =
+      searchData?.searchFeild === "Group Name" ? searchData.search : ""
+    const fromDate =
+      searchData?.searchFeild === "Last Modified Date"
+        ? searchData.fromDate
+        : ""
+    const toDate =
+      searchData?.searchFeild === "Last Modified Date" ? searchData.toDate : ""
+    const status = searchData?.searchFeild === "Status" ? searchData.status : ""
+
+    const approvalUsers = await getAllFilterApprovalUsers(
+      userId,
+      status,
+      fromDate,
+      toDate,
+      page,
+      SIZE,
+      groupCode,
+      groupName
+    )
+
+    setTableData(approvalUsers)
+    setIsLoading(false)
+    setSearchTriggered(false)
+    if (approvalUsers !== undefined) {
+      var data = approvalUsers?.content?.map(item => modernization(item))
+      setUsers(data)
+    }
+  }
+
   useEffect(() => {
-    var _isMounted = true
+    setSearchTriggered(true)
+    setPage(0)
+  }, [isReset, searchData.searchFeild, searchData.status, searchData.search])
 
-    const fetchData = async () => {
-      const userResponse = await getAllApprovalUsers(PAGE, SIZE)
-      if (_isMounted && userResponse !== undefined) {
-        var data = userResponse.map(item => modernization(item))
-        setUsers(data)
-      }
-    }
-
+  useEffect(() => {
     fetchData()
-
-    return () => {
-      _isMounted = false
-    }
-  }, [isOpenCreate, isOpenUpdate])
+  }, [page, searchTriggered])
 
   return (
     <React.Fragment>
@@ -157,7 +205,21 @@ const Member = props => {
                     </button>
                   </div>
 
-                  <Table items={items} />
+                  {/* Advence search */}
+                  <Search
+                    searchTags={searchTags}
+                    loading={isLoading}
+                    onReset={setIsReset}
+                    onSubmitSearch={setSearchData}
+                    status={searchStatus}
+                  />
+
+                  <PaginatedTable
+                    items={items}
+                    setPage={setPage}
+                    page={page}
+                    totalPages={tableData?.totalPages ?? 0}
+                  />
                 </CardBody>
               </Card>
             </Col>
