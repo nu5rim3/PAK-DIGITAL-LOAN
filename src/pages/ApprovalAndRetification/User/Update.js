@@ -106,7 +106,7 @@ const Update = props => {
     <Row>
       <Modal size="lg" isOpen={props.isOpen}>
         <div className="modal-header">
-          <h5 className="modal-title mt-0">Update User</h5>
+          <h5 className="modal-title mt-0">Update Approval Group Users</h5>
           <button
             onClick={() => {
               props.toggel()
