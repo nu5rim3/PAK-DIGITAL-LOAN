@@ -84,7 +84,7 @@ const Employee = props => {
   }
 
   const getActions = item => {
-    if (item.status === "ACTIVE") {
+    if (item.status === "Active") {
       item.actions = (
         <Row>
           <Col>
