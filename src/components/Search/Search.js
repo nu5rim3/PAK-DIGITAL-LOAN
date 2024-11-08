@@ -154,7 +154,7 @@ const Search = ({ searchTags, loading, onSubmitSearch, onReset, status }) => {
             color="danger"
             className="mx-1"
             onClick={() => {
-              console.log("[reset]")
+              // console.log("[reset]")
               reset()
               onReset(true)
               onSubmitSearch({})
