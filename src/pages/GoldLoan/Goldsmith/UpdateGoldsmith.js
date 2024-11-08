@@ -43,7 +43,7 @@ const UpdateGoldsmith = props => {
       .then(res => {
         if (res?.status === 200) {
           setIsLoading(false)
-          setSuccessMessage("User updated successfully.")
+          setSuccessMessage("User Updated Successfully.")
           reset()
           setTimeout(() => {
             setSuccessMessage(null)
@@ -52,7 +52,7 @@ const UpdateGoldsmith = props => {
           }, 2000)
         } else if (res?.status === 500) {
           setIsLoading(false)
-          setErrorMessage("User updated failed.")
+          setErrorMessage("User Updated Failed.")
           setTimeout(() => {
             setErrorMessage(null)
             props.toggel()
