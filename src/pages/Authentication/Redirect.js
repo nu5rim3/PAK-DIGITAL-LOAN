@@ -19,6 +19,7 @@ import { loginUser } from "../../store/actions"
 // import images
 import profile from "assets/images/profile-img.jpg"
 import loading from "assets/images/loading.gif"
+import pkg from "../../../package.json"
 
 const Login = props => {
   const dispatch = useDispatch()
@@ -93,6 +94,8 @@ const Login = props => {
               <div className="mt-5 text-center">
                 <p>
                   © {new Date().getFullYear()} LOLC Technology Services Ltd.
+                  <br></br>
+                  version {pkg.version}
                   <br></br>
                   Design & Develop by Mobile Solutions
                 </p>

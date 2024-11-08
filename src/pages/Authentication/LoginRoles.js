@@ -24,6 +24,7 @@ import { withRouter, Link } from "react-router-dom"
 import profile from "assets/images/profile-img.jpg"
 
 import { autherizationContextHandler } from "store/auth/login/actions"
+import pkg from "../../../package.json"
 
 const UserRoleSelecter = props => {
   const [roles, setRoles] = useState([null])
@@ -146,6 +147,8 @@ const UserRoleSelecter = props => {
               <div className="mt-5 text-center">
                 <p>
                   © {new Date().getFullYear()} LOLC Technology Services Ltd.
+                  <br></br>
+                  version {pkg.version}
                   <br></br>
                   Design & Develop by Mobile Solutions
                 </p>

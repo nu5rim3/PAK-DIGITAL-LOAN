@@ -11,7 +11,7 @@ import { Authentication } from "services/auth.service"
 
 // import images
 import profile from "assets/images/profile-img.jpg"
-import Footer from "../../components/HorizontalLayout/Footer"
+import pkg from "../../../package.json"
 
 const Login = props => {
   const service = Authentication()
@@ -72,6 +72,8 @@ const Login = props => {
               <div className="mt-5 text-center">
                 <p>
                   © {new Date().getFullYear()} LOLC Technology Services Ltd.
+                  <br></br>
+                  version {pkg.version}
                   <br></br>
                   Design & Develop by Mobile Solutions
                 </p>

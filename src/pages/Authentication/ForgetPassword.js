@@ -29,6 +29,7 @@ import { userForgetPassword } from "../../store/actions"
 // import images
 import profile from "../../assets/images/profile-img.png"
 import logo from "../../assets/images/logo.svg"
+import pkg from "../../../package.json"
 
 const ForgetPasswordPage = props => {
   const dispatch = useDispatch()
@@ -157,6 +158,8 @@ const ForgetPasswordPage = props => {
               <div className="mt-5 text-center">
                 <p>
                   © {new Date().getFullYear()} LOLC Technology Services Ltd.
+                  <br></br>
+                  version {pkg.version}
                   <br></br>
                   Design & Develop by Mobile Solutions
                 </p>
