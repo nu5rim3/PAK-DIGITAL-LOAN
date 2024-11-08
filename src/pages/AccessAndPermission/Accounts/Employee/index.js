@@ -23,7 +23,7 @@ const searchTags = [
   { key: "empNo", value: "Employee No", type: "TEXT" },
   { key: "empName", value: "Employee Name", type: "TEXT" },
   { key: "empDisplayName", value: "Display Name", type: "TEXT" },
-  { key: "cnic", value: "Cnic", type: "TEXT" },
+  { key: "cnic", value: "CNIC", type: "TEXT" },
   { key: "lastModifiedDate", value: "Last Modified Date", type: "DATE" },
   { key: "status", value: "Status", type: "SELECT" },
 ]
@@ -139,6 +139,11 @@ const Employee = props => {
         sort: "asc",
       },
       {
+        field: "empCnic",
+        label: "CNIC",
+        sort: "asc",
+      },
+      {
         field: "empName",
         label: "Employee Name",
         sort: "asc",
@@ -182,7 +187,7 @@ const Employee = props => {
       searchData?.searchFeild === "Employee Name" ? searchData.search : ""
     const empDisplayName =
       searchData?.searchFeild === "Display Name" ? searchData.search : ""
-    const cnic = searchData?.searchFeild === "Cnic" ? searchData.search : ""
+    const cnic = searchData?.searchFeild === "CNIC" ? searchData.search : ""
     const fromDate =
       searchData?.searchFeild === "Last Modified Date"
         ? searchData.fromDate
@@ -215,7 +220,14 @@ const Employee = props => {
   useEffect(() => {
     setSearchTriggered(true)
     setPage(0)
-  }, [isReset, searchData.searchFeild, searchData.status, searchData.search])
+  }, [
+    isReset,
+    searchData.searchFeild,
+    searchData.status,
+    searchData.search,
+    searchData.fromDate,
+    searchData.toDate,
+  ])
 
   useEffect(() => {
     fetchData()
