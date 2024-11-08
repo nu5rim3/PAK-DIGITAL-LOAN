@@ -231,7 +231,7 @@ const Member = props => {
                       onClick={() => toggelCreateModal(true)}
                     >
                       <i className="bx bxs-plus-square font-size-16 me-1"></i>
-                      <p className="m-0">Create Member</p>
+                      <p className="m-0">Create System User</p>
                     </Button>
                   </div>
                   {/* Advence search */}
