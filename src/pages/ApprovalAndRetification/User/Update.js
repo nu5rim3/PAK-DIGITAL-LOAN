@@ -45,7 +45,7 @@ const Update = props => {
 
     setIsLoading(true)
 
-    await updateApprovalUser(props.data.userIdx, payload)
+    await updateApprovalUser(payload.userIdx, payload)
       .then(res => {
         setIsLoading(false)
         setSuccess("User has been updated successfully.")

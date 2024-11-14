@@ -56,10 +56,10 @@ const Member = props => {
   }
 
   const getLabel = item => {
-    if (item.groupStatus === "A") {
-      item.groupStatus = "Active"
+    if (item.groupUserStatus === "A") {
+      item.groupUserStatus = "Active"
     } else {
-      item.groupStatus = "Inactive"
+      item.groupUserStatus = "Inactive"
     }
     item.groupCode = item.groupCode
     item.groupName = item.groupName
@@ -109,7 +109,7 @@ const Member = props => {
         sort: "asc",
       },
       {
-        field: "groupStatus",
+        field: "groupUserStatus",
         label: "Status",
         sort: "asc",
       },
