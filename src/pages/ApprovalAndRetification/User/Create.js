@@ -109,7 +109,7 @@ const Create = props => {
     <Row>
       <Modal size="lg" isOpen={props.isOpen}>
         <div className="modal-header">
-          <h5 className="modal-title mt-0">Create User</h5>
+          <h5 className="modal-title mt-0">Create Approval Group User</h5>
           <button
             onClick={() => {
               props.toggel()

@@ -75,10 +75,6 @@ const Update = props => {
     }
   }
 
-  const findUser = value => {
-    console.log()
-  }
-
   useEffect(() => {
     var _isMounted = true
 
@@ -88,7 +84,7 @@ const Update = props => {
         setGroups(groupsResponse)
 
         if (props.data !== null && props.data !== undefined) {
-          setValue("userIdx", props.data.userIdx)
+          setValue("userIdx", props.data.groupUserIdx)
           setValue("group", props.data.groupCode)
           setValue("status", getStatusValue(props.data.status))
         }
@@ -139,17 +135,9 @@ const Update = props => {
                         type="text"
                         className="form-control"
                         placeholder="Enter User IDX"
+                        disabled
                         {...register("userIdx", { required: true })}
                       />
-                      <div className="input-group-append">
-                        <button
-                          className="btn btn-success"
-                          type="button"
-                          onClick={() => findUser()}
-                        >
-                          Find
-                        </button>
-                      </div>
                     </div>
                     {errors.userIdx && (
                       <span className="text-danger">
