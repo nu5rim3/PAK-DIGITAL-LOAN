@@ -24,15 +24,41 @@ import Breadcrumbs from "components/Common/Breadcrumb"
 import Table from "components/Datatable/Table"
 
 // APIs
-import { getAllCompletedAppraisals } from "services/origination.service"
+import {
+  getAllCompletedAppraisals,
+  getAllFilteredAppraisals,
+} from "services/origination.service"
 import PaginatedTable from "components/Datatable/PaginatedTable"
+import Search from "components/Search/Search"
+
+const searchTags = [
+  { key: "appraisalId", value: "Appraisal ID", type: "TEXT" },
+  { key: "contractId", value: "Contract ID", type: "TEXT" },
+  { key: "productName", value: "Product Name", type: "TEXT" },
+  { key: "customerCnic", value: "Customer CNIC", type: "TEXT" },
+  { key: "customerName", value: "Customer Name", type: "TEXT" },
+  { key: "branchName", value: "Branch Name", type: "TEXT" },
+  { key: "createdBy", value: "Created By", type: "TEXT" },
+  { key: "createdAt", value: "Created At", type: "DATE" },
+]
+
+const extraStatus = [
+  { label: "Completed", value: "completed" },
+  { label: "Returned", value: "returned" },
+  { label: "Active", value: "active" },
+  { label: "Rejected", value: "rejected" },
+]
 
 const Origination = props => {
   const [data, setData] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
   const [page, setPage] = useState(0)
+
   const SIZE = 7
+
+  const [searchData, setSearchData] = useState({})
+  const [isLoading, setIsLoading] = useState(false)
   const [isReset, setIsReset] = useState(false)
+  const [tableData, setTableData] = useState([])
   const [searchTriggered, setSearchTriggered] = useState(false)
 
   const items = {
@@ -69,7 +95,7 @@ const Origination = props => {
         sort: "asc",
       },
       {
-        field: "branchName",
+        field: "branchDesc",
         label: "Branch Name",
         sort: "asc",
       },
@@ -115,9 +141,9 @@ const Origination = props => {
   }
 
   const getLabel = item => {
-    item.customerCnic = item.clienteles[0].identificationNumber
-    item.customerName = item.clienteles[0].fullName
-    item.createdBy = item.clienteles[0].createdBy
+    item.customerCnic = item.identificationNumber
+    item.customerName = item.fullName
+    item.createdBy = item.createdBy
     item.creationDate = moment(item.lastModifiedDate).format(
       "yyyy-MM-DD HH:mm:ss"
     )
@@ -176,6 +202,60 @@ const Origination = props => {
     reset()
   }
 
+  const fetchData = async () => {
+    setIsLoading(true)
+    const status = searchData.status ?? ""
+    const appraisalId =
+      searchData?.searchFeild === "Appraisal ID" ? searchData.search : ""
+    const fromDate =
+      searchData?.searchFeild === "Created At" ? searchData.fromDate : ""
+    const toDate =
+      searchData?.searchFeild === "Created At" ? searchData.toDate : ""
+    const contractId =
+      searchData?.searchFeild === "Contract ID" ? searchData.search : ""
+    const productName =
+      searchData?.searchFeild === "Product Name" ? searchData.search : ""
+    const customerName =
+      searchData?.searchFeild === "Customer Name" ? searchData.search : ""
+    const createdBy =
+      searchData?.searchFeild === "Created By" ? searchData.search : ""
+    const branchName =
+      searchData?.searchFeild === "Branch Name" ? searchData.search : ""
+    const customerCnic =
+      searchData?.searchFeild === "Customer CNIC" ? searchData.search : ""
+
+    const tableResponse = await getAllFilteredAppraisals(
+      page,
+      SIZE,
+      branchName,
+      status,
+      appraisalId,
+      fromDate,
+      toDate,
+      contractId,
+      productName,
+      customerName,
+      createdBy
+    )
+
+    setTableData(tableResponse)
+    setIsLoading(false)
+    setSearchTriggered(false)
+    if (tableResponse !== undefined) {
+      var data = tableResponse.content?.map(item => modernization(item))
+      setData(data)
+    }
+  }
+
+  useEffect(() => {
+    setSearchTriggered(true)
+    setPage(0)
+  }, [isReset, searchData.searchFeild, searchData.status, searchData.search])
+
+  useEffect(() => {
+    fetchData()
+  }, [page, searchTriggered])
+
   return (
     <React.Fragment>
       <div className="page-content">
@@ -191,142 +271,26 @@ const Origination = props => {
               <Card>
                 <CardBody>
                   <CardTitle className="h4">Appraisal Origination</CardTitle>
-                  <p className="card-title-desc"></p>
+                  <p className="card-title-desc">
+                    List of all appraisals that are based on status.
+                  </p>
 
-                  <form onSubmit={handleSubmit(onSubmitFetchData)}>
-                    <Row className="my-4">
-                      <Col className="col">
-                        <div className="form-group row">
-                          <div className="col-md-12">
-                            <select
-                              className="form-control"
-                              name="status"
-                              {...register("status", { required: true })}
-                            >
-                              <option value="">Select Status</option>
-                              <option value="completed">Pending</option>
-                              <option value="returned">Returned</option>
-                              <option value="active">Approved</option>
-                              <option value="rejected">Rejected</option>
-                            </select>
-                          </div>
-                          {errors.status && (
-                            <span className="error">
-                              This field is required
-                            </span>
-                          )}
-                        </div>
-                      </Col>
-                      <Col className="col">
-                        <div className="form-group row">
-                          <div className="col-md-12">
-                            <input
-                              {...register("appraisalId", { required: false })}
-                              className="form-control"
-                              type="text"
-                              name="appraisalId"
-                              id="appraisalId"
-                              placeholder="Appraisal ID"
-                            />
-                          </div>
-                        </div>
-                      </Col>
-                      <Col className="col">
-                        <div className="form-group row">
-                          <div className="col-md-12">
-                            <Controller
-                              name="fromDate"
-                              id="fromDate"
-                              control={control}
-                              defaultValue={null}
-                              rules={{
-                                required: true,
-                                message: "This field is required",
-                              }}
-                              render={({ field }) => (
-                                <DatePicker
-                                  className="form-control"
-                                  placeholderText="Select From Date"
-                                  onChange={date => field.onChange(date)}
-                                  selected={field.value}
-                                  dateFormat="yyyy-MM-dd"
-                                  showYearDropdown
-                                  showMonthDropdown
-                                  scrollableMonthYearDropdown
-                                  scrollableYearDropdown
-                                  yearDropdownItemNumber={15}
-                                />
-                              )}
-                            />
-                          </div>
-                          {errors.fromDate && (
-                            <span className="error">
-                              This field is required
-                            </span>
-                          )}
-                        </div>
-                      </Col>
-                      <Col className="col">
-                        <div className="form-group row">
-                          <div className="col-md-12">
-                            <Controller
-                              name="toDate"
-                              id="toDate"
-                              control={control}
-                              defaultValue={null}
-                              rules={{
-                                required: true,
-                                message: "This field is required",
-                              }}
-                              render={({ field }) => (
-                                <DatePicker
-                                  className="form-control"
-                                  placeholderText="Select To Date"
-                                  onChange={date => field.onChange(date)}
-                                  selected={field.value}
-                                  dateFormat="yyyy-MM-dd"
-                                  showYearDropdown
-                                  scrollableYearDropdown
-                                  showMonthDropdown
-                                  scrollableMonthYearDropdown
-                                  yearDropdownItemNumber={15}
-                                />
-                              )}
-                            />
-                          </div>
-                          {errors.toDate && (
-                            <span className="error">
-                              This field is required
-                            </span>
-                          )}
-                        </div>
-                      </Col>
-                      <Col className="col">
-                        <div className="d-flex justify-content-start gap-2">
-                          <Button type="submit" color="primary">
-                            <Loader loading={isLoading} />
-                            Search
-                          </Button>
-                          <Button
-                            type="reset"
-                            color="danger"
-                            className="mx-1"
-                            onClick={() => onReset()}
-                          >
-                            Reset
-                          </Button>
-                        </div>
-                      </Col>
-                    </Row>
-                  </form>
-                  <Table items={items} />
-                  {/* TODO: replace later */}
-                  {/* <PaginatedTable
+                  {/* Advence search */}
+                  <Search
+                    searchTags={searchTags}
+                    loading={isLoading}
+                    onReset={setIsReset}
+                    onSubmitSearch={setSearchData}
+                    // status={searchStatus}
+                    extraStatus={extraStatus}
+                  />
+
+                  <PaginatedTable
                     items={items}
-                    page={page}
                     setPage={setPage}
-                    totalPages={10}
-                  /> */}
+                    page={page}
+                    totalPages={tableData?.totalPages ?? 0}
+                  />
                 </CardBody>
               </Card>
             </Col>

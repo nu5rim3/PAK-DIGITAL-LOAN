@@ -6,7 +6,14 @@ import Loader from "components/SyncLoader"
 import DatePicker from "react-datepicker"
 import moment from "moment"
 
-const Search = ({ searchTags, loading, onSubmitSearch, onReset, status }) => {
+const Search = ({
+  searchTags,
+  loading,
+  onSubmitSearch,
+  onReset,
+  status,
+  extraStatus,
+}) => {
   const [searchType, setSearchType] = useState("TEXT")
   const {
     register,
@@ -29,7 +36,9 @@ const Search = ({ searchTags, loading, onSubmitSearch, onReset, status }) => {
     } else if (searchType === "TEXT") {
       delete data.fromDate
       delete data.toDate
-      delete data.status
+      if (extraStatus === undefined) {
+        delete data.status
+      }
       onSubmitSearch(data)
     } else if (searchType === "SELECT") {
       delete data.fromDate
@@ -57,6 +66,20 @@ const Search = ({ searchTags, loading, onSubmitSearch, onReset, status }) => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Row>
+        {extraStatus && extraStatus.length > 0 && (
+          <Col className="col-2 pe-0">
+            <FormGroup>
+              <select className="form-select" {...register("status")}>
+                {extraStatus.map((item, index) => (
+                  <option key={index} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
+              </select>
+            </FormGroup>
+          </Col>
+        )}
+
         <Col className="col-2">
           <FormGroup>
             <select className="form-select" {...register("searchFeild")}>
@@ -174,6 +197,7 @@ Search.propTypes = {
   loading: PropTypes.bool,
   onSubmitSearch: PropTypes.func,
   onReset: PropTypes.func,
+  extraStatus: PropTypes.array,
 }
 
 export default Search

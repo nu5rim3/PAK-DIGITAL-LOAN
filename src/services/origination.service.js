@@ -9,6 +9,34 @@ export const getAllCompletedAppraisals = data => {
   )
 }
 
+export const getAllFilteredAppraisals = (
+  page,
+  size,
+  branch,
+  status,
+  appraisalId,
+  fromDate,
+  toDate,
+  contractId,
+  productName,
+  customerName,
+  createdBy
+) => {
+  var role = localStorage.getItem("role")
+  // var branch = localStorage.getItem("branch")
+  return get(
+    `/mobixCamsLoan/v1/appraisals/filters??role=${role ?? ""}&branch=${
+      branch ?? ""
+    }&status=${status ?? ""}&appraisalId=${appraisalId ?? ""}&fromDate=${
+      fromDate ?? ""
+    }&toDate=${toDate ?? ""}&contractId=${contractId ?? ""}&productName=${
+      productName ?? ""
+    }&customerName=${customerName ?? ""}&createdBy=${createdBy ?? ""}&page=${
+      page ?? 0
+    }&size=${size ?? 7}`
+  )
+}
+
 export const getAllOriginationCommon = async productCode => {
   return await get(`/mobixCamsCommon/v1/common-details/product/${productCode}`)
 }
