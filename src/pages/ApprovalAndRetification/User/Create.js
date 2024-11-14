@@ -49,27 +49,53 @@ const Create = props => {
 
     await createApprovalUser(payload)
       .then(res => {
-        setIsLoading(false)
-        if (res !== undefined) {
-          setSuccess("User has been created successfully.")
+        console.log("[res]", res)
+        if (res?.status === undefined) {
+          setIsLoading(false)
+          setErrorMessage("User creation failed.")
+        } else if (res?.status === 200) {
+          setIsLoading(false)
+          setSuccess("User created successfully.")
           reset()
           setTimeout(() => {
             setSuccess(null)
+            props.toggel()
           }, 3000)
+        } else if (res?.status === 400) {
+          setIsLoading(false)
+          setErrorMessage("User creation failed.")
+        } else if (res?.status === 500) {
+          setIsLoading(false)
+          setErrorMessage("User creation failed.")
+        } else {
+          setIsLoading(false)
+          setErrorMessage(res.data?.message)
         }
-
-        throw res
       })
-      .catch(err => {
-        setIsLoading(false)
-        if (err) {
-          setErrorMessage(err)
-        }
+      .catch(err => console.log(err))
+    // .then(res => {
+    //   setIsLoading(false)
+    //   console.log("[res]", res)
+    //   if (res?.status === 200) {
+    //     setSuccess("User has been created successfully.")
+    //     reset()
+    //     setTimeout(() => {
+    //       setSuccess(null)
+    //     }, 3000)
+    //   }
 
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 3000)
-      })
+    //   throw res
+    // })
+    // .catch(err => {
+    //   setIsLoading(false)
+    //   if (err) {
+    //     setErrorMessage(err)
+    //   }
+
+    //   setTimeout(() => {
+    //     setErrorMessage(null)
+    //   }, 3000)
+    // })
   }
 
   const findUser = async () => {
