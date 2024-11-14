@@ -49,7 +49,6 @@ const Create = props => {
 
     await createApprovalUser(payload)
       .then(res => {
-        console.log("[res]", res)
         if (res?.status === undefined) {
           setIsLoading(false)
           setErrorMessage("User creation failed.")
@@ -73,29 +72,6 @@ const Create = props => {
         }
       })
       .catch(err => console.log(err))
-    // .then(res => {
-    //   setIsLoading(false)
-    //   console.log("[res]", res)
-    //   if (res?.status === 200) {
-    //     setSuccess("User has been created successfully.")
-    //     reset()
-    //     setTimeout(() => {
-    //       setSuccess(null)
-    //     }, 3000)
-    //   }
-
-    //   throw res
-    // })
-    // .catch(err => {
-    //   setIsLoading(false)
-    //   if (err) {
-    //     setErrorMessage(err)
-    //   }
-
-    //   setTimeout(() => {
-    //     setErrorMessage(null)
-    //   }, 3000)
-    // })
   }
 
   const findUser = async () => {
@@ -108,6 +84,10 @@ const Create = props => {
     const userData = await getUserById(user)
     if (userData !== undefined) {
       setSuccess("User has been found successfully.")
+      setTimeout(() => {
+        setSuccess(null)
+        props.toggel()
+      }, 3000)
       return
     } else {
       setErrorMessage("User not found.")
