@@ -168,7 +168,14 @@ const Member = props => {
   useEffect(() => {
     setSearchTriggered(true)
     setPage(0)
-  }, [isReset, searchData.searchFeild, searchData.status, searchData.search])
+  }, [
+    isReset,
+    searchData.searchFeild,
+    searchData.status,
+    searchData.search,
+    searchData.fromDate,
+    searchData.toDate,
+  ])
 
   useEffect(() => {
     fetchData()
