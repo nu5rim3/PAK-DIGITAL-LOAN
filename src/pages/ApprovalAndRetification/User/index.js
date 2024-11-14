@@ -19,7 +19,7 @@ import Search from "components/Search/Search"
 import { getAllFilterApprovalUsers } from "services/approval.service"
 
 const searchTags = [
-  { key: "userId", value: "User ID", type: "TEXT" },
+  { key: "userId", value: "IDX", type: "TEXT" },
   { key: "groupCode", value: "Group Code", type: "TEXT" },
   { key: "groupName", value: "Group Name", type: "TEXT" },
   { key: "lastModifiedDate", value: "Last Modified Date", type: "DATE" },
@@ -131,8 +131,7 @@ const Member = props => {
 
   const fetchData = async () => {
     setIsLoading(true)
-    const userId =
-      searchData?.searchFeild === "User ID" ? searchData.search : ""
+    const userId = searchData?.searchFeild === "IDX" ? searchData.search : ""
     const groupCode =
       searchData?.searchFeild === "Group Code" ? searchData.search : ""
     const groupName =
