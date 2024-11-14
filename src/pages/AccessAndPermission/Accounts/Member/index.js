@@ -258,7 +258,7 @@ const Member = props => {
               toggel={toggelUpdateModal}
               isOpen={isOpenUpdate}
               data={data}
-              onSuccessfulUpdate={() => console.log("Data Feteched")}
+              onSuccessfulUpdate={() => fetchData()}
             />
           </Row>
         </Container>
