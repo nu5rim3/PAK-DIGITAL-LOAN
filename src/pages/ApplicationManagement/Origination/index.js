@@ -196,13 +196,29 @@ const Origination = props => {
 
   const getStatus = item => {
     if (item.status === "A") {
-      item.status = "Approved"
+      item.status = (
+        <span className="font-size-12  badge bg-success rounded-pill">
+          Approved
+        </span>
+      )
     } else if (item.status === "R") {
-      item.status = "Returned"
+      item.status = (
+        <span className="font-size-12  badge bg-warning rounded-pill">
+          Returned
+        </span>
+      )
     } else if (item.status === "C") {
-      item.status = "Pending"
+      item.status = (
+        <span className="font-size-12  badge bg-secondary rounded-pill">
+          Pending
+        </span>
+      )
     } else if (item.status === "J") {
-      item.status = "Rejected"
+      item.status = (
+        <span className="font-size-12  badge bg-danger rounded-pill">
+          Rejected
+        </span>
+      )
     }
     return item
   }
