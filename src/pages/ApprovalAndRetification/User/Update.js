@@ -157,7 +157,6 @@ const Update = props => {
                       id="approval-group"
                       {...register("group", { required: true })}
                     >
-                      <option value="">Choose...</option>
                       {groups.map((item, index) => (
                         <option key={index} value={item.code}>
                           {item.name}
@@ -182,7 +181,6 @@ const Update = props => {
                       id="approval-user-status"
                       {...register("status", { required: true })}
                     >
-                      <option value="">Choose...</option>
                       <option value="A">Active</option>
                       <option value="I">Inactive</option>
                     </select>
