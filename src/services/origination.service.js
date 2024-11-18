@@ -20,7 +20,8 @@ export const getAllFilteredAppraisals = (
   contractId,
   productName,
   customerName,
-  createdBy
+  createdBy,
+  customerCnic
 ) => {
   var role = localStorage.getItem("role")
   // var branch = localStorage.getItem("branch")
@@ -33,7 +34,9 @@ export const getAllFilteredAppraisals = (
       contractId ?? ""
     }&productName=${productName ?? ""}&customerName=${
       customerName ?? ""
-    }&createdBy=${createdBy ?? ""}&page=${page ?? 0}&size=${size ?? 7}`
+    }&createdBy=${createdBy ?? ""}&page=${page ?? 0}&size=${
+      size ?? 7
+    }&customerCnic=${customerCnic ?? ""}`
   )
 }
 

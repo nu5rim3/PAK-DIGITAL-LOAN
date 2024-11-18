@@ -270,7 +270,8 @@ const Origination = props => {
       contractId,
       productName,
       customerName,
-      createdBy
+      createdBy,
+      customerCnic
     )
 
     setTableData(tableResponse)
