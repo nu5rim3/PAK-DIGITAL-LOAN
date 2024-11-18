@@ -38,15 +38,15 @@ const searchTags = [
   { key: "customerCnic", value: "Customer CNIC", type: "TEXT" },
   { key: "customerName", value: "Customer Name", type: "TEXT" },
   { key: "branchName", value: "Branch Name", type: "TEXT" },
-  { key: "createdBy", value: "Created By", type: "TEXT" },
-  { key: "createdAt", value: "Created At", type: "DATE" },
+  { key: "createdBy", value: "Created User", type: "TEXT" },
+  { key: "createdAt", value: "Created Date", type: "DATE" },
 ]
 
 const extraStatus = [
-  { label: "Completed", value: "completed" },
-  { label: "Returned", value: "returned" },
-  { label: "Active", value: "active" },
-  { label: "Rejected", value: "rejected" },
+  { label: "Approval Pending", value: "APPROVAL_PENDING" },
+  { label: "Approved", value: "APPROVED" },
+  { label: "Returned", value: "RETURNED" },
+  { label: "Rejected", value: "REJECTED" },
 ]
 
 const Origination = props => {
@@ -91,7 +91,7 @@ const Origination = props => {
       },
       {
         field: "creationDate",
-        label: "Created At",
+        label: "Created Date",
         sort: "asc",
       },
       {
@@ -102,6 +102,11 @@ const Origination = props => {
       {
         field: "createdBy",
         label: "Created By",
+        sort: "asc",
+      },
+      {
+        field: "status",
+        label: "Status",
         sort: "asc",
       },
       {
@@ -189,11 +194,25 @@ const Origination = props => {
     return item
   }
 
+  const getStatus = item => {
+    if (item.status === "A") {
+      item.status = "Approved"
+    } else if (item.status === "R") {
+      item.status = "Returned"
+    } else if (item.status === "C") {
+      item.status = "Pending"
+    } else if (item.status === "J") {
+      item.status = "Rejected"
+    }
+    return item
+  }
+
   const modernization = item => {
     item = getLabel(item)
     item = getAction(item)
     item = getContractNo(item)
     item = getBackgroundColor(item)
+    item = getStatus(item)
     return item
   }
 
@@ -204,13 +223,13 @@ const Origination = props => {
 
   const fetchData = async () => {
     setIsLoading(true)
-    const status = searchData.status ?? ""
+    const status = searchData.status ?? "APPROVAL_PENDING"
     const appraisalId =
       searchData?.searchFeild === "Appraisal ID" ? searchData.search : ""
     const fromDate =
-      searchData?.searchFeild === "Created At" ? searchData.fromDate : ""
+      searchData?.searchFeild === "Created Date" ? searchData.fromDate : ""
     const toDate =
-      searchData?.searchFeild === "Created At" ? searchData.toDate : ""
+      searchData?.searchFeild === "Created Date" ? searchData.toDate : ""
     const contractId =
       searchData?.searchFeild === "Contract ID" ? searchData.search : ""
     const productName =
@@ -218,7 +237,7 @@ const Origination = props => {
     const customerName =
       searchData?.searchFeild === "Customer Name" ? searchData.search : ""
     const createdBy =
-      searchData?.searchFeild === "Created By" ? searchData.search : ""
+      searchData?.searchFeild === "Created User" ? searchData.search : ""
     const branchName =
       searchData?.searchFeild === "Branch Name" ? searchData.search : ""
     const customerCnic =

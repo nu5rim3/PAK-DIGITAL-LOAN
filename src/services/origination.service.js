@@ -27,13 +27,13 @@ export const getAllFilteredAppraisals = (
   return get(
     `/mobixCamsLoan/v1/appraisals/filters??role=${role ?? ""}&branch=${
       branch ?? ""
-    }&status=${status ?? ""}&appraisalId=${appraisalId ?? ""}&fromDate=${
-      fromDate ?? ""
-    }&toDate=${toDate ?? ""}&contractId=${contractId ?? ""}&productName=${
-      productName ?? ""
-    }&customerName=${customerName ?? ""}&createdBy=${createdBy ?? ""}&page=${
-      page ?? 0
-    }&size=${size ?? 7}`
+    }&status=${status ?? "APPROVAL_PENDING"}&appraisalId=${
+      appraisalId ?? ""
+    }&fromDate=${fromDate ?? ""}&toDate=${toDate ?? ""}&contractId=${
+      contractId ?? ""
+    }&productName=${productName ?? ""}&customerName=${
+      customerName ?? ""
+    }&createdBy=${createdBy ?? ""}&page=${page ?? 0}&size=${size ?? 7}`
   )
 }
 
