@@ -172,7 +172,7 @@ const MisReport = props => {
     item.customerName = item.customerName
     item.loanProduct = item.productName
     item.requestedLoanAmount = getCurrency(item.loanAmount)
-    item.createdDate = item.createdDate
+    item.createdDate = moment(item.createdDate).format("yyyy-MM-DD HH:mm:ss")
     item.userIdx = item.userIdx
     item.nextActionPendingRole = item.nextActionPendingUser ?? "-"
     return item
