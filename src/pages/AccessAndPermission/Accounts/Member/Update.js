@@ -27,7 +27,6 @@ const Update = props => {
   const [isLoading, setIsLoading] = useState(false)
   const [roles, setRoles] = useState([])
   const [branches, setBranches] = useState([])
-  const [data, setData] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
 
@@ -82,10 +81,8 @@ const Update = props => {
           setSuccessMessage("User Updated Successfully.")
           reset()
           props.onSuccessfulUpdate()
-          setTimeout(() => {
-            setSuccessMessage(null)
-            props.toggel()
-          }, 3000)
+          setSuccessMessage(null)
+          props.closeUpdateModal()
         } else if (res?.status === 500) {
           setIsLoading(false)
           setErrorMessage("User Update Failed.")
@@ -103,10 +100,6 @@ const Update = props => {
     } else {
       return "I"
     }
-  }
-
-  const verifyUser = value => {
-    console.log()
   }
 
   const filterSelectedRoles = (options, value) => {
@@ -155,8 +148,8 @@ const Update = props => {
         setValue("email", props.data.email)
         setValue("branch", props.data.branches[0]?.code)
         setValue("role", props.data.roles)
-        setValue("device", props.data.devices[0].code)
-        setValue("model", props.data.devices[0].model)
+        setValue("device", props.data.devices[0]?.code)
+        setValue("model", props.data.devices[0]?.model)
         setValue("profileUser", props.data?.profileUser)
         setValue("meCode", props.data?.meCode)
         setValue("status", getStatusValue(props.data?.status))
@@ -181,8 +174,9 @@ const Update = props => {
           <h5 className="modal-title mt-0">Update System User</h5>
           <button
             onClick={() => {
-              setData(null)
-              props.toggel()
+              props.setData(null)
+              reset()
+              props.closeUpdateModal()
             }}
             type="button"
             className="close"
@@ -193,251 +187,255 @@ const Update = props => {
           </button>
         </div>
         <div className="modal-body">
-          <Row>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Col md={12}>
-                {successMessage && (
-                  <Alert color="success">{successMessage}</Alert>
-                )}
-              </Col>
-              <Col md={12}>
-                {errorMessage && <Alert color="danger">{errorMessage}</Alert>}
-              </Col>
-              <Row>
-                <Col md={6}>
-                  <div className="mb-3">
-                    <label htmlFor="user-idx">
-                      User IDX (AD Login ID)
-                      <span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="user-idx"
-                      placeholder="Enter User IDX"
-                      {...register("idx", { required: true })}
-                    />
-                    {errors.idx && (
-                      <span className="text-danger">
-                        This field is required
-                      </span>
-                    )}
-                  </div>
+          <Loader loading={isLoading}>
+            <Row>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <Col md={12}>
+                  {successMessage && (
+                    <Alert color="success">{successMessage}</Alert>
+                  )}
                 </Col>
-
-                <Col md={6}>
-                  <div className="mb-3">
-                    <label htmlFor="user-profile">
-                      Profile Username (SYUS ID)
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="CRO Code"
-                      {...register("profileUser", { required: false })}
-                    />
-                  </div>
+                <Col md={12}>
+                  {errorMessage && <Alert color="danger">{errorMessage}</Alert>}
                 </Col>
-
-                <Col md={6}>
-                  <div className="mb-3">
-                    <label htmlFor="user-name">CRO Code</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="cro-code"
-                      placeholder="Enter CRO Code"
-                      {...register("meCode", { required: false })}
-                    />
-                    {errors.userName && (
-                      <span className="text-danger">
-                        This field is required
-                      </span>
-                    )}
-                  </div>
-                </Col>
-
-                <Col md={6}>
-                  <div className="mb-3">
-                    <label htmlFor="user-name">
-                      User Name<span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="user-name"
-                      placeholder="Enter User Name"
-                      {...register("userName", { required: true })}
-                    />
-                    {errors.userName && (
-                      <span className="text-danger">
-                        This field is required
-                      </span>
-                    )}
-                  </div>
-                </Col>
-
-                <Col md={6}>
-                  <div className="mb-3">
-                    <label htmlFor="user-email">
-                      Email<span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="user-email"
-                      placeholder="Enter User Email"
-                      {...register("email", { required: true })}
-                    />
-                    {errors.email && (
-                      <span className="text-danger">
-                        This field is required
-                      </span>
-                    )}
-                  </div>
-                </Col>
-
-                <Col md={6}>
-                  <div className="mb-3">
-                    <label htmlFor="user-role">
-                      Role<span className="text-danger">*</span>
-                    </label>
-                    <Controller
-                      control={control}
-                      defaultValue={options}
-                      name="role"
-                      rules={{ required: true }}
-                      render={({ field: { onChange, value, ref, onBlur } }) => (
-                        // <Select
-                        //   onBlur={onBlur}
-                        //   inputRef={ref}
-                        //   value={options.filter(c => value.includes(c.value))}
-                        //   onChange={val => onChange(val.map(c => c.value))}
-                        //   options={options}
-                        //   isMulti
-                        // />
-
-                        <Select
-                          onBlur={onBlur}
-                          inputRef={ref}
-                          value={filterSelectedRoles(options, value)}
-                          onChange={handleChange}
-                          options={options}
-                          isMulti
-                        />
+                <Row>
+                  <Col md={6}>
+                    <div className="mb-3">
+                      <label htmlFor="user-idx">
+                        User IDX (AD Login ID)
+                        <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="user-idx"
+                        placeholder="Enter User IDX"
+                        {...register("idx", { required: true })}
+                      />
+                      {errors.idx && (
+                        <span className="text-danger">
+                          This field is required
+                        </span>
                       )}
-                    />
-                    {errors.role && (
-                      <span className="text-danger">
-                        This field is required
-                      </span>
-                    )}
-                  </div>
-                </Col>
+                    </div>
+                  </Col>
 
-                <Col md={6}>
-                  <div className="mb-3">
-                    <label htmlFor="user-branch">
-                      Branch<span className="text-danger">*</span>
-                    </label>
-                    <select
-                      className="form-control"
-                      id="user-branch"
-                      {...register("branch", { required: true })}
-                    >
-                      <option value="">Choose...</option>
-                      {branches.map((item, index) => (
-                        <option key={index} value={item.code}>
-                          {item.description}
-                        </option>
-                      ))}
-                    </select>
-                    {errors.branch && (
-                      <span className="text-danger">
-                        This field is required
-                      </span>
-                    )}
-                  </div>
-                </Col>
+                  <Col md={6}>
+                    <div className="mb-3">
+                      <label htmlFor="user-profile">
+                        Profile Username (SYUS ID)
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder="CRO Code"
+                        {...register("profileUser", { required: false })}
+                      />
+                    </div>
+                  </Col>
 
-                <Col md={6}>
-                  <div className="mb-3">
-                    <label htmlFor="user-contact">
-                      Contact<span className="text-danger">*</span>
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="user-contact"
-                      placeholder="Enter User Contact"
-                      {...register("mobileNo", {
-                        required: true,
-                        pattern:
-                          /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/,
-                      })}
-                    />
-                    {errors.mobileNo && (
-                      <span className="text-danger">
-                        Enter a valid contact number
-                      </span>
-                    )}
-                  </div>
-                </Col>
+                  <Col md={6}>
+                    <div className="mb-3">
+                      <label htmlFor="user-name">CRO Code</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="cro-code"
+                        placeholder="Enter CRO Code"
+                        {...register("meCode", { required: false })}
+                      />
+                      {errors.userName && (
+                        <span className="text-danger">
+                          This field is required
+                        </span>
+                      )}
+                    </div>
+                  </Col>
 
-                <Col md={6}>
-                  <div className="mb-3">
-                    <label htmlFor="user-device">Device</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="user-device"
-                      placeholder="Enter Device ID"
-                      {...register("device", { required: false })}
-                    />
-                  </div>
-                </Col>
+                  <Col md={6}>
+                    <div className="mb-3">
+                      <label htmlFor="user-name">
+                        User Name<span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="user-name"
+                        placeholder="Enter User Name"
+                        {...register("userName", { required: true })}
+                      />
+                      {errors.userName && (
+                        <span className="text-danger">
+                          This field is required
+                        </span>
+                      )}
+                    </div>
+                  </Col>
 
-                <Col md={6}>
-                  <div className="mb-3">
-                    <label htmlFor="user-device-model">Model</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="user-device-model"
-                      placeholder="Enter Device Model"
-                      {...register("model", { required: false })}
-                    />
-                  </div>
-                </Col>
+                  <Col md={6}>
+                    <div className="mb-3">
+                      <label htmlFor="user-email">
+                        Email<span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        className="form-control"
+                        id="user-email"
+                        placeholder="Enter User Email"
+                        {...register("email", { required: true })}
+                      />
+                      {errors.email && (
+                        <span className="text-danger">
+                          This field is required
+                        </span>
+                      )}
+                    </div>
+                  </Col>
 
-                <Col md={6}>
-                  <div className="mb-3">
-                    <label htmlFor="user-status">
-                      Status<span className="text-danger">*</span>
-                    </label>
-                    <select
-                      className="form-control"
-                      id="user-status"
-                      {...register("status", { required: true })}
-                    >
-                      <option value="">Choose...</option>
-                      <option value="A">Active</option>
-                      <option value="I">Inactive</option>
-                    </select>
-                  </div>
-                </Col>
-              </Row>
+                  <Col md={6}>
+                    <div className="mb-3">
+                      <label htmlFor="user-role">
+                        Role<span className="text-danger">*</span>
+                      </label>
+                      <Controller
+                        control={control}
+                        defaultValue={options}
+                        name="role"
+                        rules={{ required: true }}
+                        render={({
+                          field: { onChange, value, ref, onBlur },
+                        }) => (
+                          // <Select
+                          //   onBlur={onBlur}
+                          //   inputRef={ref}
+                          //   value={options.filter(c => value.includes(c.value))}
+                          //   onChange={val => onChange(val.map(c => c.value))}
+                          //   options={options}
+                          //   isMulti
+                          // />
 
-              <div className="mt-3 d-flex flex-row-reverse">
-                <button type="submit" className="btn btn-primary w-md">
-                  <Loader loading={isLoading}>
-                    <i className="bx bx-save font-size-16 me-2"></i>
-                    Update
-                  </Loader>
-                </button>
-              </div>
-            </form>
-          </Row>
+                          <Select
+                            onBlur={onBlur}
+                            inputRef={ref}
+                            value={filterSelectedRoles(options, value)}
+                            onChange={handleChange}
+                            options={options}
+                            isMulti
+                          />
+                        )}
+                      />
+                      {errors.role && (
+                        <span className="text-danger">
+                          This field is required
+                        </span>
+                      )}
+                    </div>
+                  </Col>
+
+                  <Col md={6}>
+                    <div className="mb-3">
+                      <label htmlFor="user-branch">
+                        Branch<span className="text-danger">*</span>
+                      </label>
+                      <select
+                        className="form-control"
+                        id="user-branch"
+                        {...register("branch", { required: true })}
+                      >
+                        <option value="">Choose...</option>
+                        {branches.map((item, index) => (
+                          <option key={index} value={item.code}>
+                            {item.description}
+                          </option>
+                        ))}
+                      </select>
+                      {errors.branch && (
+                        <span className="text-danger">
+                          This field is required
+                        </span>
+                      )}
+                    </div>
+                  </Col>
+
+                  <Col md={6}>
+                    <div className="mb-3">
+                      <label htmlFor="user-contact">
+                        Contact<span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="number"
+                        className="form-control"
+                        id="user-contact"
+                        placeholder="Enter User Contact"
+                        {...register("mobileNo", {
+                          required: true,
+                          pattern:
+                            /^((\+92)|(0092))-{0,1}\d{3}-{0,1}\d{7}$|^\d{11}$|^\d{4}-\d{7}$/,
+                        })}
+                      />
+                      {errors.mobileNo && (
+                        <span className="text-danger">
+                          Enter a valid contact number
+                        </span>
+                      )}
+                    </div>
+                  </Col>
+
+                  <Col md={6}>
+                    <div className="mb-3">
+                      <label htmlFor="user-device">Device</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="user-device"
+                        placeholder="Enter Device ID"
+                        {...register("device", { required: false })}
+                      />
+                    </div>
+                  </Col>
+
+                  <Col md={6}>
+                    <div className="mb-3">
+                      <label htmlFor="user-device-model">Model</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id="user-device-model"
+                        placeholder="Enter Device Model"
+                        {...register("model", { required: false })}
+                      />
+                    </div>
+                  </Col>
+
+                  <Col md={6}>
+                    <div className="mb-3">
+                      <label htmlFor="user-status">
+                        Status<span className="text-danger">*</span>
+                      </label>
+                      <select
+                        className="form-control"
+                        id="user-status"
+                        {...register("status", { required: true })}
+                      >
+                        <option value="">Choose...</option>
+                        <option value="A">Active</option>
+                        <option value="I">Inactive</option>
+                      </select>
+                    </div>
+                  </Col>
+                </Row>
+
+                <div className="mt-3 d-flex flex-row-reverse">
+                  <button type="submit" className="btn btn-primary w-md">
+                    <Loader loading={isLoading}>
+                      <i className="bx bx-save font-size-16 me-2"></i>
+                      Update
+                    </Loader>
+                  </button>
+                </div>
+              </form>
+            </Row>
+          </Loader>
         </div>
       </Modal>
     </Row>
@@ -446,8 +444,10 @@ const Update = props => {
 
 Update.propTypes = {
   isOpen: PropTypes.bool,
-  toggel: PropTypes.func,
+  closeUpdateModal: PropTypes.func,
+  openUpdateModal: PropTypes.func,
   data: PropTypes.object,
+  setData: PropTypes.func,
   onSuccessfulUpdate: PropTypes.func,
 }
 

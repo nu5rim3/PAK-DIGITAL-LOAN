@@ -58,9 +58,14 @@ const Member = props => {
     setIsOpenCreate(!isOpenCreate)
   }
 
-  const toggelUpdateModal = data => {
+  const openUpdateModal = data => {
     setData(data)
-    setIsOpenUpdate(!isOpenUpdate)
+    setIsOpenUpdate(true)
+  }
+
+  const closeUpdateModal = () => {
+    setData(null)
+    setIsOpenUpdate(false)
   }
 
   const getLabel = item => {
@@ -93,7 +98,7 @@ const Member = props => {
       <div className="d-flex align-items-center">
         <button
           className="btn btn-warning btn-sm d-flex justify-content-between align-items-center"
-          onClick={() => toggelUpdateModal(item)}
+          onClick={() => openUpdateModal(item)}
         >
           <i className="bx bxs-edit font-size-16 me-1"></i>
           <p className="m-0">Update</p>
@@ -255,10 +260,12 @@ const Member = props => {
 
             <Create toggel={toggelCreateModal} isOpen={isOpenCreate} />
             <Update
-              toggel={toggelUpdateModal}
+              openModal={openUpdateModal}
+              closeUpdateModal={closeUpdateModal}
               isOpen={isOpenUpdate}
               data={data}
-              onSuccessfulUpdate={() => fetchData()}
+              setData={setData}
+              onSuccessfulUpdate={fetchData}
             />
           </Row>
         </Container>
