@@ -14,9 +14,20 @@ export const getLandVerificationReport = appraisalId => {
   )
 }
 
-export const getMisReport = data => {
+export const getMisReport = (
+  croName,
+  branchName,
+  status,
+  appraisalId,
+  fromDate,
+  toDate
+) => {
   return file(
-    `/mobixCamsReport/v1/reports/mis-reports/report.xlsx?cro=${data.cro}&branch=${data.branch}&status=${data.status}&appraisalId=${data.appraisalId}&fromDate=${data.fromDate}&toDate=${data.toDate}`
+    `/mobixCamsReport/v1/reports/mis-reports/report.xlsx?croName=${
+      croName ?? ""
+    }&branch=${branchName ?? ""}&status=${status ?? ""}&appraisalId=${
+      appraisalId ?? ""
+    }&fromDate=${fromDate ?? ""}&toDate=${toDate ?? ""}`
   )
 }
 
@@ -34,13 +45,13 @@ export const getFilteredMisReport = (
   fromDate,
   toDate,
   branch,
-  croCode
+  croName
 ) => {
   return get(
     `mobixCamsLoan/v1/mis-report/filters?status=${status ?? ""}&appraisalId=${
       appraisalId ?? ""
-    }&fromDate=${fromDate ?? ""}&toDate=${toDate ?? ""}&croCode=${
-      croCode ?? ""
+    }&fromDate=${fromDate ?? ""}&toDate=${toDate ?? ""}&croName=${
+      croName ?? ""
     }&branch=${branch ?? ""}&page=${page ?? 0}&size=${size ?? 7}`
   )
 }
