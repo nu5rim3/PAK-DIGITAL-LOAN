@@ -242,8 +242,6 @@ const MisReport = props => {
     fetchData()
   }, [page, searchTriggered])
 
-  console.log("[searchData.search]", searchData.search)
-
   return (
     <React.Fragment>
       <div className="page-content">
