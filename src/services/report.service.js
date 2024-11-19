@@ -23,7 +23,7 @@ export const getMisReport = (
   toDate
 ) => {
   return file(
-    `/mobixCamsReport/v1/reports/mis-reports/report.xlsx?croName=${
+    `/mobixCamsReport/v1/reports/mis-reports/report.xlsx?cro=${
       croName ?? ""
     }&branch=${branchName ?? ""}&status=${status ?? ""}&appraisalId=${
       appraisalId ?? ""
