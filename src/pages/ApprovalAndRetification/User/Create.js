@@ -52,18 +52,17 @@ const Create = props => {
         if (res?.status === undefined) {
           setIsLoading(false)
           setErrorMessage("User Creation Failed.")
-        } else if (res?.status === 200) {
+        } else if (res?.status === 201) {
           setIsLoading(false)
-          setSuccess("User Created Successfully.")
+          setSuccess(res.message)
           reset()
           setTimeout(() => {
             setSuccess(null)
             props.toggel()
           }, 3000)
-        } else if (res?.status === 400) {
-          console.log("[res]", res)
+        } else if (res?.status === 406) {
           setIsLoading(false)
-          setErrorMessage("User Creation Failed.")
+          setErrorMessage(res.message)
           setTimeout(() => {
             setSuccess(null)
             // props.toggel()
