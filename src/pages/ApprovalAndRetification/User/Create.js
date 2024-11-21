@@ -51,21 +51,30 @@ const Create = props => {
       .then(res => {
         if (res?.status === undefined) {
           setIsLoading(false)
-          setErrorMessage("User creation failed.")
+          setErrorMessage("User Creation Failed.")
         } else if (res?.status === 200) {
           setIsLoading(false)
-          setSuccess("User created successfully.")
+          setSuccess("User Created Successfully.")
           reset()
           setTimeout(() => {
             setSuccess(null)
             props.toggel()
           }, 3000)
         } else if (res?.status === 400) {
+          console.log("[res]", res)
           setIsLoading(false)
-          setErrorMessage("User creation failed.")
+          setErrorMessage("User Creation Failed.")
+          setTimeout(() => {
+            setSuccess(null)
+            // props.toggel()
+          }, 3000)
         } else if (res?.status === 500) {
           setIsLoading(false)
-          setErrorMessage("User creation failed.")
+          setErrorMessage("User Creation Failed.")
+          setTimeout(() => {
+            setSuccess(null)
+            // props.toggel()
+          }, 3000)
         } else {
           setIsLoading(false)
           setErrorMessage(res.data?.message)
@@ -86,7 +95,7 @@ const Create = props => {
       setSuccess("User has been found successfully.")
       setTimeout(() => {
         setSuccess(null)
-        props.toggel()
+        // props.toggel()
       }, 3000)
       return
     } else {
@@ -119,6 +128,7 @@ const Create = props => {
           <button
             onClick={() => {
               props.toggel()
+              reset()
             }}
             type="button"
             className="close"

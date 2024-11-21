@@ -288,19 +288,19 @@ const Employee = props => {
               toggel={toggelUpdateModal}
               isOpen={isOpenUpdate}
               data={data}
-              onSuccessfulUpdate={() => console.log("Data Feteched")}
+              onSuccessfulUpdate={fetchData}
             />
             <DeActivateEmployee
               toggel={toggelDeactivateModal}
               isOpen={isDeactivate}
               data={data}
-              onSuccessfulDeactivate={() => console.log("Data Feteched")}
+              onSuccessfulDeactivate={fetchData}
             />
             <ActivateEmployee
               toggel={toggelActivateModal}
               isOpen={isOpenActivate}
               data={data}
-              onSuccessfulActivate={() => console.log("Data Feteched")}
+              onSuccessfulActivate={fetchData}
             />
           </Row>
         </Container>
