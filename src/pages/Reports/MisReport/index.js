@@ -236,7 +236,14 @@ const MisReport = props => {
   useEffect(() => {
     setSearchTriggered(true)
     setPage(0)
-  }, [isReset, searchData.searchFeild, searchData.status, searchData.search])
+  }, [
+    isReset,
+    searchData.searchFeild,
+    searchData.status,
+    searchData.search,
+    searchData.fromDate,
+    searchData.toDate,
+  ])
 
   useEffect(() => {
     fetchData()
@@ -271,7 +278,9 @@ const MisReport = props => {
                     extraStatus={extraStatus}
                   />
                   {tableData?.totalPages > 0 &&
-                    searchData.search !== undefined && (
+                    (searchData.search !== undefined ||
+                      (searchData.fromDate !== undefined &&
+                        searchData.toDate !== undefined)) && (
                       <div className="pb-2 d-flex justify-content-end align-items-center">
                         <button
                           onClick={exportToExcel}
