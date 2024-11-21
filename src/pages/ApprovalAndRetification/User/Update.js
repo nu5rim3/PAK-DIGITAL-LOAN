@@ -84,7 +84,7 @@ const Update = props => {
         setGroups(groupsResponse)
 
         if (props.data !== null && props.data !== undefined) {
-          setValue("userIdx", props.data.groupUserIdx)
+          setValue("userIdx", props.data.userIdx)
           setValue("group", props.data.groupCode)
           setValue("status", getStatusValue(props.data.status))
         }

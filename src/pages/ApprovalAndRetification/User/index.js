@@ -61,13 +61,15 @@ const Member = props => {
     } else {
       item.groupUserStatus = "Inactive"
     }
-    item.groupCode = item.groupCode
-    item.groupName = item.groupName
+    item.groupCode = item.group.code
+    item.groupName = item.group.name
     return item
   }
 
   const getLastModifiedDate = item => {
-    item.lastModifiedDate = moment(item.lastModifiedDate).format("YYYY-MM-DD")
+    item.lastModifiedDate = moment(item.lastModifiedDate).format(
+      "yyyy-MM-DD | HH:mm:ss"
+    )
     return item
   }
 
@@ -89,7 +91,7 @@ const Member = props => {
   const items = {
     columns: [
       {
-        field: "groupUserIdx",
+        field: "userIdx",
         label: "IDX",
         sort: "asc",
       },
