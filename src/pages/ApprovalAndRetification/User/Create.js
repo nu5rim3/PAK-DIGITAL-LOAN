@@ -128,6 +128,7 @@ const Create = props => {
           <button
             onClick={() => {
               props.toggel()
+              setSuccess(null)
               reset()
             }}
             type="button"

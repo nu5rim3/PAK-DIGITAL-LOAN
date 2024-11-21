@@ -78,11 +78,11 @@ const ActivateEmployee = props => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <Col md={12}>
                 {successMessage && (
-                  <Alert color="danger">{successMessage}</Alert>
+                  <Alert color="success">{successMessage}</Alert>
                 )}
               </Col>
               <Col md={12}>
-                {errorMessage && <Alert color="danger">{errorMessage}</Alert>}
+                {errorMessage && <Alert color="success">{errorMessage}</Alert>}
               </Col>
               <ModalBody
                 style={{

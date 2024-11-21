@@ -147,7 +147,7 @@ const MisReport = props => {
       )
     } else if (item.status === "P") {
       item.status = (
-        <span className="font-size-12  badge bg-danger rounded-pill">
+        <span className="font-size-12  badge bg-info rounded-pill">
           Pending
         </span>
       )
