@@ -27,7 +27,7 @@ const Search = ({
   const onSubmit = data => {
     if (searchType === "DATE") {
       delete data.search
-      delete data.status
+      if (extraStatus === undefined) delete data.status
       onSubmitSearch({
         ...data,
         fromDate: moment(data.fromDate).format("YYYY-MM-DD"),

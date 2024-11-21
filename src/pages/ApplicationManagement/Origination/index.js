@@ -1,33 +1,16 @@
 import PropTypes from "prop-types"
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  CardBody,
-  CardTitle,
-  Button,
-} from "reactstrap"
-import DatePicker from "react-datepicker"
+import { Container, Row, Col, Card, CardBody, CardTitle } from "reactstrap"
 
 import "react-datepicker/dist/react-datepicker.css"
 import moment from "moment"
 
-import { useForm, Controller } from "react-hook-form"
-
-import Loader from "components/SyncLoader"
-
 //Import Breadcrumb
 import Breadcrumbs from "components/Common/Breadcrumb"
-import Table from "components/Datatable/Table"
 
 // APIs
-import {
-  getAllCompletedAppraisals,
-  getAllFilteredAppraisals,
-} from "services/origination.service"
+import { getAllFilteredAppraisals } from "services/origination.service"
 import PaginatedTable from "components/Datatable/PaginatedTable"
 import Search from "components/Search/Search"
 
@@ -118,33 +101,6 @@ const Origination = props => {
     rows: data,
   }
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    setError,
-    reset,
-    control,
-    formState: { errors },
-  } = useForm()
-
-  const onSubmitFetchData = async data => {
-    setIsLoading(true)
-    const originationResponse = await getAllCompletedAppraisals({
-      ...data,
-      fromDate: moment(data.fromDate).format("YYYY-MM-DD"),
-      toDate: moment(data.toDate).format("YYYY-MM-DD"),
-    })
-    if (originationResponse !== undefined && originationResponse !== null) {
-      var data = originationResponse.map(item => modernization(item))
-
-      setData(data)
-
-      setIsLoading(false)
-    }
-  }
-
   const getLabel = item => {
     item.customerCnic = item.identificationNumber
     item.customerName = item.fullName
@@ -232,11 +188,6 @@ const Origination = props => {
     return item
   }
 
-  const onReset = () => {
-    setData([])
-    reset()
-  }
-
   const fetchData = async () => {
     setIsLoading(true)
     const status = searchData.status ?? "APPROVAL_PENDING"
@@ -286,7 +237,14 @@ const Origination = props => {
   useEffect(() => {
     setSearchTriggered(true)
     setPage(0)
-  }, [isReset, searchData.searchFeild, searchData.status, searchData.search])
+  }, [
+    isReset,
+    searchData.searchFeild,
+    searchData.status,
+    searchData.search,
+    searchData.fromDate,
+    searchData.toDate,
+  ])
 
   useEffect(() => {
     fetchData()
