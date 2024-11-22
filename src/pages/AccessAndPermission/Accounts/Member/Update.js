@@ -80,9 +80,11 @@ const Update = props => {
           setIsLoading(false)
           setSuccessMessage("User Updated Successfully.")
           reset()
-          props.onSuccessfulUpdate()
-          setSuccessMessage(null)
-          props.closeUpdateModal()
+          setTimeout(() => {
+            props.onSuccessfulUpdate()
+            setSuccessMessage(null)
+            props.closeUpdateModal()
+          }, 3000)
         } else if (res?.status === 500) {
           setIsLoading(false)
           setErrorMessage("User Update Failed.")
