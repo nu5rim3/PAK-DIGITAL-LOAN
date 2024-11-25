@@ -26,7 +26,7 @@ export const getAllFilteredAppraisals = (
   var role = localStorage.getItem("role")
   // var branch = localStorage.getItem("branch")
   return get(
-    `/mobixCamsLoan/v1/appraisals/filters??role=${role ?? ""}&branch=${
+    `/mobixCamsLoan/v1/appraisals/filters?role=${role ?? ""}&branch=${
       branch ?? ""
     }&status=${status ?? "APPROVAL_PENDING"}&appraisalId=${
       appraisalId ?? ""
