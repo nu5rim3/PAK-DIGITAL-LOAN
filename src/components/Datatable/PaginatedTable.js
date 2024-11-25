@@ -62,7 +62,7 @@ const PaginatedTable = ({
       />
 
       <div className="d-flex flex-row-reverse">
-        <span className="p-2"> Total records - {totalElements ?? 0} </span>{" "}
+        <span className="p-2"> Total Records - {totalElements ?? 0} </span>{" "}
         {pagination()}
       </div>
     </Row>
