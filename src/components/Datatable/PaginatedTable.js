@@ -61,8 +61,10 @@ const PaginatedTable = ({
         searching={false}
       />
       {totalElements > 0 && (
-        <div className="d-flex flex-row-reverse">
-          <span className="p-2"> Total Records - {totalElements ?? 0} </span>{" "}
+        <div className="d-flex justify-content-between">
+          <span className="py-2">
+            Showing Total Records - {totalElements ?? 0}{" "}
+          </span>{" "}
           {pagination()}
         </div>
       )}

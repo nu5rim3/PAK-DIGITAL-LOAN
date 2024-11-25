@@ -22,7 +22,7 @@ const searchTags = [
   { key: "customerName", value: "Customer Name", type: "TEXT" },
   { key: "branchName", value: "Branch Name", type: "TEXT" },
   { key: "createdBy", value: "Created User", type: "TEXT" },
-  { key: "createdAt", value: "Created Date", type: "DATE" },
+  // { key: "createdAt", value: "Created Date", type: "DATE" },
 ]
 
 const extraStatus = [
@@ -277,6 +277,7 @@ const Origination = props => {
                     onSubmitSearch={setSearchData}
                     // status={searchStatus}
                     extraStatus={extraStatus}
+                    isDateFilter={true}
                   />
 
                   <PaginatedTable

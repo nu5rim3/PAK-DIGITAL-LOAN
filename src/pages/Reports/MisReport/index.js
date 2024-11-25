@@ -19,7 +19,7 @@ const searchTags = [
   { key: "appraisalId", value: "Appraisal ID", type: "TEXT" },
   { key: "branch", value: "Branch Name", type: "TEXT" },
   { key: "croName", value: "CRO Name", type: "TEXT" },
-  { key: "createdAt", value: "Created Date", type: "DATE" },
+  // { key: "createdAt", value: "Created Date", type: "DATE" },
 ]
 
 const extraStatus = [
@@ -276,6 +276,7 @@ const MisReport = props => {
                     onSubmitSearch={setSearchData}
                     // status={searchStatus}
                     extraStatus={extraStatus}
+                    isDateFilter={true}
                   />
                   {tableData?.totalPages > 0 &&
                     (searchData.search !== undefined ||

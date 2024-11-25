@@ -13,6 +13,7 @@ const Search = ({
   onReset,
   status,
   extraStatus,
+  isDateFilter = false,
 }) => {
   const [searchType, setSearchType] = useState("TEXT")
   const {
@@ -167,10 +168,69 @@ const Search = ({
             )}
           </FormGroup>
         </Col>
+        {isDateFilter && (
+          <Col className="col-3">
+            <Row>
+              <Col className="pe-0">
+                <Controller
+                  name="fromDate"
+                  id="fromDate"
+                  control={control}
+                  defaultValue={""}
+                  rules={{
+                    required: true,
+                    message: "This field is required",
+                  }}
+                  render={({ field }) => (
+                    <DatePicker
+                      className="form-control"
+                      placeholderText="Select From Date"
+                      onChange={date => field.onChange(date)}
+                      selected={field.value}
+                      dateFormat="yyyy-MM-dd"
+                      showYearDropdown
+                      showMonthDropdown
+                      scrollableMonthYearDropdown
+                      scrollableYearDropdown
+                      yearDropdownItemNumber={15}
+                    />
+                  )}
+                />
+              </Col>
+              <Col className="pe-0">
+                <Controller
+                  name="toDate"
+                  id="toDate"
+                  control={control}
+                  defaultValue={""}
+                  rules={{
+                    required: true,
+                    message: "This field is required",
+                  }}
+                  render={({ field }) => (
+                    <DatePicker
+                      className="form-control"
+                      placeholderText="Select To Date"
+                      onChange={date => field.onChange(date)}
+                      selected={field.value}
+                      dateFormat="yyyy-MM-dd"
+                      showYearDropdown
+                      scrollableYearDropdown
+                      showMonthDropdown
+                      scrollableMonthYearDropdown
+                      yearDropdownItemNumber={15}
+                    />
+                  )}
+                />
+              </Col>
+            </Row>
+          </Col>
+        )}
+
         <Col>
           <Button type="submit" color="primary">
             <Loader loading={loading} />
-            Search
+            {!loading && <i className="fas fa-search"></i>}
           </Button>
           <Button
             type="reset"
@@ -183,7 +243,7 @@ const Search = ({
               onSubmitSearch({})
             }}
           >
-            Reset
+            <i className="fas fa-sync " />
           </Button>
         </Col>
       </Row>
@@ -198,6 +258,7 @@ Search.propTypes = {
   onSubmitSearch: PropTypes.func,
   onReset: PropTypes.func,
   extraStatus: PropTypes.array,
+  isDateFilter: PropTypes.bool,
 }
 
 export default Search
