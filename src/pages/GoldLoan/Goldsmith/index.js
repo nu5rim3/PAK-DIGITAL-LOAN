@@ -267,7 +267,7 @@ const IndexGoldSmith = props => {
                     setPage={setPage}
                     page={page}
                     totalPages={goldsmithTableData?.totalPages ?? 0}
-                    totalElements={tableData?.totalElements ?? 0}
+                    totalElements={goldsmithTableData?.totalElements ?? 0}
                   />
                 </CardBody>
               </Card>

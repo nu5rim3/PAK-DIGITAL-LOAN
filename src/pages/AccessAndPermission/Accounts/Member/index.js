@@ -89,7 +89,9 @@ const Member = props => {
   }
 
   const getLastModifiedDate = item => {
-    item.lastModifiedDate = moment(item.lastModifiedDate).format("YYYY-MM-DD")
+    item.lastModifiedDate = moment(item.lastModifiedDate).format(
+      "YYYY-MM-DD | HH:mm:ss"
+    )
     return item
   }
 
@@ -253,7 +255,7 @@ const Member = props => {
                     setPage={setPage}
                     page={page}
                     totalPages={usersTableData?.totalPages ?? 0}
-                    totalElements={tableData?.totalElements ?? 0}
+                    totalElements={usersTableData?.totalElements ?? 0}
                   />
                 </CardBody>
               </Card>
