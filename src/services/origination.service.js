@@ -24,7 +24,7 @@ export const getAllFilteredAppraisals = (
   customerCnic
 ) => {
   var role = localStorage.getItem("role")
-  // var branch = localStorage.getItem("branch")
+  var branchCode = localStorage.getItem("branch")
   return get(
     `/mobixCamsLoan/v1/appraisals/filters?role=${role ?? ""}&branch=${
       branch ?? ""
@@ -36,7 +36,7 @@ export const getAllFilteredAppraisals = (
       customerName ?? ""
     }&createdBy=${createdBy ?? ""}&page=${page ?? 0}&size=${
       size ?? 7
-    }&customerCnic=${customerCnic ?? ""}`
+    }&customerCnic=${customerCnic ?? ""}&branchCode=${branchCode}`
   )
 }
 

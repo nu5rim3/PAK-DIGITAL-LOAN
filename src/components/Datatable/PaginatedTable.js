@@ -60,11 +60,12 @@ const PaginatedTable = ({
         paging={false}
         searching={false}
       />
-
-      <div className="d-flex flex-row-reverse">
-        <span className="p-2"> Total Records - {totalElements ?? 0} </span>{" "}
-        {pagination()}
-      </div>
+      {totalElements > 0 && (
+        <div className="d-flex flex-row-reverse">
+          <span className="p-2"> Total Records - {totalElements ?? 0} </span>{" "}
+          {pagination()}
+        </div>
+      )}
     </Row>
   )
 }
