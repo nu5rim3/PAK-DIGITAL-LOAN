@@ -111,7 +111,7 @@ const Header = props => {
             </button>
           </div>
           <div className="d-flex justify-content-center">
-            <span className="font-size-12  badge bg-info rounded-pill">
+            <span className="font-size-12  badge bg-secondary rounded-pill">
               {role ?? ""} | {branch ?? ""}
             </span>
           </div>
