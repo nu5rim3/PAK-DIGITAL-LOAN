@@ -227,6 +227,7 @@ const Member = props => {
                     setPage={setPage}
                     page={page}
                     totalPages={tableData?.totalPages ?? 0}
+                    totalElements={tableData?.totalElements ?? 0}
                   />
                 </CardBody>
               </Card>

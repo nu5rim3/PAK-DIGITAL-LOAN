@@ -9,7 +9,13 @@ import ReactPaginate from "react-paginate"
 //Import Breadcrumb
 import "./datatables.scss"
 
-const PaginatedTable = ({ totalPages, page, items, setPage }) => {
+const PaginatedTable = ({
+  totalPages,
+  page,
+  items,
+  setPage,
+  totalElements,
+}) => {
   const handlePageClick = data => {
     let selected = data.selected
     setPage(selected)
@@ -55,7 +61,10 @@ const PaginatedTable = ({ totalPages, page, items, setPage }) => {
         searching={false}
       />
 
-      <div className="d-flex flex-row-reverse">{pagination()}</div>
+      <div className="d-flex flex-row-reverse">
+        <span className="p-2"> total records - {totalElements ?? 0} </span>{" "}
+        {pagination()}
+      </div>
     </Row>
   )
 }
@@ -65,6 +74,7 @@ PaginatedTable.propTypes = {
   page: PropTypes.number,
   setPage: PropTypes.func,
   totalPages: PropTypes.number,
+  totalElements: PropTypes.number,
 }
 
 export default PaginatedTable
