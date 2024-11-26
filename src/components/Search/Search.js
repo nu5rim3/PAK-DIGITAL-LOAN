@@ -13,7 +13,7 @@ const Search = ({
   onReset,
   status,
   extraStatus,
-  isDateFilter = false,
+  isDateFilter,
 }) => {
   const [searchType, setSearchType] = useState("TEXT")
   const {
@@ -31,12 +31,14 @@ const Search = ({
       if (extraStatus === undefined) delete data.status
       onSubmitSearch({
         ...data,
-        fromDate: moment(data.fromDate).format("YYYY-MM-DD"),
-        toDate: moment(data.toDate).format("YYYY-MM-DD"),
+        fromDate: moment(data.fromDate).format("YYYY-MM-DD") ?? "",
+        toDate: moment(data.toDate).format("YYYY-MM-DD") ?? "",
       })
     } else if (searchType === "TEXT") {
-      delete data.fromDate
-      delete data.toDate
+      if (isDateFilter === undefined) {
+        delete data.fromDate
+        delete data.toDate
+      }
       if (extraStatus === undefined) {
         delete data.status
       }
@@ -50,6 +52,7 @@ const Search = ({
   }
 
   const searchTag = watch("searchFeild")
+  const search = watch("search")
 
   function getTypeByValue(value) {
     const tag = searchTags.find(tag => tag.value === value)
@@ -62,7 +65,7 @@ const Search = ({
     return () => {
       setSearchType("TEXT")
     }
-  }, [searchTag])
+  }, [searchTag, search])
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -177,10 +180,6 @@ const Search = ({
                   id="fromDate"
                   control={control}
                   defaultValue={""}
-                  rules={{
-                    required: true,
-                    message: "This field is required",
-                  }}
                   render={({ field }) => (
                     <DatePicker
                       className="form-control"
@@ -203,10 +202,6 @@ const Search = ({
                   id="toDate"
                   control={control}
                   defaultValue={""}
-                  rules={{
-                    required: true,
-                    message: "This field is required",
-                  }}
                   render={({ field }) => (
                     <DatePicker
                       className="form-control"

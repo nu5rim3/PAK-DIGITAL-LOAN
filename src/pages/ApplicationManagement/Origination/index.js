@@ -106,7 +106,7 @@ const Origination = props => {
     item.customerName = item.fullName
     item.createdBy = item.createdBy
     item.creationDate = moment(item.lastModifiedDate).format(
-      "yyyy-MM-DD HH:mm:ss"
+      "yyyy-MM-DD | HH:mm:ss"
     )
     item.isReturned = item.isReturned
     return item
@@ -193,10 +193,12 @@ const Origination = props => {
     const status = searchData.status ?? "APPROVAL_PENDING"
     const appraisalId =
       searchData?.searchFeild === "Appraisal ID" ? searchData.search : ""
-    const fromDate =
-      searchData?.searchFeild === "Created Date" ? searchData.fromDate : ""
-    const toDate =
-      searchData?.searchFeild === "Created Date" ? searchData.toDate : ""
+    const fromDate = searchData.fromDate
+      ? moment(searchData.fromDate).format("YYYY-MM-DD")
+      : ""
+    const toDate = searchData.toDate
+      ? moment(searchData.toDate).format("YYYY-MM-DD")
+      : ""
     const contractId =
       searchData?.searchFeild === "Contract ID" ? searchData.search : ""
     const productName =
