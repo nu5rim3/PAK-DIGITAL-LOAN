@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 
 import { connect } from "react-redux"
 import { Row, Col } from "reactstrap"
@@ -39,6 +39,7 @@ const Header = props => {
   const [search, setsearch] = useState(false)
   const [megaMenu, setmegaMenu] = useState(false)
   const [socialDrp, setsocialDrp] = useState(false)
+  const [role, setRole] = useState()
 
   function toggleFullscreen() {
     if (
@@ -77,8 +78,37 @@ const Header = props => {
     }
   }
 
-  var role = localStorage.getItem("role")
+  var _role = localStorage.getItem("role")
   var branch = localStorage.getItem("branchName")
+
+  useEffect(() => {
+    setRole(showRole(_role))
+  }, [_role])
+
+  const showRole = __role => {
+    switch (__role) {
+      case "CO":
+        return "Credit Officer"
+      case "BHO":
+        return "Branch Manager"
+      case "CCO":
+        return "Call Center Officer"
+      case "CR":
+        return "Credit Reviewer"
+      case "CA":
+        return "Credit Approver"
+      case "CM":
+        return "Credit Manager"
+      case "CMO":
+        return "Credit Monitoring Officer"
+      case "CRO":
+        return "Credit Recovery Officer"
+      case "ADMIN":
+        return "Admin"
+      default:
+        return ""
+    }
+  }
 
   return (
     <React.Fragment>
