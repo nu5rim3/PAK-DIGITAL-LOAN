@@ -208,10 +208,10 @@ const MisReport = props => {
       searchData?.searchFeild === "Appraisal ID" ? searchData.search : ""
     const fromDate = searchData.fromDate
       ? moment(searchData.fromDate).format("YYYY-MM-DD")
-      : ""
+      : moment().format("YYYY-MM-DD")
     const toDate = searchData.toDate
       ? moment(searchData.toDate).format("YYYY-MM-DD")
-      : ""
+      : moment().format("YYYY-MM-DD")
     const branchName =
       searchData?.searchFeild === "Branch Name" ? searchData.search : ""
     const croName =

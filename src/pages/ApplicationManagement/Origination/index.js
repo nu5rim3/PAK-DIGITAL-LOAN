@@ -83,8 +83,8 @@ const Origination = props => {
         sort: "asc",
       },
       {
-        field: "createdBy",
-        label: "Created By",
+        field: "lastModifiedDate",
+        label: "Last Modified Date",
         sort: "asc",
       },
       {
@@ -105,7 +105,10 @@ const Origination = props => {
     item.customerCnic = item.identificationNumber
     item.customerName = item.fullName
     item.createdBy = item.createdBy
-    item.creationDate = moment(item.lastModifiedDate).format(
+    item.lastModifiedDate = moment(item.lastModifiedDate).format(
+      "yyyy-MM-DD | HH:mm:ss"
+    )
+    item.creationDate = moment(item.creationDate).format(
       "yyyy-MM-DD | HH:mm:ss"
     )
     item.isReturned = item.isReturned
@@ -195,10 +198,10 @@ const Origination = props => {
       searchData?.searchFeild === "Appraisal ID" ? searchData.search : ""
     const fromDate = searchData.fromDate
       ? moment(searchData.fromDate).format("YYYY-MM-DD")
-      : ""
+      : moment().format("YYYY-MM-DD")
     const toDate = searchData.toDate
       ? moment(searchData.toDate).format("YYYY-MM-DD")
-      : ""
+      : moment().format("YYYY-MM-DD")
     const contractId =
       searchData?.searchFeild === "Contract ID" ? searchData.search : ""
     const productName =
