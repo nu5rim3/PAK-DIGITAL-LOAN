@@ -60,14 +60,14 @@ const PaginatedTable = ({
         paging={false}
         searching={false}
       />
-      {totalElements > 0 && (
-        <div className="d-flex justify-content-between">
-          <span className="py-2">
-            Showing Total Records - {totalElements ?? 0}{" "}
-          </span>{" "}
-          {pagination()}
-        </div>
-      )}
+      {/* {totalElements > 0 && ( */}
+      <div className="d-flex justify-content-between">
+        <span className="py-2">
+          Showing Total Records - {totalElements ?? 0}{" "}
+        </span>{" "}
+        {pagination()}
+      </div>
+      {/* )} */}
     </Row>
   )
 }
