@@ -91,7 +91,7 @@ const Header = props => {
         return "Credit Officer"
       case "BHO":
         return "Branch Manager"
-      case "CCO":
+      case "CC":
         return "Call Center Officer"
       case "CR":
         return "Credit Reviewer"
