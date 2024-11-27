@@ -196,12 +196,9 @@ const Origination = props => {
     const status = searchData.status ?? "APPROVAL_PENDING"
     const appraisalId =
       searchData?.searchFeild === "Appraisal ID" ? searchData.search : ""
-    const fromDate = searchData.fromDate
-      ? moment(searchData.fromDate).format("YYYY-MM-DD")
-      : moment().format("YYYY-MM-DD")
-    const toDate = searchData.toDate
-      ? moment(searchData.toDate).format("YYYY-MM-DD")
-      : moment().format("YYYY-MM-DD")
+    const fromDate = moment(searchData.fromDate).format("YYYY-MM-DD") ?? ""
+
+    const toDate = moment(searchData.toDate).format("YYYY-MM-DD") ?? ""
     const contractId =
       searchData?.searchFeild === "Contract ID" ? searchData.search : ""
     const productName =
