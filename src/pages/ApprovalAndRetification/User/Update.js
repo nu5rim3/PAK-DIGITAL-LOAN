@@ -31,6 +31,7 @@ const Update = props => {
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
   } = useForm()
 
@@ -47,24 +48,30 @@ const Update = props => {
 
     await updateApprovalUser(payload.userIdx, payload)
       .then(res => {
-        setIsLoading(false)
-        setSuccess("User has been updated successfully.")
-
-        setTimeout(() => {
-          setSuccess(null)
-          props.toggel()
-        }, 3000)
-      })
-      .catch(err => {
-        setIsLoading(false)
-        if (err.response.status) {
-          setError(err.response.data.message)
+        if (res) {
+          setIsLoading(false)
+          setSuccess("User Updated Successfully.")
+          reset()
+          setTimeout(() => {
+            props.onSuccessfulUpdate()
+            setSuccess(null)
+            props.closeUpdateModal()
+          }, 3000)
+        } else if (res === undefined) {
+          setIsLoading(false)
+          setError("User Update Failed.")
+          setTimeout(() => {
+            setError(null)
+          }, 3000)
+        } else {
+          setIsLoading(false)
+          setError(res.data?.message)
+          setTimeout(() => {
+            setError(null)
+          }, 3000)
         }
-
-        setTimeout(() => {
-          setError(null)
-        }, 3000)
       })
+      .catch(err => console.log(err))
   }
 
   const getStatusValue = value => {
@@ -105,7 +112,9 @@ const Update = props => {
           <h5 className="modal-title mt-0">Update Approval Group Users</h5>
           <button
             onClick={() => {
-              props.toggel()
+              props.setData(null)
+              reset()
+              props.closeUpdateModal()
             }}
             type="button"
             className="close"
@@ -206,8 +215,11 @@ const Update = props => {
 
 Update.propTypes = {
   isOpen: PropTypes.bool,
-  toggel: PropTypes.func,
+  closeUpdateModal: PropTypes.func,
+  openUpdateModal: PropTypes.func,
   data: PropTypes.object,
+  setData: PropTypes.func,
+  onSuccessfulUpdate: PropTypes.func,
 }
 
 export default Update
