@@ -56,7 +56,7 @@ const Member = props => {
   }
 
   const getLabel = item => {
-    item.status = item.groupUserStatus === "A" ? "Active" : "Inactive"
+    item.status = item.status === "A" ? "Active" : "Inactive"
     item.groupCode = item.group.code
     item.groupName = item.group.name
     return item
