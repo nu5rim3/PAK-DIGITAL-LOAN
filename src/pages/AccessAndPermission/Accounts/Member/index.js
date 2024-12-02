@@ -89,9 +89,7 @@ const Member = props => {
   }
 
   const getLastModifiedDate = item => {
-    item.lastModifiedDate = moment(item.lastModifiedDate).format(
-      "YYYY-MM-DD | HH:mm:ss"
-    )
+    item.lastModifiedDate = moment(item.lastModifiedDate).format("YYYY-MM-DD")
     return item
   }
 
