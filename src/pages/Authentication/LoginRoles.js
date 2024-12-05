@@ -27,25 +27,18 @@ import { autherizationContextHandler } from "store/auth/login/actions"
 import pkg from "../../../package.json"
 
 const UserRoleSelecter = props => {
-  const [roles, setRoles] = useState([null])
+  const [roles, setRoles] = useState(
+    props.location.state.userResponse?.roles ?? []
+  )
+
+  const [activeStatus, setActiveStatus] = useState(
+    props.location.state.userResponse?.status ?? "A"
+  )
+
   const [roleType, setRoleType] = useState()
   const [modal, showModal] = useState(false)
 
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    var _isMounted = true
-
-    if (_isMounted && props.location.state !== undefined) {
-      const userRolesResponce = props.location.state.userResponse?.roles
-      setRoles(userRolesResponce)
-    }
-
-    return () => {
-      _isMounted = false
-    }
-  }),
-    []
 
   const submitLoginRole = () => {
     var checked_role = document.querySelector('input[name = "radio"]:checked')
@@ -67,26 +60,28 @@ const UserRoleSelecter = props => {
     var cardRoleList = []
 
     const userRoles = roles.map(item => {
-      return { role: item?.description, code: item?.code }
+      return { role: item?.description, code: item?.code, status: item?.status }
     })
 
     for (var i = 0; i < userRoles.length; i++) {
-      var card = (
-        <label key={i} className="custom-radio">
-          <input
-            type="radio"
-            name="radio"
-            value={userRoles[i].code}
-            onChange={e => setRoleType(e.target.value)}
-          />
-          <span className="radio-btn">
-            <i className="las la-check"></i>
-            <div className="user-icon">
-              <h3>{userRoles[i].role}</h3>
-            </div>
-          </span>
-        </label>
-      )
+      if (activeStatus === "A") {
+        var card = (
+          <label key={i} className="custom-radio">
+            <input
+              type="radio"
+              name="radio"
+              value={userRoles[i].code}
+              onChange={e => setRoleType(e.target.value)}
+            />
+            <span className="radio-btn">
+              <i className="las la-check"></i>
+              <div className="user-icon">
+                <h3>{userRoles[i].role}</h3>
+              </div>
+            </span>
+          </label>
+        )
+      }
 
       cardRoleList.push(card)
     }
@@ -125,9 +120,21 @@ const UserRoleSelecter = props => {
                   </Row>
                 </div>
                 <CardBody className="pt-0">
-                  <div className="text-center p-3">
-                    <h3>Select Your Role</h3>
-                  </div>
+                  {activeStatus === "I" ? (
+                    <div className="mt-4">
+                      <h3
+                        style={{ color: "red" }}
+                        className="font-size-16 text-center me-1 text-danger"
+                      >
+                        This user is no longer Active.
+                      </h3>
+                    </div>
+                  ) : (
+                    <div className="text-center p-3">
+                      <h3>Select Your Role</h3>
+                    </div>
+                  )}
+
                   <div className="button-container">
                     <div className="radio-buttons">{renderRoleCard()}</div>
                   </div>
