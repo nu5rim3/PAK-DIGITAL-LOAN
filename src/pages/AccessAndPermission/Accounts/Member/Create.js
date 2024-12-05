@@ -125,7 +125,7 @@ const Create = props => {
     }
   }, [])
 
-  const options = roles.map((item, index) => {
+  const options = roles?.map((item, index) => {
     return { key: index, label: item.description, value: item.code }
   })
 
@@ -283,7 +283,7 @@ const Create = props => {
                           // value={options.filter(c => value.includes(c.value))}
                           onChange={val => onChange(val.map(c => c.value))}
                           options={options}
-                          defaultValue={options[6]}
+                          defaultValue={options && options[6]}
                           isMulti
                         />
                       )}
@@ -308,7 +308,7 @@ const Create = props => {
                       {...register("branch", { required: true })}
                     >
                       <option value="">Choose...</option>
-                      {branches.map((item, index) => (
+                      {branches?.map((item, index) => (
                         <option key={index} value={item.code}>
                           {item.description}
                         </option>

@@ -165,7 +165,7 @@ const Update = props => {
     }
   }, [props.data])
 
-  const options = roles.map((item, index) => {
+  const options = roles?.map((item, index) => {
     return { key: index, label: item.description, value: item.code }
   })
 
@@ -342,7 +342,7 @@ const Update = props => {
                       {...register("branch", { required: true })}
                     >
                       <option value="">Choose...</option>
-                      {branches.map((item, index) => (
+                      {branches?.map((item, index) => (
                         <option key={index} value={item.code}>
                           {item.description}
                         </option>
