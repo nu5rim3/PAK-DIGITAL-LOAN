@@ -39,6 +39,10 @@ const ProfileMenu = props => {
     }
   }, [props.success])
 
+  const handleLogout = () => {
+    localStorage.clear()
+  }
+
   return (
     <React.Fragment>
       <Dropdown
@@ -81,10 +85,12 @@ const ProfileMenu = props => {
             {props.t("Lock screen")}
           </DropdownItem>
           <div className="dropdown-divider"/> */}
-          <Link to="/pakoman-digital-loan/logout" className="dropdown-item">
-            <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />
-            <span>{props.t("Logout")}</span>
-          </Link>
+          <DropdownItem onClick={handleLogout}>
+            <Link to="/pakoman-digital-loan/logout" className="dropdown-item">
+              <i className="bx bx-power-off font-size-16 align-middle me-1 text-danger" />
+              <span>{props.t("Logout")}</span>
+            </Link>
+          </DropdownItem>
         </DropdownMenu>
       </Dropdown>
     </React.Fragment>
