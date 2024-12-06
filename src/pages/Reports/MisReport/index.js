@@ -172,7 +172,7 @@ const MisReport = props => {
     const toDate = searchData.toDate
       ? moment(searchData.toDate).format("YYYY-MM-DD")
       : ""
-    const branchName =
+    var branchName =
       searchData?.searchFeild === "Branch Name" ? searchData.search : ""
     const croName =
       searchData?.searchFeild === "CRO Name" ? searchData.search : ""
