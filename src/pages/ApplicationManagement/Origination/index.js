@@ -88,6 +88,11 @@ const Origination = props => {
         sort: "asc",
       },
       {
+        field: "createdBy",
+        label: "Created By",
+        sort: "asc",
+      },
+      {
         field: "status",
         label: "Status",
         sort: "asc",
