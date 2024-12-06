@@ -138,17 +138,28 @@ const UserRoleSelecter = props => {
                   <div className="button-container">
                     <div className="radio-buttons">{renderRoleCard()}</div>
                   </div>
-
-                  <div className="mt-3 d-grid">
-                    <button
-                      onClick={() => submitLoginRole()}
-                      className="btn btn-block"
-                      style={{ backgroundColor: "#1abc86", color: "#ffffff" }}
-                      type="button"
-                    >
-                      Proceed Login
-                    </button>
-                  </div>
+                  {activeStatus === "I" ? (
+                    <div className="mt-3 d-grid">
+                      <a
+                        href={process.env.REACT_APP_LOGIN_URL}
+                        className="btn"
+                        style={{ backgroundColor: "#1abc86", color: "#ffffff" }}
+                      >
+                        Return to Login
+                      </a>
+                    </div>
+                  ) : (
+                    <div className="mt-3 d-grid">
+                      <button
+                        onClick={() => submitLoginRole()}
+                        className="btn btn-block"
+                        style={{ backgroundColor: "#1abc86", color: "#ffffff" }}
+                        type="button"
+                      >
+                        Proceed Login
+                      </button>
+                    </div>
+                  )}
                 </CardBody>
               </Card>
               <div className="mt-5 text-center">
