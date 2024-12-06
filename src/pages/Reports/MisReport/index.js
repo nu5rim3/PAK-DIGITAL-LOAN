@@ -84,6 +84,7 @@ const MisReport = props => {
         field: "requestedLoanAmount",
         label: "Req. Loan Amount",
         sort: "asc",
+        algin: "right",
       },
       {
         field: "createdDate",

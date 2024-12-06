@@ -208,7 +208,7 @@ const Employee = props => {
       status
     )
 
-    setTableData(employeeResponse?.content)
+    setTableData(employeeResponse)
     setIsLoading(false)
     setSearchTriggered(false)
     if (employeeResponse !== undefined) {
