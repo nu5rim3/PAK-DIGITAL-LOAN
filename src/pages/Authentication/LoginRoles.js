@@ -121,44 +121,50 @@ const UserRoleSelecter = props => {
                 </div>
                 <CardBody className="pt-0">
                   {activeStatus === "I" ? (
-                    <div className="mt-4">
-                      <h3
-                        style={{ color: "red" }}
-                        className="font-size-16 text-center me-1 text-danger"
-                      >
-                        This user is no longer Active.
-                      </h3>
-                    </div>
+                    <>
+                      <div className="mt-4">
+                        <h3
+                          style={{ color: "red" }}
+                          className="font-size-16 text-center me-1 text-danger"
+                        >
+                          This user is no longer Active.
+                        </h3>
+                      </div>
+                      <div className="mt-3 d-grid">
+                        <a
+                          href={process.env.REACT_APP_LOGIN_URL}
+                          className="btn"
+                          style={{
+                            backgroundColor: "#1abc86",
+                            color: "#ffffff",
+                          }}
+                        >
+                          Return to Login
+                        </a>
+                      </div>
+                    </>
                   ) : (
-                    <div className="text-center p-3">
-                      <h3>Select Your Role</h3>
-                    </div>
-                  )}
-
-                  <div className="button-container">
-                    <div className="radio-buttons">{renderRoleCard()}</div>
-                  </div>
-                  {activeStatus === "I" ? (
-                    <div className="mt-3 d-grid">
-                      <a
-                        href={process.env.REACT_APP_LOGIN_URL}
-                        className="btn"
-                        style={{ backgroundColor: "#1abc86", color: "#ffffff" }}
-                      >
-                        Return to Login
-                      </a>
-                    </div>
-                  ) : (
-                    <div className="mt-3 d-grid">
-                      <button
-                        onClick={() => submitLoginRole()}
-                        className="btn btn-block"
-                        style={{ backgroundColor: "#1abc86", color: "#ffffff" }}
-                        type="button"
-                      >
-                        Proceed Login
-                      </button>
-                    </div>
+                    <>
+                      <div className="text-center p-3">
+                        <h3>Select Your Role</h3>
+                      </div>
+                      <div className="button-container">
+                        <div className="radio-buttons">{renderRoleCard()}</div>
+                      </div>
+                      <div className="mt-3 d-grid">
+                        <button
+                          onClick={() => submitLoginRole()}
+                          className="btn btn-block"
+                          style={{
+                            backgroundColor: "#1abc86",
+                            color: "#ffffff",
+                          }}
+                          type="button"
+                        >
+                          Proceed Login
+                        </button>
+                      </div>
+                    </>
                   )}
                 </CardBody>
               </Card>
