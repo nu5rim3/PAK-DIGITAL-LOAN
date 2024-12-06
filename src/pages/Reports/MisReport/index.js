@@ -178,10 +178,9 @@ const MisReport = props => {
       searchData?.searchFeild === "CRO Name" ? searchData.search : ""
 
     var role = localStorage.getItem("role")
-    var branch = localStorage.getItem("branch")
 
     if (role === "CO" || role === "BHO") {
-      branchName = branch
+      branchName = localStorage.getItem("branchName")
     }
 
     const response = await getMisReport(
