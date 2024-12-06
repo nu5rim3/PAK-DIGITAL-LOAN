@@ -98,7 +98,7 @@ const MisReport = props => {
       },
       {
         field: "nextActionPendingRole",
-        label: "Next Action Pending Role",
+        label: "Next Action By",
         sort: "asc",
       },
     ],
