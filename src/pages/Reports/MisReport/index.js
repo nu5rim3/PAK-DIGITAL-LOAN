@@ -208,10 +208,16 @@ const MisReport = props => {
       searchData?.searchFeild === "Appraisal ID" ? searchData.search : ""
     const fromDate = moment(searchData.fromDate).format("YYYY-MM-DD") ?? ""
     const toDate = moment(searchData.toDate).format("YYYY-MM-DD") ?? ""
-    const branchName =
+    var branchName =
       searchData?.searchFeild === "Branch Name" ? searchData.search : ""
     const croName =
       searchData?.searchFeild === "CRO Name" ? searchData.search : ""
+
+    var role = localStorage.getItem("role")
+
+    if (role === "CO" || role === "BHO") {
+      branchName = localStorage.getItem("branchName")
+    }
 
     const tableResponse = await getFilteredMisReport(
       page,
