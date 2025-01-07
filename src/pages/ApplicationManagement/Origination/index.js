@@ -35,6 +35,7 @@ const extraStatus = [
 const Origination = props => {
   const [data, setData] = useState([])
   const [page, setPage] = useState(0)
+  const [activeTab, setActiveTab] = useState("tab1")
 
   const SIZE = 7
 
@@ -266,39 +267,94 @@ const Origination = props => {
             title={"Application Management"}
             breadcrumbItem={"Origination"}
           />
-
-          <Row>
-            <Col className="col-12">
-              <Card>
-                <CardBody>
-                  <CardTitle className="h4">Appraisal Origination</CardTitle>
-                  <p className="card-title-desc">
-                    List of all appraisals that are based on status.
-                  </p>
-
-                  {/* Advence search */}
-                  <Search
-                    searchTags={searchTags}
-                    loading={isLoading}
-                    onReset={setIsReset}
-                    onSubmitSearch={setSearchData}
-                    // status={searchStatus}
-                    extraStatus={extraStatus}
-                    isDateFilter={true}
-                  />
-
-                  <PaginatedTable
-                    items={items}
-                    setPage={setPage}
-                    page={page}
-                    totalPages={tableData?.totalPages ?? 0}
-                    totalElements={tableData?.totalElements ?? 0}
-                  />
-                </CardBody>
-              </Card>
-            </Col>
-          </Row>
         </Container>
+
+        <ul className="nav nav-tabs">
+          <li className="nav-item">
+            <button
+              className={`nav-link ${
+                activeTab === "tab1"
+                  ? "bg-primary text-white rounded-top active"
+                  : ""
+              }`}
+              onClick={() => setActiveTab("tab1")}
+            >
+              General
+            </button>
+          </li>
+          <li className="nav-item">
+            <button
+              className={`nav-link ${
+                activeTab === "tab2"
+                  ? "bg-primary text-white rounded-top active"
+                  : ""
+              }`}
+              onClick={() => setActiveTab("tab2")}
+            >
+              Exceptional
+            </button>
+          </li>
+        </ul>
+
+        {/* Tab Content */}
+        <div className="tab-content">
+          {activeTab === "tab1" && (
+            <div className="tab-pane fade show active">
+              <Row>
+                <Col className="col-12">
+                  <Card>
+                    <CardBody>
+                      <CardTitle className="h4">
+                        General Appraisal Origination
+                      </CardTitle>
+                      <p className="card-title-desc">
+                        List of all general appraisals that are based on status.
+                      </p>
+
+                      {/* Advence search */}
+                      <Search
+                        searchTags={searchTags}
+                        loading={isLoading}
+                        onReset={setIsReset}
+                        onSubmitSearch={setSearchData}
+                        // status={searchStatus}
+                        extraStatus={extraStatus}
+                        isDateFilter={true}
+                      />
+
+                      <PaginatedTable
+                        items={items}
+                        setPage={setPage}
+                        page={page}
+                        totalPages={tableData?.totalPages ?? 0}
+                        totalElements={tableData?.totalElements ?? 0}
+                      />
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            </div>
+          )}
+          {activeTab === "tab2" && (
+            <div className="tab-pane fade show active">
+              <Row>
+                <Col className="col-12">
+                  <Card>
+                    <CardBody>
+                      <CardTitle className="h4">
+                        Exceptional Appraisal Origination
+                      </CardTitle>
+                      <p className="card-title-desc">
+                        List of all exceptional appraisals that are based on
+                        status.
+                      </p>
+                    </CardBody>
+                  </Card>
+                </Col>
+              </Row>
+            </div>
+          )}
+        </div>
       </div>
     </React.Fragment>
   )
