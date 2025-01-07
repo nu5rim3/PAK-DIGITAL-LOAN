@@ -15,6 +15,7 @@ const PaginatedTable = ({
   items,
   setPage,
   totalElements,
+  isLoading,
 }) => {
   const handlePageClick = data => {
     let selected = data.selected
@@ -47,28 +48,38 @@ const PaginatedTable = ({
   }
 
   return (
-    <Row>
-      <MDBDataTable
-        responsive
-        striped
-        bordered
-        noBottomColumns
-        data={{
-          columns: items?.columns,
-          rows: items?.rows ?? [],
-        }}
-        paging={false}
-        searching={false}
-      />
-      {/* {totalElements > 0 && ( */}
-      <div className="d-flex justify-content-between">
-        <span className="py-2">
-          Showing Total Records - {totalElements ?? 0}{" "}
-        </span>{" "}
-        {pagination()}
-      </div>
-      {/* )} */}
-    </Row>
+    <>
+      {isLoading ? (
+        <div className="container text-center mt-5">
+          <div className="spinner-border text-primary" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      ) : (
+        <Row>
+          <MDBDataTable
+            responsive
+            striped
+            bordered
+            noBottomColumns
+            data={{
+              columns: items?.columns,
+              rows: items?.rows ?? [],
+            }}
+            paging={false}
+            searching={false}
+          />
+          {/* {totalElements > 0 && ( */}
+          <div className="d-flex justify-content-between">
+            <span className="py-2">
+              Showing Total Records - {totalElements ?? 0}{" "}
+            </span>{" "}
+            {pagination()}
+          </div>
+          {/* )} */}
+        </Row>
+      )}
+    </>
   )
 }
 
@@ -78,6 +89,7 @@ PaginatedTable.propTypes = {
   setPage: PropTypes.func,
   totalPages: PropTypes.number,
   totalElements: PropTypes.number,
+  isLoading: PropTypes.bool,
 }
 
 export default PaginatedTable

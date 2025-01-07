@@ -328,6 +328,7 @@ const Origination = props => {
                         page={page}
                         totalPages={tableData?.totalPages ?? 0}
                         totalElements={tableData?.totalElements ?? 0}
+                        isLoading={isLoading}
                       />
                     </CardBody>
                   </Card>
