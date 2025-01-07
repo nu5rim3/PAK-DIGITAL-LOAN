@@ -103,6 +103,12 @@ const Header = props => {
         return "Credit Monitoring Officer"
       case "CRO":
         return "Credit Recovery Officer"
+      case "AM":
+        return "Area Manager"
+      case "RBU":
+        return "Regional Business Head"
+      case "COO":
+        return "Chief Operating Officer"
       case "ADMIN":
         return "Admin"
       default:
