@@ -40,6 +40,39 @@ export const getAllFilteredAppraisals = (
   )
 }
 
+export const getAllExceptionalFilteredAppraisals = (
+  page,
+  size,
+  branch,
+  status,
+  appraisalId,
+  fromDate,
+  toDate,
+  contractId,
+  productName,
+  customerName,
+  createdBy,
+  customerCnic
+) => {
+  var role = localStorage.getItem("role")
+  var branchCode = localStorage.getItem("branch")
+  return get(
+    `/mobixCamsLoan/v1/appraisals/exceptional-approvals/filters?role=${
+      role ?? ""
+    }&branch=${branch ?? ""}&status=${
+      status ?? "APPROVAL_PENDING"
+    }&appraisalId=${appraisalId ?? ""}&fromDate=${fromDate ?? ""}&toDate=${
+      toDate ?? ""
+    }&contractId=${contractId ?? ""}&productName=${
+      productName ?? ""
+    }&customerName=${customerName ?? ""}&createdBy=${createdBy ?? ""}&page=${
+      page ?? 0
+    }&size=${size ?? 7}&customerCnic=${
+      customerCnic ?? ""
+    }&branchCode=${branchCode}`
+  )
+}
+
 export const getAllOriginationCommon = async productCode => {
   return await get(`/mobixCamsCommon/v1/common-details/product/${productCode}`)
 }

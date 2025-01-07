@@ -10,7 +10,10 @@ import moment from "moment"
 import Breadcrumbs from "components/Common/Breadcrumb"
 
 // APIs
-import { getAllFilteredAppraisals } from "services/origination.service"
+import {
+  getAllFilteredAppraisals,
+  getAllExceptionalFilteredAppraisals,
+} from "services/origination.service"
 import PaginatedTable from "components/Datatable/PaginatedTable"
 import Search from "components/Search/Search"
 
@@ -218,20 +221,39 @@ const Origination = props => {
     const customerCnic =
       searchData?.searchFeild === "Customer CNIC" ? searchData.search : ""
 
-    const tableResponse = await getAllFilteredAppraisals(
-      page,
-      SIZE,
-      branchName,
-      status,
-      appraisalId,
-      fromDate,
-      toDate,
-      contractId,
-      productName,
-      customerName,
-      createdBy,
-      customerCnic
-    )
+    let tableResponse = null
+
+    if (activeTab === "tab1") {
+      tableResponse = await getAllFilteredAppraisals(
+        page,
+        SIZE,
+        branchName,
+        status,
+        appraisalId,
+        fromDate,
+        toDate,
+        contractId,
+        productName,
+        customerName,
+        createdBy,
+        customerCnic
+      )
+    } else if (activeTab === "tab2") {
+      tableResponse = await getAllExceptionalFilteredAppraisals(
+        page,
+        SIZE,
+        branchName,
+        status,
+        appraisalId,
+        fromDate,
+        toDate,
+        contractId,
+        productName,
+        customerName,
+        createdBy,
+        customerCnic
+      )
+    }
 
     setTableData(tableResponse)
     setIsLoading(false)
@@ -256,7 +278,12 @@ const Origination = props => {
 
   useEffect(() => {
     fetchData()
-  }, [page, searchTriggered])
+  }, [page, searchTriggered, activeTab])
+
+  useEffect(() => {
+    setTableData([])
+    setData([])
+  }, [activeTab])
 
   return (
     <React.Fragment>
@@ -349,6 +376,26 @@ const Origination = props => {
                         List of all exceptional appraisals that are based on
                         status.
                       </p>
+
+                      {/* Advence search */}
+                      <Search
+                        searchTags={searchTags}
+                        loading={isLoading}
+                        onReset={setIsReset}
+                        onSubmitSearch={setSearchData}
+                        // status={searchStatus}
+                        extraStatus={extraStatus}
+                        isDateFilter={true}
+                      />
+
+                      <PaginatedTable
+                        items={items}
+                        setPage={setPage}
+                        page={page}
+                        totalPages={tableData?.totalPages ?? 0}
+                        totalElements={tableData?.totalElements ?? 0}
+                        isLoading={isLoading}
+                      />
                     </CardBody>
                   </Card>
                 </Col>
