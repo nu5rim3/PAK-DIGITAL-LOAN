@@ -40,7 +40,8 @@ const ProfileMenu = props => {
   }, [props.success])
 
   const handleLogout = () => {
-    localStorage.clear()
+    // localStorage.clear()
+    console.log("[ProfileMenu.js] handleLogout()")
   }
 
   return (
