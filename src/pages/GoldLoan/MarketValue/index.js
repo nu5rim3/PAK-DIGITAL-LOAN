@@ -147,7 +147,7 @@ const IndexMarcketValue = props => {
     columns: [
       {
         field: "valueDate",
-        label: "Value Date",
+        label: "Value Added Date",
         sort: "asc",
       },
       {
