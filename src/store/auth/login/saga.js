@@ -29,6 +29,9 @@ function* loginUser({ payload: { user, history, response } }) {
       // Token Expire time
       var timestamp = moment().add(response.expires_in / 60 - 10, "minutes")
       localStorage.setItem("expires_time", timestamp)
+      localStorage.setItem("expires_at", timestamp)
+
+      console.log("response: ", response)
 
       const userData = jwt_decode(response.access_token)
       localStorage.setItem(
@@ -106,6 +109,7 @@ function* loginUser({ payload: { user, history, response } }) {
               uid: `${userResponse.idx}`,
               username: `${user.email}`,
               role: `${userResponse.roles[0].code}`,
+              expires_in: `${response.expires_in}`,
             })
           )
           yield put(

@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types"
 import React from "react"
 
 import { Switch, BrowserRouter as Router } from "react-router-dom"
@@ -41,7 +41,6 @@ fakeBackend()
 // initFirebaseBackend(firebaseConfig)
 
 const App = props => {
-
   function getLayout() {
     let layoutCls = VerticalLayout
     switch (props.layout.layoutType) {
@@ -88,7 +87,7 @@ const App = props => {
 }
 
 App.propTypes = {
-  layout: PropTypes.any
+  layout: PropTypes.any,
 }
 
 const mapStateToProps = state => {

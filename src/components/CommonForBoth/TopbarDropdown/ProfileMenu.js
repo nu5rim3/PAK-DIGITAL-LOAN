@@ -41,7 +41,10 @@ const ProfileMenu = props => {
 
   const handleLogout = () => {
     // localStorage.clear()
-    console.log("[ProfileMenu.js] handleLogout()")
+    localStorage.removeItem("authUser")
+    localStorage.removeItem("access_token")
+    localStorage.removeItem("refresh_token")
+    localStorage.removeItem("expires_at")
   }
 
   return (
