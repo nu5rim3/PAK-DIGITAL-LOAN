@@ -27,6 +27,7 @@ export const getAllFilterUsers = async (
 }
 
 export const getUserById = async idx => {
+  console.log("call getUserById")
   return await get(`/mobixCamsCommon/v1/users/${idx}`)
 }
 

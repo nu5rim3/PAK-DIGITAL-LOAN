@@ -87,32 +87,38 @@ const Header = props => {
 
   const showRole = __role => {
     switch (__role) {
+      case "ADMIN":
+        return "Administrator"
+      case "BHO":
+        return "Branch Head Officer"
+      case "CRO":
+        return "Customer Relationship Officer"
       case "CO":
         return "Credit Officer"
-      case "BHO":
+      case "BM":
         return "Branch Manager"
       case "CC":
-        return "Call Center Officer"
+        return "Call Center Verification"
+      case "IMD":
+        return "Islamic Microfinance Division"
       case "CR":
         return "Credit Reviewer"
       case "CA":
         return "Credit Approver"
-      case "CM":
-        return "Credit Manager"
-      case "CMO":
-        return "Credit Monitoring Officer"
-      case "CRO":
-        return "Credit Recovery Officer"
+      case "CAD":
+        return "Credit Administrative Division"
       case "AM":
         return "Area Manager"
       case "RBH":
         return "Regional Business Head"
       case "COO":
         return "Chief Operating Officer"
-      case "ADMIN":
-        return "Admin"
+      case "CEO":
+        return "Chief Executive Officer"
+      case "COP":
+        return "Credit Operations"
       default:
-        return ""
+        return __role
     }
   }
 

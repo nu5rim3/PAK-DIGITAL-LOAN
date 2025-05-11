@@ -56,6 +56,43 @@ const UserRoleSelecter = props => {
     showModal(!modal)
   }
 
+  const showRole = __role => {
+    switch (__role) {
+      case "ADMIN":
+        return "Administrator"
+      case "BHO":
+        return "Branch Head Officer"
+      case "CRO":
+        return "Customer Relationship Officer"
+      case "CO":
+        return "Credit Officer"
+      case "BM":
+        return "Branch Manager"
+      case "CC":
+        return "Call Center Verification"
+      case "IMD":
+        return "Islamic Microfinance Division"
+      case "CR":
+        return "Credit Reviewer"
+      case "CA":
+        return "Credit Approver"
+      case "CAD":
+        return "Credit Administrative Division"
+      case "AM":
+        return "Area Manager"
+      case "RBH":
+        return "Regional Business Head"
+      case "COO":
+        return "Chief Operating Officer"
+      case "CEO":
+        return "Chief Executive Officer"
+      case "COP":
+        return "Credit Operations"
+      default:
+        return __role
+    }
+  }
+
   const renderRoleCard = () => {
     var cardRoleList = []
 
@@ -76,7 +113,15 @@ const UserRoleSelecter = props => {
             <span className="radio-btn">
               <i className="las la-check"></i>
               <div className="user-icon">
-                <h3>{userRoles[i].role}</h3>
+                <h3>{showRole(userRoles[i].code)}</h3>
+                {/* <p
+                  className="font-size-10"
+                  style={{
+                    lineHeight: 1,
+                  }}
+                >
+                  {userRoles[i].role}
+                </p> */}
               </div>
             </span>
           </label>
