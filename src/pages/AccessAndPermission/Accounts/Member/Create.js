@@ -125,10 +125,6 @@ const Create = props => {
     }
   }, [])
 
-  const options = roles?.map((item, index) => {
-    return { key: index, label: showRole(item.code), value: item.code }
-  })
-
   const showRole = __role => {
     switch (__role) {
       case "ADMIN":
@@ -165,6 +161,10 @@ const Create = props => {
         return __role
     }
   }
+
+  const options = roles?.map((item, index) => {
+    return { key: index, label: showRole(item.code), value: item.code }
+  })
 
   return (
     <Row>
