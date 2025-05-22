@@ -165,8 +165,45 @@ const Update = props => {
     }
   }, [props.data])
 
+  const showRole = __role => {
+    switch (__role) {
+      case "ADMIN":
+        return "Administrator"
+      case "BHO":
+        return "Branch Head Officer"
+      case "CRO":
+        return "Customer Relationship Officer"
+      case "CO":
+        return "Credit Officer"
+      case "BM":
+        return "Branch Manager"
+      case "CC":
+        return "Call Center Verification"
+      case "IMD":
+        return "Islamic Microfinance Division"
+      case "CR":
+        return "Credit Reviewer"
+      case "CA":
+        return "Credit Approver"
+      case "CAD":
+        return "Credit Administrative Division"
+      case "AM":
+        return "Area Manager"
+      case "RBH":
+        return "Regional Business Head"
+      case "COO":
+        return "Chief Operating Officer"
+      case "CEO":
+        return "Chief Executive Officer"
+      case "COP":
+        return "Credit Operations"
+      default:
+        return __role
+    }
+  }
+
   const options = roles?.map((item, index) => {
-    return { key: index, label: item.description, value: item.code }
+    return { key: index, label: showRole(item.code), value: item.code }
   })
 
   return (
